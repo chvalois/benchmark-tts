@@ -1,0 +1,19 @@
+# Module commun du benchmark (Phases 1–2), hors ASR lourd.
+# Ne PAS y mettre torch/transformers : voir requirements-asr.txt.
+# Installation :
+#   source env.sh
+#   uv venv "$TTSB_VENVS/_commun" --python 3.10
+#   uv pip install --python "$TTSB_VENVS/_commun/bin/python" -r benchmark/requirements.txt
+
+pyyaml>=6.0
+huggingface_hub>=0.24
+hf_transfer>=0.1.6
+num2words>=0.5.13
+jiwer>=3.0
+soundfile>=0.12
+librosa>=0.10
+numpy>=1.24,<2.0
+nvidia-ml-py>=12.535
+phonemizer>=3.2
+pytest>=8.0
+pytest-cov>=5.0

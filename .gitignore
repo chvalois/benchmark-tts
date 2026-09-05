@@ -1,0 +1,23 @@
+# Environnement local (copie de env.sh.example, contient des chemins machine)
+env.sh
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.venv/
+venv/
+
+# Sorties volumineuses — vivent sur D: ($TTSB_AUDIO_OUT), pas dans le repo
+/audio_genere/*
+!/audio_genere/.gitkeep
+/resultats/*.csv
+/resultats/*.json
+!/resultats/.gitkeep
+
+# Poids / venvs par modèle : jamais commités (voir models.lock + fetch_models.py)
+/models/*/.venv/
+/models/*/weights/

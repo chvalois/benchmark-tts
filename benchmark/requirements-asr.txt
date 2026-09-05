@@ -1,0 +1,14 @@
+# ASR de scoring (Phase 2). Lourd (torch CUDA). Installé dans le venv
+# commun PAR-DESSUS requirements.txt, ou dans son propre venv `_asr`.
+# Whisper large-v3-french tourne APRÈS la génération, modèle TTS déchargé
+# (jamais deux modèles GPU chargés en même temps — cf. APIAVISOL §2.3).
+#
+#   uv pip install --python "$TTSB_VENVS/_commun/bin/python" \
+#       --torch-backend=cu124 -r benchmark/requirements-asr.txt
+
+--extra-index-url https://download.pytorch.org/whl/cu124
+torch>=2.4,<2.9
+transformers>=4.44
+accelerate>=0.33
+faster-whisper>=1.0
+ctranslate2>=4.0

@@ -1,0 +1,249 @@
+# =====================================================================
+# Corpus de test FR — FIXE et PARTAGÉ par tous les modèles.
+# Ne jamais modifier une entrée existante en cours de release :
+# rejouer l'intégralité du benchmark sinon (cf. protocole §4.5).
+#
+# Schéma d'une entrée :
+#   <id>:
+#     texte:     str   — texte source (AVANT pré-traitement §3.9)
+#     longueur:  court | moyen | long
+#     registre:  narration | dialogue_joie | dialogue_colere
+#                | dialogue_peur | dialogue_tristesse | cours_magistral
+#     pieges:    liste parmi :
+#                liaison | nombre | nom_propre | silence_rythme
+#                | homographe_heterophone | emprunt_en
+#                | ponctuation_repetee | onomatopee
+#     type:      (optionnel, défaut "phrase")
+#                phrase | titre | long_form | multi_voix
+#
+# p01–p20  : grille longueur × registre × piège (doc REFLEXIONCLAUDE)
+# p21–p34  : capacités C4/C8/C9/C10/C11 + cas limites du pré-traitement
+#            (doc APIAVISOL)
+# =====================================================================
+
+p01:
+  texte: "On a gagné, c'est incroyable !"
+  longueur: court
+  registre: dialogue_joie
+  pieges: []
+
+p02:
+  texte: "Non, mais ça suffit maintenant !"
+  longueur: court
+  registre: dialogue_colere
+  pieges: []
+
+p03:
+  texte: "Il y a quelqu'un... j'ai entendu du bruit."
+  longueur: court
+  registre: dialogue_peur
+  pieges: [silence_rythme]
+
+p04:
+  texte: "Il me manque, chaque jour un peu plus."
+  longueur: court
+  registre: dialogue_tristesse
+  pieges: [homographe_heterophone]   # "plus" : négation vs comparatif
+
+p05:
+  texte: "Considérons à présent l'équation suivante."
+  longueur: court
+  registre: cours_magistral
+  pieges: [liaison]
+
+p06:
+  texte: "Tu te rends compte ? Après tout ce travail, on l'a enfin décroché, ce contrat !"
+  longueur: moyen
+  registre: dialogue_joie
+  pieges: [liaison]
+
+p07:
+  texte: "Je t'avais pourtant prévenu cent fois, et tu n'as rien écouté, encore une fois !"
+  longueur: moyen
+  registre: dialogue_colere
+  pieges: [nombre]
+
+p08:
+  texte: "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ombre bouger près de la porte."
+  longueur: moyen
+  registre: dialogue_peur
+  pieges: [silence_rythme]
+
+p09:
+  texte: "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais."
+  longueur: moyen
+  registre: dialogue_tristesse
+  pieges: [homographe_heterophone]   # "est" : verbe être vs point cardinal (cf. p18)
+
+p10:
+  texte: "La Révolution française de mille sept cent quatre-vingt-neuf marque une rupture profonde avec l'Ancien Régime."
+  longueur: moyen
+  registre: cours_magistral
+  pieges: [nombre, liaison]
+
+p11:
+  texte: "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne."
+  longueur: moyen
+  registre: narration
+  pieges: [liaison]
+
+p12:
+  texte: "Anne-Sophie Legrand-Dubois a rencontré Grzegorz Wozniak à Aix-en-Provence."
+  longueur: moyen
+  registre: narration
+  pieges: [nom_propre]
+
+p13:
+  texte: "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village."
+  longueur: long
+  registre: narration
+  pieges: [homographe_heterophone]   # "fils" (/fis/) et "fils" (/fil/) dans la même phrase
+
+p14:
+  texte: "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante."
+  longueur: long
+  registre: cours_magistral
+  pieges: [liaison, silence_rythme]
+
+p15:
+  texte: "Quatre-vingt-onze virgule trois pour cent des participants ont répondu par l'affirmative, un chiffre en nette hausse par rapport à l'année précédente où seulement soixante-quatorze pour cent s'étaient prononcés dans ce sens."
+  longueur: long
+  registre: cours_magistral
+  pieges: [nombre]
+
+p16:
+  texte: "Il est fier de se fier à son instinct."
+  longueur: court
+  registre: narration
+  pieges: [homographe_heterophone]   # "fier" (/fjɛʁ/) vs "se fier" (/fje/)
+
+p17:
+  texte: "Les poules couvent leurs œufs près du couvent abandonné."
+  longueur: court
+  registre: narration
+  pieges: [homographe_heterophone]   # "couvent" verbe (/kuv/) vs nom (/kuvɑ̃/)
+
+p18:
+  texte: "Le soleil se lève à l'est ; c'est là qu'est notre maison."
+  longueur: court
+  registre: narration
+  pieges: [homographe_heterophone]   # "est" cardinal (/ɛst/) vs verbe être (/ɛ/)
+
+p19:
+  texte: "Il n'en veut plus, même si j'en ai plus que lui."
+  longueur: court
+  registre: dialogue_colere
+  pieges: [homographe_heterophone]   # "plus" négatif (/ply/) vs comparatif (/plys/)
+
+p20:
+  texte: "Sacha et Amélie habitent au vingt-six rue des Acacias à Bordeaux."
+  longueur: moyen
+  registre: narration
+  pieges: [nombre, nom_propre, liaison]
+
+# --- C4 : onomatopées & ponctuation répétée -------------------------------
+p21:
+  texte: "*Vroum* La voiture bondit en avant, projetant des gravillons contre la vieille barrière."
+  longueur: moyen
+  registre: narration
+  pieges: [onomatopee, silence_rythme]
+
+p22:
+  texte: "— Encore ! Encore lui ! Mais qu'est-ce qu'il veut, à la fin ?"
+  longueur: court
+  registre: dialogue_colere
+  pieges: [ponctuation_repetee]
+
+p23:
+  texte: "Rrrmmm... le vieux moteur toussa trois fois, puis se tut pour de bon."
+  longueur: moyen
+  registre: narration
+  pieges: [onomatopee, silence_rythme]
+
+# --- C8 : titre sans ponctuation terminale ------------------------------
+p24:
+  texte: "La danse mystérieuse du Kabuki"
+  longueur: court
+  registre: narration
+  pieges: [nom_propre]
+  type: titre
+
+p25:
+  texte: "Chapitre premier : le moulin endormi"
+  longueur: court
+  registre: narration
+  pieges: []
+  type: titre
+
+# --- C9 : texte long (dérive de durée, tenue du timbre) -----------------
+p26:
+  texte: |
+    Il y avait, au bout de la vallée de Grismouton, un moulin que personne n'osait plus faire tourner. Les anciens racontaient qu'un hiver, il y a de cela quatre-vingt-onze ans, le meunier Aristide Vaillant-Coste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture. Depuis, disait-on, le vent dormait dans la roue, et il ne fallait surtout pas le réveiller.
+
+    Camille n'avait jamais cru à ces histoires. À douze ans, elle trouvait que les grandes personnes inventaient des dangers pour éviter d'avoir à expliquer les vraies choses. Ce matin-là, elle descendit le sentier gelé avant le lever du jour, une lanterne à la main, bien décidée à voir de ses yeux ce qu'il y avait derrière la porte du moulin. Le givre craquait sous ses pas comme du sucre. Au loin, l'horloge du village sonna six coups, puis un septième, plus grave, qui resta longtemps suspendu dans l'air.
+
+    La porte n'était pas fermée à clé. Elle poussa, et le bois gémit sur ses gonds. À l'intérieur, tout était couvert d'une fine poussière blanche, la farine d'un autre siècle, et au centre de la salle, la grande roue de bois attendait, immobile. Camille s'approcha. Elle posa la paume sur l'un des rayons. Le bois était tiède. Tiède, en plein mois de janvier, dans un bâtiment sans feu depuis des décennies.
+
+    — Il y a quelqu'un ? demanda-t-elle, et sa voix lui parut minuscule.
+
+    Rien ne répondit, sinon un souffle, très bas, qui semblait venir de la roue elle-même. Un souffle régulier, patient, comme celui d'un dormeur. Camille retira sa main. Elle comprit alors que l'histoire du meunier n'était peut-être pas une invention, mais une consigne : on n'avait pas voulu lui faire peur, on avait voulu la protéger, et elle, comme toujours, avait pris la protection pour un mensonge.
+
+    Elle aurait pu partir. Elle aurait dû. Au lieu de cela, elle s'assit sur le rebord de pierre, éteignit sa lanterne pour économiser l'huile, et attendit dans le noir que le jour se lève, en écoutant respirer le vent. Elle se disait que si on l'avait enfermé si longtemps, quelqu'un, un jour, devrait bien lui ouvrir la porte, et lui demander pardon, et le laisser repartir vers les collines. Elle se disait aussi que ce quelqu'un, ce serait peut-être elle. Le souffle, dans la roue, sembla ralentir, puis s'apaiser, comme s'il avait, lui aussi, décidé d'attendre encore un peu.
+
+    Quand la première lumière grise passa sous la porte, Camille rouvrit les yeux. Elle n'avait pas dormi, ou à peine. Le moulin lui paraissait plus petit qu'à son arrivée, presque ordinaire, et pourtant quelque chose avait changé. Sur le sol, dans la farine, on voyait la trace nette de ses pas jusqu'au centre de la salle, et autour de la roue, un large cercle balayé, net, comme si un courant d'air très doux avait tourné là toute la nuit. Elle se leva, ralluma sa lanterne, et remonta le sentier sans se retourner. Au village, elle ne raconta rien à personne. Mais chaque matin, désormais, elle descendait jusqu'au moulin, posait la main sur le bois tiède, disait bonjour à voix basse, et repartait. Et les anciens, qui la regardaient passer depuis leurs fenêtres, hochaient la tête en silence, parce qu'ils savaient, eux, qu'une porte gardée pendant quatre-vingt-onze ans finit toujours, un jour, par trouver la main qui l'ouvrira.
+  longueur: long
+  registre: narration
+  pieges: [nombre, nom_propre, liaison, silence_rythme]
+  type: long_form
+
+# --- C10 : multi-voix (balises <voice:>) --------------------------------
+p27:
+  texte: "<voice:narrateur>Le renard s'avança sans bruit jusqu'au bord de la clairière. <voice:enfant>Bonjour, dit une petite voix claire, tu es perdu ? <voice:narrateur>Il s'arrêta net, une patte encore levée."
+  longueur: moyen
+  registre: dialogue_joie
+  pieges: [liaison]
+  type: multi_voix
+
+# --- C11 : non-régression multilingue (emprunts EN sur du FR) ----------
+p28:
+  texte: "Il a partagé le nouveau starter pack sur son feed juste avant le week-end."
+  longueur: moyen
+  registre: narration
+  pieges: [emprunt_en]
+
+p29:
+  texte: "Le manager a calé le kick-off du sprint avec Bradley en toute fin de meeting."
+  longueur: moyen
+  registre: cours_magistral
+  pieges: [emprunt_en, nom_propre]
+
+# --- Cas limites du pré-traitement §3.9 --------------------------------
+p30:
+  texte: "Il gravit les 73 marches, puis attendit le train de 10 h 45 du 14 juillet."
+  longueur: moyen
+  registre: narration
+  pieges: [nombre]   # verbalisation FR de chiffres écrits, "h" -> "heures"
+
+p31:
+  texte: "Le sorcier Franfrelou vivait au hameau de Grismouton-le-Vieux, près du bois de Kernide."
+  longueur: moyen
+  registre: narration
+  pieges: [nom_propre]
+
+p32:
+  texte: "Les enfants heureux ont ouvert, un à un, les anciens albums oubliés au grenier."
+  longueur: moyen
+  registre: narration
+  pieges: [liaison]
+
+p33:
+  texte: "« Je n'y crois pas une seconde », répondit Juliette en haussant les épaules."
+  longueur: moyen
+  registre: dialogue_colere
+  pieges: []   # teste l'étape 2 (virgule d'incise) ET son rendu
+
+p34:
+  texte: "Chut... ne dis rien... ils sont juste derrière la porte."
+  longueur: court
+  registre: dialogue_peur
+  pieges: [silence_rythme]   # suspension -> point : la pause doit rester lisible

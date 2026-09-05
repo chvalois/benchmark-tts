@@ -1,0 +1,14 @@
+[project]
+name = "benchmark-tts"
+version = "0.0.0"
+description = "Benchmark reproductible de modèles TTS open source, spécialisé français"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["benchmark/tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
