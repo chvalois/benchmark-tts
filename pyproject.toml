@@ -9,6 +9,11 @@ pythonpath = ["."]
 testpaths = ["benchmark/tests"]
 addopts = "-q"
 
+[tool.coverage.run]
+source = ["benchmark"]
+# CLI d'I/O (téléchargement HF), vérifiée manuellement via `--check` :
+omit = ["benchmark/tests/*", "benchmark/fetch_models.py"]
+
 [tool.ruff]
 line-length = 100
 target-version = "py310"

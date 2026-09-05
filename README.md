@@ -16,7 +16,7 @@ Mesuré sur matériel réel (**RTX 4090**, 24 Go), un modèle à la fois.
 |---|---|---|
 | 0 | Socle infra (env, `doctor.py`, stockage D:) | ✅ |
 | 1 | Contrats partagés (corpus, voix, pré-traitement, `models.lock`, contrat modèle) | ✅ |
-| 2 | Module commun de scoring (WER FR, fidélité, vitesse, VRAM, licence, stabilité) | à venir |
+| 2 | Module commun de scoring (WER FR, fidélité, vitesse, VRAM, licence, stabilité) | 🚧 `corpus.py`, `normalisation.py`, `fidelite.py` faits ; WER/vitesse/VRAM/licence à venir |
 | 3 | Adaptateurs modèles (venv-par-modèle, checklist des 16 pièges) | à venir |
 | 4 | Protocole subjectif (MOS, A/B aveugle, panel) | à venir |
 | 5 | Agrégation & rapport (vue globale + par catégorie) | à venir |
