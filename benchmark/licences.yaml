@@ -1,0 +1,119 @@
+# =====================================================================
+# Registre de licences — donnée DÉCLARÉE et vérifiée manuellement, pas
+# une mesure automatique. Source de vérité unique pour l'axe « usage
+# commercial » du benchmark. Couvre AUSSI les modèles écartés (pour la
+# colonne comparative + l'angle éditorial).
+#
+# usage_commercial : oui | non | conditionnel
+#   conditionnel  -> lire `note` (ex. code libre mais poids non commerciaux,
+#                    Creator Use Grant limité aux créateurs individuels...)
+# Chaque entrée : licence, usage_commercial, source_url, verifie_le (ISO),
+#                 note (obligatoire si conditionnel).
+# =====================================================================
+
+chatterbox_v3:
+  licence: MIT
+  usage_commercial: oui
+  source_url: "https://github.com/resemble-ai/chatterbox"
+  verifie_le: null
+  note: ""
+
+kokoro_82m:
+  licence: Apache-2.0
+  usage_commercial: oui
+  source_url: "https://huggingface.co/hexgrad/Kokoro-82M"
+  verifie_le: null
+  note: ""
+
+firered_tts3:
+  licence: Apache-2.0
+  usage_commercial: oui
+  source_url: ""
+  verifie_le: null
+  note: "veille sept. 2026 — licence à confirmer à l'intégration"
+
+voxcpm2:
+  licence: Apache-2.0
+  usage_commercial: oui
+  source_url: ""
+  verifie_le: null
+  note: "veille juin 2026 — à confirmer"
+
+cosyvoice3_05b:
+  licence: Apache-2.0
+  usage_commercial: oui
+  source_url: ""
+  verifie_le: null
+  note: "à confirmer"
+
+audio8_06b:
+  licence: Apache-2.0
+  usage_commercial: oui
+  source_url: ""
+  verifie_le: null
+  note: "à confirmer"
+
+pocket_tts:
+  licence: CC-BY-4.0
+  usage_commercial: oui
+  source_url: ""
+  verifie_le: null
+  note: "attribution requise (CC-BY)"
+
+parler_tts_fr:
+  licence: Apache-2.0
+  usage_commercial: oui
+  source_url: "https://huggingface.co/parler-tts"
+  verifie_le: null
+  note: "base HF Apache ; vérifier le dataset d'entraînement du finetune FR"
+
+# --- Écartés du service (référence qualité uniquement) ----------------
+xtts_v2:
+  licence: CPML
+  usage_commercial: non
+  source_url: "https://coqui.ai/cpml"
+  verifie_le: null
+  note: "Coqui Public Model License — non commercial. Coqui a fermé."
+
+f5_tts:
+  licence: CC-BY-NC-4.0
+  usage_commercial: non
+  source_url: "https://github.com/SWivid/F5-TTS"
+  verifie_le: null
+  note: "non commercial"
+
+fish_speech:
+  licence: CC-BY-NC-SA-4.0
+  usage_commercial: non
+  source_url: "https://github.com/fishaudio/fish-speech"
+  verifie_le: null
+  note: "Research License, inchangée depuis mars 2026 ; commercial interdit sans accord écrit séparé (classé Apache par erreur dans une veille antérieure)"
+
+omnivoice:
+  licence: "code Apache-2.0 / poids CC-BY-NC"
+  usage_commercial: conditionnel
+  source_url: "https://github.com/k2-fsa/omnivoice"
+  verifie_le: null
+  note: "le finetune émotion (ModelsLab/omnivoice-singing) reste non commercial malgré le code libre — même situation que XTTS-v2 / F5-TTS"
+
+higgs_audio_v3:
+  licence: "Research & Non-Commercial + Creator Use Grant"
+  usage_commercial: conditionnel
+  source_url: "https://github.com/boson-ai/higgs-audio"
+  verifie_le: null
+  note: "Creator Use Grant = créateurs individuels avec acknowledgement uniquement ; jamais un usage B2B/SaaS exposant le modèle à des tiers"
+
+# --- Outils de scoring ------------------------------------------------
+asr_whisper_large_v3_fr:
+  licence: MIT
+  usage_commercial: oui
+  source_url: "https://huggingface.co/bofenghuang/whisper-large-v3-french"
+  verifie_le: null
+  note: "outil de mesure, pas un composant produit"
+
+asr_faster_whisper_small:
+  licence: MIT
+  usage_commercial: oui
+  source_url: "https://huggingface.co/Systran/faster-whisper-small"
+  verifie_le: null
+  note: "outil de mesure (CTranslate2), pas un composant produit"
