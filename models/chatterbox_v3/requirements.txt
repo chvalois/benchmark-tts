@@ -1,0 +1,19 @@
+# venv dédié Chatterbox V3 Multilingual.
+#   source env.sh
+#   uv venv "$TTSB_VENVS/chatterbox_v3" --python 3.11
+#   uv pip install --python "$TTSB_VENVS/chatterbox_v3/bin/python" \
+#       -r models/chatterbox_v3/requirements.txt
+#
+# Poids : téléchargés séparément à révision épinglée
+#   python3 benchmark/fetch_models.py --model chatterbox_v3
+
+chatterbox-tts>=0.1.4
+
+# Dépendances du module commun benchmark/ (generer.py tourne dans CE venv)
+soundfile>=0.12
+librosa>=0.10
+numpy>=1.24,<2.0
+nvidia-ml-py>=12.535
+pyyaml>=6.0
+num2words>=0.5.13
+phonemizer>=3.2
