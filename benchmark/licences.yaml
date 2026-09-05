@@ -28,44 +28,44 @@ kokoro_82m:
 firered_tts3:
   licence: Apache-2.0
   usage_commercial: oui
-  source_url: ""
-  verifie_le: null
-  note: "veille sept. 2026 — licence à confirmer à l'intégration"
+  source_url: "https://huggingface.co/FireRedTeam/FireRedTTS3"
+  verifie_le: "2026-09-05"
+  note: "repo HF ouvert, apache-2.0 confirmé (métadonnée HF)"
 
 voxcpm2:
   licence: Apache-2.0
   usage_commercial: oui
-  source_url: ""
-  verifie_le: null
-  note: "veille juin 2026 — à confirmer"
+  source_url: "https://huggingface.co/openbmb/VoxCPM2"
+  verifie_le: "2026-09-05"
+  note: "apache-2.0 confirmé (métadonnée HF)"
 
 cosyvoice3_05b:
   licence: Apache-2.0
   usage_commercial: oui
-  source_url: ""
-  verifie_le: null
-  note: "à confirmer"
+  source_url: "https://huggingface.co/FunAudioLLM/Fun-CosyVoice3-0.5B-2512"
+  verifie_le: "2026-09-05"
+  note: "apache-2.0 confirmé (métadonnée HF)"
 
 audio8_06b:
   licence: Apache-2.0
   usage_commercial: oui
-  source_url: ""
-  verifie_le: null
-  note: "à confirmer"
+  source_url: "https://huggingface.co/Audio8/Audio8-TTS-Preview-0.6b"
+  verifie_le: "2026-09-05"
+  note: "apache-2.0 confirmé (métadonnée HF)"
 
 pocket_tts:
   licence: CC-BY-4.0
   usage_commercial: oui
-  source_url: ""
-  verifie_le: null
-  note: "attribution requise (CC-BY)"
+  source_url: "https://huggingface.co/kyutai/pocket-tts"
+  verifie_le: "2026-09-05"
+  note: "cc-by-4.0 confirmé (métadonnée HF) ; attribution requise"
 
 parler_tts_fr:
-  licence: Apache-2.0
+  licence: a_verifier
   usage_commercial: oui
-  source_url: "https://huggingface.co/parler-tts"
-  verifie_le: null
-  note: "base HF Apache ; vérifier le dataset d'entraînement du finetune FR"
+  source_url: "https://huggingface.co/PHBJT/french_parler_tts_mini_v0.1"
+  verifie_le: "2026-09-05"
+  note: "métadonnée licence ABSENTE sur le repo du finetune FR ; base parler-tts Apache-2.0 en amont — à clarifier avant tout usage produit"
 
 # --- Écartés du service (référence qualité uniquement) ----------------
 xtts_v2:
