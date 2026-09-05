@@ -21,3 +21,9 @@ venv/
 # Poids / venvs par modèle : jamais commités (voir models.lock + fetch_models.py)
 /models/*/.venv/
 /models/*/weights/
+
+# Voix de référence : données vocales personnelles (consentement/licence
+# individuels — cf. corpus/voix_reference/README.md). Jamais poussées.
+corpus/voix_reference/*.wav
+corpus/voix_reference/*.flac
+corpus/voix_reference/*.mp3
