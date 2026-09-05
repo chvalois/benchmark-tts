@@ -11,8 +11,13 @@ addopts = "-q"
 
 [tool.coverage.run]
 source = ["benchmark"]
-# CLI d'I/O (téléchargement HF), vérifiée manuellement via `--check` :
-omit = ["benchmark/tests/*", "benchmark/fetch_models.py"]
+# CLI/runners qui chargent un modèle ou font de l'I/O réseau — vérifiés en
+# run réel ; leurs helpers PURS restent couverts (test_transcrire.py, etc.) :
+omit = [
+  "benchmark/tests/*",
+  "benchmark/fetch_models.py",
+  "benchmark/transcrire.py",
+]
 
 [tool.coverage.report]
 exclude_also = ["if __name__ == .__main__.:", "raise SystemExit"]
