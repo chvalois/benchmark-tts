@@ -8,6 +8,10 @@
 #   python3 benchmark/fetch_models.py --model chatterbox_v3
 
 chatterbox-tts>=0.1.4
+# resemble-perth (watermark, dép. de chatterbox) importe `pkg_resources`,
+# supprimé de setuptools >= 81 -> sans ça PerthImplicitWatermarker = None
+# et le chargement du modèle crashe.
+setuptools<80
 
 # Dépendances du module commun benchmark/ (generer.py tourne dans CE venv)
 soundfile>=0.12

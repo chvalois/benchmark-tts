@@ -1,16 +1,35 @@
-# Chatterbox V3 Multilingual — notes d'intégration
+# Chatterbox Multilingual — notes d'intégration
 
 - **Repo** : `ResembleAI/chatterbox` @ `5bb1f6ee…` — MIT, multilingue 23 langues.
-  Le repo porte v2 **et** v3 des poids ; on force `t3_model="v3"`.
-- **API** : `ChatterboxMultilingualTTS.from_pretrained(device, t3_model="v3")`,
-  puis `.generate(texte, language_id="fr", audio_prompt_path=ref,
-  exaggeration=<float>, cfg_weight=1.0)` → tensor `(1, N)`. `model.sr` = SR natif.
-- **exaggeration dynamique** (repris d'avisol) : 0.3 narration / 0.9 dialogue /
-  0.5 réplique courte. Détection de dialogue sur `—` / `-` / `«` (chunker commun).
-- **Borne dure** : `FAMILLE_CHATTERBOX.max_cars = 160` (avisol : 200 cars →
-  crash CUDA du flow model, > 6561 tokens).
-- **Clonage** : voix de référence unique par run → item `multi_voix` (p27)
-  marqué `n/a` (jamais `echec`).
+- **Checkpoint réellement chargé** : `chatterbox-tts==0.1.7` →
+  `from_pretrained(device)` charge **`t3_mtl23ls_v2` + `s3gen.pt`** (pas le v3).
+  `t3_mtl23ls_v3.safetensors` / `s3gen_v3` sont dans le repo mais `from_local`
+  de la lib code en dur les noms `_v2` → le « V3 » de la veille n'est pas
+  câblé par cette version de la lib. À revisiter si Resemble publie une lib
+  gérant v3 (clé `chatterbox_v3` conservée comme identifiant).
+- **API 0.1.7** : `ChatterboxMultilingualTTS.from_pretrained(device)` puis
+  `.generate(text, language_id="fr", audio_prompt_path=ref, exaggeration,
+  cfg_weight=0.5, temperature=0.8, repetition_penalty=2.0, min_p=0.05,
+  top_p=1.0)` → tensor `(1, N)`. `model.sr` = 24000.
+  `repetition_penalty` **défaut 2.0 ≥ 1.0** (cf. piège §3.6 — OK).
+- **Dépendance piège** : `resemble-perth` importe `pkg_resources` (retiré de
+  setuptools ≥ 81) → `setuptools<80` épinglé dans requirements, sinon
+  `PerthImplicitWatermarker = None` et le chargement crashe.
+- **exaggeration dynamique** : 0.3 narration / 0.9 dialogue / 0.5 réplique
+  courte ; détection de dialogue sur `—` / `-` / `«` (chunker commun).
+- **Borne dure** : `FAMILLE_CHATTERBOX.max_cars = 160`.
+- **Clonage** : voix de référence unique par run → `multi_voix` (p27) = `n/a`.
+
+## Observations du 1er smoke (2026-09-05, 3 phrases × 2 reps, papa_normal)
+
+- 6/6 runs `ok`, WAV 24 kHz mono, `timings.csv` + `meta.json` conformes.
+- **cold start 52 s** ; VRAM pic ~5.9 Go ; `gen_s` ~1,5–1,8 s / phrase courte
+  APRÈS le 1er run (p01_1 = 15,7 s : compilation kernels CUDA au 1er appel
+  → **ajouter un warm-up non chronométré** avant la boucle).
+- ⚠️ `alignment_stream_analyzer` de Chatterbox a **forcé l'EOS** sur 5/6
+  générations (« Detected 2x repetition of token 6405 »). À écouter : soit
+  répétition réelle, soit arrêt prématuré sur phrases courtes. C'est
+  précisément ce que le scoring fidélité doit trancher.
 
 ## Checklist des 16 pièges (APIAVISOL §5) — à remplir au 1er run réel
 

@@ -54,14 +54,17 @@ REVISION = "5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18"
 EXAG_NARRATION = 0.3
 EXAG_DIALOGUE = 0.9
 EXAG_REPLIQUE_COURTE = 0.5
-CFG_WEIGHT = 1.0
+CFG_WEIGHT = 0.5   # défaut modèle (chatterbox-tts 0.1.7)
 
 
 # ---------------------------------------------------------------- modèle
 def _charger_modele(device: str = "cuda"):
+    # chatterbox-tts 0.1.7 : from_pretrained(device) charge le checkpoint
+    # multilingue t3_mtl23ls_v2 (le v3 est dans le repo mais non câblé par
+    # cette version de la lib — cf. NOTES.md).
     from chatterbox.mtl_tts import ChatterboxMultilingualTTS
 
-    modele = ChatterboxMultilingualTTS.from_pretrained(device=device, t3_model="v3")
+    modele = ChatterboxMultilingualTTS.from_pretrained(device=device)
     return modele, int(modele.sr)
 
 
@@ -140,6 +143,15 @@ def main() -> int:
     modele, sr_modele = _charger_modele(args.device)
     cold_start_s = time.perf_counter() - t_cold
     print(f"[{NOM_MODELE}] cold start {cold_start_s:.1f} s, sr={sr_modele}", flush=True)
+
+    # Warm-up NON chronométré : le 1er appel compile les kernels CUDA (~15 s
+    # observés) et fausserait le RTF de la 1re phrase.
+    t_warm = time.perf_counter()
+    try:
+        _synthetiser(modele, "Bonjour, ceci est un test de préchauffage.", "narration", ref_wav)
+        print(f"[{NOM_MODELE}] warm-up {time.perf_counter() - t_warm:.1f} s", flush=True)
+    except Exception as e:  # noqa: BLE001
+        print(f"[{NOM_MODELE}] warm-up ignoré : {e}", flush=True)
 
     lignes: list[dict] = []
     for ph in phrases:
