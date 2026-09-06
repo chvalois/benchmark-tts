@@ -48,7 +48,9 @@ from benchmark.vram import PicVRAM  # noqa: E402
 
 NOM_MODELE = "chatterbox_v3"
 REPO_ID = "ResembleAI/chatterbox"
-REVISION = "5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18"
+REVISION = "5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18"          # poids HF
+CODE_REF = "resemble-ai/chatterbox@5de7a54aa4e5e2baadb0182dde554908b48b85c2"  # source (support t3_model=v3)
+T3_MODEL = "v3"                                                 # checkpoint T3 sélectionné
 
 # exaggeration dynamique (avisol) : posé en narration, vif en dialogue.
 EXAG_NARRATION = 0.3
@@ -59,12 +61,11 @@ CFG_WEIGHT = 0.5   # défaut modèle (chatterbox-tts 0.1.7)
 
 # ---------------------------------------------------------------- modèle
 def _charger_modele(device: str = "cuda"):
-    # chatterbox-tts 0.1.7 : from_pretrained(device) charge le checkpoint
-    # multilingue t3_mtl23ls_v2 (le v3 est dans le repo mais non câblé par
-    # cette version de la lib — cf. NOTES.md).
+    # Source GitHub épinglée (CODE_REF) : from_pretrained accepte t3_model="v3"
+    # -> charge t3_mtl23ls_v3.safetensors (parité avec la prod avisol).
     from chatterbox.mtl_tts import ChatterboxMultilingualTTS
 
-    modele = ChatterboxMultilingualTTS.from_pretrained(device=device)
+    modele = ChatterboxMultilingualTTS.from_pretrained(device=device, t3_model=T3_MODEL)
     return modele, int(modele.sr)
 
 
@@ -116,53 +117,20 @@ def _generer_une(
     return audio, categorie_globale(chunks), ttfa, gen_s
 
 
-def main() -> int:
-    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--reps", type=int, default=5)
-    p.add_argument("--voix", default="vf_moyen", help="id dans corpus/voix_reference/")
-    p.add_argument("--base-seed", type=int, default=1000)
-    p.add_argument("--phrases", default="", help="filtre : p01,p07 (défaut : tout le corpus)")
-    p.add_argument("--limite", type=int, default=0, help="n'traiter que les N premières phrases (smoke test)")
-    p.add_argument("--device", default="cuda")
-    args = p.parse_args()
-
-    sortie = Path(os.environ.get("TTSB_AUDIO_OUT", RACINE / "audio_genere")) / NOM_MODELE
-    ref_wav = str(RACINE / "corpus" / "voix_reference" / f"{args.voix}.wav")
-    if not Path(ref_wav).is_file():
-        sys.exit(f"[FAIL] voix de référence absente : {ref_wav}")
-
-    phrases = charger_corpus()
-    if args.phrases:
-        garde = set(args.phrases.split(","))
-        phrases = [ph for ph in phrases if ph.id in garde]
-    if args.limite:
-        phrases = phrases[: args.limite]
-
-    print(f"[{NOM_MODELE}] chargement du modèle ({REPO_ID} @ {REVISION[:8]})…", flush=True)
-    t_cold = time.perf_counter()
-    modele, sr_modele = _charger_modele(args.device)
-    cold_start_s = time.perf_counter() - t_cold
-    print(f"[{NOM_MODELE}] cold start {cold_start_s:.1f} s, sr={sr_modele}", flush=True)
-
-    # Warm-up NON chronométré : le 1er appel compile les kernels CUDA (~15 s
-    # observés) et fausserait le RTF de la 1re phrase.
-    t_warm = time.perf_counter()
-    try:
-        _synthetiser(modele, "Bonjour, ceci est un test de préchauffage.", "narration", ref_wav)
-        print(f"[{NOM_MODELE}] warm-up {time.perf_counter() - t_warm:.1f} s", flush=True)
-    except Exception as e:  # noqa: BLE001
-        print(f"[{NOM_MODELE}] warm-up ignoré : {e}", flush=True)
-
+def _generer_voix(modele, sr_modele: int, phrases, voix: str, ref_wav: str,
+                  reps: int, base_seed: int, racine_sortie: Path) -> int:
+    """Génère tout le corpus pour UNE voix -> `<racine_sortie>/<voix>/`."""
+    sortie = racine_sortie / voix
     lignes: list[dict] = []
     for ph in phrases:
         texte, motif_na = _texte_pour_modele(ph)
         if texte is None:
-            for rep in range(1, args.reps + 1):
+            for rep in range(1, reps + 1):
                 lignes.append({"id_phrase": ph.id, "repetition": rep, "statut": f"n/a:{motif_na}"})
-            print(f"[{NOM_MODELE}] {ph.id} -> n/a ({motif_na})", flush=True)
+            print(f"[{NOM_MODELE}/{voix}] {ph.id} -> n/a ({motif_na})", flush=True)
             continue
-        for rep in range(1, args.reps + 1):
-            seed = args.base_seed + rep
+        for rep in range(1, reps + 1):
+            seed = base_seed + rep
             fixer_seed(seed)
             try:
                 with PicVRAM() as pic:
@@ -173,7 +141,7 @@ def main() -> int:
                 cat, ttfa, gen_s, audio_s = "inconnu", 0.0, 0.0, 0.0
                 pic = PicVRAM()
                 statut = f"echec:{type(e).__name__}"
-                print(f"[{NOM_MODELE}] {ph.id} rep {rep} -> {statut}: {e}", flush=True)
+                print(f"[{NOM_MODELE}/{voix}] {ph.id} rep {rep} -> {statut}: {e}", flush=True)
             lignes.append({
                 "id_phrase": ph.id, "repetition": rep, "seed": seed,
                 "ttfa_s": round(ttfa, 4), "gen_s": round(gen_s, 4),
@@ -186,11 +154,11 @@ def main() -> int:
         "modele": NOM_MODELE,
         "repo_id": REPO_ID,
         "revision": REVISION,
-        "cold_start_s": round(cold_start_s, 2),
-        "sr_modele": sr_modele,
-        "voix": args.voix,
-        "base_seed": args.base_seed,
-        "reps": args.reps,
+        "code_ref": CODE_REF,
+        "t3_model": T3_MODEL,
+        "voix": voix,
+        "base_seed": base_seed,
+        "reps": reps,
         "params": {
             "language_id": "fr", "cfg_weight": CFG_WEIGHT,
             "exaggeration": {"narration": EXAG_NARRATION, "dialogue": EXAG_DIALOGUE,
@@ -201,7 +169,54 @@ def main() -> int:
         "date_run": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     })
     n_ok = sum(1 for x in lignes if x["statut"] == "ok")
-    print(f"[{NOM_MODELE}] terminé : {n_ok}/{len(lignes)} runs ok -> {sortie}", flush=True)
+    print(f"[{NOM_MODELE}/{voix}] terminé : {n_ok}/{len(lignes)} runs ok -> {sortie}", flush=True)
+    return n_ok
+
+
+def main() -> int:
+    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    p.add_argument("--reps", type=int, default=5)
+    p.add_argument("--voix", default="vf_moyen", help="id(s) dans corpus/voix_reference/, séparés par des virgules")
+    p.add_argument("--base-seed", type=int, default=1000)
+    p.add_argument("--phrases", default="", help="filtre : p01,p07 (défaut : tout le corpus)")
+    p.add_argument("--limite", type=int, default=0, help="n'traiter que les N premières phrases (smoke test)")
+    p.add_argument("--device", default="cuda")
+    args = p.parse_args()
+
+    racine_sortie = Path(os.environ.get("TTSB_AUDIO_OUT", RACINE / "audio_genere")) / NOM_MODELE
+    voix_list = [v.strip() for v in args.voix.split(",") if v.strip()]
+    refs = {v: str(RACINE / "corpus" / "voix_reference" / f"{v}.wav") for v in voix_list}
+    for v, chemin in refs.items():
+        if not Path(chemin).is_file():
+            sys.exit(f"[FAIL] voix de référence absente : {chemin}")
+
+    phrases = charger_corpus()
+    if args.phrases:
+        garde = set(args.phrases.split(","))
+        phrases = [ph for ph in phrases if ph.id in garde]
+    if args.limite:
+        phrases = phrases[: args.limite]
+
+    print(f"[{NOM_MODELE}] chargement (poids {REVISION[:8]}, code {CODE_REF.split('@')[1][:8]}, t3={T3_MODEL})…", flush=True)
+    t_cold = time.perf_counter()
+    modele, sr_modele = _charger_modele(args.device)
+    print(f"[{NOM_MODELE}] cold start {time.perf_counter() - t_cold:.1f} s, sr={sr_modele}", flush=True)
+
+    # Warm-up NON chronométré : le 1er appel compile les kernels CUDA (~15 s).
+    t_warm = time.perf_counter()
+    try:
+        _synthetiser(modele, "Bonjour, ceci est un test de préchauffage.", "narration", refs[voix_list[0]])
+        print(f"[{NOM_MODELE}] warm-up {time.perf_counter() - t_warm:.1f} s", flush=True)
+    except Exception as e:  # noqa: BLE001
+        print(f"[{NOM_MODELE}] warm-up ignoré : {e}", flush=True)
+
+    total_ok = 0
+    for voix in voix_list:
+        total_ok += _generer_voix(
+            modele, sr_modele, phrases, voix, refs[voix],
+            args.reps, args.base_seed, racine_sortie,
+        )
+    print(f"[{NOM_MODELE}] TOUT terminé : {total_ok} runs ok sur {len(voix_list)} voix", flush=True)
     return 0
 
 

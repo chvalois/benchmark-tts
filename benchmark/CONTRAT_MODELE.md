@@ -48,7 +48,9 @@ Le pré-traitement commun **n'y touche pas**. À la charge de l'adaptateur :
 
 ### Audio
 
-`$TTSB_AUDIO_OUT/<nom_modele>/<id_phrase>_<repetition>.wav`
+`$TTSB_AUDIO_OUT/<nom_modele>/<voix>/<id_phrase>_<repetition>.wav`
+(un sous-dossier par voix de référence testée ; `timings.csv` + `meta.json`
+sont écrits dans ce même sous-dossier).
 
 - WAV PCM 16 bits, **24 000 Hz, mono**.
 - `float32` → `int16` à l'encodage (tensors `bfloat16` convertis en

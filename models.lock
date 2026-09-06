@@ -16,16 +16,18 @@
       "repo_id": "ResembleAI/chatterbox",
       "repo_id_verifie": true,
       "revision": "5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18",
+      "code_ref": "git+https://github.com/resemble-ai/chatterbox.git@5de7a54aa4e5e2baadb0182dde554908b48b85c2",
+      "t3_model": "v3",
       "hf_allow_patterns": null,
       "licence": "MIT",
       "usage_commercial": true,
       "clonage_zero_shot": true,
-      "langue_fr": "natif — repo multilingue 23 langues (t3_mtl23ls_v3), balise <lang:fr>",
+      "langue_fr": "natif — multilingue 23 langues, balise <lang:fr>",
       "vram_go_estimee": 4,
       "disque_go_estimee": 6.5,
       "venv": "chatterbox_v3",
       "statut": "verifie",
-      "notes": "le repo porte v2 ET v3 des poids (t3_mtl23ls_v2/v3, s3gen_v3) ; détection dialogue native ; paramètre exaggeration ; chunker chatterbox"
+      "notes": "le wheel PyPI ne charge que le T3 v2 ; on installe le code GitHub épinglé (code_ref) pour from_pretrained(t3_model=\"v3\") -> t3_mtl23ls_v3.safetensors, parité prod avisol. Dép. piège : setuptools<80 (pkg_resources pour resemble-perth). Détection dialogue native ; exaggeration dynamique ; chunker FAMILLE_CHATTERBOX."
     },
     "kokoro_82m": {
       "phase": 1,

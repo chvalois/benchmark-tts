@@ -7,7 +7,13 @@
 # Poids : téléchargés séparément à révision épinglée
 #   python3 benchmark/fetch_models.py --model chatterbox_v3
 
-chatterbox-tts>=0.1.4
+# Source GitHub ÉPINGLÉE : le wheel PyPI (0.1.7) ne connaît que le
+# checkpoint T3 v2 ; le code GitHub ajoute from_pretrained(t3_model="v3")
+# -> parité avec la prod avisol. Installer en 2 temps :
+#   uv pip install --python "$TTSB_VENVS/chatterbox_v3/bin/python" chatterbox-tts setuptools<80
+#   uv pip install --python "$TTSB_VENVS/chatterbox_v3/bin/python" --no-deps \
+#     "chatterbox-tts @ git+https://github.com/resemble-ai/chatterbox.git@5de7a54aa4e5e2baadb0182dde554908b48b85c2"
+chatterbox-tts @ git+https://github.com/resemble-ai/chatterbox.git@5de7a54aa4e5e2baadb0182dde554908b48b85c2
 # resemble-perth (watermark, dép. de chatterbox) importe `pkg_resources`,
 # supprimé de setuptools >= 81 -> sans ça PerthImplicitWatermarker = None
 # et le chargement du modèle crashe.

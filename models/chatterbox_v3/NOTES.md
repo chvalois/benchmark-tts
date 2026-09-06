@@ -1,12 +1,12 @@
 # Chatterbox Multilingual — notes d'intégration
 
 - **Repo** : `ResembleAI/chatterbox` @ `5bb1f6ee…` — MIT, multilingue 23 langues.
-- **Checkpoint réellement chargé** : `chatterbox-tts==0.1.7` →
-  `from_pretrained(device)` charge **`t3_mtl23ls_v2` + `s3gen.pt`** (pas le v3).
-  `t3_mtl23ls_v3.safetensors` / `s3gen_v3` sont dans le repo mais `from_local`
-  de la lib code en dur les noms `_v2` → le « V3 » de la veille n'est pas
-  câblé par cette version de la lib. À revisiter si Resemble publie une lib
-  gérant v3 (clé `chatterbox_v3` conservée comme identifiant).
+- **Checkpoint T3** : `v3` (`t3_mtl23ls_v3.safetensors`). Le wheel PyPI
+  `chatterbox-tts 0.1.7` ne connaît que `v2` ; on installe donc le **code
+  GitHub épinglé** (`git+…@5de7a54a`, `--no-deps` par-dessus les deps PyPI),
+  dont `from_pretrained(device, t3_model="v3")` sait charger le v3. C'est le
+  même montage que la prod avisol (`Dockerfile.chatterbox.runpod` : deps
+  PyPI + source GitHub via PYTHONPATH), mais **pinné**.
 - **API 0.1.7** : `ChatterboxMultilingualTTS.from_pretrained(device)` puis
   `.generate(text, language_id="fr", audio_prompt_path=ref, exaggeration,
   cfg_weight=0.5, temperature=0.8, repetition_penalty=2.0, min_p=0.05,
