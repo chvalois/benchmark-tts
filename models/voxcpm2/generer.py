@@ -60,7 +60,9 @@ def _charger_ref(voix: str):
     return (prompt_txt, str(wav))
 
 
-def _synthetiser_brut(model, texte: str, ref, seed: int) -> np.ndarray:
+def _synthetiser_brut(model, texte: str, ref, _seed: int = 0) -> np.ndarray:
+    # voxcpm 2.0.3 : _generate n'a pas de param `seed` -> la variance des reps
+    # vient de la graine GLOBALE torch posée par executer_corpus (fixer_seed).
     prompt_text, wav_path = ref
     wav = model.generate(
         text=texte,
@@ -69,7 +71,8 @@ def _synthetiser_brut(model, texte: str, ref, seed: int) -> np.ndarray:
         reference_wav_path=wav_path,
         cfg_value=CFG_VALUE,
         inference_timesteps=INFERENCE_TIMESTEPS,
-        seed=seed,
+        normalize=False,
+        retry_badcase=True,
     )
     return np.asarray(wav, dtype=np.float32)
 
