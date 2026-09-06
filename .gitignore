@@ -29,3 +29,8 @@ corpus/voix_reference/*.flac
 corpus/voix_reference/*.mp3
 corpus/voix_reference/*.prompt.txt
 corpus/voix_reference/*.json
+
+# Test d'écoute : artefacts régénérables + audio (voix perso)
+site/ecoute/audio/
+site/ecoute/manifest.js
+site/ecoute/_solution.json
