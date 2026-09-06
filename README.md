@@ -17,9 +17,9 @@ Mesuré sur matériel réel (**RTX 4090**, 24 Go), un modèle à la fois.
 | 0 | Socle infra (env, `doctor.py`, stockage D:) | ✅ |
 | 1 | Contrats partagés (corpus, voix, pré-traitement, `models.lock`, contrat modèle) | ✅ |
 | 2 | Module commun de scoring (WER FR, fidélité, vitesse, licence, stabilité) | ✅ pur & testé (97 % cov.) — reste : runner ASR + helper VRAM (avec Phase 3) |
-| 3 | Adaptateurs modèles (venv-par-modèle, checklist des 16 pièges) | à venir |
+| 3 | Adaptateurs modèles (venv-par-modèle) | ✅ 5 modèles : chatterbox_v3, kokoro_82m, firered_tts3, voxcpm2, moss_tts_local_v15 |
 | 4 | Protocole subjectif (MOS, A/B aveugle, panel) | à venir |
-| 5 | Agrégation & rapport (vue globale + par catégorie) | à venir |
+| 5 | Agrégation & rapport | ✅ `rapport.py` + `comparatif.py` → `resultats/` (par modèle + `comparatif.md` + `RESUME.md`) |
 | 6 | Présence publique (leaderboard, navigateur audio, data brute) | à venir |
 | 7 | Cadence & contenu (re-run par sortie de modèle, outil de conseil) | à venir |
 

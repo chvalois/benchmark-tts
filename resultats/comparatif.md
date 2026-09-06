@@ -12,6 +12,8 @@ WER brut (aucun plancher humain soustrait).
 | chatterbox_v3 | papa_narration | oui | 4.8% | 7.6% | 0.0% | 0.0% | 2.0% | 0.59 | 3.4% | 7.7% | 11.5% |
 | voxcpm2 | johnny | oui | 7.3% | 10.1% | 0.0% | 0.0% | 0.0% | 0.41 | 10.9% | 9.0% | 9.0% |
 | kokoro_82m | ff_siwis (voix interne) | non | 7.5% | 18.0% | 3.0% | 0.0% | 3.0% | 0.01 | 0.0% | 12.4% | 61.5% |
+| moss_tts_local_v15 | johnny | oui | 7.7% | 10.8% | 1.0% | 0.0% | 1.0% | 0.63 | 14.3% | 9.7% | 19.2% |
+| moss_tts_local_v15 | papa_narration | oui | 7.9% | 27.8% | 2.0% | 0.0% | 1.0% | 0.69 | 7.7% | 11.5% | 10.3% |
 | chatterbox_v3 | johnny | oui | 8.3% | 10.6% | 0.0% | 0.0% | 2.0% | 0.56 | 5.1% | 11.0% | 7.7% |
 
 - **RTF** = temps de génération / durée audio (< 1 = plus rapide que le temps réel).
