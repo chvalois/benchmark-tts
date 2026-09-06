@@ -31,15 +31,17 @@ AUDIO_SRC = Path("/mnt/d/tts-benchmark-data/audio_genere")  # $TTSB_AUDIO_OUT
 
 MODELES = ["firered_tts3", "voxcpm2", "chatterbox_v3", "cosyvoice3_05b",
            "xtts_v2", "kokoro_82m", "moss_tts_local_v15"]
-CHAMPION = "firered_tts3"
+# Les deux "têtes" : comparées à tout le monde + l'une à l'autre sur chaque
+# phrase. VoxCPM2 en tête aussi (moins lourd que FireRed, intérêt fort).
+TETES = ["voxcpm2", "firered_tts3"]
 VOIX = "papa_narration"
 VOIX_KOKORO = "ff_siwis"           # Kokoro : pas de clonage
 REF_WAV = RACINE / "corpus" / "voix_reference" / f"{VOIX}.wav"
 REP = 1
 SEED = 20260906
 
-N_PHRASES_AB = 8          # x 6 challengers  ≈ 48 paires
-N_PAIRES_ALEA = 6         # paires entre challengers (calibration)
+N_PHRASES_AB = 8          # ~6 paires / phrase  ≈ 48 + aléas
+N_PAIRES_ALEA = 8         # paires entièrement aléatoires (calibration)
 N_PHRASES_MOS = 6         # x 7 modèles = 42 clips
 
 DEFAUTS = [
@@ -130,16 +132,37 @@ def build() -> None:
 
     corpus = yaml.safe_load(CORPUS.read_text(encoding="utf-8"))
 
-    # --- paires A/B ---
-    challengers = [m for m in MODELES if m != CHAMPION]
+    # --- paires A/B : pas de champion unique -------------------------
+    # Chaque phrase : le duel des 2 têtes + chaque tête vs 2 challengers
+    # (décalés par phrase → couvre les 5) + 1 duel challenger-vs-challenger.
+    challengers = [m for m in MODELES if m not in TETES]
+    vus: set[tuple[str, str, str]] = set()
     paires: list[dict] = []
-    for phrase in phrases_ab:
-        for chal in challengers:
-            paires.append({"phrase": phrase, "m1": CHAMPION, "m2": chal})
-    for _ in range(N_PAIRES_ALEA):
-        phrase = rnd.choice(phrases_ab)
-        a, b = rnd.sample(challengers, 2)
+
+    def _ajouter(phrase: str, a: str, b: str) -> None:
+        if a == b:
+            return
+        cle = (phrase, *sorted((a, b)))
+        if cle in vus:
+            return
+        vus.add(cle)
         paires.append({"phrase": phrase, "m1": a, "m2": b})
+
+    for i, phrase in enumerate(phrases_ab):
+        _ajouter(phrase, TETES[0], TETES[1])
+        for j, tete in enumerate(TETES):
+            for off in (0, 1):
+                _ajouter(phrase, tete, challengers[(2 * i + j + off) % len(challengers)])
+        _ajouter(phrase, challengers[i % len(challengers)],
+                 challengers[(i + 2) % len(challengers)])
+
+    for _ in range(N_PAIRES_ALEA * 3):
+        if sum(1 for p in paires if {p["m1"], p["m2"]} & set(TETES) == set()) >= N_PAIRES_ALEA:
+            break
+        phrase = rnd.choice(phrases_ab)
+        a, b = rnd.sample(MODELES, 2)
+        _ajouter(phrase, a, b)
+
     rnd.shuffle(paires)
 
     ab: list[dict] = []
@@ -175,7 +198,7 @@ def build() -> None:
 
     shutil.copy2(REF_WAV, audio_dir / "ref.wav")
 
-    build_info = {"seed": SEED, "voix": VOIX, "champion": CHAMPION,
+    build_info = {"seed": SEED, "voix": VOIX, "tetes": TETES,
                   "modeles": MODELES, "rep": REP,
                   "phrases_ab": phrases_ab, "phrases_mos": phrases_mos}
 
