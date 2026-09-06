@@ -40,7 +40,7 @@ def _charger_modele(device: str):
 
 
 def _faire_synthetiser(pipe):
-    def _synth(texte: str, _categorie: str, voix: str) -> np.ndarray:
+    def _synth(texte: str, _categorie: str, voix: str, _seed: int = 0) -> np.ndarray:
         segs = list(pipe(texte, voice=voix, speed=1))
         if not segs:
             return np.zeros(0, dtype=np.float32)

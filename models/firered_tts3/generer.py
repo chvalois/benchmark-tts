@@ -75,14 +75,15 @@ def _charger_ref(voix: str):
     return (prompt_txt, wav, int(sr))
 
 
-def _synthetiser_brut(tts, texte: str, ref) -> tuple[np.ndarray, int]:
+def _synthetiser_brut(tts, texte: str, ref, seed: int = 1234) -> tuple[np.ndarray, int]:
     prompt_text, prompt_audio, prompt_sr = ref
     gen, gen_sr = tts.generate(
+        text=texte,
         language=LANGUE_FIRERED,
         prompt_text=prompt_text,
         prompt_audio=prompt_audio,
         prompt_audio_sr=prompt_sr,
-        text=texte,
+        seed=seed,          # FireRed a sa propre graine (défaut 1234) -> reps sinon identiques
         do_tn=True,
     )
     return gen.detach().float().cpu().numpy(), int(gen_sr)
@@ -129,8 +130,8 @@ def main() -> int:
     except Exception as e:  # noqa: BLE001
         print(f"[{NOM_MODELE}] warm-up ignoré : {e}", flush=True)
 
-    def synth(texte, _categorie, ref):
-        arr, _sr = _synthetiser_brut(tts, texte, ref)
+    def synth(texte, _categorie, ref, seed):
+        arr, _sr = _synthetiser_brut(tts, texte, ref, seed)
         return arr
 
     total_ok = executer_corpus(

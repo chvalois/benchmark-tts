@@ -17,7 +17,7 @@ PHRASES = [
 ]
 
 
-def _synth_ok(texte, categorie, ref):
+def _synth_ok(texte, categorie, ref, seed=0):
     # 0,1 s d'audio par chunk, amplitude qui dépend du texte (déterministe)
     n = 2400
     return (0.1 * np.ones(n, dtype=np.float32)) * (len(texte) % 7 + 1) / 7
@@ -59,7 +59,7 @@ def test_executer_corpus_produit_wav_timings_meta(tmp_path):
 def test_executer_corpus_echec_isole_ne_stoppe_pas(tmp_path):
     appels = {"n": 0}
 
-    def _synth_capricieux(texte, categorie, ref):
+    def _synth_capricieux(texte, categorie, ref, seed=0):
         appels["n"] += 1
         if appels["n"] == 1:          # échoue sur le tout premier chunk
             raise RuntimeError("boom")

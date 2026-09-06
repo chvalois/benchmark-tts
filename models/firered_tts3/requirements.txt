@@ -16,5 +16,8 @@
 #   # poids :
 #   python3 benchmark/fetch_models.py --model firered_tts3
 #
-# flash_attn : la requirements officielle épingle flash_attn==2.8.3 ; on tente
-# d'abord SANS (repli sdpa). À ajouter seulement si le chargement l'exige.
+# flash_attn : REQUIS. redae.py code en dur attn_implementation="flash_attention_2"
+# pour son Qwen3Model -> pas de repli sdpa possible.
+#   uv pip install --python "$TTSB_VENVS/firered_tts3/bin/python" \
+#     --no-build-isolation flash-attn==2.8.3
+

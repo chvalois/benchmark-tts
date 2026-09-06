@@ -100,7 +100,7 @@ def ecrire_meta(chemin: Path | str, meta: dict) -> None:
 def executer_corpus(
     *,
     nom_modele: str,
-    synthetiser: Callable[[str, str, object], np.ndarray],
+    synthetiser: Callable[[str, str, object, int], np.ndarray],
     sr_modele: int,
     phrases: list,
     voix_refs: dict,
@@ -113,8 +113,11 @@ def executer_corpus(
 ) -> int:
     """Déroule le corpus pour chaque voix (contrat CONTRAT_MODELE.md).
 
-    - `synthetiser(texte_chunk, categorie, ref) -> np.ndarray` au SR du
-      modèle : SEULE partie propre au modèle.
+    - `synthetiser(texte_chunk, categorie, ref, seed) -> np.ndarray` au SR
+      du modèle : SEULE partie propre au modèle. `seed` est passé aussi aux
+      modèles qui exposent leur propre graine (sinon toutes les reps sont
+      identiques et la variance n'est plus mesurée) — un modèle qui n'en a
+      pas l'ignore (`fixer_seed` a déjà réglé random/numpy/torch).
     - `voix_refs` : `{voix: ref}` — `ref` est opaque (chemin WAV de clonage,
       ou id de voix interne), passé tel quel à `synthetiser`.
     - `est_non_applicable(phrase) -> motif|None` : ex. `multi_voix` non
@@ -153,7 +156,7 @@ def executer_corpus(
                         morceaux: list[np.ndarray] = []
                         ttfa = 0.0
                         for i, ch in enumerate(chunks):
-                            brut = synthetiser(ch.texte, ch.categorie, ref)
+                            brut = synthetiser(ch.texte, ch.categorie, ref, seed)
                             if i == 0:
                                 ttfa = time.perf_counter() - t0
                             morceaux.append(preparer_audio(brut, sr_modele))
