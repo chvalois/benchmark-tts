@@ -134,7 +134,7 @@ def executer_corpus(
     for voix, ref in voix_refs.items():
         sortie = racine_sortie / voix
         lignes: list[dict] = []
-        for ph in phrases:
+        for i_ph, ph in enumerate(phrases, 1):
             motif = est_non_applicable(ph) if est_non_applicable else None
             if motif:
                 for rep in range(1, reps + 1):
@@ -176,6 +176,9 @@ def executer_corpus(
                     "audio_s": round(audio_s, 4), "vram_pic_mo": pic.pic_mo or "",
                     "categorie_chunk": cat_globale, "statut": statut,
                 })
+            derniere = lignes[-1]
+            print(f"[{nom_modele}/{voix}] {i_ph}/{len(phrases)} {ph.id} "
+                  f"({derniere['statut']}, gen {derniere.get('gen_s', 0):.1f}s)", flush=True)
 
         ecrire_timings(sortie / "timings.csv", lignes)
         ecrire_meta(sortie / "meta.json", {
