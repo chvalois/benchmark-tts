@@ -7,8 +7,10 @@ WER brut (aucun plancher humain soustrait).
 | modèle | voix | clonage | WER | ±σ | hallu. | rép. | tronc. | RTF | CV durée | WER narration | WER onomatopée |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | firered_tts3 | papa_narration | oui | 3.6% | 6.5% | 0.0% | 0.0% | 0.0% | 1.00 | 3.5% | 5.3% | 6.4% |
+| voxcpm2 | papa_narration | oui | 4.2% | 8.0% | 0.0% | 0.0% | 6.1% | 0.42 | 3.3% | 7.4% | 7.7% |
 | firered_tts3 | johnny | oui | 4.3% | 6.9% | 0.0% | 0.0% | 0.0% | 0.94 | 5.3% | 6.2% | 6.4% |
 | chatterbox_v3 | papa_narration | oui | 4.8% | 7.6% | 0.0% | 0.0% | 2.0% | 0.59 | 3.4% | 7.7% | 11.5% |
+| voxcpm2 | johnny | oui | 7.3% | 10.1% | 0.0% | 0.0% | 0.0% | 0.41 | 10.9% | 9.0% | 9.0% |
 | kokoro_82m | ff_siwis (voix interne) | non | 7.5% | 18.0% | 3.0% | 0.0% | 3.0% | 0.01 | 0.0% | 12.4% | 61.5% |
 | chatterbox_v3 | johnny | oui | 8.3% | 10.6% | 0.0% | 0.0% | 2.0% | 0.56 | 5.1% | 11.0% | 7.7% |
 
