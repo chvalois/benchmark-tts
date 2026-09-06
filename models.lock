@@ -190,7 +190,7 @@
       "repo_id": "bofenghuang/whisper-large-v3-french",
       "repo_id_verifie": true,
       "revision": "90a7cd1fea9cd69f80f5a0fc49738418dba96083",
-      "hf_allow_patterns": null,
+      "hf_allow_patterns": ["*.json", "*.txt", "model.safetensors"],
       "licence": "MIT",
       "usage_commercial": true,
       "clonage_zero_shot": null,

@@ -17,6 +17,7 @@ omit = [
   "benchmark/tests/*",
   "benchmark/fetch_models.py",
   "benchmark/transcrire.py",
+  "benchmark/rapport.py",
 ]
 
 [tool.coverage.report]
