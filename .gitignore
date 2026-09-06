@@ -27,3 +27,5 @@ venv/
 corpus/voix_reference/*.wav
 corpus/voix_reference/*.flac
 corpus/voix_reference/*.mp3
+corpus/voix_reference/*.prompt.txt
+corpus/voix_reference/*.json

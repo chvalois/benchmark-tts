@@ -1,0 +1,20 @@
+# venv dédié FireRedTTS3. Pas de paquet PyPI : code depuis le dépôt GitHub
+# épinglé, via PYTHONPATH (comme avisol pour Chatterbox).
+#
+#   source env.sh
+#   uv venv "$TTSB_VENVS/firered_tts3" --python 3.11
+#   # torch 2.8 : pas de wheel cu124, prendre cu128 (RTX 4090 OK)
+#   uv pip install --python "$TTSB_VENVS/firered_tts3/bin/python" \
+#     --index-url https://download.pytorch.org/whl/cu128 torch==2.8.0 torchaudio==2.8.0
+#   uv pip install --python "$TTSB_VENVS/firered_tts3/bin/python" \
+#     torchcodec==0.7.0 transformers==5.6.2 einops==0.8.2 python-dotenv regex \
+#     wetext fasttext-wheel faster-whisper soundfile librosa "numpy<2" \
+#     nvidia-ml-py pyyaml num2words phonemizer
+#   # source du modèle (pinnée) :
+#   git clone https://github.com/FireRedTeam/FireRedTTS3 "$TTSB_ROOT/src/firered_tts3"
+#   (cd "$TTSB_ROOT/src/firered_tts3" && git checkout 1d32ba780da6af37a71bdfd9c68c12003e908a46)
+#   # poids :
+#   python3 benchmark/fetch_models.py --model firered_tts3
+#
+# flash_attn : la requirements officielle épingle flash_attn==2.8.3 ; on tente
+# d'abord SANS (repli sdpa). À ajouter seulement si le chargement l'exige.

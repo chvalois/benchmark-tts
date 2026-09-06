@@ -52,16 +52,17 @@
       "repo_id": "FireRedTeam/FireRedTTS3",
       "repo_id_verifie": true,
       "revision": "dcf1bdcd1b8b25b382fa84c3e34eb82e3054a610",
+      "code_ref": "git+https://github.com/FireRedTeam/FireRedTTS3.git@1d32ba780da6af37a71bdfd9c68c12003e908a46",
       "hf_allow_patterns": null,
       "licence": "Apache-2.0",
       "usage_commercial": true,
       "clonage_zero_shot": true,
-      "langue_fr": "annonce 24 langues dont FR",
+      "langue_fr": "annonce 24 langues dont FR (tag 'French')",
       "vram_go_estimee": 8,
-      "disque_go_estimee": 10,
+      "disque_go_estimee": 14,
       "venv": "firered_tts3",
       "statut": "verifie",
-      "notes": "repo ouvert = base + instruct bundlés (fireredtts3_base/, fireredtts3_instruct/) ; le repo FireRedTTS3-Instruct séparé est gated et redondant"
+      "notes": "pas de paquet PyPI -> code GitHub épinglé (code_ref) via PYTHONPATH. torch 2.8 (wheel cu128). TN 'wetext' = zh/en seulement -> nombres FR (p30) mal verbalisés attendu. Prompt de clonage = wav + transcription (corpus/voix_reference/<voix>.prompt.txt)."
     },
     "voxcpm2": {
       "phase": 2,
