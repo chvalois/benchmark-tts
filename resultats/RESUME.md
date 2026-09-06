@@ -1,4 +1,4 @@
-# Benchmark TTS open source FR — synthèse (v1, 5 modèles)
+# Benchmark TTS open source FR — synthèse (v1, 7 modèles)
 
 **Protocole** : 34 phrases annotées × 3 répétitions × 2 voix de référence
 (`papa_narration` = 27 s / 24 kHz / propre ; `johnny` = 21 s / converti du
@@ -13,29 +13,38 @@ un modèle à la fois.
 
 ## Classement (voix `papa_narration`, la plus propre)
 
-| # | modèle | WER | ±σ | UTMOS | SIM | anomalies (h/r/t) | RTF | VRAM | clon. | licence |
+| # | modèle | WER | ±σ | UTMOS | SIM | anom. (h/r/t) | RTF | VRAM | clon. | licence |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **FireRedTTS3** | **3,6 %** | 6,5 | 3,26 | 0,964 | 0 / 0 / 0 | 1,00 | 17 Go | oui | Apache-2.0 |
-| 2 | **VoxCPM2** | 4,2 % | 8,0 | 3,13 | **0,967** | 0 / 0 / **6,1 %** | 0,42 | 10 Go | oui | Apache-2.0 |
-| 3 | **Chatterbox v3** | 4,8 % | 7,6 | **3,64** | 0,961 | 0 / 0 / 2 % | 0,59 | 6,5 Go | oui | MIT |
-| 4 | **Kokoro-82M** | 7,5 % | **18,0** | **3,66** | — | 3 % / 0 / 3 % | **0,01** | 3 Go | **non** | Apache-2.0 |
-| 5 | **MOSS-1.5** *(défauts)* | 7,9 % | **27,8** | 3,50 | **0,968** | 2 % / 0 / 1 % | 0,69 | 16 Go | oui | Apache-2.0 |
+| 1 | **FireRedTTS3** | **3,6 %** | 6,5 | 3,26 | 0,964 | 0/0/0 | 1,00 | 17 Go | oui | Apache-2.0 |
+| 2 | **VoxCPM2** | 4,2 % | 8,0 | 3,13 | 0,967 | 0/0/**6,1 %** | 0,42 | 10 Go | oui | Apache-2.0 |
+| 3 | **Chatterbox v3** | 4,8 % | 7,6 | **3,64** | 0,961 | 0/0/2 % | 0,59 | 6,5 Go | oui | MIT |
+| 4 | **CosyVoice3-0.5B** | 4,9 % | 8,9 | 3,52 | 0,964 | 0/0/0 | 0,82 | 5 Go | oui | Apache-2.0 |
+| 5 | **XTTS-v2** | 7,4 % | 19,6 | 3,33 | 0,966 | 1 %/0/0 | **0,24** | 4 Go | oui | **CPML — non comm.** |
+| 6 | **Kokoro-82M** | 7,5 % | 18,0 | **3,66** | — | 3 %/0/3 % | **0,01** | 3 Go | **non** | Apache-2.0 |
+| 7 | **MOSS-1.5** *(défauts)* | 7,9 % | **27,8** | 3,50 | 0,968 | 2 %/0/1 % | 0,69 | 16 Go | oui | Apache-2.0 |
 
-*(h/r/t = hallucination / répétition / troncature ; UTMOS ↑ mieux, ~1–5, non calibré FR ; SIM ↑ mieux, 0–1 ; RTF < 1 = + rapide que le temps réel)*
+*(h/r/t = hallucination / répétition / troncature ; UTMOS ↑ mieux ~1–5 non calibré FR ; SIM ↑ mieux 0–1 ; RTF < 1 = + rapide que le temps réel)*
 
-Sur la voix difficile `johnny` : FireRed 4,3 % (WER quasi inchangé) ; les
-autres se dégradent (VoxCPM 7,3 %, Kokoro 7,5 %, MOSS 7,7 %, Chatterbox
-8,3 %). **Mais le SIM reste ~0,96 pour tous sur `johnny`** → l'identité de
-timbre est captée ; l'écart vient de l'intelligibilité / la prosodie, pas
-d'une perte de voix.
+Sur la voix difficile `johnny` : FireRed 4,3 % (WER quasi inchangé, il
+encaisse le mieux) ; ensuite VoxCPM/XTTS 7,3 %, Kokoro 7,5 %, MOSS 7,7 %,
+Chatterbox 8,3 %, CosyVoice3 10,4 %. **Le SIM reste ~0,92–0,97 pour tous
+sur `johnny`** → l'identité de timbre est captée ; l'écart vient de
+l'intelligibilité / la prosodie.
+
+### Modèles non aboutis
+
+| modèle | statut | raison |
+|---|---|---|
+| **F5-TTS** | ❌ FR non supporté | checkpoint de référence `F5TTS_v1_Base` = EN/ZH ; sortie FR inintelligible (WER > 100 %). Finetunes FR communautaires non maintenus seulement. |
+| **PocketTTS** (Kyutai) | 🔒 bloqué | poids voice-cloning + voix catalogue derrière l'acceptation explicite des conditions sur huggingface.co/kyutai/pocket-tts (le token seul ne suffit pas). Déblocable côté compte HF. |
+| **Audio8-0.6B**, **Parler-TTS FR** | ⬜ non tentés | prévus, pas encore intégrés |
 
 ### ⚠️ WER et UTMOS ne sont pas d'accord
 
-Le meilleur WER (**FireRed**) a l'UTMOS le **plus bas** sur `johnny`
-(2,78) ; **Chatterbox** et **Kokoro** ont le meilleur UTMOS (~3,65) avec un
-WER moyen. Autrement dit : « dit exactement le texte » ≠ « sonne le plus
-naturel ». C'est précisément pour ça qu'il faut **plusieurs métriques + de
-l'écoute** — aucune ne tranche seule.
+Le meilleur WER (**FireRed**) a l'UTMOS le plus bas sur `johnny` (2,78) ;
+**Chatterbox** et **Kokoro** ont le meilleur UTMOS (~3,65) avec un WER
+moyen. « Dit exactement le texte » ≠ « sonne le plus naturel » → plusieurs
+métriques + écoute obligatoires, aucune ne tranche seule.
 
 ## Run émotions (`resultats/EMOTIONS.md`)
 
@@ -87,12 +96,25 @@ paramètres par catégorie) donnerait un résultat radicalement différent —
 c'est la démonstration que *passe-1 = défauts* ne suffit pas pour MOSS.
 → *À re-tester en passe-2 avec les réglages de prod.*
 
+**CosyVoice3-0.5B — solide et léger, dépendances lourdes.**
+WER 4,9 % sur `papa_narration`, **zéro anomalie**, UTMOS 3,52, seulement
+5 Go de VRAM, RTF 0,82. Se dégrade sur `johnny` (WER 10,4 %, SIM 0,92).
+Installation la plus pénible du lot (dépôt + sous-module Matcha-TTS, deps
+pinnées, `<|endofprompt|>` obligatoire dans le prompt).
+→ *Bon rapport qualité/VRAM si on accepte le coût de mise en place.*
+
+**XTTS-v2 — le plus rapide des clonants, mais non commercial et instable.**
+RTF 0,24 (4× temps réel), 4 Go. Mais WER 7,4 % ± 19,6 (forte variance),
+cale complètement sur le registre `peur` (WER 28 %), et **licence CPML
+bloquante**. Référence historique, plus un candidat produit.
+
 ## Décision rapide
 
 | Contrainte dominante | Modèle |
 |---|---|
 | Fidélité maximale, GPU ≥ 20 Go | **FireRedTTS3** |
 | Qualité + débit, GPU ~12 Go | **VoxCPM2** |
+| Qualité, VRAM serrée (~5 Go), install one-off acceptée | **CosyVoice3-0.5B** |
 | GPU ≤ 8 Go / beaucoup d'instances | **Chatterbox v3** |
 | Débit extrême, voix neutre imposée OK | **Kokoro-82M** |
 | Déjà investi sur MOSS en prod | **MOSS** (avec le handler calibré, pas les défauts) |
