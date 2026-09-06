@@ -2,9 +2,9 @@
 
 ## Vue globale (par voix)
 
-| voix | runs ok | WER moyen | ±σ | hallucination | répétition | troncature | RTF méd. | VRAM pic | CV durée méd. |
-|---|---|---|---|---|---|---|---|---|---|
-| ff_siwis | 99/99 | 7.5% | 18.0% | 3.0% | 0.0% | 3.0% | 0.01 | 3058 Mo | 0.0% |
+| voix | runs ok | WER moyen | ±σ | UTMOS | SIM | hallu. | rép. | tronc. | RTF méd. | VRAM pic | CV durée |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| ff_siwis | 99/99 | 7.5% | 18.0% | 3.66 | — | 3.0% | 0.0% | 3.0% | 0.02 | 2965 Mo | 0.0% |
 
 ## ff_siwis — WER par catégorie
 

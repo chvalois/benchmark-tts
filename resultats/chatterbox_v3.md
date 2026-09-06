@@ -2,10 +2,14 @@
 
 ## Vue globale (par voix)
 
-| voix | runs ok | WER moyen | ±σ | hallucination | répétition | troncature | RTF méd. | VRAM pic | CV durée méd. |
-|---|---|---|---|---|---|---|---|---|---|
-| johnny | 99/99 | 8.3% | 10.6% | 0.0% | 0.0% | 2.0% | 0.56 | 6737 Mo | 5.1% |
-| papa_narration | 99/99 | 4.8% | 7.6% | 0.0% | 0.0% | 2.0% | 0.59 | 6449 Mo | 3.4% |
+| voix | runs ok | WER moyen | ±σ | UTMOS | SIM | hallu. | rép. | tronc. | RTF méd. | VRAM pic | CV durée |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| johnny | 99/99 | 8.3% | 10.6% | 3.25 | 0.968 | 0.0% | 0.0% | 2.0% | 0.56 | 6737 Mo | 5.1% |
+| papa_colere | 15/15 | 2.0% | 3.3% | 3.70 | 0.956 | 0.0% | 0.0% | 0.0% | 0.58 | 6106 Mo | 4.1% |
+| papa_joie | 6/6 | 0.0% | 0.0% | 3.57 | 0.966 | 0.0% | 0.0% | 0.0% | 0.54 | 6097 Mo | 8.2% |
+| papa_narration | 99/99 | 4.8% | 7.6% | 3.64 | 0.961 | 0.0% | 0.0% | 2.0% | 0.59 | 6449 Mo | 3.4% |
+| papa_peur | 9/9 | 10.0% | 28.3% | 3.46 | 0.965 | 11.1% | 0.0% | 11.1% | 0.55 | 6182 Mo | 3.1% |
+| papa_tristesse | 6/6 | 4.8% | 10.6% | 3.37 | 0.931 | 0.0% | 0.0% | 0.0% | 0.56 | 6189 Mo | 6.0% |
 
 ## johnny — WER par catégorie
 
@@ -45,6 +49,50 @@
 
 **Durée instable (CV > seuil)** : p30
 
+## papa_colere — WER par catégorie
+
+**Par longueur**
+
+| longueur | n | WER moyen |
+|---|---|---|
+| court | 9 | 0.0% |
+| moyen | 6 | 4.9% |
+
+**Par registre**
+
+| registre | n | WER moyen |
+|---|---|---|
+| dialogue_colere | 15 | 2.0% |
+
+**Par piège**
+
+| piège | n | WER moyen |
+|---|---|---|
+| homographe_heterophone | 3 | 0.0% |
+| nombre | 3 | 2.1% |
+| ponctuation_repetee | 3 | 0.0% |
+
+## papa_joie — WER par catégorie
+
+**Par longueur**
+
+| longueur | n | WER moyen |
+|---|---|---|
+| court | 3 | 0.0% |
+| moyen | 3 | 0.0% |
+
+**Par registre**
+
+| registre | n | WER moyen |
+|---|---|---|
+| dialogue_joie | 6 | 0.0% |
+
+**Par piège**
+
+| piège | n | WER moyen |
+|---|---|---|
+| liaison | 3 | 0.0% |
+
 ## papa_narration — WER par catégorie
 
 **Par longueur**
@@ -80,3 +128,49 @@
 | silence_rythme | 21 | 4.3% |
 
 **Troncature détectée sur** : p13, p32
+
+## papa_peur — WER par catégorie
+
+**Par longueur**
+
+| longueur | n | WER moyen |
+|---|---|---|
+| court | 6 | 15.0% |
+| moyen | 3 | 0.0% |
+
+**Par registre**
+
+| registre | n | WER moyen |
+|---|---|---|
+| dialogue_peur | 9 | 10.0% |
+
+**Par piège**
+
+| piège | n | WER moyen |
+|---|---|---|
+| silence_rythme | 9 | 10.0% |
+
+**Hallucination détectée sur** : p34
+
+**Troncature détectée sur** : p34
+
+## papa_tristesse — WER par catégorie
+
+**Par longueur**
+
+| longueur | n | WER moyen |
+|---|---|---|
+| court | 3 | 0.0% |
+| moyen | 3 | 9.5% |
+
+**Par registre**
+
+| registre | n | WER moyen |
+|---|---|---|
+| dialogue_tristesse | 6 | 4.8% |
+
+**Par piège**
+
+| piège | n | WER moyen |
+|---|---|---|
+| homographe_heterophone | 6 | 4.8% |

@@ -13,19 +13,43 @@ un modèle à la fois.
 
 ## Classement (voix `papa_narration`, la plus propre)
 
-| # | modèle | WER | ±σ | anomalies (h/r/t) | RTF | VRAM | clonage | licence |
-|---|---|---|---|---|---|---|---|---|
-| 1 | **FireRedTTS3** | **3,6 %** | 6,5 | 0 / 0 / 0 | 1,00 | 17 Go | oui | Apache-2.0 |
-| 2 | **VoxCPM2** | 4,2 % | 8,0 | 0 / 0 / **6,1 %** | 0,42 | 10 Go | oui | Apache-2.0 |
-| 3 | **Chatterbox v3** | 4,8 % | 7,6 | 0 / 0 / 2 % | 0,59 | 6,5 Go | oui | MIT |
-| 4 | **Kokoro-82M** | 7,5 % | **18,0** | 3 % / 0 / 3 % | **0,01** | 3 Go | **non** | Apache-2.0 |
-| 5 | **MOSS-TTS-Local-1.5** *(défauts)* | 7,9 % | **27,8** | 2 % / 0 / 1 % | 0,69 | 16 Go | oui | Apache-2.0 |
+| # | modèle | WER | ±σ | UTMOS | SIM | anomalies (h/r/t) | RTF | VRAM | clon. | licence |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | **FireRedTTS3** | **3,6 %** | 6,5 | 3,26 | 0,964 | 0 / 0 / 0 | 1,00 | 17 Go | oui | Apache-2.0 |
+| 2 | **VoxCPM2** | 4,2 % | 8,0 | 3,13 | **0,967** | 0 / 0 / **6,1 %** | 0,42 | 10 Go | oui | Apache-2.0 |
+| 3 | **Chatterbox v3** | 4,8 % | 7,6 | **3,64** | 0,961 | 0 / 0 / 2 % | 0,59 | 6,5 Go | oui | MIT |
+| 4 | **Kokoro-82M** | 7,5 % | **18,0** | **3,66** | — | 3 % / 0 / 3 % | **0,01** | 3 Go | **non** | Apache-2.0 |
+| 5 | **MOSS-1.5** *(défauts)* | 7,9 % | **27,8** | 3,50 | **0,968** | 2 % / 0 / 1 % | 0,69 | 16 Go | oui | Apache-2.0 |
 
-*(h/r/t = hallucination / répétition / troncature ; RTF < 1 = plus rapide que le temps réel)*
+*(h/r/t = hallucination / répétition / troncature ; UTMOS ↑ mieux, ~1–5, non calibré FR ; SIM ↑ mieux, 0–1 ; RTF < 1 = + rapide que le temps réel)*
 
-Sur la voix difficile `johnny` : FireRed 4,3 % (quasi inchangé) ; les
-autres se dégradent nettement (VoxCPM 7,3 %, Kokoro 7,5 %, MOSS 7,7 %,
-Chatterbox 8,3 %).
+Sur la voix difficile `johnny` : FireRed 4,3 % (WER quasi inchangé) ; les
+autres se dégradent (VoxCPM 7,3 %, Kokoro 7,5 %, MOSS 7,7 %, Chatterbox
+8,3 %). **Mais le SIM reste ~0,96 pour tous sur `johnny`** → l'identité de
+timbre est captée ; l'écart vient de l'intelligibilité / la prosodie, pas
+d'une perte de voix.
+
+### ⚠️ WER et UTMOS ne sont pas d'accord
+
+Le meilleur WER (**FireRed**) a l'UTMOS le **plus bas** sur `johnny`
+(2,78) ; **Chatterbox** et **Kokoro** ont le meilleur UTMOS (~3,65) avec un
+WER moyen. Autrement dit : « dit exactement le texte » ≠ « sonne le plus
+naturel ». C'est précisément pour ça qu'il faut **plusieurs métriques + de
+l'écoute** — aucune ne tranche seule.
+
+## Run émotions (`resultats/EMOTIONS.md`)
+
+Voix de référence émotionnelle → phrases du registre correspondant.
+- **L'émotion ne casse pas l'intelligibilité** : WER 0–5 % sur la plupart
+  des (modèle, émotion). Deux exceptions : `chatterbox_v3/papa_peur`
+  (WER 10 %, hallu + troncature 11 % — Chatterbox cale sur le registre peur
+  chuchoté) et `moss/papa_peur` (WER 9 % ± 21,7 — instabilité MOSS).
+- **L'identité tient** : SIM 0,91–0,98. La **tristesse** est le registre le
+  plus dur pour l'identité (SIM la plus basse chez tous : 0,91–0,93 —
+  cohérent avec §3.4, faible énergie/voisement).
+- **Est-ce que ça *sonne* triste / en colère / apeuré ?** → question
+  d'écoute pure, non mesurée ici. Audio fourni pour A/B avec la version
+  neutre.
 
 ## Verdicts
 

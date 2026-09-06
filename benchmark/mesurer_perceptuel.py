@@ -26,6 +26,8 @@ from pathlib import Path
 
 RACINE = Path(__file__).resolve().parent.parent
 SR_CIBLE = 16_000
+MAX_SECONDES = 30  # fenêtre analysée (UTMOS/SIM n'ont pas besoin de plus ;
+#                    protège des fichiers pathologiques, ex. runaway MOSS 5 min)
 _NOM_WAV = re.compile(r"^(?P<id>[^_]+)_(?P<rep>\d+)\.wav$")
 COLONNES = ("id_phrase", "repetition", "utmos", "sim")
 
@@ -66,7 +68,7 @@ def _lire_16k(chemin: Path):
     y = y.astype("float32")
     if sr != SR_CIBLE:
         y = librosa.resample(y, orig_sr=sr, target_sr=SR_CIBLE)
-    return y
+    return y[: MAX_SECONDES * SR_CIBLE]
 
 
 def _embedding(fe, model, y):
@@ -96,14 +98,17 @@ def perceptuel_dossier(audio_dir: Path | str, ref_wav: Path | str | None) -> lis
 
     lignes: list[dict] = []
     for i, (pid, rep, chemin) in enumerate(wavs, 1):
-        y = _lire_16k(chemin)
-        score_utmos = float(utmos(torch.from_numpy(y).unsqueeze(0), SR_CIBLE))
-        sim = ""
-        if emb_ref is not None:
-            sim = round(torch.nn.functional.cosine_similarity(
-                emb_ref, _embedding(fe, sv, y)).item(), 4)
-        lignes.append({"id_phrase": pid, "repetition": rep,
-                       "utmos": round(score_utmos, 3), "sim": sim})
+        try:
+            y = _lire_16k(chemin)
+            score_utmos = round(float(utmos(torch.from_numpy(y).unsqueeze(0), SR_CIBLE)), 3)
+            sim = ""
+            if emb_ref is not None:
+                sim = round(torch.nn.functional.cosine_similarity(
+                    emb_ref, _embedding(fe, sv, y)).item(), 4)
+        except Exception as e:  # noqa: BLE001 — un fichier pathologique ne casse pas le dossier
+            print(f"[perceptuel] {chemin.name} -> échec ({type(e).__name__}: {e})", flush=True)
+            score_utmos, sim = "", ""
+        lignes.append({"id_phrase": pid, "repetition": rep, "utmos": score_utmos, "sim": sim})
         if i % 25 == 0 or i == len(wavs):
             print(f"[perceptuel] {i}/{len(wavs)}", flush=True)
     return lignes
