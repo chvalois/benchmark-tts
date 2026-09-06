@@ -40,6 +40,8 @@ NOM_MODELE = "cosyvoice3_05b"
 REPO_ID = "FunAudioLLM/Fun-CosyVoice3-0.5B-2512"
 REVISION = "29e01c4e8d000f4bcd70751be16fa94bf3d85a18"
 CODE_REF = "FunAudioLLM/CosyVoice@074ca6d"
+# CosyVoice3 exige le token <|endofprompt|> dans prompt_text (assert dans llm.py).
+PREFIXE_INSTRUCT = "You are a helpful assistant.<|endofprompt|>"
 
 
 def _chemin_poids() -> str:
@@ -56,24 +58,21 @@ def _charger_modele(_device: str):
 
 
 def _charger_ref(voix: str):
+    # CosyVoice attend un CHEMIN de WAV 16 kHz + une transcription courte
+    # (prompt trop long -> "too short than prompt text" + perf dégradée) :
+    # clip 12 s dédié (`<voix>.16k.wav` / `<voix>.f5.prompt.txt`).
     d = RACINE / "corpus" / "voix_reference"
-    wav = d / f"{voix}.wav"
-    prompt = (d / f"{voix}.prompt.txt").read_text(encoding="utf-8").strip()
-    if not wav.is_file() or not prompt:
-        sys.exit(f"[FAIL] référence incomplète pour {voix}")
-    return (str(wav), prompt)
+    wav, prompt = d / f"{voix}.16k.wav", d / f"{voix}.f5.prompt.txt"
+    if not wav.is_file() or not prompt.is_file():
+        sys.exit(f"[FAIL] clip 16k manquant pour {voix} ({wav.name} / {prompt.name})")
+    return (str(wav), PREFIXE_INSTRUCT + prompt.read_text(encoding="utf-8").strip())
 
 
 def _faire_synthetiser(model):
-    import torchaudio
-
     def _synth(texte: str, _categorie: str, ref, _seed: int = 0) -> np.ndarray:
         ref_wav, ref_text = ref
-        prompt_16k = torchaudio.functional.resample(
-            torchaudio.load(ref_wav)[0], torchaudio.info(ref_wav).sample_rate, 16_000
-        )
         morceaux = []
-        for j in model.inference_zero_shot(texte, ref_text, prompt_16k, stream=False):
+        for j in model.inference_zero_shot(texte, ref_text, ref_wav, stream=False):
             morceaux.append(np.asarray(j["tts_speech"], dtype=np.float32).reshape(-1))
         return np.concatenate(morceaux) if morceaux else np.zeros(0, dtype=np.float32)
     return _synth

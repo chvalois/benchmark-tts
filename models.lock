@@ -7,8 +7,10 @@
     "le disque est sur D:). Estimations disque = venv (torch CUDA ~2.5-5 Go)",
     "+ poids + marge cache HF."
   ],
-  "budget_disque_go": { "lean": 70, "complet": 150 },
-
+  "budget_disque_go": {
+    "lean": 70,
+    "complet": 150
+  },
   "modeles": {
     "chatterbox_v3": {
       "phase": 1,
@@ -82,7 +84,6 @@
       "statut": "verifie",
       "notes": "5B, backbone Qwen3, transformers 5 + torch 2.9.1+cu128, install editable du repo MOSS-TTS ([torch-runtime]). AutoModel/AutoProcessor trust_remote_code -> tire AUSSI OpenMOSS-Team/MOSS-Audio-Tokenizer-v2 (~8 Go) implicitement. Cold start ~600 s (1er run, download tokenizer inclus). Repli sdpa (flash-attn absent). Passe-1 = défauts model card (audio_temperature 1.7), PAS le handler avisol calibré (budget de tokens chars_per_second)."
     },
-
     "voxcpm2": {
       "phase": 2,
       "role": "candidat de référence (veille juin 2026)",
@@ -168,7 +169,6 @@
       "statut": "verifie",
       "notes": "métadonnée licence absente sur le repo du finetune ; base parler-tts Apache-2.0 en amont — à clarifier avant tout usage produit ; pas de clonage"
     },
-
     "xtts_v2": {
       "phase": "ref",
       "role": "référence qualité (hors service : licence non commerciale)",
@@ -200,17 +200,20 @@
       "vram_go_estimee": 4,
       "disque_go_estimee": 5,
       "venv": "f5_tts",
-      "statut": "verifie",
-      "notes": "flow-matching ; plafond de comparaison"
+      "statut": "fr_non_supporte",
+      "notes": "checkpoint de référence F5TTS_v1_Base = EN/ZH uniquement (vocab pinyin/char) -> sortie FR inintelligible (WER > 100 %). Seuls des finetunes FR communautaires non maintenus existent (tontate/f5-tts-quebec-french-finetune dl~90, RASPIAUDIO/F5-French-MixedSpeakers-reduced dl 0). 'FR annoncé' de la veille = infirmé pour le repo officiel."
     },
-
     "asr_whisper_large_v3_fr": {
       "phase": "outil",
       "role": "ASR de scoring (WER FR) — jamais chargé en // d'un TTS",
       "repo_id": "bofenghuang/whisper-large-v3-french",
       "repo_id_verifie": true,
       "revision": "90a7cd1fea9cd69f80f5a0fc49738418dba96083",
-      "hf_allow_patterns": ["*.json", "*.txt", "model.safetensors"],
+      "hf_allow_patterns": [
+        "*.json",
+        "*.txt",
+        "model.safetensors"
+      ],
       "licence": "MIT",
       "usage_commercial": true,
       "clonage_zero_shot": null,

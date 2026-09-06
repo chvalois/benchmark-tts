@@ -43,12 +43,15 @@ def _charger_modele(device: str):
 
 
 def _charger_ref(voix: str):
+    # F5 clippe la référence à ~12 s en interne : passer un WAV de 27 s +
+    # sa transcription complète crée un décalage texte/audio -> sortie
+    # catastrophique (WER > 100 %). On fournit un clip 12 s dédié F5
+    # (`<voix>.f5.wav`) + sa transcription (`<voix>.f5.prompt.txt`).
     d = RACINE / "corpus" / "voix_reference"
-    wav = d / f"{voix}.wav"
-    prompt = (d / f"{voix}.prompt.txt").read_text(encoding="utf-8").strip()
-    if not wav.is_file() or not prompt:
-        sys.exit(f"[FAIL] référence incomplète pour {voix}")
-    return (str(wav), prompt)
+    wav, prompt = d / f"{voix}.f5.wav", d / f"{voix}.f5.prompt.txt"
+    if not wav.is_file() or not prompt.is_file():
+        sys.exit(f"[FAIL] clip F5 manquant pour {voix} ({wav.name} / {prompt.name})")
+    return (str(wav), prompt.read_text(encoding="utf-8").strip())
 
 
 def _faire_synthetiser(f5):
