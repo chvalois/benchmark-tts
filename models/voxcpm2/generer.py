@@ -29,7 +29,7 @@ sys.path.insert(0, str(RACINE))
 
 from benchmark.chunking import FAMILLE_DEFAUT  # noqa: E402
 from benchmark.corpus import charger_corpus  # noqa: E402
-from benchmark.generation import executer_corpus  # noqa: E402
+from benchmark.generation import executer_corpus, parser_voix_phrases  # noqa: E402
 
 NOM_MODELE = "voxcpm2"
 REPO_ID = "openbmb/VoxCPM2"
@@ -87,13 +87,15 @@ def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--reps", type=int, default=3)
     p.add_argument("--voix", default="papa_narration,johnny")
+    p.add_argument("--voix-phrases", default="", help="'papa_joie:p01,p06;papa_colere:p02,...' — restreint les phrases par voix")
     p.add_argument("--base-seed", type=int, default=1000)
     p.add_argument("--phrases", default="")
     p.add_argument("--limite", type=int, default=0)
     p.add_argument("--device", default="cuda")
     args = p.parse_args()
 
-    voix_list = [v.strip() for v in args.voix.split(",") if v.strip()]
+    pxv = parser_voix_phrases(args.voix_phrases)
+    voix_list = list(pxv) if pxv else [v.strip() for v in args.voix.split(",") if v.strip()]
     phrases = charger_corpus()
     if args.phrases:
         garde = set(args.phrases.split(","))
@@ -129,6 +131,7 @@ def main() -> int:
         base_seed=args.base_seed,
         racine_sortie=racine_sortie,
         params_chunk=FAMILLE_DEFAUT,
+        phrases_par_voix=pxv or None,
         meta_base={
             "repo_id": REPO_ID, "revision": REVISION,
             "params": {"cfg_value": CFG_VALUE, "inference_timesteps": INFERENCE_TIMESTEPS,

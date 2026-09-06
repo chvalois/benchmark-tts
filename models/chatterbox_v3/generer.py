@@ -40,6 +40,7 @@ from benchmark.generation import (  # noqa: E402
     ecrire_timings,
     ecrire_wav,
     fixer_seed,
+    parser_voix_phrases,
     preparer_audio,
     silence,
 )
@@ -118,11 +119,15 @@ def _generer_une(
 
 
 def _generer_voix(modele, sr_modele: int, phrases, voix: str, ref_wav: str,
-                  reps: int, base_seed: int, racine_sortie: Path) -> int:
-    """Génère tout le corpus pour UNE voix -> `<racine_sortie>/<voix>/`."""
+                  reps: int, base_seed: int, racine_sortie: Path,
+                  garde_ids: set | None = None) -> int:
+    """Génère le corpus (ou le sous-ensemble `garde_ids`) pour UNE voix
+    -> `<racine_sortie>/<voix>/`."""
     sortie = racine_sortie / voix
     lignes: list[dict] = []
     for ph in phrases:
+        if garde_ids is not None and ph.id not in garde_ids:
+            continue
         texte, motif_na = _texte_pour_modele(ph)
         if texte is None:
             for rep in range(1, reps + 1):
@@ -177,6 +182,7 @@ def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--reps", type=int, default=5)
     p.add_argument("--voix", default="vf_moyen", help="id(s) dans corpus/voix_reference/, séparés par des virgules")
+    p.add_argument("--voix-phrases", default="", help="'papa_joie:p01,p06;papa_colere:p02,...' — restreint les phrases par voix")
     p.add_argument("--base-seed", type=int, default=1000)
     p.add_argument("--phrases", default="", help="filtre : p01,p07 (défaut : tout le corpus)")
     p.add_argument("--limite", type=int, default=0, help="n'traiter que les N premières phrases (smoke test)")
@@ -184,7 +190,8 @@ def main() -> int:
     args = p.parse_args()
 
     racine_sortie = Path(os.environ.get("TTSB_AUDIO_OUT", RACINE / "audio_genere")) / NOM_MODELE
-    voix_list = [v.strip() for v in args.voix.split(",") if v.strip()]
+    pxv = parser_voix_phrases(args.voix_phrases)
+    voix_list = list(pxv) if pxv else [v.strip() for v in args.voix.split(",") if v.strip()]
     refs = {v: str(RACINE / "corpus" / "voix_reference" / f"{v}.wav") for v in voix_list}
     for v, chemin in refs.items():
         if not Path(chemin).is_file():
@@ -215,6 +222,7 @@ def main() -> int:
         total_ok += _generer_voix(
             modele, sr_modele, phrases, voix, refs[voix],
             args.reps, args.base_seed, racine_sortie,
+            garde_ids=set(pxv[voix]) if voix in pxv else None,
         )
     print(f"[{NOM_MODELE}] TOUT terminé : {total_ok} runs ok sur {len(voix_list)} voix", flush=True)
     return 0

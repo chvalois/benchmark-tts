@@ -96,6 +96,22 @@ def ecrire_meta(chemin: Path | str, meta: dict) -> None:
         json.dump(meta, f, ensure_ascii=False, indent=2, sort_keys=True)
 
 
+def parser_voix_phrases(spec: str) -> dict[str, list[str]]:
+    """`"papa_joie:p01,p06 ; papa_colere:p02,p07"` -> `{"papa_joie": [...], ...}`.
+
+    Chaîne vide -> dict vide. Sert au run « émotions » : chaque voix de
+    référence émotionnelle ne génère que les phrases de son registre.
+    """
+    out: dict[str, list[str]] = {}
+    for bloc in spec.split(";"):
+        bloc = bloc.strip()
+        if not bloc:
+            continue
+        voix, _, ids = bloc.partition(":")
+        out[voix.strip()] = [i.strip() for i in ids.split(",") if i.strip()]
+    return out
+
+
 # -- boucle générique corpus × voix × répétitions ---------------------
 def executer_corpus(
     *,
@@ -110,6 +126,7 @@ def executer_corpus(
     params_chunk,
     meta_base: dict,
     est_non_applicable: Callable[[object], str | None] | None = None,
+    phrases_par_voix: dict | None = None,
 ) -> int:
     """Déroule le corpus pour chaque voix (contrat CONTRAT_MODELE.md).
 
@@ -122,6 +139,10 @@ def executer_corpus(
       ou id de voix interne), passé tel quel à `synthetiser`.
     - `est_non_applicable(phrase) -> motif|None` : ex. `multi_voix` non
       géré → lignes `n/a` (jamais `echec`).
+    - `phrases_par_voix` : `{voix: [id, ...]}` optionnel — restreint le
+      sous-ensemble de phrases pour cette voix (ex. voix d'émotion → seules
+      les phrases du registre correspondant). Une voix absente du dict
+      traite tout `phrases`.
 
     Écrit `<racine_sortie>/<voix>/{<id>_<rep>.wav, timings.csv, meta.json}`.
     Retourne le nombre total de runs `ok`.
@@ -133,8 +154,10 @@ def executer_corpus(
     total_ok = 0
     for voix, ref in voix_refs.items():
         sortie = racine_sortie / voix
+        garde = set((phrases_par_voix or {}).get(voix, [])) or None
+        phrases_voix = [ph for ph in phrases if garde is None or ph.id in garde]
         lignes: list[dict] = []
-        for i_ph, ph in enumerate(phrases, 1):
+        for i_ph, ph in enumerate(phrases_voix, 1):
             motif = est_non_applicable(ph) if est_non_applicable else None
             if motif:
                 for rep in range(1, reps + 1):
@@ -177,7 +200,7 @@ def executer_corpus(
                     "categorie_chunk": cat_globale, "statut": statut,
                 })
             derniere = lignes[-1]
-            print(f"[{nom_modele}/{voix}] {i_ph}/{len(phrases)} {ph.id} "
+            print(f"[{nom_modele}/{voix}] {i_ph}/{len(phrases_voix)} {ph.id} "
                   f"({derniere['statut']}, gen {derniere.get('gen_s', 0):.1f}s)", flush=True)
 
         ecrire_timings(sortie / "timings.csv", lignes)

@@ -8,7 +8,7 @@ import numpy as np
 
 from benchmark.chunking import FAMILLE_DEFAUT
 from benchmark.corpus import Phrase
-from benchmark.generation import executer_corpus
+from benchmark.generation import executer_corpus, parser_voix_phrases
 
 PHRASES = [
     Phrase("p01", "Une phrase de narration simple et posée pour le test.", "moyen", "narration", ()),
@@ -81,6 +81,30 @@ def test_executer_corpus_echec_isole_ne_stoppe_pas(tmp_path):
     assert n_ok == 2
     assert [r["statut"] for r in rows].count("ok") == 2
     assert any(r["statut"].startswith("echec:") for r in rows)
+
+
+def test_parser_voix_phrases():
+    assert parser_voix_phrases("") == {}
+    assert parser_voix_phrases("papa_joie:p01,p06 ; papa_colere:p02,p07,p19") == {
+        "papa_joie": ["p01", "p06"],
+        "papa_colere": ["p02", "p07", "p19"],
+    }
+
+
+def test_executer_corpus_phrases_par_voix(tmp_path):
+    phrases = [
+        Phrase("p01", "Une phrase de joie pour le test unitaire.", "court", "dialogue_joie", ()),
+        Phrase("p02", "Une phrase de colère pour le test unitaire.", "court", "dialogue_colere", ()),
+        Phrase("p03", "Une phrase de peur pour le test unitaire.", "court", "dialogue_peur", ()),
+    ]
+    executer_corpus(
+        nom_modele="faux", synthetiser=_synth_ok, sr_modele=24_000, phrases=phrases,
+        voix_refs={"vjoie": "r", "vcolere": "r"}, reps=1, base_seed=0,
+        racine_sortie=tmp_path, params_chunk=FAMILLE_DEFAUT, meta_base={},
+        phrases_par_voix={"vjoie": ["p01"], "vcolere": ["p02"]},
+    )
+    assert sorted(p.name for p in (tmp_path / "vjoie").glob("*.wav")) == ["p01_1.wav"]
+    assert sorted(p.name for p in (tmp_path / "vcolere").glob("*.wav")) == ["p02_1.wav"]
 
 
 def test_executer_corpus_multi_voix(tmp_path):
