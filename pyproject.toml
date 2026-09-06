@@ -19,6 +19,7 @@ omit = [
   "benchmark/transcrire.py",
   "benchmark/rapport.py",
   "benchmark/comparatif.py",
+  "benchmark/mesurer_perceptuel.py",
 ]
 
 [tool.coverage.report]

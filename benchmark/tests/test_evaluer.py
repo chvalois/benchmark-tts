@@ -63,3 +63,31 @@ def test_synthese_taux_et_listes():
 
 def test_synthese_vide():
     assert synthese([])["n_runs"] == 0
+
+
+def test_perceptuel_joint_et_agrege():
+    tr = [
+        {"id_phrase": "p01", "repetition": 1,
+         "texte_transcrit": "le vieux moulin tournait lentement dans le vent du soir"},
+        {"id_phrase": "p02", "repetition": 1,
+         "texte_transcrit": "elle poussa la lourde porte de chêne massif du grenier"},
+    ]
+    perc = [
+        {"id_phrase": "p01", "repetition": 1, "utmos": 3.8, "sim": 0.90},
+        {"id_phrase": "p02", "repetition": 1, "utmos": 3.4, "sim": 0.80},
+    ]
+    lignes = evaluer_runs(tr, CORPUS, perceptuel=perc)
+    assert lignes[0]["utmos"] == 3.8 and lignes[0]["sim"] == 0.90
+    s = synthese(lignes)
+    assert abs(s["utmos_moyen"] - 3.6) < 1e-9
+    assert abs(s["sim_moyen"] - 0.85) < 1e-9
+
+
+def test_synthese_sans_perceptuel_none():
+    lignes = evaluer_runs(
+        [{"id_phrase": "p01", "repetition": 1,
+          "texte_transcrit": "le vieux moulin tournait lentement dans le vent du soir"}],
+        CORPUS,
+    )
+    s = synthese(lignes)
+    assert s["utmos_moyen"] is None and s["sim_moyen"] is None
