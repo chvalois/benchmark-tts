@@ -64,6 +64,25 @@
       "statut": "verifie",
       "notes": "pas de paquet PyPI -> code GitHub épinglé (code_ref) via PYTHONPATH. torch 2.8 (wheel cu128). TN 'wetext' = zh/en seulement -> nombres FR (p30) mal verbalisés attendu. Prompt de clonage = wav + transcription (corpus/voix_reference/<voix>.prompt.txt)."
     },
+    "moss_tts_local_v15": {
+      "phase": 2,
+      "role": "moteur de prod avisol (5B, piloté par durée cible)",
+      "repo_id": "OpenMOSS-Team/MOSS-TTS-Local-Transformer-v1.5",
+      "repo_id_verifie": true,
+      "revision": "be7766a6735b98bd793f7c79fb720b4d0f5d13b8",
+      "code_ref": "git+https://github.com/OpenMOSS/MOSS-TTS.git@fb6e6a5eae694e856c2ae78457682ea8ad79b44a",
+      "hf_allow_patterns": null,
+      "licence": "Apache-2.0",
+      "usage_commercial": true,
+      "clonage_zero_shot": true,
+      "langue_fr": "balise <lang:fr> (pas de language_id global)",
+      "vram_go_estimee": 13,
+      "disque_go_estimee": 22,
+      "venv": "moss_tts_local_v15",
+      "statut": "verifie",
+      "notes": "5B, backbone Qwen3, transformers 5 + torch 2.9.1+cu128, install editable du repo MOSS-TTS ([torch-runtime]). AutoModel/AutoProcessor trust_remote_code. Piloté par durée cible -> budget de tokens (chars_per_second). RISQUE : chargement 5B vs 8 Go de RAM WSL (cf. models/voxcpm2/NOTES.md)."
+    },
+
     "voxcpm2": {
       "phase": 2,
       "role": "candidat de référence (veille juin 2026)",

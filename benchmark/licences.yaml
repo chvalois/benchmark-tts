@@ -60,6 +60,13 @@ pocket_tts:
   verifie_le: "2026-09-05"
   note: "cc-by-4.0 confirmé (métadonnée HF) ; attribution requise"
 
+moss_tts_local_v15:
+  licence: Apache-2.0
+  usage_commercial: oui
+  source_url: "https://huggingface.co/OpenMOSS-Team/MOSS-TTS-Local-Transformer-v1.5"
+  verifie_le: "2026-09-06"
+  note: "apache-2.0 confirmé (métadonnée HF) ; moteur de prod avisol"
+
 parler_tts_fr:
   licence: a_verifier
   usage_commercial: oui
