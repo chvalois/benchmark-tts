@@ -65,7 +65,7 @@ def test_synthese_vide():
     assert synthese([])["n_runs"] == 0
 
 
-def test_perceptuel_joint_et_agrege():
+def test_perceptuel_et_nisqa_joints_et_agreges():
     tr = [
         {"id_phrase": "p01", "repetition": 1,
          "texte_transcrit": "le vieux moulin tournait lentement dans le vent du soir"},
@@ -73,21 +73,36 @@ def test_perceptuel_joint_et_agrege():
          "texte_transcrit": "elle poussa la lourde porte de chêne massif du grenier"},
     ]
     perc = [
-        {"id_phrase": "p01", "repetition": 1, "utmos": 3.8, "sim": 0.90},
-        {"id_phrase": "p02", "repetition": 1, "utmos": 3.4, "sim": 0.80},
+        {"id_phrase": "p01", "repetition": 1, "sim": 0.90},
+        {"id_phrase": "p02", "repetition": 1, "sim": 0.80},
     ]
-    lignes = evaluer_runs(tr, CORPUS, perceptuel=perc)
-    assert lignes[0]["utmos"] == 3.8 and lignes[0]["sim"] == 0.90
+    nisqa = [
+        {"id_phrase": "p01", "repetition": 1, "nisqa": 3.8},
+        {"id_phrase": "p02", "repetition": 1, "nisqa": 3.4},
+    ]
+    lignes = evaluer_runs(tr, CORPUS, perceptuel=perc, nisqa=nisqa)
+    assert lignes[0]["sim"] == 0.90 and lignes[0]["nisqa"] == 3.8
+    assert "utmos" not in lignes[0]
     s = synthese(lignes)
-    assert abs(s["utmos_moyen"] - 3.6) < 1e-9
+    assert abs(s["nisqa_moyen"] - 3.6) < 1e-9
     assert abs(s["sim_moyen"] - 0.85) < 1e-9
 
 
-def test_synthese_sans_perceptuel_none():
+def test_synthese_sans_perceptuel_ni_nisqa_none():
     lignes = evaluer_runs(
         [{"id_phrase": "p01", "repetition": 1,
           "texte_transcrit": "le vieux moulin tournait lentement dans le vent du soir"}],
         CORPUS,
     )
     s = synthese(lignes)
-    assert s["utmos_moyen"] is None and s["sim_moyen"] is None
+    assert s["nisqa_moyen"] is None and s["sim_moyen"] is None
+    assert s["ttsds2"] is None
+
+
+def test_synthese_range_ttsds2_tel_quel():
+    tr = [{"id_phrase": "p01", "repetition": 1,
+           "texte_transcrit": "le vieux moulin tournait lentement dans le vent du soir"}]
+    lignes = evaluer_runs(tr, CORPUS)
+    t2 = {"score_global": 78.4, "par_composante": {"prosody": 0.71}}
+    assert synthese(lignes, ttsds2=t2)["ttsds2"] == t2
+    assert synthese([], ttsds2=t2)["ttsds2"] == t2  # même sur lignes vides

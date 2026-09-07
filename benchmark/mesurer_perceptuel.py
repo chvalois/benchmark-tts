@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-"""Métriques perceptuelles objectives : UTMOS (naturel prédit) + SIM
-(similarité au locuteur de la voix de référence).
+"""Métrique perceptuelle objective : SIM (similarité au locuteur de la voix
+de référence).
 
-- **UTMOS** : `tarepan/SpeechMOS` (utmos22_strong, torch.hub). Scalaire
-  ~1–5 par fichier, sans référence. ⚠️ entraîné sur du MOS anglophone →
-  valeur absolue non calibrée pour le FR ; à lire en **classement
-  relatif** sur le même corpus.
-- **SIM** : cosinus des embeddings `microsoft/wavlm-base-plus-sv`
-  (`WavLMForXVector`) entre l'audio généré et la voix de référence. ⚠️
-  proxy transformers ; le SIM « papers » utilise wavlm-large finetuné.
+- **SIM** : cosinus des embeddings **ECAPA-TDNN**
+  (`speechbrain/spkrec-ecapa-voxceleb`, entraîné VoxCeleb) entre l'audio
+  généré et la voix de référence, **silences rognés** (`librosa.trim`,
+  30 dB) des deux côtés. ECAPA sépare beaucoup mieux les locuteurs que
+  `wavlm-base-plus-sv` (dont les cosinus, tous ~0,96, ne discriminaient
+  pas — cf. corrélation nulle avec la note humaine de similarité).
+
+La **naturalité** n'est plus mesurée ici : UTMOS (`utmos22_strong`) a été
+retiré — non calibré pour le FR au point d'être quasi du bruit (les voix
+de référence *humaines* y scoraient 1,5–2,9, sous les sorties TTS). Voir
+`mesurer_ttsds2.py` (principal) et `mesurer_nisqa.py` (contre-vérification).
 
 Modèle-dépendant : tourne dans le venv `_commun`. Les helpers d'I/O
 (`lire_perceptuel`, `_lister_wavs`) restent purs et testés.
@@ -21,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import math
 import re
 from pathlib import Path
 
@@ -28,8 +33,20 @@ RACINE = Path(__file__).resolve().parent.parent
 SR_CIBLE = 16_000
 MAX_SECONDES = 30  # fenêtre analysée (UTMOS/SIM n'ont pas besoin de plus ;
 #                    protège des fichiers pathologiques, ex. runaway MOSS 5 min)
+MIN_SECONDES = 0.4  # en-dessous, x-vector / UTMOS dégénèrent (embedding NaN) :
+#                     génération quasi vide -> pas de score plutôt qu'un NaN
+
+
+def _fini(x):
+    """Valeur si finie, sinon '' (traitée comme 'pas de mesure' en aval)."""
+    try:
+        return x if math.isfinite(float(x)) else ""
+    except (TypeError, ValueError):
+        return ""
+
+
 _NOM_WAV = re.compile(r"^(?P<id>[^_]+)_(?P<rep>\d+)\.wav$")
-COLONNES = ("id_phrase", "repetition", "utmos", "sim")
+COLONNES = ("id_phrase", "repetition", "sim")
 
 
 def _lister_wavs(dossier: Path) -> list[tuple[str, int, Path]]:
@@ -41,21 +58,20 @@ def _lister_wavs(dossier: Path) -> list[tuple[str, int, Path]]:
     return out
 
 
-def _charger_utmos():
-    import torch
-
-    return torch.hub.load("tarepan/SpeechMOS:v1.2.0", "utmos22_strong", trust_repo=True)
+SV_MODELE = "speechbrain/spkrec-ecapa-voxceleb"
+TRIM_DB = 30          # silences rognés à 30 dB sous la crête avant embedding SV
 
 
 def _charger_sv():
     import os
 
-    from transformers import AutoFeatureExtractor, WavLMForXVector
+    from speechbrain.inference.speaker import EncoderClassifier
 
-    cache = os.environ.get("HF_HUB_CACHE")
-    fe = AutoFeatureExtractor.from_pretrained("microsoft/wavlm-base-plus-sv", cache_dir=cache)
-    model = WavLMForXVector.from_pretrained("microsoft/wavlm-base-plus-sv", cache_dir=cache).eval()
-    return fe, model
+    cache = os.environ.get("HF_HUB_CACHE") or os.environ.get("TTSB_ROOT", ".")
+    return EncoderClassifier.from_hparams(
+        source=SV_MODELE, savedir=str(Path(cache) / "speechbrain-ecapa"),
+        run_opts={"device": "cpu"},
+    )
 
 
 def _lire_16k(chemin: Path):
@@ -71,15 +87,25 @@ def _lire_16k(chemin: Path):
     return y[: MAX_SECONDES * SR_CIBLE]
 
 
-def _embedding(fe, model, y):
+def _rogner(y):
+    """Rogne les silences tête/queue (les générations ajoutent du silence
+    de fin de chunk qui dilue l'embedding locuteur)."""
+    import librosa
+
+    coupe, _ = librosa.effects.trim(y, top_db=TRIM_DB)
+    return coupe if len(coupe) >= MIN_SECONDES * SR_CIBLE else y
+
+
+def _embedding(model, y):
     import torch
 
     with torch.no_grad():
-        return model(**fe([y], sampling_rate=SR_CIBLE, return_tensors="pt")).embeddings
+        emb = model.encode_batch(torch.from_numpy(_rogner(y)).unsqueeze(0))
+    return emb.reshape(1, -1)
 
 
 def perceptuel_dossier(audio_dir: Path | str, ref_wav: Path | str | None) -> list[dict]:
-    """UTMOS pour chaque `<id>_<rep>.wav` ; SIM vs `ref_wav` si fourni."""
+    """SIM vs `ref_wav` (cosinus ECAPA) pour chaque `<id>_<rep>.wav`."""
     import torch
 
     audio_dir = Path(audio_dir)
@@ -87,28 +113,30 @@ def perceptuel_dossier(audio_dir: Path | str, ref_wav: Path | str | None) -> lis
     if not wavs:
         raise SystemExit(f"[FAIL] aucun <id>_<rep>.wav dans {audio_dir}")
 
-    utmos = _charger_utmos()
-    emb_ref = None
+    emb_ref = sv = None
     if ref_wav and Path(ref_wav).is_file():
-        fe, sv = _charger_sv()
-        emb_ref = _embedding(fe, sv, _lire_16k(Path(ref_wav)))
+        sv = _charger_sv()
+        emb_ref = _embedding(sv, _lire_16k(Path(ref_wav)))
     else:
-        fe = sv = None
         print(f"[perceptuel] pas de voix de référence pour {audio_dir.name} -> SIM omise", flush=True)
 
     lignes: list[dict] = []
     for i, (pid, rep, chemin) in enumerate(wavs, 1):
         try:
             y = _lire_16k(chemin)
-            score_utmos = round(float(utmos(torch.from_numpy(y).unsqueeze(0), SR_CIBLE)), 3)
-            sim = ""
-            if emb_ref is not None:
-                sim = round(torch.nn.functional.cosine_similarity(
-                    emb_ref, _embedding(fe, sv, y)).item(), 4)
+            if len(y) < MIN_SECONDES * SR_CIBLE:
+                print(f"[perceptuel] {chemin.name} -> {len(y) / SR_CIBLE:.2f}s "
+                      f"(< {MIN_SECONDES}s) : génération quasi vide, score omis", flush=True)
+                sim = ""
+            else:
+                sim = ""
+                if emb_ref is not None:
+                    sim = _fini(round(torch.nn.functional.cosine_similarity(
+                        emb_ref, _embedding(sv, y)).item(), 4))
         except Exception as e:  # noqa: BLE001 — un fichier pathologique ne casse pas le dossier
             print(f"[perceptuel] {chemin.name} -> échec ({type(e).__name__}: {e})", flush=True)
-            score_utmos, sim = "", ""
-        lignes.append({"id_phrase": pid, "repetition": rep, "utmos": score_utmos, "sim": sim})
+            sim = ""
+        lignes.append({"id_phrase": pid, "repetition": rep, "sim": sim})
         if i % 25 == 0 or i == len(wavs):
             print(f"[perceptuel] {i}/{len(wavs)}", flush=True)
     return lignes
@@ -125,12 +153,19 @@ def ecrire_perceptuel(chemin: Path | str, lignes: list[dict]) -> None:
 def lire_perceptuel(chemin: Path | str) -> list[dict]:
     with open(chemin, newline="", encoding="utf-8") as f:
         out = []
+        def _num(v):
+            try:
+                x = float(v)
+            except (TypeError, ValueError):
+                return None
+            return x if math.isfinite(x) else None
+
         for row in csv.DictReader(f):
+            # `utmos` : colonne d'anciennes passes, ignorée si présente.
             out.append({
                 "id_phrase": row["id_phrase"],
                 "repetition": int(row["repetition"]) if row.get("repetition") else None,
-                "utmos": float(row["utmos"]) if row.get("utmos") else None,
-                "sim": float(row["sim"]) if row.get("sim") not in ("", None) else None,
+                "sim": _num(row.get("sim")),
             })
         return out
 

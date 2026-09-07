@@ -1,10 +1,12 @@
 # Benchmark TTS open source FR — synthèse (v1, 7 modèles)
 
-**Protocole** : 34 phrases annotées × 3 répétitions × 2 voix de référence
-(`papa_narration` = 27 s / 24 kHz / propre ; `johnny` = 21 s / converti du
-44 kHz stéréo / brut). Transcription `whisper-large-v3-french`, WER `jiwer`
-+ détecteurs de fidélité *language-agnostic* (portés d'`avisol`). RTX 4090,
-un modèle à la fois.
+**Protocole** : 34 phrases annotées × 3 répétitions × voix de référence.
+Cœur du classement = `papa_narration` (27 s / 24 kHz / propre) ; `johnny`
+(21 s / converti 44 kHz stéréo / brut) = réf « difficile ». \+ 3 voix
+narration : `aurore2` (femme), `papy` (âgé, poème), `tonton_marc` (accent
+Sud-Ouest) — cf. « Sensibilité à la voix de référence ». Transcription
+`whisper-large-v3-french`, WER `jiwer` + détecteurs de fidélité
+*language-agnostic* (portés d'`avisol`). RTX 4090, un modèle à la fois.
 
 > ⚠️ **Métriques automatiques uniquement — pas encore d'écoute MOS/A-B.**
 > WER **brut** (aucun plancher humain soustrait ; une vraie voix humaine
@@ -13,23 +15,30 @@ un modèle à la fois.
 
 ## Classement (voix `papa_narration`, la plus propre)
 
-| # | modèle | WER | ±σ | UTMOS | SIM | anom. (h/r/t) | RTF | VRAM | clon. | licence |
+| # | modèle | WER | ±σ | UTMOS † | SIM | anom. (h/r/t) | RTF | VRAM | clon. | licence |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **FireRedTTS3** | **3,6 %** | 6,5 | 3,26 | 0,964 | 0/0/0 | 1,00 | 17 Go | oui | Apache-2.0 |
-| 2 | **VoxCPM2** | 4,2 % | 8,0 | 3,13 | 0,967 | 0/0/**6,1 %** | 0,42 | 10 Go | oui | Apache-2.0 |
-| 3 | **Chatterbox v3** | 4,8 % | 7,6 | **3,64** | 0,961 | 0/0/2 % | 0,59 | 6,5 Go | oui | MIT |
-| 4 | **CosyVoice3-0.5B** | 4,9 % | 8,9 | 3,52 | 0,964 | 0/0/0 | 0,82 | 5 Go | oui | Apache-2.0 |
-| 5 | **XTTS-v2** | 7,4 % | 19,6 | 3,33 | 0,966 | 1 %/0/0 | **0,24** | 4 Go | oui | **CPML — non comm.** |
-| 6 | **Kokoro-82M** | 7,5 % | 18,0 | **3,66** | — | 3 %/0/3 % | **0,01** | 3 Go | **non** | Apache-2.0 |
-| 7 | **MOSS-1.5** *(défauts)* | 7,9 % | **27,8** | 3,50 | 0,968 | 2 %/0/1 % | 0,69 | 16 Go | oui | Apache-2.0 |
+| 1 | **FireRedTTS3** | **3,6 %** | 6,5 | 3,26 | 0,844 | 0/0/0 | 1,00 | 17 Go | oui | Apache-2.0 |
+| 2 | **VoxCPM2** | 4,2 % | 8,0 | 3,13 | 0,822 | 0/0/**6,1 %** | 0,42 | 10 Go | oui | Apache-2.0 |
+| 3 | **Chatterbox v3** | 4,8 % | 7,6 | 3,64 | 0,800 | 0/0/2 % | 0,59 | 6,5 Go | oui | MIT |
+| 4 | **CosyVoice3-0.5B** | 4,9 % | 8,9 | 3,52 | 0,823 | 0/0/0 | 0,82 | 5 Go | oui | Apache-2.0 |
+| 5 | **XTTS-v2** | 7,4 % | 19,6 | 3,33 | 0,745 | 1 %/0/0 | **0,24** | 4 Go | oui | **CPML — non comm.** |
+| 6 | **Kokoro-82M** | 7,5 % | 18,0 | 3,66 | — | 3 %/0/3 % | **0,01** | 3 Go | **non** | Apache-2.0 |
+| 7 | **MOSS-1.5** *(défauts)* | 7,9 % | **27,8** | 3,50 | 0,772 | 2 %/0/1 % | 0,69 | 16 Go | oui | Apache-2.0 |
 
-*(h/r/t = hallucination / répétition / troncature ; UTMOS ↑ mieux ~1–5 non calibré FR ; SIM ↑ mieux 0–1 ; RTF < 1 = + rapide que le temps réel)*
+*(h/r/t = hallucination / répétition / troncature ; SIM = cosinus **ECAPA-TDNN**,
+↑ mieux 0–1 ; RTF < 1 = + rapide que le temps réel)*
+
+† **UTMOS retiré** — non calibré FR (les voix de référence *humaines* y scorent
+1,5–2,9, *sous* les TTS ; cf. `docs/METHODOLOGIE.md` §9). Colonne laissée telle
+quelle en attendant le re-scoring **TTSDS2** (naturalité distributionnelle vs
+vraie parole FR, principal) + **NISQA** (contre-vérification).
 
 Sur la voix difficile `johnny` : FireRed 4,3 % (WER quasi inchangé, il
 encaisse le mieux) ; ensuite VoxCPM/XTTS 7,3 %, Kokoro 7,5 %, MOSS 7,7 %,
-Chatterbox 8,3 %, CosyVoice3 10,4 %. **Le SIM reste ~0,92–0,97 pour tous
-sur `johnny`** → l'identité de timbre est captée ; l'écart vient de
-l'intelligibilité / la prosodie.
+Chatterbox 8,3 %, CosyVoice3 10,4 %. **Le SIM tombe à ~0,64–0,78 pour tous
+sur `johnny`** (réf 44 kHz stéréo convertie, brute) contre ~0,75–0,84 sur
+`papa_narration` → l'identité de timbre est captée mais moins nettement ;
+l'écart de classement vient surtout de l'intelligibilité / la prosodie.
 
 ### Modèles non aboutis
 
@@ -39,26 +48,72 @@ l'intelligibilité / la prosodie.
 | **PocketTTS** (Kyutai) | 🔒 bloqué | poids voice-cloning + voix catalogue derrière l'acceptation explicite des conditions sur huggingface.co/kyutai/pocket-tts (le token seul ne suffit pas). Déblocable côté compte HF. |
 | **Audio8-0.6B**, **Parler-TTS FR** | ⬜ non tentés | prévus, pas encore intégrés |
 
-### ⚠️ WER et UTMOS ne sont pas d'accord
+### ⚠️ La naturalité automatique ne suit pas le WER (et UTMOS était trompeur)
 
-Le meilleur WER (**FireRed**) a l'UTMOS le plus bas sur `johnny` (2,78) ;
-**Chatterbox** et **Kokoro** ont le meilleur UTMOS (~3,65) avec un WER
-moyen. « Dit exactement le texte » ≠ « sonne le plus naturel » → plusieurs
-métriques + écoute obligatoires, aucune ne tranche seule.
+Le meilleur WER (**FireRed**) avait l'UTMOS le plus bas sur `johnny` (2,78) ;
+**Chatterbox** et **Kokoro** avaient le meilleur UTMOS (~3,65) avec un WER
+moyen. Mais **UTMOS est retiré** : contrôle en session, les voix de
+référence *humaines* y scorent 1,5–2,9 (`papa_narration.wav` = 2,89,
+`Aurore 2` = 1,56), *sous* les sorties TTS — la métrique n'est pas
+calibrée pour le FR. Elle est remplacée par **TTSDS2** (distributionnel vs
+vraie parole FR MLS-French, principal) + **NISQA-TTS** (par énoncé,
+contre-vérification) ; le re-scoring complet reste à lancer. « Dit
+exactement le texte » ≠ « sonne le plus naturel » → plusieurs métriques +
+écoute obligatoires, aucune ne tranche seule.
 
 ## Run émotions (`resultats/EMOTIONS.md`)
 
 Voix de référence émotionnelle → phrases du registre correspondant.
-- **L'émotion ne casse pas l'intelligibilité** : WER 0–5 % sur la plupart
-  des (modèle, émotion). Deux exceptions : `chatterbox_v3/papa_peur`
-  (WER 10 %, hallu + troncature 11 % — Chatterbox cale sur le registre peur
-  chuchoté) et `moss/papa_peur` (WER 9 % ± 21,7 — instabilité MOSS).
+**6 modèles** (FireRed, VoxCPM2, Chatterbox, MOSS, CosyVoice3, XTTS-v2 ;
+Kokoro exclu, voix interne).
+- **L'émotion ne casse pas l'intelligibilité** pour FireRed / VoxCPM2 /
+  XTTS-v2 / MOSS (hors peur) : WER 0–5 %. Exceptions :
+  `chatterbox_v3/papa_peur` (WER 10 %, hallu + troncature 11 % — cale sur
+  le registre peur chuchoté), `moss/papa_peur` (WER 9 % ± 21,7 —
+  instabilité MOSS), et surtout **CosyVoice3 sur les phrases courtes et
+  sèches** : `papa_colere` WER 29 % (p02 « Non, mais ça suffit ! »
+  s'effondre à 0,16 s sur 2 reps / 3 → troncature 13 %), `papa_joie`
+  WER 19 % (TN parasite « Tu te » → « Tuesday »). CosyVoice3 a besoin de
+  phrases longues.
 - **L'identité tient** : SIM 0,91–0,98. La **tristesse** est le registre le
   plus dur pour l'identité (SIM la plus basse chez tous : 0,91–0,93 —
   cohérent avec §3.4, faible énergie/voisement).
-- **Est-ce que ça *sonne* triste / en colère / apeuré ?** → question
-  d'écoute pure, non mesurée ici. Audio fourni pour A/B avec la version
-  neutre.
+- **Quel modèle *rend* le mieux l'émotion ?** → le mode **« A/B émotion »**
+  du test `site/ecoute/` compare deux modèles clonant la **même** voix de
+  réf émotionnelle sur la même phrase (« lequel rend le mieux
+  l'émotion <X> ? ») → win-rate par (modèle, émotion). *(Ancien
+  protocole « réf émotionnelle vs neutre » : résultat joué d'avance,
+  abandonné ; data archivée toujours agrégée.)*
+
+## Sensibilité à la voix de référence (`comparatif.md`, 7 voix)
+
+4 voix ajoutées en narration : `aurore2` (femme, 24 s), `tonton_marc`
+(accent du Sud-Ouest, 30 s, conte), `papy` (homme âgé, 30 s, **récitation
+d'un poème très connu**), `manou` (femme âgée, 30 s, conte original).
+SIM = ECAPA-TDNN (cf. §9), même-locuteur ~0,75–0,85.
+
+- **Voix féminine** (`aurore2`) : clonage **propre**, WER 5,3–5,9 % (5
+  modèles sur 6), SIM 0,69–0,81. MOSS seul déraille (WER 20 % — un run en
+  boucle).
+- **Accent du Sud-Ouest** (`tonton_marc`) : **pas de casse**, WER 4–6 %,
+  accent capté. CosyVoice3 seul à 16 % (fragilité passe-1 générale). →
+  **pas d'« accent parasite »**.
+- **Femme âgée** (`manou`, conte **original**) : **rien ne casse** — WER
+  3,5–8,4 % pour les 6 modèles (VoxCPM2 3,5 %, Chatterbox 3,9 % ;
+  CosyVoice3 8,4 % tronc. 9 %). SIM 0,69–0,83 (FireRed devant, XTTS
+  dernier). Une voix âgée se clone très bien.
+- **Homme âgé + poème connu** (`papy`) : **effondrement des modèles
+  “audio + transcript”** — VoxCPM2 **60 %** WER (49 % hallu, écho du
+  prompt : « à l'heure où blanchit la campagne » → « Tombe au blanchi »),
+  FireRed **77 %** WER. Les modèles **audio seul** (Chatterbox, XTTS, MOSS)
+  encaissent (4,7–6,8 %).
+- **Conclusion** — en comparant `papy` (poème) et `manou` (conte original),
+  la cause est **le transcript de référence, pas l'âge** : « Demain, dès
+  l'aube… » est un poème archi-mémorisé ; le modèle de texte
+  auto-régressif *continue le poème* au lieu de basculer sur la phrase
+  cible. **Le clonage audio+transcript est fragile aux références dont le
+  texte a un prior de continuation fort** (poème/chanson connus) ; l'audio
+  seul est immunisé. → éviter les textes de référence célèbres.
 
 ## Verdicts
 
@@ -123,12 +178,16 @@ Tous les candidats retenus sont **Apache-2.0 ou MIT** → usage commercial OK.
 
 ## Limites de cette v1 (à lever)
 
-1. **Aucune écoute** — MOS / A-B en aveugle (Phase 4) obligatoire avant de
-   publier un classement « officiel ».
+1. **Écoute pas encore dépouillée** — le test en aveugle est prêt
+   (`site/ecoute/` : MOS 1–5, A/B préférence, A/B émotion) mais aucun
+   auditeur n'a encore renvoyé d'export. Obligatoire avant de publier un
+   classement « officiel ».
 2. **WER brut** — enregistrer les 34 phrases en voix humaine pour poser le
    plancher ASR et lire les WER *au-dessus*.
 3. **Passe-1 seulement** — `chars_per_second` calibré par voix non appliqué
    (surtout critique pour MOSS).
-4. **2 voix de référence**, toutes deux masculines — élargir la banque.
+4. **Voix de référence** : 1 féminine (`aurore2`), 4 masculines. `papy`
+   cumule âge + registre poème (confond). Manque : locuteur âgé en
+   narration neutre, voix d'enfant, qualité téléphone.
 5. Artefact ASR connu : Whisper écrit « seconde » → « 2nde » (p33),
    « quatre-vingt-onze… » → « 91,3 % » (p15) — gonfle le WER de ces items.

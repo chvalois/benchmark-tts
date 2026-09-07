@@ -1,0 +1,29 @@
+# TTSDS2 — naturalité distributionnelle (métrique principale).
+# Deps lourdes (transformers>=5, openai-whisper, s3prl, wespeaker, allosaurus,
+# pyworld, silero-vad) : venv DÉDIÉ, jamais _commun.
+#
+#   source env.sh
+#   uv venv "$TTSB_VENVS/_ttsds2" --python 3.11
+#   uv pip install --python "$TTSB_VENVS/_ttsds2/bin/python" \
+#       --torch-backend=cu124 -r benchmark/requirements-ttsds2.txt
+#
+# ⚠️ Graphe de deps de ttsds 2.1.3 fragile : on reste sur le set qu'il
+# résout nativement (torch ~2.6+cu124, numpy<2, s3prl, pyannote-audio 3.4).
+# NE PAS forcer pyannote>=4 (tire pyannote-core>=6 -> numpy>=2 -> casse
+# s3prl/byol_a sur `torchaudio.set_audio_backend`).
+# Le seul benchmark cassé de ce set est **speaker** (`wespeaker` :
+# pyannote 3.4 passe `use_auth_token=` à hf_hub_download, retiré de
+# huggingface_hub>=1.0). -> `mesurer_ttsds2.py` exclut la catégorie SPEAKER
+# (poids 0) ; l'identité locuteur reste couverte par SIM (ECAPA,
+# `mesurer_perceptuel.py`).
+#
+# Corpus de réf FR : benchmark/build_ref_ttsds2.py (`datasets`, `soundfile`).
+
+ttsds>=2.1.3
+numpy<2
+datasets>=2.19
+soundfile>=0.12
+librosa>=0.10
+pandas>=2.0
+onnxruntime            # requis par wespeaker-unofficial (non déclaré)
+setuptools<81          # librosa 0.10 importe `pkg_resources` (retiré de setuptools>=81)

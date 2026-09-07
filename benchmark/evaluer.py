@@ -15,17 +15,20 @@ from benchmark.mesurer_wer import agreger_wer, wer
 
 def evaluer_runs(
     transcriptions: list[dict], phrases: list[Phrase], *, langue: str = "fr",
-    perceptuel: list[dict] | None = None,
+    perceptuel: list[dict] | None = None, nisqa: list[dict] | None = None,
 ) -> list[dict]:
     """`transcriptions` : `[{"id_phrase", "repetition", "texte_transcrit",
     "seg_logprobs"?}, ...]`. Une ligne de sortie par transcription
     rattachée à une phrase connue (les autres sont ignorées).
 
-    `perceptuel` (optionnel) : `[{"id_phrase", "repetition", "utmos",
-    "sim"}, ...]` — joint par (id, rep), ajoute `utmos`/`sim` aux lignes.
+    `perceptuel` (optionnel) : `[{"id_phrase", "repetition", "sim"}, ...]`
+    — joint par (id, rep), ajoute `sim` aux lignes.
+    `nisqa` (optionnel) : `[{"id_phrase", "repetition", "nisqa"}, ...]`
+    — joint par (id, rep), ajoute `nisqa` (naturalité NISQA-TTS) aux lignes.
     """
     par_id = {p.id: p for p in phrases}
     perc = {(x["id_phrase"], x.get("repetition")): x for x in (perceptuel or [])}
+    nis = {(x["id_phrase"], x.get("repetition")): x for x in (nisqa or [])}
     lignes: list[dict] = []
     for t in transcriptions:
         ph = par_id.get(t.get("id_phrase"))
@@ -33,6 +36,7 @@ def evaluer_runs(
             continue
         transcrit = (t.get("texte_transcrit") or "").strip()
         pp = perc.get((t.get("id_phrase"), t.get("repetition")), {})
+        nn = nis.get((t.get("id_phrase"), t.get("repetition")), {})
         w = wer(ph.texte, transcrit, langue)
         f = evaluer_fidelite(
             ph.texte, transcrit, langue=langue, seg_logprobs=t.get("seg_logprobs")
@@ -58,23 +62,29 @@ def evaluer_runs(
             "anomalie_kind": f["kind"],
             "anomalie_detail": f["detail"],
             "texte_transcrit": transcrit,
-            "utmos": pp.get("utmos"),
             "sim": pp.get("sim"),
+            "nisqa": nn.get("nisqa"),
         })
     return lignes
 
 
-def synthese(lignes: list[dict], *, plancher_wer: float = 0.0) -> dict:
+def synthese(lignes: list[dict], *, plancher_wer: float = 0.0,
+             ttsds2: dict | None = None) -> dict:
     """Agrège les lignes de `evaluer_runs` en synthèse modèle : WER (global
     + par longueur / registre / piège), WER net du plancher humain, taux
     d'anomalies (sur les runs réellement vérifiés) et listes de phrases
-    concernées (pour prioriser l'écoute)."""
+    concernées (pour prioriser l'écoute).
+
+    `ttsds2` (optionnel) : score distributionnel de naturalité du système
+    (`{"score_global", "par_composante", ...}`), calculé par
+    `mesurer_ttsds2.py` par (modèle, voix) — rangé tel quel dans la synthèse.
+    """
     if not lignes:
-        return {"n_runs": 0, "n_verifiees": 0}
+        return {"n_runs": 0, "n_verifiees": 0, "ttsds2": ttsds2}
 
     verifiees = [l for l in lignes if l["fidelite_verifiee"]]
     n_v = len(verifiees) or 1
-    utmos = [l["utmos"] for l in lignes if l.get("utmos") is not None]
+    nisqa = [l["nisqa"] for l in lignes if l.get("nisqa") is not None]
     sim = [l["sim"] for l in lignes if l.get("sim") is not None]
     agg = agreger_wer([
         {"wer": l["wer"], "longueur": l["longueur"],
@@ -88,7 +98,8 @@ def synthese(lignes: list[dict], *, plancher_wer: float = 0.0) -> dict:
     return {
         "n_runs": len(lignes),
         "n_verifiees": len(verifiees),
-        "utmos_moyen": (sum(utmos) / len(utmos)) if utmos else None,
+        "ttsds2": ttsds2,
+        "nisqa_moyen": (sum(nisqa) / len(nisqa)) if nisqa else None,
         "sim_moyen": (sum(sim) / len(sim)) if sim else None,
         "wer_moyen": agg["global"]["wer_moyen"],
         "wer_ecart_type": agg["global"]["wer_ecart_type"],

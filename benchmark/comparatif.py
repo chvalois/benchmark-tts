@@ -35,7 +35,8 @@ def _lignes_modele(chemin: Path, voix_filtre: set | None = None) -> list[dict]:
             "modele": modele,
             "voix": voix + ("" if clonage else " (voix interne)"),
             "clonage": "oui" if clonage else "non",
-            "utmos": s.get("utmos_moyen"),
+            "ttsds2": (s.get("ttsds2") or {}).get("score_global"),
+            "nisqa": s.get("nisqa_moyen"),
             "sim": s.get("sim_moyen"),
             "wer": s["wer_moyen"],
             "wer_sigma": s["wer_ecart_type"],
@@ -53,24 +54,32 @@ def _lignes_modele(chemin: Path, voix_filtre: set | None = None) -> list[dict]:
 def markdown(lignes: list[dict]) -> str:
     L = ["# Comparatif TTS open source — français", "",
          "Métriques **automatiques** : WER (whisper-large-v3-french), fidélité",
-         "language-agnostic, **UTMOS** (naturel prédit, ↑ mieux), **SIM**",
-         "(similarité au locuteur de réf, ↑ mieux). **Pas encore d'écoute MOS",
-         "humaine.** WER brut (aucun plancher humain soustrait).", "",
-         "| modèle | voix | clon. | WER | ±σ | UTMOS | SIM | hallu. | rép. | tronc. | RTF | CV dur. |",
-         "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+         "language-agnostic, **TTSDS2** (naturalité distributionnelle vs vraie",
+         "parole FR, ↑ mieux), **NISQA** (naturalité prédite par énoncé, contre-",
+         "vérification, ↑ mieux), **SIM** (similarité au locuteur de réf, ↑ mieux).",
+         "**Pas encore d'écoute MOS humaine.** WER brut (aucun plancher humain",
+         "soustrait).", "",
+         "| modèle | voix | clon. | WER | ±σ | TTSDS2 | NISQA | SIM | hallu. | rép. | tronc. | RTF | CV dur. |",
+         "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for x in sorted(lignes, key=lambda d: d["wer"]):
-        um = f"{x['utmos']:.2f}" if x.get("utmos") is not None else "—"
+        t2 = f"{x['ttsds2']:.1f}" if x.get("ttsds2") is not None else "—"
+        nq = f"{x['nisqa']:.2f}" if x.get("nisqa") is not None else "—"
         sm = f"{x['sim']:.3f}" if x.get("sim") is not None else "—"
         L.append(
             f"| {x['modele']} | {x['voix']} | {x['clonage']} | {_pct(x['wer'])} | "
-            f"{_pct(x['wer_sigma'])} | {um} | {sm} | {_pct(x['hallucination'])} | "
+            f"{_pct(x['wer_sigma'])} | {t2} | {nq} | {sm} | {_pct(x['hallucination'])} | "
             f"{_pct(x['repetition'])} | {_pct(x['troncature'])} | {x['rtf']:.2f} | "
             f"{_pct(x['cv_duree'])} |"
         )
     L.append("")
     L.append("- **RTF** = temps de génération / durée audio (< 1 = plus rapide que le temps réel).")
-    L.append("- **UTMOS** ~1–5, entraîné sur MOS anglophone → classement relatif seulement.")
-    L.append("- **SIM** = cosinus embeddings `wavlm-base-plus-sv` gén. vs voix de réf (0–1).")
+    L.append("- **TTSDS2** = score distributionnel (0–100) vs corpus de vraie parole FR "
+             "(MLS-French) ; principal pour la naturalité. UTMOS retiré (non calibré FR : "
+             "les voix humaines de réf y scoraient 1,5–2,9, sous les TTS).")
+    L.append("- **NISQA** ~1–5 (NISQA-TTS, naturalness) — biais anglophone connu, "
+             "tenu en contre-vérification seulement.")
+    L.append("- **SIM** = cosinus embeddings **ECAPA-TDNN** (`speechbrain/spkrec-ecapa-voxceleb`) "
+             "gén. vs voix de réf, silences rognés (0–1).")
     L.append("- **CV durée** = écart-type / moyenne de la durée sur les 3 reps (stabilité).")
     L.append("- Détail par catégorie + WER par piège : `resultats/<modele>.md`.")
     return "\n".join(L)
