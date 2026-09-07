@@ -1,0 +1,20 @@
+# contexte de build minimal : seuls benchmark/, resultats/, models.lock servent
+.git
+.github
+site
+audio_genere
+audio_ref
+exports
+models
+corpus
+docs
+scripts
+_ttsds2
+_nisqa
+*.venv
+.venv
+**/__pycache__
+**/*.pyc
+env.sh
+*.md
+!resultats/*.md

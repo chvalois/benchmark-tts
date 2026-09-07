@@ -10,21 +10,23 @@ Mesuré sur matériel réel (**RTX 4090**, 24 Go), un modèle à la fois.
 > - [`BENCHMARK_TTS_OPENSOURCE_FR_APIAVISOL.md`](BENCHMARK_TTS_OPENSOURCE_FR_APIAVISOL.md) — retour d'expérience, méthodologie détaillée, pièges
 > - [`BENCHMARK_TTS_OPENSOURCE_FR_REFLEXIONCLAUDE.md`](BENCHMARK_TTS_OPENSOURCE_FR_REFLEXIONCLAUDE.md) — architecture, corpus structuré, WER FR
 
-## État : Phases 0–1 (socle)
+## État : v1 — 7 modèles scorés + test d'écoute
 
 | Phase | Contenu | Statut |
 |---|---|---|
 | 0 | Socle infra (env, `doctor.py`, stockage D:) | ✅ |
 | 1 | Contrats partagés (corpus, voix, pré-traitement, `models.lock`, contrat modèle) | ✅ |
-| 2 | Module commun de scoring (WER FR, fidélité, vitesse, licence, stabilité) | ✅ pur & testé (97 % cov.) — reste : runner ASR + helper VRAM (avec Phase 3) |
-| 3 | Adaptateurs modèles (venv-par-modèle) | ✅ 5 modèles : chatterbox_v3, kokoro_82m, firered_tts3, voxcpm2, moss_tts_local_v15 |
-| 4 | Protocole subjectif (MOS, A/B aveugle, panel) | à venir |
-| 5 | Agrégation & rapport | ✅ `rapport.py` + `comparatif.py` → `resultats/` (par modèle + `comparatif.md` + `RESUME.md`) |
-| 6 | Présence publique (leaderboard, navigateur audio, data brute) | à venir |
+| 2 | Module commun de scoring (WER FR, fidélité, vitesse, licence, stabilité) | ✅ pur & testé (97 % cov.) |
+| 3 | Adaptateurs modèles (venv-par-modèle) | ✅ 8 : chatterbox_v3, kokoro_82m, firered_tts3, voxcpm2, moss_tts_local_v15, cosyvoice3_05b, xtts_v2 (+ f5_tts = FR non supporté) |
+| 4 | Protocole subjectif (MOS, A/B aveugle) | ✅ `build_ecoute.py` → `site/ecoute/` ; agrégation `agreger_ecoute.py` → `resultats/ecoute.md` |
+| 5 | Agrégation & rapport | ✅ `rapport.py` + `comparatif.py` → `resultats/` (par modèle + `comparatif.md` + `RESUME.md` + `EMOTIONS.md`) |
+| 6 | Présence publique (site de résultats) | 🚧 `build_pages.py` → `site/resultats/` (3 pages autonomes) ; déploiement Coolify |
 | 7 | Cadence & contenu (re-run par sortie de modèle, outil de conseil) | à venir |
 
-**Périmètre v1** : corpus de phrases annotées + WER FR + licence + vitesse.
-**v2** : volet narratif long-form / clonage zero-shot (méthodo APIAVISOL).
+**Périmètre v1** : corpus de phrases annotées + WER FR + licence + vitesse + écoute humaine.
+**v2** : volet narratif long-form / clonage zero-shot (méthodo APIAVISOL) — cf. `corpus/longform.yaml`.
+
+Classement complet : [`resultats/RESUME.md`](resultats/RESUME.md) · comparatif : [`resultats/comparatif.md`](resultats/comparatif.md).
 
 ## Démarrage
 
@@ -40,6 +42,28 @@ uv run --with pytest --with pytest-cov python -m pytest \
 # plan de téléchargement des poids (rien téléchargé)
 python3 benchmark/fetch_models.py --check --set lean
 ```
+
+## Site de résultats
+
+`benchmark/build_pages.py` génère un site **statique autonome** dans
+`site/resultats/` à partir des `.md` / `.json` de `resultats/` (stdlib + PyYAML,
+**aucune donnée vocale perso** — que des métriques agrégées) :
+
+- `index.html` — classement triable + verdict + méthode
+- `objectif.html` — table complète des métriques auto, par voix
+- `ecoute.html` — rendu du test d'écoute humain (`resultats/ecoute.md`)
+
+```bash
+source env.sh
+python3 benchmark/build_pages.py   # -> site/resultats/{index,objectif,ecoute}.html
+```
+
+**Déploiement (VPS managé + Coolify)** : le `Dockerfile` à la racine régénère les
+pages puis les sert via `nginx`. Coolify → *Public Repository* → build pack
+Dockerfile, port `80`, HTTPS automatique ; chaque push sur `main` redéploie.
+
+> `site/ecoute/` (audio du test A/B) contient des **clones de voix perso** —
+> `.gitignore`é, jamais publié.
 
 ## Contraintes matérielles (résumé)
 
@@ -65,9 +89,16 @@ benchmark-tts/
 ├── benchmark/                # module commun, agnostique du modèle
 │   ├── pretraitement.py      # 6 étapes §3.9 + ponctuation titre §3.1
 │   ├── fetch_models.py       # téléchargement révision-épinglée vers D:
+│   ├── rapport.py / comparatif.py   # agrégation -> resultats/
+│   ├── build_ecoute.py      # génère site/ecoute/ (test A/B aveugle)
+│   ├── build_pages.py       # génère site/resultats/ (site statique public)
 │   ├── CONTRAT_MODELE.md     # interface modèle ↔ module commun
 │   └── tests/
 ├── models/<nom>/             # un venv + un generer.py par modèle (Phase 3)
 ├── audio_genere/             # (généré sur D:, hors git)
-└── resultats/                # rapports CSV / MD / JSON (Phase 5)
+├── resultats/                # rapports CSV / MD / JSON (Phases 4–5)
+├── site/
+│   ├── resultats/            # site statique publié via Coolify
+│   └── ecoute/               # test A/B — audio hors git
+└── Dockerfile                # image nginx du site de résultats
 ```
