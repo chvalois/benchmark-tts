@@ -15,8 +15,10 @@ venv/
 /audio_genere/*
 !/audio_genere/.gitkeep
 /resultats/*.csv
-/resultats/*.json
 !/resultats/.gitkeep
+
+# Retours d'auditeurs bruts (pseudos) — jamais publiés
+exports/*.json
 
 # Poids / venvs par modèle : jamais commités (voir models.lock + fetch_models.py)
 /models/*/.venv/

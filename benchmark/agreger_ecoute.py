@@ -76,7 +76,8 @@ def agreger(exports: list[Path]) -> str:
             {**v, "_pseudo": d.get("pseudo")} for v in d.get("votes", []) if v.get("id")
         )
 
-    L.append(f"{len(auditeurs)} auditeur(s) : {', '.join(sorted(auditeurs))}  "
+    # Panel anonymisé : seul le nombre d'auditeurs est publié, pas les pseudos.
+    L.append(f"{len(auditeurs)} auditeur(s)  "
              f"— {len(ab_votes)} votes A/B, {len(mos_votes)} notes MOS.\n")
 
     # ---------- A/B ----------
