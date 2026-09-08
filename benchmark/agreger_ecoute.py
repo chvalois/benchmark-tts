@@ -5,8 +5,12 @@ Dé-anonymise via `_solution.json` puis produit :
 - **A/B** : win-rate par modèle (victoires + ½ nuls), matrice des duels,
   défauts entendus attribués au bon modèle ;
 - **MOS** : moyenne ± IC 95 % par modèle et par axe ;
-- **corrélations** MOS ↔ métriques auto (par clip) : naturel↔UTMOS,
-  intelligibilité↔(1−WER), similarité↔SIM.
+- **corrélations** MOS ↔ métriques auto (par clip) : intelligibilité↔(1−WER),
+  similarité↔SIM (le **naturel** n'a pas de contrepartie auto : UTMOS/TTSDS2/
+  NISQA écartés, cf. `docs/METHODOLOGIE.md` §10) ;
+- **ÉMOTION** : taux de transfert (l'auditeur juge le clip cloné depuis la
+  voix de réf émotionnelle plus expressif que celui cloné depuis la voix
+  neutre), par (modèle, émotion) et global par modèle.
 
     source env.sh
     python3 benchmark/agreger_ecoute.py exports/*.json --out resultats/ecoute.md
@@ -50,55 +54,76 @@ def _pearson(xs: list[float], ys: list[float]) -> float | None:
 
 
 def _lignes_objectives() -> dict[tuple[str, str, int], dict]:
-    """(modele, phrase, rep) -> {wer, utmos, sim} depuis resultats/*.json."""
+    """(modele, phrase, rep) -> {wer, sim} depuis resultats/*.json."""
     out: dict[tuple[str, str, int], dict] = {}
     for f in RESULTATS.glob("*.json"):
         modele = f.stem
         for _voix, r in json.loads(f.read_text(encoding="utf-8")).items():
             for l in r.get("lignes", []):
                 out[(modele, l["id_phrase"], l["repetition"])] = {
-                    "wer": l["wer"], "utmos": l.get("utmos"), "sim": l.get("sim"),
+                    "wer": l["wer"], "sim": l.get("sim"),
                 }
     return out
 
 
+def _charger_solution() -> dict:
+    """Solution courante + toutes les solutions archivées (`_solutions/`)
+    fusionnées : un export reste exploitable même après un changement de
+    pool (les `id` non retrouvés sont simplement ignorés en aval)."""
+    sol = {"build": {}, "ab": {}, "mos": {}, "emo": {}}
+    fichiers = sorted((SOLUTION.parent / "_solutions").glob("*.json"))
+    if SOLUTION.is_file():
+        fichiers.append(SOLUTION)          # la courante en dernier (prioritaire)
+    for f in fichiers:
+        d = json.loads(f.read_text(encoding="utf-8"))
+        for k in ("ab", "mos", "emo"):
+            sol[k].update(d.get(k, {}))
+        if d.get("build"):
+            sol["build"] = d["build"]
+    sol["build"].setdefault("rep", 1)
+    return sol
+
+
 def agreger(exports: list[Path]) -> str:
-    sol = json.loads(SOLUTION.read_text(encoding="utf-8"))
+    sol = _charger_solution()
     obj = _lignes_objectives()
     L: list[str] = ["# Test d'écoute — agrégation", ""]
 
-    ab_votes, mos_votes = [], []
+    bacs = {"ab": [], "mos": [], "emo": []}
     auditeurs = set()
     for f in exports:
         d = json.loads(f.read_text(encoding="utf-8"))
         auditeurs.add(d.get("pseudo", f.stem))
-        (ab_votes if d.get("mode") == "ab" else mos_votes).extend(
-            {**v, "_pseudo": d.get("pseudo")} for v in d.get("votes", []) if v.get("id")
-        )
+        bac = bacs.get(d.get("mode"), bacs["mos"])
+        bac.extend({**v, "_pseudo": d.get("pseudo")}
+                   for v in d.get("votes", []) if v.get("id"))
+    ab_votes, mos_votes, emo_votes = bacs["ab"], bacs["mos"], bacs["emo"]
 
     # Panel anonymisé : seul le nombre d'auditeurs est publié, pas les pseudos.
-    L.append(f"{len(auditeurs)} auditeur(s)  "
-             f"— {len(ab_votes)} votes A/B, {len(mos_votes)} notes MOS.\n")
+    L.append(f"{len(auditeurs)} auditeur(s) "
+             f"— {len(ab_votes)} votes A/B, {len(mos_votes)} notes MOS, "
+             f"{len(emo_votes)} votes émotion.\n")
 
     # ---------- A/B ----------
     if ab_votes:
         stats = defaultdict(lambda: {"v": 0, "n": 0, "d": 0})
         duel = defaultdict(lambda: [0, 0])          # (m1,m2) trié -> [gagne m1, gagne m2]
         defauts = defaultdict(lambda: defaultdict(int))
+        par_voix = defaultdict(lambda: defaultdict(lambda: [0.0, 0]))   # voix -> modele -> [v, n]
         for v in ab_votes:
             s = sol["ab"].get(v["id"])
             if not s or not v.get("choix"):
                 continue
             ma, mb = s["A_modele"], s["B_modele"]
+            voix = s.get("voix", "?")
             for m in (ma, mb):
                 stats[m]["n"] += 1
-            if v["choix"] == "A":
-                stats[ma]["v"] += 1
-            elif v["choix"] == "B":
-                stats[mb]["v"] += 1
-            else:
-                stats[ma]["v"] += 0.5
-                stats[mb]["v"] += 0.5
+                par_voix[voix][m][1] += 1
+            gain = {"A": (ma,), "B": (mb,)}.get(v["choix"], (ma, mb))
+            pts = 1.0 if v["choix"] in ("A", "B") else 0.5
+            for m in gain:
+                stats[m]["v"] += pts
+                par_voix[voix][m][0] += pts
             k = tuple(sorted((ma, mb)))
             if v["choix"] in ("A", "B"):
                 gagnant = ma if v["choix"] == "A" else mb
@@ -134,23 +159,38 @@ def agreger(exports: list[Path]) -> str:
             L.append(f"| **{a}** | " + " | ".join(cells) + " |")
         L.append("")
 
+        if len(par_voix) > 1:
+            voix_l = sorted(par_voix)
+            modeles_l = sorted({m for vv in par_voix.values() for m in vv})
+            L.append("## A/B — win-rate par voix de référence (victoires / duels)\n")
+            L.append("| modèle | " + " | ".join(voix_l) + " |")
+            L.append("|" + "---|" * (len(voix_l) + 1))
+            for m in modeles_l:
+                cells = []
+                for vx in voix_l:
+                    vv, nn = par_voix[vx].get(m, [0.0, 0])
+                    cells.append(f"{vv / nn:.0%} ({vv:.1f}/{nn})" if nn else "—")
+                L.append(f"| {m} | " + " | ".join(cells) + " |")
+            L.append("")
+
     # ---------- MOS ----------
     if mos_votes:
         par = defaultdict(lambda: defaultdict(list))    # modele -> axe -> [notes]
+        par_vx = defaultdict(lambda: defaultdict(list)) # voix -> modele -> [moyenne des 4 axes]
         corr_pts = defaultdict(lambda: ([], []))        # (axe_h, metrique) -> (xs, ys)
         for v in mos_votes:
             s = sol["mos"].get(v["id"])
             if not s:
                 continue
-            m, phrase = s["modele"], s["phrase"]
+            m, phrase, voix = s["modele"], s["phrase"], s.get("voix", "?")
+            notes = [float(v[a]) for a in AXES if v.get(a) is not None]
             for a in AXES:
                 if v.get(a) is not None:
                     par[m][a].append(float(v[a]))
+            if notes:
+                par_vx[voix][m].append(sum(notes) / len(notes))
             o = obj.get((m, phrase, sol["build"]["rep"]))
             if o:
-                if v.get("naturel") is not None and o["utmos"] is not None:
-                    xs, ys = corr_pts[("naturel", "UTMOS")]
-                    xs.append(float(v["naturel"])); ys.append(o["utmos"])
                 if v.get("intelligibilite") is not None:
                     xs, ys = corr_pts[("intelligibilite", "1-WER")]
                     xs.append(float(v["intelligibilite"])); ys.append(1 - o["wer"])
@@ -168,6 +208,19 @@ def agreger(exports: list[Path]) -> str:
                 cells.append(f"{mo:.2f} ±{ic:.2f}" if n else "—")
             L.append(f"| {m} | " + " | ".join(cells) + " |")
         L.append("")
+        if len(par_vx) > 1:
+            voix_l = sorted(par_vx)
+            modeles_l = sorted({m for vv in par_vx.values() for m in vv})
+            L.append("## MOS — note globale moyenne (4 axes) par voix de référence\n")
+            L.append("| modèle | " + " | ".join(voix_l) + " |")
+            L.append("|" + "---|" * (len(voix_l) + 1))
+            for m in modeles_l:
+                cells = []
+                for vx in voix_l:
+                    xs = par_vx[vx].get(m, [])
+                    cells.append(f"{sum(xs) / len(xs):.2f} (n={len(xs)})" if xs else "—")
+                L.append(f"| {m} | " + " | ".join(cells) + " |")
+            L.append("")
         L.append("## Corrélation MOS (humain) ↔ métrique automatique (par clip)\n")
         L.append("| axe humain | métrique auto | Pearson r | n |")
         L.append("|---|---|---|---|")
@@ -177,17 +230,83 @@ def agreger(exports: list[Path]) -> str:
                      else f"| {ah} | {met} | n/a | {len(xs)} |")
         L.append("")
 
+    # ---------- ÉMOTION ----------
+    if emo_votes:
+        mv = defaultdict(lambda: [0.0, 0])          # modèle -> [victoires, n]  (global)
+        mv_e = defaultdict(lambda: [0.0, 0])        # (modèle, émotion) -> [victoires, n]
+        old = defaultdict(lambda: [0, 0, 0, 0])     # protocole archivé : (modèle, émotion) -> [n, émo, égal, neutre]
+        old_t = defaultdict(lambda: [0, 0, 0, 0])
+        for v in emo_votes:
+            s = sol.get("emo", {}).get(v["id"])
+            if not s or not v.get("choix"):
+                continue
+            if s.get("A_modele"):                   # nouveau protocole : modèle vs modèle
+                ma, mb, emo = s["A_modele"], s["B_modele"], s["emotion"]
+                for m in (ma, mb):
+                    mv[m][1] += 1
+                    mv_e[(m, emo)][1] += 1
+                gg = {"A": (ma,), "B": (mb,)}.get(v["choix"], (ma, mb))
+                pts = 1.0 if v["choix"] in ("A", "B") else 0.5
+                for m in gg:
+                    mv[m][0] += pts
+                    mv_e[(m, emo)][0] += pts
+            elif s.get("A_ref"):                     # ancien protocole (émo vs neutre) — data archivée
+                m, emo = s["modele"], s["emotion"]
+                idx = 2 if v["choix"] == "=" else (1 if s[f"{v['choix']}_ref"] == "emo" else 3)
+                for cible in (old[(m, emo)], old_t[m]):
+                    cible[0] += 1
+                    cible[idx] += 1
+
+        if mv:
+            L.append("## Émotion — quel modèle rend le mieux l'émotion ?\n")
+            L.append("A/B en aveugle : deux modèles disent la même phrase, tous deux "
+                     "clonés depuis la **même** voix de réf émotionnelle. Win-rate = "
+                     "victoires + ½ nuls.\n")
+            L.append("| modèle | win-rate | (victoires / duels) |")
+            L.append("|---|---|---|")
+            for m, (vv, nn) in sorted(mv.items(), key=lambda kv: -kv[1][0] / max(1, kv[1][1])):
+                L.append(f"| {m} | {vv / nn:.0%} | {vv:.1f} / {nn} |" if nn else f"| {m} | — | 0 / 0 |")
+            L.append("")
+            emos = sorted({e for _, e in mv_e})
+            if emos:
+                L.append("### Émotion — win-rate par (modèle, émotion)\n")
+                L.append("| modèle | " + " | ".join(emos) + " |")
+                L.append("|" + "---|" * (len(emos) + 1))
+                for m in sorted(mv):
+                    cells = []
+                    for e in emos:
+                        vv, nn = mv_e.get((m, e), [0.0, 0])
+                        cells.append(f"{vv / nn:.0%} ({vv:.1f}/{nn})" if nn else "—")
+                    L.append(f"| {m} | " + " | ".join(cells) + " |")
+                L.append("")
+
+        if old_t:
+            L.append("## Émotion — protocole archivé (réf. émotionnelle vs neutre)\n")
+            L.append("*Sessions antérieures : « lequel sonne le plus <émotion> », clip "
+                     "cloné depuis la réf émotionnelle vs depuis la réf neutre.*\n")
+            L.append("| modèle | n | choix réf. émo. | égalité | choix réf. neutre | taux de transfert |")
+            L.append("|---|---|---|---|---|---|")
+            for m, (n, ce, eg, cn) in sorted(old_t.items(), key=lambda kv: -(kv[1][1] / max(1, kv[1][0]))):
+                L.append(f"| {m} | {n} | {ce} | {eg} | {cn} | {ce / n:.0%} |" if n else f"| {m} | 0 | | | | — |")
+            L.append("")
+
     return "\n".join(L)
 
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("exports", nargs="+", help="fichiers ecoute_*.json des auditeurs")
+    p.add_argument("exports", nargs="*",
+                   help="fichiers ecoute_*.json des auditeurs (défaut : exports/*.json)")
     p.add_argument("--out", default="resultats/ecoute.md")
     args = p.parse_args()
     if not SOLUTION.is_file():
         raise SystemExit(f"[FAIL] {SOLUTION} absent — lance d'abord build_ecoute.py")
-    md = agreger([Path(e) for e in args.exports])
+    fichiers = [Path(e) for e in args.exports] or sorted((RACINE / "exports").glob("*.json"))
+    if not fichiers:
+        raise SystemExit("[FAIL] aucun export — dépose les .json dans exports/ "
+                         "ou passe-les en argument")
+    print(f"[agreger] {len(fichiers)} export(s) : {', '.join(f.name for f in fichiers)}")
+    md = agreger(fichiers)
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     Path(args.out).write_text(md, encoding="utf-8")
     print(md)

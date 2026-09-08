@@ -21,8 +21,13 @@ def evaluer_runs(
     "seg_logprobs"?}, ...]`. Une ligne de sortie par transcription
     rattachée à une phrase connue (les autres sont ignorées).
 
-    `perceptuel` (optionnel) : `[{"id_phrase", "repetition", "utmos",
-    "sim"}, ...]` — joint par (id, rep), ajoute `utmos`/`sim` aux lignes.
+    `perceptuel` (optionnel) : `[{"id_phrase", "repetition", "sim"}, ...]`
+    — joint par (id, rep), ajoute `sim` (similarité locuteur) aux lignes.
+
+    Pas de métrique de naturalité automatique : UTMOS, TTSDS2 et NISQA ont
+    tous été testés et écartés (non pertinents / anti-corrélés avec la note
+    humaine en français) — cf. `docs/METHODOLOGIE.md` §10. La naturalité se
+    juge à l'écoute (`benchmark/agreger_ecoute.py`).
     """
     par_id = {p.id: p for p in phrases}
     perc = {(x["id_phrase"], x.get("repetition")): x for x in (perceptuel or [])}
@@ -58,7 +63,6 @@ def evaluer_runs(
             "anomalie_kind": f["kind"],
             "anomalie_detail": f["detail"],
             "texte_transcrit": transcrit,
-            "utmos": pp.get("utmos"),
             "sim": pp.get("sim"),
         })
     return lignes
@@ -74,7 +78,6 @@ def synthese(lignes: list[dict], *, plancher_wer: float = 0.0) -> dict:
 
     verifiees = [l for l in lignes if l["fidelite_verifiee"]]
     n_v = len(verifiees) or 1
-    utmos = [l["utmos"] for l in lignes if l.get("utmos") is not None]
     sim = [l["sim"] for l in lignes if l.get("sim") is not None]
     agg = agreger_wer([
         {"wer": l["wer"], "longueur": l["longueur"],
@@ -88,7 +91,6 @@ def synthese(lignes: list[dict], *, plancher_wer: float = 0.0) -> dict:
     return {
         "n_runs": len(lignes),
         "n_verifiees": len(verifiees),
-        "utmos_moyen": (sum(utmos) / len(utmos)) if utmos else None,
         "sim_moyen": (sum(sim) / len(sim)) if sim else None,
         "wer_moyen": agg["global"]["wer_moyen"],
         "wer_ecart_type": agg["global"]["wer_ecart_type"],

@@ -73,14 +73,16 @@ def test_perceptuel_joint_et_agrege():
          "texte_transcrit": "elle poussa la lourde porte de chêne massif du grenier"},
     ]
     perc = [
-        {"id_phrase": "p01", "repetition": 1, "utmos": 3.8, "sim": 0.90},
-        {"id_phrase": "p02", "repetition": 1, "utmos": 3.4, "sim": 0.80},
+        {"id_phrase": "p01", "repetition": 1, "sim": 0.90},
+        {"id_phrase": "p02", "repetition": 1, "sim": 0.80},
     ]
     lignes = evaluer_runs(tr, CORPUS, perceptuel=perc)
-    assert lignes[0]["utmos"] == 3.8 and lignes[0]["sim"] == 0.90
+    assert lignes[0]["sim"] == 0.90
+    # aucune métrique de naturalité auto ne subsiste
+    assert "utmos" not in lignes[0] and "nisqa" not in lignes[0]
     s = synthese(lignes)
-    assert abs(s["utmos_moyen"] - 3.6) < 1e-9
     assert abs(s["sim_moyen"] - 0.85) < 1e-9
+    assert "nisqa_moyen" not in s and "ttsds2" not in s
 
 
 def test_synthese_sans_perceptuel_none():
@@ -90,4 +92,4 @@ def test_synthese_sans_perceptuel_none():
         CORPUS,
     )
     s = synthese(lignes)
-    assert s["utmos_moyen"] is None and s["sim_moyen"] is None
+    assert s["sim_moyen"] is None

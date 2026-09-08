@@ -37,7 +37,6 @@ M = {
     "wer":       dict(label="WER",      dir=-1, fmt="pct",  g=.05,  b=.10),
     "wer_sigma": dict(label="±σ",       dir=-1, fmt="pct",  g=.08,  b=.15),
     "wer_net":   dict(label="WER net",  dir=-1, fmt="pct",  g=.04,  b=.09),
-    "utmos":     dict(label="UTMOS",    dir=1,  fmt="num2", g=3.40, b=3.00),
     "sim":       dict(label="SIM",      dir=1,  fmt="num3", g=.80,  b=.72),
     "hallu":     dict(label="hallu.",   dir=-1, fmt="pct",  g=.001, b=.05),
     "rep":       dict(label="rép.",     dir=-1, fmt="pct",  g=.001, b=.05),
@@ -492,7 +491,7 @@ def _collecter() -> dict:
                 "clonage": r["meta"].get("params", {}).get("clonage", True),
                 "wer": s["wer_moyen"], "wer_sigma": s["wer_ecart_type"],
                 "wer_net": s.get("wer_net_plancher"),
-                "utmos": s.get("utmos_moyen"), "sim": s.get("sim_moyen"),
+                "sim": s.get("sim_moyen"),
                 "hallu": s["taux_hallucination"], "rep": s["taux_repetition"],
                 "tronc": s["taux_troncature"],
                 "rtf": g["rtf"]["moyenne"], "ttfa": g["ttfa_s"]["moyenne"],
@@ -603,6 +602,7 @@ def page_index(standalone: bool = False) -> str:
     d = _collecter()
     v = d["voix_defaut"]
     h_obj = REPO if standalone else "objectif.html"
+    h_ec = "#ecoute" if standalone else "ecoute.html"
     lb = sorted(
         ((n, m, m["par_voix"][v]) for n, m in d["modeles"].items()
          if (m.get("par_voix", {}).get(v) or {}).get("wer") is not None
@@ -622,7 +622,7 @@ def page_index(standalone: bool = False) -> str:
                else f'<span class="chip warn">{m["licence"]}</span>')
         rows.append({
             "_nom": nom, "_rank": i + 1,
-            "wer": r["wer"], "utmos": r["utmos"], "sim": r["sim"],
+            "wer": r["wer"], "sim": r["sim"],
         })
         vram = f'{m["vram_go"]} Go' if m["vram_go"] else "—"
         st = (
@@ -642,7 +642,6 @@ def page_index(standalone: bool = False) -> str:
     cols = [
         {"k": "_nom", "label": "modèle"},
         {"k": "wer", "label": "WER", "dir": -1, "fmt": "pct", "g": .05, "b": .10},
-        {"k": "utmos", "label": "UTMOS", "dir": 1, "fmt": "num2", "g": 3.4, "b": 3.0},
         {"k": "sim", "label": "SIM", "dir": 1, "fmt": "num3", "g": .80, "b": .72},
     ]
     cfg = {"cols": cols, "rows": rows, "sort": {"k": "wer", "asc": True}, "rankcol": True}
@@ -692,17 +691,17 @@ def page_index(standalone: bool = False) -> str:
 
     corps = f"""<section id="classement">
   <div class="sec-h"><h2>Recap des scores</h2><span class="n">voix « {v} » · passe-1</span></div>
-  <p class="lead">Les trois métriques qui comptent — WER (intelligibilité, transcription
-    <span class="mono">whisper-large-v3-french</span> + <span class="mono">jiwer</span>),
-    UTMOS (naturel prédit), SIM (similarité au locuteur, ECAPA). Clic sur un en-tête,
-    ou&nbsp;:</p>
+  <p class="lead">Les métriques auto qui tiennent — WER (intelligibilité, transcription
+    <span class="mono">whisper-large-v3-french</span> + <span class="mono">jiwer</span>)
+    et SIM (similarité au locuteur, ECAPA). <b>La naturalité ne se mesure pas
+    ici</b> : UTMOS, TTSDS2 et NISQA ont tous été écartés (non pertinents en
+    français) — elle vient du <a class="link" href="{h_ec}">test d'écoute</a>.
+    Clic sur un en-tête, ou&nbsp;:</p>
   {LEGENDE}
   <div class="tools"><label>Trier&nbsp;:
     <select id="msort">
       <option value="wer|a">WER — meilleur d'abord</option>
       <option value="wer|d">WER — pire d'abord</option>
-      <option value="utmos|d">UTMOS — meilleur d'abord</option>
-      <option value="utmos|a">UTMOS — pire d'abord</option>
       <option value="sim|d">SIM — meilleur d'abord</option>
       <option value="sim|a">SIM — pire d'abord</option>
     </select></label></div>
@@ -717,10 +716,10 @@ def page_index(standalone: bool = False) -> str:
 </section>
 
 <section id="lecture"><div class="callout">
-  <p><span class="k">Les métriques priorisent l'écoute, elles ne tranchent pas.</span>
+  <p><span class="k">Les métriques auto ne tranchent pas — l'écoute, oui.</span>
   <span class="d">Le WER est brut (une vraie voix dans le même Whisper fait déjà 2–4 %).
-  UTMOS est entraîné sur du MOS anglophone — à lire en classement relatif. Le verdict
-  vient du test d'écoute en aveugle.</span></p>
+  La naturalité n'a aucune métrique auto fiable en français (UTMOS, TTSDS2, NISQA
+  tous écartés) : le classement de naturalité vient du test d'écoute en aveugle.</span></p>
 </div></section>
 
 {ecoute_bloc}
@@ -763,11 +762,10 @@ def page_index(standalone: bool = False) -> str:
 # --------------------------------------------------------------------------
 def page_objectif() -> str:
     d = _collecter()
-    # p2 masqué < 620px, p3 masqué < 900px — modèle/WER/UTMOS/SIM toujours visibles
+    # p2 masqué < 620px, p3 masqué < 900px — modèle/WER/SIM toujours visibles
     cols = [
         {"k": "_nom", "label": "modèle"},
         {"k": "wer", "label": "WER", "dir": -1, "fmt": "pct", "g": .05, "b": .10},
-        {"k": "utmos", "label": "UTMOS", "dir": 1, "fmt": "num2", "g": 3.4, "b": 3.0},
         {"k": "sim", "label": "SIM", "dir": 1, "fmt": "num3", "g": .80, "b": .72},
         {"k": "wer_sigma", "label": "±σ", "dir": -1, "fmt": "pct", "g": .08, "b": .15, "p": 2},
         {"k": "rtf", "label": "RTF", "dir": 0, "fmt": "x", "g": .6, "b": 1.5, "p": 2},
@@ -795,7 +793,7 @@ def page_objectif() -> str:
             rr.append({
                 "_nom": n, "_lic": lic, "_detail": _detail_html(r),
                 "clonage": r["clonage"], "wer": r["wer"], "wer_sigma": r["wer_sigma"],
-                "wer_net": r["wer_net"], "utmos": r["utmos"], "sim": r["sim"],
+                "wer_net": r["wer_net"], "sim": r["sim"],
                 "hallu": r["hallu"], "rep": r["rep"], "tronc": r["tronc"],
                 "rtf": r["rtf"], "ttfa": r["ttfa"], "cv": r["cv"], "vram_go": m["vram_go"],
             })
@@ -807,9 +805,10 @@ def page_objectif() -> str:
     corps = f"""<section>
   <div class="sec-h"><h2>Métriques par modèle</h2><span class="n">toutes voix · triable</span></div>
   <p class="lead">WER brut (pas de plancher humain) — <i>WER net</i> = estimation après retrait
-    d'un plancher ASR. UTMOS entraîné sur du MOS anglophone → classement relatif.
+    d'un plancher ASR. <b>Aucune métrique de naturalité</b> : UTMOS, TTSDS2, NISQA
+    tous écartés (non pertinents en français) → la naturalité se juge à l'écoute.
     Kokoro : voix interne fixe, non comparable voix-à-voix. Clic sur un en-tête pour trier ;
-    clic sur une ligne pour le détail par phrase. Sur petit écran, seules WER / UTMOS / SIM
+    clic sur une ligne pour le détail par phrase. Sur petit écran, seules WER / SIM
     restent affichées.</p>
   {LEGENDE}
   <div class="tools">
@@ -818,7 +817,6 @@ def page_objectif() -> str:
       <select id="msort">
         <option value="wer|a">WER — meilleur d'abord</option>
         <option value="wer|d">WER — pire d'abord</option>
-        <option value="utmos|d">UTMOS — meilleur d'abord</option>
         <option value="sim|d">SIM — meilleur d'abord</option>
         <option value="rtf|a">RTF — plus rapide</option>
         <option value="cv|a">CV durée — plus stable</option>

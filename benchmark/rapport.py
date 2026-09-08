@@ -20,8 +20,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from benchmark.corpus import charger_corpus  # noqa: E402
 from benchmark.evaluer import evaluer_runs, synthese  # noqa: E402
-from benchmark.mesurer_vitesse import agreger_vitesse, charger_timings  # noqa: E402
 from benchmark.mesurer_perceptuel import lire_perceptuel  # noqa: E402
+from benchmark.mesurer_vitesse import agreger_vitesse, charger_timings  # noqa: E402
 from benchmark.stabilite import stabilite_duree  # noqa: E402
 from benchmark.transcrire import lire_transcriptions  # noqa: E402
 
@@ -30,7 +30,8 @@ def rapport_voix(dossier_voix: Path, phrases, *, plancher_wer: float = 0.0) -> d
     f_perc = dossier_voix / "perceptuel.csv"
     perc = lire_perceptuel(f_perc) if f_perc.is_file() else None
     lignes = evaluer_runs(
-        lire_transcriptions(dossier_voix / "transcriptions.csv"), phrases, perceptuel=perc
+        lire_transcriptions(dossier_voix / "transcriptions.csv"), phrases,
+        perceptuel=perc,
     )
     timings = charger_timings(dossier_voix / "timings.csv")
     meta = json.loads((dossier_voix / "meta.json").read_text(encoding="utf-8"))
@@ -61,16 +62,15 @@ def markdown(nom_modele: str, rap: dict) -> str:
 
     L.append("## Vue globale (par voix)")
     L.append("")
-    L.append("| voix | runs ok | WER moyen | ±σ | UTMOS | SIM | hallu. | rép. | tronc. | RTF méd. | VRAM pic | CV durée |")
-    L.append("|---|---|---|---|---|---|---|---|---|---|---|---|")
+    L.append("| voix | runs ok | WER moyen | ±σ | SIM | hallu. | rép. | tronc. | RTF méd. | VRAM pic | CV durée |")
+    L.append("|---|---|---|---|---|---|---|---|---|---|---|")
     for voix, r in rap.items():
         s, v, st = r["synthese"], r["vitesse"], r["stabilite"]
         vram = max((x.get("vram_pic_mo") or 0 for x in r.get("_timings", [])), default=0)
-        utmos = f"{s['utmos_moyen']:.2f}" if s.get("utmos_moyen") is not None else "—"
         sim = f"{s['sim_moyen']:.3f}" if s.get("sim_moyen") is not None else "—"
         L.append(
             f"| {voix} | {s['n_verifiees']}/{s['n_runs']} | {_pct(s['wer_moyen'])} | "
-            f"{_pct(s['wer_ecart_type'])} | {utmos} | {sim} | {_pct(s['taux_hallucination'])} | "
+            f"{_pct(s['wer_ecart_type'])} | {sim} | {_pct(s['taux_hallucination'])} | "
             f"{_pct(s['taux_repetition'])} | {_pct(s['taux_troncature'])} | "
             f"{v['global']['rtf']['moyenne']:.2f} | {vram or '?'} Mo | "
             f"{_pct(st['cv_median'])} |"

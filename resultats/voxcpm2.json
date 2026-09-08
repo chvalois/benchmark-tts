@@ -19,7 +19,6 @@
     "synthese": {
       "n_runs": 99,
       "n_verifiees": 99,
-      "utmos_moyen": 2.139010101010101,
       "sim_moyen": 0.791592929292929,
       "wer_moyen": 0.055289642789642796,
       "wer_ecart_type": 0.09002123311948672,
@@ -487,7 +486,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable.",
-        "utmos": 2.164,
         "sim": 0.7661
       },
       {
@@ -511,7 +509,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable !",
-        "utmos": 2.504,
         "sim": 0.6939
       },
       {
@@ -535,7 +532,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable.",
-        "utmos": 1.768,
         "sim": 0.6404
       },
       {
@@ -559,7 +555,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça suffit maintenant.",
-        "utmos": 2.028,
         "sim": 0.6911
       },
       {
@@ -583,7 +578,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça suffit maintenant.",
-        "utmos": 2.205,
         "sim": 0.6882
       },
       {
@@ -607,7 +601,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça suffit maintenant.",
-        "utmos": 2.108,
         "sim": 0.6836
       },
       {
@@ -633,7 +626,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 2.133,
         "sim": 0.7455
       },
       {
@@ -659,7 +651,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 2.3,
         "sim": 0.7537
       },
       {
@@ -685,7 +676,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 2.182,
         "sim": 0.8116
       },
       {
@@ -711,7 +701,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque chaque jour un peu plus.",
-        "utmos": 2.966,
         "sim": 0.7554
       },
       {
@@ -737,7 +726,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque, chaque jour, un peu plus.",
-        "utmos": 2.753,
         "sim": 0.7364
       },
       {
@@ -763,7 +751,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque chaque jour un peu plus.",
-        "utmos": 2.761,
         "sim": 0.6975
       },
       {
@@ -789,7 +776,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 2.597,
         "sim": 0.6822
       },
       {
@@ -815,7 +801,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 2.662,
         "sim": 0.7363
       },
       {
@@ -841,7 +826,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 1.953,
         "sim": 0.7093
       },
       {
@@ -867,7 +851,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte, après tout ce travail, on a enfin décroché ce contrat.",
-        "utmos": 2.092,
         "sim": 0.7193
       },
       {
@@ -893,7 +876,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte, après tout ce travail, on l'a enfin décroché, ce contrat.",
-        "utmos": 2.116,
         "sim": 0.8121
       },
       {
@@ -919,7 +901,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte, après tout ce travail, on l'a enfin décroché, ce contrat.",
-        "utmos": 2.181,
         "sim": 0.807
       },
       {
@@ -945,7 +926,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenue 100 fois et tu n'as rien écouté, encore une fois.",
-        "utmos": 2.237,
         "sim": 0.8292
       },
       {
@@ -971,7 +951,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenue 100 fois, et tu n'as rien écouté, encore une fois.",
-        "utmos": 2.324,
         "sim": 0.8494
       },
       {
@@ -997,7 +976,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenue 100 fois et tu n'as rien écouté, encore une fois.",
-        "utmos": 2.197,
         "sim": 0.8403
       },
       {
@@ -1023,7 +1001,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ombre bouger près de la porte.",
-        "utmos": 1.907,
         "sim": 0.8
       },
       {
@@ -1049,7 +1026,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ombre bouger près de la porte.",
-        "utmos": 2.245,
         "sim": 0.7852
       },
       {
@@ -1075,7 +1051,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ombre bouger près de la porte.",
-        "utmos": 2.248,
         "sim": 0.8338
       },
       {
@@ -1101,7 +1076,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais ?",
-        "utmos": 2.408,
         "sim": 0.8052
       },
       {
@@ -1127,7 +1101,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais ?",
-        "utmos": 2.393,
         "sim": 0.8135
       },
       {
@@ -1153,7 +1126,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais ?",
-        "utmos": 2.447,
         "sim": 0.8732
       },
       {
@@ -1180,7 +1152,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 1.739,
         "sim": 0.8341
       },
       {
@@ -1207,7 +1178,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 2.092,
         "sim": 0.8275
       },
       {
@@ -1234,7 +1204,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 2.383,
         "sim": 0.8093
       },
       {
@@ -1260,7 +1229,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés, mais heureux d'avoir vaincu la montagne.",
-        "utmos": 2.526,
         "sim": 0.8814
       },
       {
@@ -1286,7 +1254,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne.",
-        "utmos": 2.46,
         "sim": 0.8761
       },
       {
@@ -1312,7 +1279,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne.",
-        "utmos": 2.643,
         "sim": 0.8671
       },
       {
@@ -1338,7 +1304,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Anne-Sophie Legrand-Dubois a rencontré Grézégorz Wozniak à Aix-en-Provence.",
-        "utmos": 2.318,
         "sim": 0.8368
       },
       {
@@ -1364,7 +1329,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Anne-Sophie Legrand-Dubois a rencontré Grès et Gorz Wozniak à Aix-en-Provence.",
-        "utmos": 2.322,
         "sim": 0.8455
       },
       {
@@ -1390,7 +1354,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Anne-sophie Legrand du Bois a rencontré Greg Zégor Dvozniak à Aix-en-provence.",
-        "utmos": 2.293,
         "sim": 0.8437
       },
       {
@@ -1416,7 +1379,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 2.286,
         "sim": 0.8312
       },
       {
@@ -1442,7 +1404,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 1.763,
         "sim": 0.8309
       },
       {
@@ -1468,7 +1429,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 1.89,
         "sim": 0.8047
       },
       {
@@ -1495,7 +1455,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 1.738,
         "sim": 0.8923
       },
       {
@@ -1522,7 +1481,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 1.737,
         "sim": 0.829
       },
       {
@@ -1549,7 +1507,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre les mécanismes de la photosynthèse, il convient de rappeler que les chloroplastes, ces organiques présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 1.592,
         "sim": 0.9029
       },
       {
@@ -1575,7 +1532,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pourcents des participants ont répondu par l'affirmative, un chiffre en nettose par rapport à l'année précédente, où seulement 74 pourcents s'étaient prononcés dans ce sens.",
-        "utmos": 2.188,
         "sim": 0.8131
       },
       {
@@ -1601,7 +1557,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pourcents des participants ont répondu par l'affirmative, un chiffre en nette hausse par rapport à l'année précédente où seulement 74 pourcents s'étaient prononcés dans ce sens.",
-        "utmos": 1.956,
         "sim": 0.7905
       },
       {
@@ -1627,7 +1582,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pourcents des participants ont répondu par l'affirmative, un chiffre en net hausse par rapport à l'année précédente, où seulement 74 pourcents s'étaient prononcés dans ce sens.",
-        "utmos": 1.611,
         "sim": 0.8233
       },
       {
@@ -1653,7 +1607,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de se fier à son instinct.",
-        "utmos": 2.512,
         "sim": 0.7526
       },
       {
@@ -1679,7 +1632,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de se fier à son instinct.",
-        "utmos": 2.695,
         "sim": 0.6886
       },
       {
@@ -1705,7 +1657,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de se fier à son instinct.",
-        "utmos": 2.159,
         "sim": 0.7543
       },
       {
@@ -1731,7 +1682,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvent leurs oeufs près du couvent abandonné.",
-        "utmos": 1.585,
         "sim": 0.781
       },
       {
@@ -1757,7 +1707,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvant leurs oeufs près du couvent abandonné.",
-        "utmos": 1.913,
         "sim": 0.7937
       },
       {
@@ -1783,7 +1732,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvent leurs oeufs près du couvent abandonné.",
-        "utmos": 1.494,
         "sim": 0.7485
       },
       {
@@ -1809,7 +1757,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 1.909,
         "sim": 0.791
       },
       {
@@ -1835,7 +1782,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 2.251,
         "sim": 0.775
       },
       {
@@ -1861,7 +1807,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 1.974,
         "sim": 0.7803
       },
       {
@@ -1887,7 +1832,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 2.698,
         "sim": 0.7388
       },
       {
@@ -1913,7 +1857,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 2.402,
         "sim": 0.7324
       },
       {
@@ -1939,7 +1882,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si je n'en ai plus que lui.",
-        "utmos": 2.125,
         "sim": 0.7181
       },
       {
@@ -1967,7 +1909,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sacha et Amélie habitent aux 26 rues des Acacias à Bordeaux.",
-        "utmos": 2.646,
         "sim": 0.8114
       },
       {
@@ -1995,7 +1936,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sascha et Amélie habitent aux 26 rues des Acacias à Bordeaux.",
-        "utmos": 2.229,
         "sim": 0.8036
       },
       {
@@ -2023,7 +1963,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sacha et Amélie habitent aux 26 rues des Acacias à Bordeaux.",
-        "utmos": 2.394,
         "sim": 0.8129
       },
       {
@@ -2050,7 +1989,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Vroum, la voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 1.932,
         "sim": 0.8094
       },
       {
@@ -2077,7 +2015,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Vroom, la voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 1.888,
         "sim": 0.778
       },
       {
@@ -2104,7 +2041,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Vroum, la voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 2.012,
         "sim": 0.8399
       },
       {
@@ -2130,7 +2066,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore ! Encore lui ! Mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 2.276,
         "sim": 0.645
       },
       {
@@ -2156,7 +2091,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore, encore lui, mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 1.752,
         "sim": 0.6263
       },
       {
@@ -2182,7 +2116,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore ! Encore lui ! Mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 2.167,
         "sim": 0.7896
       },
       {
@@ -2209,7 +2142,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le vieux moteur toussa 3 fois, puis se tut pour de bon.",
-        "utmos": 1.284,
         "sim": 0.6527
       },
       {
@@ -2236,7 +2168,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le vieux moteur toussa 3 fois, puis se tut pour de bon.",
-        "utmos": 1.76,
         "sim": 0.802
       },
       {
@@ -2263,7 +2194,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Arh, le vieux moteur tout ça 3 fois, puis se tue pour de bon.",
-        "utmos": 2.086,
         "sim": 0.8317
       },
       {
@@ -2289,7 +2219,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 2.585,
         "sim": 0.698
       },
       {
@@ -2315,7 +2244,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 1.917,
         "sim": 0.7105
       },
       {
@@ -2341,7 +2269,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 2.515,
         "sim": 0.7234
       },
       {
@@ -2365,7 +2292,6 @@
         "anomalie_kind": "troncature:tail",
         "anomalie_detail": "mot(s) de fin non détecté(s) : « endormi »",
         "texte_transcrit": "Chapitre 1er Le moulin dormi.",
-        "utmos": 2.338,
         "sim": 0.7629
       },
       {
@@ -2389,7 +2315,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chapitre I Le Moulin endormi.",
-        "utmos": 2.433,
         "sim": 0.8136
       },
       {
@@ -2413,7 +2338,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chapitre I Le Moulin Endormi.",
-        "utmos": 2.166,
         "sim": 0.885
       },
       {
@@ -2442,7 +2366,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait, au bout de la vallée de Gricemouton, un moulin que personne n'osait plus faire tourner les anciens racontaient qu'un hiver il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture depuis disait-on, le vent dormait dans la roue, et il ne fallait surtout pas le réveiller Camille n'avait jamais cru à ces histoires ce matin-là elle descendit le sentier gelé avant le jour, une lanterne à la main la porte n'était pas fermée à clef à l'intérieur la grande roue de bois attendait, immobile, et le bois, sous sa paume, était tiède. Il y a quelqu'un, demanda-t-elle, et sa voix lui parut minuscule. Rien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 1.503,
         "sim": 0.9036
       },
       {
@@ -2471,7 +2394,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait au bout de la vallée de Grismouton un moulin que personne n'osait plus faire tourner les anciens racontaient qu'un hiver, il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture depuis, disait-on, le vent dormait dans la roue et il ne fallait surtout pas le réveiller. Camille n'avait jamais cru à ces histoires ce matin-là elle descendit le sentier gelé avant le jour, une lanterne à la main la porte n'était pas fermée à clef, à l'intérieur la grande roue de bois attendait, immobile, et le bois sous sa paume était tiède. Il y a quelqu'un ? Demanda-t-elle, et sa voix lui parut minuscule. Rien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 1.488,
         "sim": 0.9079
       },
       {
@@ -2500,7 +2422,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait, au bout de la vallée de Grismouton, un moulin que personne n'osait plus faire tourner. Les anciens racontaient qu'un hiver il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture. Depuis, disait-on, le vent dormait dans la roue, et il ne fallait surtout pas le réveiller. Camille n'avait jamais cru à ces histoires. Ce matin-là, elle descendit le sentier gelé avant le jour, une lanterne à la main, la porte n'était pas fermée à clef, à l'intérieur la grande roue de bois attendait, immobile, et le bois sous sa paume était tiède. Y a quelqu'un ? Demanda-t-elle, et sa voix lui parut minuscule. Rien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 1.596,
         "sim": 0.9018
       },
       {
@@ -2526,7 +2447,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il a partagé le nouveau Starter Pack sur son feed juste avant le week-end.",
-        "utmos": 2.46,
         "sim": 0.8564
       },
       {
@@ -2552,7 +2472,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il a partagé le nouveau Starter Pack sur son feed juste avant le week-end.",
-        "utmos": 2.494,
         "sim": 0.8462
       },
       {
@@ -2578,7 +2497,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il a partagé le nouveau Starter Pack sur son feed juste avant le week-end.",
-        "utmos": 2.352,
         "sim": 0.8259
       },
       {
@@ -2605,7 +2523,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le manager a calé le kick off du sprint avec Bradley en toute fin de meeting.",
-        "utmos": 2.523,
         "sim": 0.8293
       },
       {
@@ -2632,7 +2549,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le manager a calé le kick-off du sprint avec Bradley en toute fin de meeting.",
-        "utmos": 2.349,
         "sim": 0.8069
       },
       {
@@ -2659,7 +2575,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le manager a calé le kick-off du sprint avec Bradley en toute fin de meeting.",
-        "utmos": 1.962,
         "sim": 0.842
       },
       {
@@ -2685,7 +2600,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de 10 heures 45 du 14 juillet.",
-        "utmos": 2.169,
         "sim": 0.7991
       },
       {
@@ -2711,7 +2625,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de 10h45 du 14 juillet.",
-        "utmos": 2.214,
         "sim": 0.8133
       },
       {
@@ -2737,7 +2650,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de 10h45 du 14 juillet.",
-        "utmos": 2.147,
         "sim": 0.7865
       },
       {
@@ -2763,7 +2675,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grisse-Mouton-le-Vieux, près du Bois de Kernide.",
-        "utmos": 2.042,
         "sim": 0.853
       },
       {
@@ -2789,7 +2700,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grisse-Mouton-le-Vieux, près du Bois de Kernide.",
-        "utmos": 1.619,
         "sim": 0.847
       },
       {
@@ -2815,7 +2725,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grisse-Mouton-le-Vieux, près du bois de Kernide.",
-        "utmos": 1.74,
         "sim": 0.8468
       },
       {
@@ -2841,7 +2750,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les Enfants Heureux ont ouvert, un à un, les anciens albums oubliés au grenier.",
-        "utmos": 1.444,
         "sim": 0.834
       },
       {
@@ -2867,7 +2775,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les Enfants Heureux ont ouvert, un à un, les anciens albums oubliés au grenier.",
-        "utmos": 1.639,
         "sim": 0.8282
       },
       {
@@ -2893,7 +2800,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les Enfants Heureux ont ouvert, un à un, les anciens albums oubliés au grenier.",
-        "utmos": 2.09,
         "sim": 0.8623
       },
       {
@@ -2917,7 +2823,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 1.764,
         "sim": 0.8063
       },
       {
@@ -2941,7 +2846,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 2.62,
         "sim": 0.826
       },
       {
@@ -2965,7 +2869,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 2.584,
         "sim": 0.8648
       },
       {
@@ -2991,7 +2894,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut, ne dis rien, ils sont juste derrière la porte.",
-        "utmos": 1.881,
         "sim": 0.6569
       },
       {
@@ -3017,7 +2919,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut, ne dis rien, ils sont juste derrière la porte.",
-        "utmos": 2.119,
         "sim": 0.7774
       },
       {
@@ -3043,7 +2944,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je ne dis rien, ils sont juste derrière la porte.",
-        "utmos": 1.45,
         "sim": 0.6971
       }
     ]
@@ -3068,7 +2968,6 @@
     "synthese": {
       "n_runs": 99,
       "n_verifiees": 99,
-      "utmos_moyen": 2.6851414141414143,
       "sim_moyen": 0.7840898989898991,
       "wer_moyen": 0.07252231747845783,
       "wer_ecart_type": 0.10102917189562888,
@@ -3534,7 +3433,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On va gagner, c'est incroyable.",
-        "utmos": 2.495,
         "sim": 0.4732
       },
       {
@@ -3558,7 +3456,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable.",
-        "utmos": 2.814,
         "sim": 0.5604
       },
       {
@@ -3582,7 +3479,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable.",
-        "utmos": 3.102,
         "sim": 0.6248
       },
       {
@@ -3606,7 +3502,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça suffit maintenant.",
-        "utmos": 2.946,
         "sim": 0.5548
       },
       {
@@ -3630,7 +3525,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça suffit maintenant.",
-        "utmos": 2.48,
         "sim": 0.7762
       },
       {
@@ -3654,7 +3548,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non mais ça suffit maintenant.",
-        "utmos": 3.168,
         "sim": 0.7206
       },
       {
@@ -3680,7 +3573,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 2.898,
         "sim": 0.7204
       },
       {
@@ -3706,7 +3598,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 2.7,
         "sim": 0.7848
       },
       {
@@ -3732,7 +3623,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 2.708,
         "sim": 0.7674
       },
       {
@@ -3758,7 +3648,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque chaque jour un peu plus.",
-        "utmos": 3.137,
         "sim": 0.7521
       },
       {
@@ -3784,7 +3673,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque chaque jour un peu plus.",
-        "utmos": 3.007,
         "sim": 0.7539
       },
       {
@@ -3810,7 +3698,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque chaque jour un peu plus.",
-        "utmos": 3.054,
         "sim": 0.7583
       },
       {
@@ -3836,7 +3723,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 2.967,
         "sim": 0.7284
       },
       {
@@ -3862,7 +3748,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 3.016,
         "sim": 0.7838
       },
       {
@@ -3888,7 +3773,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 2.942,
         "sim": 0.7443
       },
       {
@@ -3914,7 +3798,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte, après tout ce travail, on a enfin décroché ce contrat.",
-        "utmos": 2.881,
         "sim": 0.738
       },
       {
@@ -3940,7 +3823,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte, après tout ce travail, on l'a enfin décroché, ce contrat.",
-        "utmos": 2.752,
         "sim": 0.8015
       },
       {
@@ -3966,7 +3848,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte, après tout ce travail, on a enfin décroché ce contrat.",
-        "utmos": 2.638,
         "sim": 0.7932
       },
       {
@@ -3992,7 +3873,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "J'ai pourtant prévenu 100 fois et tu n'as rien écouté, encore une fois.",
-        "utmos": 2.687,
         "sim": 0.7715
       },
       {
@@ -4018,7 +3898,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenu 100 fois et tu n'as rien écouté encore une fois.",
-        "utmos": 2.508,
         "sim": 0.7945
       },
       {
@@ -4044,7 +3923,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "J'avais pourtant prévenu 100 fois et tu n'as rien écouté encore une fois.",
-        "utmos": 2.623,
         "sim": 0.8213
       },
       {
@@ -4070,7 +3948,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une lampe bouger près de la porte.",
-        "utmos": 2.291,
         "sim": 0.7933
       },
       {
@@ -4096,7 +3973,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ombre bouger près de la porte.",
-        "utmos": 2.591,
         "sim": 0.7985
       },
       {
@@ -4122,7 +3998,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ampe bouger près de la porte.",
-        "utmos": 2.677,
         "sim": 0.7909
       },
       {
@@ -4148,7 +4023,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais ?",
-        "utmos": 2.92,
         "sim": 0.7944
       },
       {
@@ -4174,7 +4048,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Mais depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais ?",
-        "utmos": 3.005,
         "sim": 0.7683
       },
       {
@@ -4200,7 +4073,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais.",
-        "utmos": 2.531,
         "sim": 0.7884
       },
       {
@@ -4227,7 +4099,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 2.747,
         "sim": 0.8056
       },
       {
@@ -4254,7 +4125,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 2.479,
         "sim": 0.81
       },
       {
@@ -4281,7 +4151,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 2.589,
         "sim": 0.8116
       },
       {
@@ -4307,7 +4176,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne.",
-        "utmos": 2.683,
         "sim": 0.8235
       },
       {
@@ -4333,7 +4201,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne.",
-        "utmos": 2.523,
         "sim": 0.8549
       },
       {
@@ -4359,7 +4226,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne.",
-        "utmos": 2.645,
         "sim": 0.8564
       },
       {
@@ -4385,7 +4251,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Anne-sophie Legrand Dubois a rencontré Gratzegorz Wozniak à Aix-en-provence.",
-        "utmos": 2.675,
         "sim": 0.7782
       },
       {
@@ -4411,7 +4276,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sophie Legrand-du-bois a rencontré Groségorz Wozniak à Aix-en-Provence.",
-        "utmos": 2.633,
         "sim": 0.8114
       },
       {
@@ -4437,7 +4301,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Anne-Sophie Legrand-Dubois a rencontré Grégoire Wozniak à Aix-en-Provence.",
-        "utmos": 2.879,
         "sim": 0.8256
       },
       {
@@ -4463,7 +4326,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 2.311,
         "sim": 0.8454
       },
       {
@@ -4489,7 +4351,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 2.899,
         "sim": 0.8502
       },
       {
@@ -4515,7 +4376,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soi, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 2.605,
         "sim": 0.8478
       },
       {
@@ -4542,7 +4402,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, les organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 2.239,
         "sim": 0.856
       },
       {
@@ -4569,7 +4428,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 2.231,
         "sim": 0.8434
       },
       {
@@ -4596,7 +4454,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 2.316,
         "sim": 0.8549
       },
       {
@@ -4622,7 +4479,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pourcents des participants ont répondu par l'affirmative, un chiffre en nettose par rapport à l'année précédente, où seulement 74 pourcents s'étaient prononcés dans ce sens.",
-        "utmos": 2.225,
         "sim": 0.7766
       },
       {
@@ -4648,7 +4504,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pourcents des participants ont répondu par l'affirmative, un chiffre en nette hausse par rapport à l'année précédente, où seulement 74 pourcents s'étaient prononcés dans ce sens.",
-        "utmos": 2.248,
         "sim": 0.7898
       },
       {
@@ -4674,7 +4529,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pourcents des participants ont répondu par l'affirmative, un chiffre en nette hausse par rapport à l'année précédente, où seulement 74 pourcents s'étaient prononcés dans ce sens.",
-        "utmos": 2.442,
         "sim": 0.8086
       },
       {
@@ -4700,7 +4554,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de se fier à son instinct.",
-        "utmos": 3.278,
         "sim": 0.7277
       },
       {
@@ -4726,7 +4579,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de se fier à son instinct.",
-        "utmos": 2.942,
         "sim": 0.7104
       },
       {
@@ -4752,7 +4604,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de ce qu'il a à son instinct.",
-        "utmos": 3.036,
         "sim": 0.761
       },
       {
@@ -4778,7 +4629,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvrent leurs oeufs près du couvent abandonné.",
-        "utmos": 2.514,
         "sim": 0.7392
       },
       {
@@ -4804,7 +4654,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvant leurs oeufs près du couvent abandonné.",
-        "utmos": 2.709,
         "sim": 0.7421
       },
       {
@@ -4830,7 +4679,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Des poules couvant leurs oeufs près du couvent abandonné.",
-        "utmos": 2.547,
         "sim": 0.7336
       },
       {
@@ -4856,7 +4704,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 2.891,
         "sim": 0.7618
       },
       {
@@ -4882,7 +4729,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 2.686,
         "sim": 0.7332
       },
       {
@@ -4908,7 +4754,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 2.875,
         "sim": 0.7679
       },
       {
@@ -4934,7 +4779,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 2.874,
         "sim": 0.7644
       },
       {
@@ -4960,7 +4804,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si je n'en ai plus que lui.",
-        "utmos": 2.865,
         "sim": 0.7577
       },
       {
@@ -4986,7 +4829,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus même si j'en ai plus que lui.",
-        "utmos": 3.027,
         "sim": 0.826
       },
       {
@@ -5014,7 +4856,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sacha et Amélie habitent aux 26 rues des Acacias à Bordeaux.",
-        "utmos": 3.352,
         "sim": 0.7874
       },
       {
@@ -5042,7 +4883,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sacha et Amélie habitent au 26 rue des Acacias à Bordeaux.",
-        "utmos": 3.311,
         "sim": 0.8012
       },
       {
@@ -5070,7 +4910,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sacha et Amélie habitent au 26 rue des Acacias à Bordeaux.",
-        "utmos": 3.188,
         "sim": 0.7944
       },
       {
@@ -5097,7 +4936,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Forum, la voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 2.489,
         "sim": 0.761
       },
       {
@@ -5124,7 +4962,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Vroom, la voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 2.427,
         "sim": 0.7913
       },
       {
@@ -5151,7 +4988,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Vroom, la voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 2.756,
         "sim": 0.7669
       },
       {
@@ -5177,7 +5013,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore, encore lui, mais qu'est-ce qu'il veut à la fin ?",
-        "utmos": 3.038,
         "sim": 0.8233
       },
       {
@@ -5203,7 +5038,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore, encore lui, et qu'est-ce qu'il veut à la fin ?",
-        "utmos": 1.912,
         "sim": 0.8389
       },
       {
@@ -5229,7 +5063,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore ! Encore lui ! Et qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 2.472,
         "sim": 0.7755
       },
       {
@@ -5256,7 +5089,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le vieux botteur toussa 3 fois, puis se tut pour de bon.",
-        "utmos": 2.329,
         "sim": 0.7969
       },
       {
@@ -5283,7 +5115,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le vieux moteur toussa 3 fois puis se tut pour de bon.",
-        "utmos": 1.925,
         "sim": 0.8141
       },
       {
@@ -5310,7 +5141,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le vieux moteur toussa 3 fois puis se tut pour de bon.",
-        "utmos": 2.2,
         "sim": 0.7889
       },
       {
@@ -5336,7 +5166,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 3.243,
         "sim": 0.712
       },
       {
@@ -5362,7 +5191,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 3.067,
         "sim": 0.787
       },
       {
@@ -5388,7 +5216,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 3.062,
         "sim": 0.7556
       },
       {
@@ -5412,7 +5239,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chapitre 1er, le moulin endormi.",
-        "utmos": 2.636,
         "sim": 0.7788
       },
       {
@@ -5436,7 +5262,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chapitre 1er Le moulin endormi.",
-        "utmos": 2.765,
         "sim": 0.7581
       },
       {
@@ -5460,7 +5285,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chapitre 1er Le Moulin Endormi.",
-        "utmos": 2.632,
         "sim": 0.7928
       },
       {
@@ -5489,7 +5313,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait au bout de la vallée de Gricemouton un moulin que personne n'osait plus faire tourner, les anciens racontaient qu'un hiver, il y a de cela 91 ans, le beunier Aristide Vaillancos y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture, depuis, disait-on, le vent dormait dans la roue, et il ne fallait surtout pas le réveiller. Camille n'avait jamais cru à ces histoires, ce matin-là elle descendit, le sentier gelait avant le jour, une lanterne à la main, la porte n'était pas fermée à clef, à l'intérieur, la grande roue de bois attendait, immobile, et le bois sous sa paume était tiède. Il y a quelqu'un ? Et sa voix lui parut minuscule, rien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 2.163,
         "sim": 0.8752
       },
       {
@@ -5518,7 +5341,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait, au bout de la vallée de Grismouton, un moulin que personne n'osait plus faire tourner. Les anciens racontaient qu'un hiver, il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture, ce lui disait-on, le vent dormait dans la roue, et il ne fallait surtout pas le réveiller. Camille n'avait jamais cru à ces histoires. Ce matin-là, elle descendit le sentier gelé avant le jour, une lanterne à la main, la porte n'était pas fermée à clef. À l'intérieur, la grande roue de bois attendait, immobile, et le bois sous sa paume était tiède. Il y a quelqu'un, demanda-t-elle, et sa voix lui parut minuscule, rien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 2.291,
         "sim": 0.8782
       },
       {
@@ -5547,7 +5369,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait, au bout de la vallée de Grismouton, un moulin que personne n'osait plus faire tourner. Les anciens racontaient qu'un hiver, il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture. Depuis, disait-on, le vent dormait dans la roue, et il fallait surtout pas le réveiller. Camille n'avait jamais cru à ces histoires ce matin-là, il descendit le sentier gelé avant le jour, une lanterne à la main. La porte n'était pas fermée à clef, à l'intérieur, la grande roue de bois tendait, immobile, et le bois, sous sa paume, était tiède. Il y a quelqu'un ? Demanda-t-elle, et sa voix lui parut minuscule, rien ne répondit, sinon un souffle très bas, régulier, patient, s'il semblait venir de la roue elle-même.",
-        "utmos": 2.19,
         "sim": 0.88
       },
       {
@@ -5573,7 +5394,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il a partagé le nouveau Starter Pack sur son site juste avant le week-end.",
-        "utmos": 2.686,
         "sim": 0.7797
       },
       {
@@ -5599,7 +5419,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il a partagé le nouveau Starter Pack sur son feed juste avant le week-end.",
-        "utmos": 2.369,
         "sim": 0.8182
       },
       {
@@ -5625,7 +5444,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il a partagé le nouveau Starter Pack sur son feed juste avant le week-end.",
-        "utmos": 2.686,
         "sim": 0.8175
       },
       {
@@ -5652,7 +5470,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le manager a calé le kick off du sprint avec Bradley, en toute fin de meeting.",
-        "utmos": 2.917,
         "sim": 0.8643
       },
       {
@@ -5679,7 +5496,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le manager a calé le kick off du sprint avec Bradley en toute fin de meeting.",
-        "utmos": 2.688,
         "sim": 0.8202
       },
       {
@@ -5706,7 +5522,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le manager a calé le kick off du sprint avec Bradley en toute fin de meeting.",
-        "utmos": 2.754,
         "sim": 0.8265
       },
       {
@@ -5732,7 +5547,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de 10h45 du 14 juillet.",
-        "utmos": 2.868,
         "sim": 0.8241
       },
       {
@@ -5758,7 +5572,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de 10, qui refait à 45 du 14 juillet.",
-        "utmos": 2.734,
         "sim": 0.7902
       },
       {
@@ -5784,7 +5597,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de 10 heures 45 du 14 juillet.",
-        "utmos": 2.676,
         "sim": 0.8527
       },
       {
@@ -5810,7 +5622,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grisemont, dans le lieu, près du bois de Kernide.",
-        "utmos": 2.667,
         "sim": 0.8116
       },
       {
@@ -5836,7 +5647,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grissemouton-le-Vieux, près du Bois de Kernide.",
-        "utmos": 2.462,
         "sim": 0.8535
       },
       {
@@ -5862,7 +5672,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franc-Freloux vivait au hameau de Gricemouton-le-Vieux, près du bois de Kernide.",
-        "utmos": 2.824,
         "sim": 0.8241
       },
       {
@@ -5888,7 +5697,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les Enfants Heureux ont ouvert un à un les anciens albums oubliés au grenier.",
-        "utmos": 2.591,
         "sim": 0.7998
       },
       {
@@ -5914,7 +5722,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les Enfants Heureux ont ouvert, un à un, Les Anciens Albums oubliés au grenier.",
-        "utmos": 2.522,
         "sim": 0.8402
       },
       {
@@ -5940,7 +5747,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les enfants heureux ont couvert, un à un, les anciens albums oubliés au grenier.",
-        "utmos": 2.284,
         "sim": 0.8302
       },
       {
@@ -5964,7 +5770,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 2.891,
         "sim": 0.826
       },
       {
@@ -5988,7 +5793,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "J'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 2.333,
         "sim": 0.8452
       },
       {
@@ -6012,7 +5816,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 2.761,
         "sim": 0.8222
       },
       {
@@ -6038,7 +5841,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'y a rien, ils sont juste derrière la porte.",
-        "utmos": 2.503,
         "sim": 0.6494
       },
       {
@@ -6064,7 +5866,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut, ne dit rien, ils sont juste derrière la porte.",
-        "utmos": 2.587,
         "sim": 0.7668
       },
       {
@@ -6090,7 +5891,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut, derrière, ils sont juste derrière la porte.",
-        "utmos": 2.427,
         "sim": 0.7729
       }
     ]
@@ -6115,7 +5915,6 @@
     "synthese": {
       "n_runs": 99,
       "n_verifiees": 99,
-      "utmos_moyen": 2.770141414141415,
       "sim_moyen": 0.7970202020202019,
       "wer_moyen": 0.03499668499668499,
       "wer_ecart_type": 0.06261516690183243,
@@ -6581,7 +6380,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable.",
-        "utmos": 3.19,
         "sim": 0.8017
       },
       {
@@ -6605,7 +6403,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable !",
-        "utmos": 1.612,
         "sim": 0.2713
       },
       {
@@ -6629,7 +6426,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable !",
-        "utmos": 2.9,
         "sim": 0.7113
       },
       {
@@ -6653,7 +6449,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non mais ça suffit maintenant.",
-        "utmos": 3.351,
         "sim": 0.6327
       },
       {
@@ -6677,7 +6472,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça suffit maintenant.",
-        "utmos": 3.069,
         "sim": 0.6207
       },
       {
@@ -6701,7 +6495,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça suffit maintenant.",
-        "utmos": 3.315,
         "sim": 0.6608
       },
       {
@@ -6727,7 +6520,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 3.03,
         "sim": 0.7117
       },
       {
@@ -6753,7 +6545,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 2.513,
         "sim": 0.6521
       },
       {
@@ -6779,7 +6570,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 2.741,
         "sim": 0.655
       },
       {
@@ -6805,7 +6595,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque chaque jour un peu plus.",
-        "utmos": 3.443,
         "sim": 0.7458
       },
       {
@@ -6831,7 +6620,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque chaque jour un peu plus.",
-        "utmos": 2.837,
         "sim": 0.7279
       },
       {
@@ -6857,7 +6645,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque, chaque jour, un peu plus.",
-        "utmos": 2.906,
         "sim": 0.7213
       },
       {
@@ -6883,7 +6670,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 3.105,
         "sim": 0.7673
       },
       {
@@ -6909,7 +6695,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 3.248,
         "sim": 0.7578
       },
       {
@@ -6935,7 +6720,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 3.272,
         "sim": 0.7247
       },
       {
@@ -6961,7 +6745,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte, après tout ce travail, on l'a enfin décroché, ce contrat.",
-        "utmos": 2.537,
         "sim": 0.7122
       },
       {
@@ -6987,7 +6770,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte ? Après tout ce travail, on l'a enfin décroché, ce contrat.",
-        "utmos": 2.891,
         "sim": 0.7709
       },
       {
@@ -7013,7 +6795,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte, après tout ce travail, on l'a enfin décroché, ce contrat.",
-        "utmos": 2.888,
         "sim": 0.7592
       },
       {
@@ -7039,7 +6820,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenu 100 fois et tu n'as rien écouté encore une fois.",
-        "utmos": 2.375,
         "sim": 0.7812
       },
       {
@@ -7065,7 +6845,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenu 100 fois et tu n'as rien écouté, encore une fois.",
-        "utmos": 2.716,
         "sim": 0.8279
       },
       {
@@ -7091,7 +6870,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenu 100 fois, et tu n'as rien écouté, encore une fois.",
-        "utmos": 3.001,
         "sim": 0.8366
       },
       {
@@ -7117,7 +6895,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ombre bouger près de la porte.",
-        "utmos": 2.993,
         "sim": 0.8528
       },
       {
@@ -7143,7 +6920,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ombre bouger près de la porte.",
-        "utmos": 2.65,
         "sim": 0.7863
       },
       {
@@ -7169,7 +6945,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ombre bouger près de la porte.",
-        "utmos": 2.341,
         "sim": 0.8128
       },
       {
@@ -7195,7 +6970,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais.",
-        "utmos": 2.721,
         "sim": 0.8337
       },
       {
@@ -7221,7 +6995,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais.",
-        "utmos": 3.24,
         "sim": 0.8317
       },
       {
@@ -7247,7 +7020,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais.",
-        "utmos": 3.017,
         "sim": 0.8436
       },
       {
@@ -7274,7 +7046,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 2.715,
         "sim": 0.8719
       },
       {
@@ -7301,7 +7072,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 2.499,
         "sim": 0.8584
       },
       {
@@ -7328,7 +7098,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 2.729,
         "sim": 0.8749
       },
       {
@@ -7354,7 +7123,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne.",
-        "utmos": 3.024,
         "sim": 0.857
       },
       {
@@ -7380,7 +7148,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne.",
-        "utmos": 2.827,
         "sim": 0.869
       },
       {
@@ -7406,7 +7173,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne.",
-        "utmos": 2.802,
         "sim": 0.8401
       },
       {
@@ -7432,7 +7198,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Anne-sophie Legrand-du-bois a rencontré Grzegorz Wozniak à Aix-en-provence.",
-        "utmos": 2.843,
         "sim": 0.8153
       },
       {
@@ -7458,7 +7223,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Rensophie Legrand-Dubois a rencontré Grézégorz Wozniak à Aix-en-Provence.",
-        "utmos": 2.847,
         "sim": 0.8298
       },
       {
@@ -7484,7 +7248,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Anne-Sophie Legrand-Dubois a rencontré Gréségord Wozniak à Aix-en-Provence.",
-        "utmos": 2.49,
         "sim": 0.8385
       },
       {
@@ -7510,7 +7273,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 2.729,
         "sim": 0.8521
       },
       {
@@ -7536,7 +7298,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine, tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 3.101,
         "sim": 0.8855
       },
       {
@@ -7562,7 +7323,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 2.89,
         "sim": 0.872
       },
       {
@@ -7589,7 +7349,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 2.547,
         "sim": 0.9013
       },
       {
@@ -7616,7 +7375,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 2.495,
         "sim": 0.8914
       },
       {
@@ -7643,7 +7401,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 2.675,
         "sim": 0.8833
       },
       {
@@ -7669,7 +7426,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pourcents des participants ont répondu par l'affirmative, un chiffre en nette hausse par rapport à l'année précédente, où seulement 74 pourcents s'étaient prononcés dans ce sens.",
-        "utmos": 2.511,
         "sim": 0.8705
       },
       {
@@ -7695,7 +7451,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pourcents des participants ont répondu par l'affirmative, un chiffre en net hausse par rapport à l'année précédente, où seulement 74 pourcents s'étaient prononcés dans ce sens.",
-        "utmos": 2.599,
         "sim": 0.8692
       },
       {
@@ -7721,7 +7476,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pour 100 des participants ont répondu par l'affirmative, un chiffre en nette hausse par rapport à l'année précédente, où seulement 74 pour 100 s'étaient prononcés dans ce sens.",
-        "utmos": 2.517,
         "sim": 0.8489
       },
       {
@@ -7747,7 +7501,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de se fier à son instinct.",
-        "utmos": 3.212,
         "sim": 0.7711
       },
       {
@@ -7773,7 +7526,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de se fier à son instinct.",
-        "utmos": 2.703,
         "sim": 0.7246
       },
       {
@@ -7799,7 +7551,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de se fier à son instinct.",
-        "utmos": 3.167,
         "sim": 0.756
       },
       {
@@ -7825,7 +7576,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvent leurs oeufs près du couvent abandonné.",
-        "utmos": 2.124,
         "sim": 0.7569
       },
       {
@@ -7851,7 +7601,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvent leurs oeufs près du couvent abandonné.",
-        "utmos": 2.472,
         "sim": 0.7792
       },
       {
@@ -7877,7 +7626,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvant leurs oeufs près du couvent abandonné",
-        "utmos": 2.364,
         "sim": 0.8005
       },
       {
@@ -7903,7 +7651,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 3.149,
         "sim": 0.7872
       },
       {
@@ -7929,7 +7676,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 3.389,
         "sim": 0.8259
       },
       {
@@ -7955,7 +7701,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 2.863,
         "sim": 0.7922
       },
       {
@@ -7981,7 +7726,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 2.654,
         "sim": 0.7626
       },
       {
@@ -8007,7 +7751,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 3.016,
         "sim": 0.7925
       },
       {
@@ -8033,7 +7776,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 2.913,
         "sim": 0.7353
       },
       {
@@ -8061,7 +7803,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sacha et Amélie habitent au 26 rue des Acacias à Bordeaux.",
-        "utmos": 3.344,
         "sim": 0.8046
       },
       {
@@ -8089,7 +7830,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sascha et Amélie habitent au 26 rue des Acacias à Bordeaux.",
-        "utmos": 2.921,
         "sim": 0.8322
       },
       {
@@ -8117,7 +7857,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sascha et Amélie habitent au 26 rue des Acacias à Bordeaux.",
-        "utmos": 2.984,
         "sim": 0.7984
       },
       {
@@ -8144,7 +7883,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Vroum ! La voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 2.739,
         "sim": 0.8571
       },
       {
@@ -8171,7 +7909,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 2.729,
         "sim": 0.824
       },
       {
@@ -8198,7 +7935,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Vroom ! La voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 2.523,
         "sim": 0.8811
       },
       {
@@ -8224,7 +7960,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore ! Encore lui ! Mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 2.711,
         "sim": 0.7262
       },
       {
@@ -8250,7 +7985,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore ! Encore lui ! Mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 1.753,
         "sim": 0.7442
       },
       {
@@ -8276,7 +8010,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore ! Encore lui ! Mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 2.747,
         "sim": 0.8028
       },
       {
@@ -8303,7 +8036,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "R. M. Le vieux moteur toussa 3 fois, puis se tut pour de bon.",
-        "utmos": 2.865,
         "sim": 0.772
       },
       {
@@ -8330,7 +8062,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ahem ! Le vieux moteur toussa 3 fois, puis se tut pour de bon.",
-        "utmos": 2.872,
         "sim": 0.7769
       },
       {
@@ -8357,7 +8088,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Achemem ! Le vieux moteur toussa 3 fois, puis se tut pour de bon.",
-        "utmos": 2.889,
         "sim": 0.803
       },
       {
@@ -8383,7 +8113,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 3.319,
         "sim": 0.7612
       },
       {
@@ -8409,7 +8138,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 2.602,
         "sim": 0.7729
       },
       {
@@ -8435,7 +8163,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 2.724,
         "sim": 0.77
       },
       {
@@ -8459,7 +8186,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chapitre 1er Le moulin endormi.",
-        "utmos": 2.792,
         "sim": 0.7679
       },
       {
@@ -8483,7 +8209,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chapitre 1er Le moulin endormi.",
-        "utmos": 3.028,
         "sim": 0.7945
       },
       {
@@ -8507,7 +8232,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chapitre I Le Moulin endormi.",
-        "utmos": 2.857,
         "sim": 0.7953
       },
       {
@@ -8536,7 +8260,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait, au bout de la vallée de Grismouton, un moulin que personne n'osait plus faire tourner. Les anciens racontaient qu'un hiver il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture. Depuis, disait-on, le vent dormait dans la roue, et il ne fallait surtout pas le réveiller. Camille n'avait jamais cru à ces histoires. Ce matin-là, elle descendit le sentier gelé avant le jour, une lanterne à la main. La porte n'était pas fermée à clef à l'intérieur, la grande roue de bois attendait, immobile, et le bois, sous sa paume, était tiède. Il y a quelqu'un, demanda-t-elle, et sa voix lui parut minuscule. Rien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 2.392,
         "sim": 0.9032
       },
       {
@@ -8565,7 +8288,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait, au bout de la vallée de Grismouton, un moulin que personne n'osait plus faire tourner. Les anciens racontaient qu'un hiver, il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture. Depuis, disait-on, le vent dormait dans la roue, et il ne fallait surtout pas le réveiller. Camille n'avait jamais cru à ces histoires. Ce matin-là, elle descendit le sentier gelé avant le jour, une lanterne à la main, la porte n'était pas fermée à clef, à l'intérieur la grande roue de bois attendait, immobile, et le bois, sous sa paume, était tiède. Il y a quelqu'un ? Demanda-t-elle, et sa voix lui parut minuscule. Rien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 2.257,
         "sim": 0.8986
       },
       {
@@ -8594,7 +8316,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait au bout de la vallée de Grismouton un moulin que personne n'osait plus faire tourner les anciens racontaient qu'un hiver, il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture. Depuis, disait-on, le vent dormait dans la roue, et il ne fallait surtout pas le réveiller. Camille n'avait jamais cru à ces histoires. Ce matin-là, elle descendit le sentier gelé, avant le jour, une lanterne à la main, la porte n'était pas fermée à clef, à l'intérieur la grande roue de bois attendait, immobile, et le bois, sous sa paume, était tiède. Il y a quelqu'un, demanda-t-elle, et sa voix lui parut minuscule. Rien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 2.357,
         "sim": 0.9045
       },
       {
@@ -8620,7 +8341,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il a partagé le nouveau Starter Pack sur son feed juste avant le week-end.",
-        "utmos": 2.568,
         "sim": 0.7672
       },
       {
@@ -8646,7 +8366,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il a partagé le nouveau Starter Pack sur son feed juste avant le week-end.",
-        "utmos": 2.788,
         "sim": 0.8241
       },
       {
@@ -8672,7 +8391,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il a partagé le nouveau starter pack sur son feed juste avant le week-end.",
-        "utmos": 3.036,
         "sim": 0.8091
       },
       {
@@ -8699,7 +8417,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le manager a calé le kick-off du sprint avec Bradley en toute fin de meeting.",
-        "utmos": 2.985,
         "sim": 0.8668
       },
       {
@@ -8726,7 +8443,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le manager a calé le kick-off du sprint avec Bradley en toute fin de meeting.",
-        "utmos": 2.648,
         "sim": 0.8666
       },
       {
@@ -8753,7 +8469,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le manager a calé le kick-off du sprint avec Bradley en toute fin de meeting.",
-        "utmos": 3.048,
         "sim": 0.8693
       },
       {
@@ -8779,7 +8494,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de 10 heures 45 du 14 juillet.",
-        "utmos": 3.054,
         "sim": 0.8352
       },
       {
@@ -8805,7 +8519,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de 10 heures 45 du 14 juillet.",
-        "utmos": 2.663,
         "sim": 0.8155
       },
       {
@@ -8831,7 +8544,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de Dizor, 45, du 14 juillet.",
-        "utmos": 2.745,
         "sim": 0.8505
       },
       {
@@ -8857,7 +8569,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grismouton-le-vieux, près du bois de Kernide.",
-        "utmos": 2.579,
         "sim": 0.8312
       },
       {
@@ -8883,7 +8594,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grisse-Mouton-le-Vieux, près du bois de Kernide.",
-        "utmos": 2.431,
         "sim": 0.84
       },
       {
@@ -8909,7 +8619,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grisse Mouton le Vieux, près du bois de Kernide.",
-        "utmos": 2.452,
         "sim": 0.8477
       },
       {
@@ -8935,7 +8644,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les enfants heureux ont ouvert, un à un, les anciens albums oubliés, au grenier.",
-        "utmos": 2.558,
         "sim": 0.8188
       },
       {
@@ -8961,7 +8669,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les enfances heureux ont ouvert, un à un, les anciens albums oubliés au grenier.",
-        "utmos": 2.487,
         "sim": 0.7854
       },
       {
@@ -8987,7 +8694,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les Enfants Heureux ont ouvert, un à un, les anciens albums oubliés au grenier.",
-        "utmos": 2.471,
         "sim": 0.8382
       },
       {
@@ -9011,7 +8717,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 2.85,
         "sim": 0.8516
       },
       {
@@ -9035,7 +8740,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 2.728,
         "sim": 0.8286
       },
       {
@@ -9059,7 +8763,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 2.406,
         "sim": 0.7949
       },
       {
@@ -9085,7 +8788,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut, ne dis rien, ils sont juste derrière la porte.",
-        "utmos": 2.421,
         "sim": 0.7814
       },
       {
@@ -9111,7 +8813,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut, ne dis rien, ils sont juste derrière la porte.",
-        "utmos": 2.563,
         "sim": 0.7676
       },
       {
@@ -9137,7 +8838,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut ! Ne dis rien, ils sont juste derrière la porte.",
-        "utmos": 2.59,
         "sim": 0.8006
       }
     ]
@@ -9162,7 +8862,6 @@
     "synthese": {
       "n_runs": 15,
       "n_verifiees": 15,
-      "utmos_moyen": 3.0908,
       "sim_moyen": 0.7392066666666666,
       "wer_moyen": 0.015384615384615385,
       "wer_ecart_type": 0.03076923076923077,
@@ -9377,7 +9076,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non mais ça suffit maintenant.",
-        "utmos": 2.975,
         "sim": 0.6719
       },
       {
@@ -9401,7 +9099,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non mais ça suffit maintenant.",
-        "utmos": 3.197,
         "sim": 0.7638
       },
       {
@@ -9425,7 +9122,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça suffit maintenant !",
-        "utmos": 3.364,
         "sim": 0.7089
       },
       {
@@ -9451,7 +9147,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenu 100 fois, et tu n'as rien écouté, encore une fois.",
-        "utmos": 2.716,
         "sim": 0.8329
       },
       {
@@ -9477,7 +9172,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenu 100 fois et tu n'as rien écouté, encore une fois.",
-        "utmos": 2.627,
         "sim": 0.8078
       },
       {
@@ -9503,7 +9197,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenu 100 fois, et tu n'as rien écouté, encore une fois.",
-        "utmos": 2.928,
         "sim": 0.7622
       },
       {
@@ -9529,7 +9222,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 3.396,
         "sim": 0.6842
       },
       {
@@ -9555,7 +9247,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 3.342,
         "sim": 0.7273
       },
       {
@@ -9581,7 +9272,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 3.535,
         "sim": 0.6031
       },
       {
@@ -9607,7 +9297,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore, encore lui, mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 3.388,
         "sim": 0.6884
       },
       {
@@ -9633,7 +9322,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore ! Encore lui ! Mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 2.681,
         "sim": 0.6836
       },
       {
@@ -9659,7 +9347,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore ! Encore lui ! Mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 3.191,
         "sim": 0.7232
       },
       {
@@ -9683,7 +9370,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 2.479,
         "sim": 0.7915
       },
       {
@@ -9707,7 +9393,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 3.321,
         "sim": 0.8399
       },
       {
@@ -9731,7 +9416,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 3.222,
         "sim": 0.7994
       }
     ]
@@ -9756,7 +9440,6 @@
     "synthese": {
       "n_runs": 6,
       "n_verifiees": 6,
-      "utmos_moyen": 3.162333333333333,
       "sim_moyen": 0.7786166666666667,
       "wer_moyen": 0.0,
       "wer_ecart_type": 0.0,
@@ -9890,7 +9573,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable !",
-        "utmos": 3.246,
         "sim": 0.7404
       },
       {
@@ -9914,7 +9596,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable !",
-        "utmos": 3.437,
         "sim": 0.7172
       },
       {
@@ -9938,7 +9619,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable !",
-        "utmos": 3.251,
         "sim": 0.749
       },
       {
@@ -9964,7 +9644,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte ? Après tout ce travail, on l'a enfin décroché, ce contrat.",
-        "utmos": 3.255,
         "sim": 0.8368
       },
       {
@@ -9990,7 +9669,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte ? Après tout ce travail, on l'a enfin décroché, ce contrat.",
-        "utmos": 2.846,
         "sim": 0.7929
       },
       {
@@ -10016,7 +9694,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte, après tout ce travail, on l'a enfin décroché, ce contrat.",
-        "utmos": 2.939,
         "sim": 0.8354
       }
     ]
@@ -10041,7 +9718,6 @@
     "synthese": {
       "n_runs": 99,
       "n_verifiees": 99,
-      "utmos_moyen": 3.1381616161616157,
       "sim_moyen": 0.8218585858585857,
       "wer_moyen": 0.04155119571786239,
       "wer_ecart_type": 0.08007166366325527,
@@ -10512,7 +10188,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable.",
-        "utmos": 3.359,
         "sim": 0.7388
       },
       {
@@ -10536,7 +10211,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable.",
-        "utmos": 3.751,
         "sim": 0.7827
       },
       {
@@ -10560,7 +10234,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable.",
-        "utmos": 3.357,
         "sim": 0.7067
       },
       {
@@ -10584,7 +10257,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça suffit maintenant.",
-        "utmos": 3.276,
         "sim": 0.7561
       },
       {
@@ -10608,7 +10280,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça suffit maintenant.",
-        "utmos": 3.369,
         "sim": 0.8017
       },
       {
@@ -10632,7 +10303,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça suffit maintenant.",
-        "utmos": 3.667,
         "sim": 0.8274
       },
       {
@@ -10658,7 +10328,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 2.584,
         "sim": 0.6811
       },
       {
@@ -10684,7 +10353,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 2.909,
         "sim": 0.7462
       },
       {
@@ -10710,7 +10378,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 3.2,
         "sim": 0.7912
       },
       {
@@ -10736,7 +10403,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque, chaque jour un peu plus.",
-        "utmos": 3.651,
         "sim": 0.7399
       },
       {
@@ -10762,7 +10428,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque, chaque jour un peu plus.",
-        "utmos": 3.444,
         "sim": 0.7433
       },
       {
@@ -10788,7 +10453,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque, chaque jour un peu plus.",
-        "utmos": 3.642,
         "sim": 0.744
       },
       {
@@ -10814,7 +10478,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 3.266,
         "sim": 0.7675
       },
       {
@@ -10840,7 +10503,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 3.313,
         "sim": 0.7764
       },
       {
@@ -10866,7 +10528,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 3.089,
         "sim": 0.7075
       },
       {
@@ -10892,7 +10553,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte ? Après tout ce travail, on l'a enfin décroché, ce contrat.",
-        "utmos": 3.333,
         "sim": 0.8682
       },
       {
@@ -10918,7 +10578,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte ? Après tout ce travail, on l'a enfin décroché, ce contrat.",
-        "utmos": 3.087,
         "sim": 0.8744
       },
       {
@@ -10944,7 +10603,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte ? Après tout ce travail on l'a enfin décroché, ce contrat.",
-        "utmos": 3.323,
         "sim": 0.8658
       },
       {
@@ -10970,7 +10628,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenu 100 fois, et tu n'as rien écouté, encore une fois.",
-        "utmos": 3.237,
         "sim": 0.8686
       },
       {
@@ -10996,7 +10653,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenu 100 fois, et tu n'as rien écouté... Encore une fois...",
-        "utmos": 3.445,
         "sim": 0.8802
       },
       {
@@ -11022,7 +10678,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenu 100 fois, et tu n'as rien écouté, encore une fois.",
-        "utmos": 2.838,
         "sim": 0.8575
       },
       {
@@ -11048,7 +10703,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ombre bouger près de la porte.",
-        "utmos": 3.328,
         "sim": 0.8545
       },
       {
@@ -11074,7 +10728,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ombre bouger près de la porte.",
-        "utmos": 3.355,
         "sim": 0.8675
       },
       {
@@ -11100,7 +10753,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ombre bouger près de la porte.",
-        "utmos": 3.231,
         "sim": 0.9044
       },
       {
@@ -11126,7 +10778,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais.",
-        "utmos": 3.235,
         "sim": 0.8235
       },
       {
@@ -11152,7 +10803,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais.",
-        "utmos": 3.209,
         "sim": 0.8403
       },
       {
@@ -11178,7 +10828,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais.",
-        "utmos": 3.151,
         "sim": 0.8611
       },
       {
@@ -11205,7 +10854,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'Ancien Régime.",
-        "utmos": 3.069,
         "sim": 0.8718
       },
       {
@@ -11232,7 +10880,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'Ancien Régime.",
-        "utmos": 3.086,
         "sim": 0.8793
       },
       {
@@ -11259,7 +10906,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 2.978,
         "sim": 0.8714
       },
       {
@@ -11285,7 +10931,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés, mais heureux d'avoir vaincu la montagne.",
-        "utmos": 3.118,
         "sim": 0.9207
       },
       {
@@ -11311,7 +10956,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne.",
-        "utmos": 3.215,
         "sim": 0.904
       },
       {
@@ -11337,7 +10981,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne.",
-        "utmos": 3.189,
         "sim": 0.907
       },
       {
@@ -11363,7 +11006,6 @@
         "anomalie_kind": "troncature:tail",
         "anomalie_detail": "sauvetage phonétique (sim=88%); mot(s) de fin non détecté(s) : « aix en provence »",
         "texte_transcrit": "Anne-sophie Legrand-du-bois a rencontré Grézégorz Wozniak à.",
-        "utmos": 2.978,
         "sim": 0.8326
       },
       {
@@ -11389,7 +11031,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Anne-Sophie Legrand-Dubois a rencontré Grégor Gvozniak à Aix-en-Provence.",
-        "utmos": 2.997,
         "sim": 0.8565
       },
       {
@@ -11415,7 +11056,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Anne-Sophie Legrand-Dubois a rencontré Grèce et Gorz Wozniak à Aix-en-Provence.",
-        "utmos": 3.093,
         "sim": 0.8477
       },
       {
@@ -11441,7 +11081,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine, qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 3.186,
         "sim": 0.8843
       },
       {
@@ -11467,7 +11106,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 3.108,
         "sim": 0.8898
       },
       {
@@ -11493,7 +11131,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine, qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 3.12,
         "sim": 0.8845
       },
       {
@@ -11520,7 +11157,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 2.879,
         "sim": 0.8906
       },
       {
@@ -11547,7 +11183,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 2.894,
         "sim": 0.8918
       },
       {
@@ -11574,7 +11209,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 2.903,
         "sim": 0.9125
       },
       {
@@ -11600,7 +11234,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pour 100 des participants ont répondu par l'affirmative, un chiffre en nette hausse par rapport à l'année précédente où seulement 74 pour 100 s'étaient prononcés dans ce sens.",
-        "utmos": 2.894,
         "sim": 0.9035
       },
       {
@@ -11626,7 +11259,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pour 100 des participants ont répondu par l'affirmative, un chiffre en nette hausse par rapport à l'année précédente, où seulement 74 pour 100 s'étaient prononcés dans ce sens.",
-        "utmos": 2.795,
         "sim": 0.8576
       },
       {
@@ -11652,7 +11284,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pour 100 des participants ont répondu par l'affirmative, un chiffre en nette hausse par rapport à l'année précédente où seulement 74 pour 100 s'étaient prononcés dans ce sens.",
-        "utmos": 2.928,
         "sim": 0.8593
       },
       {
@@ -11678,7 +11309,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de se fier à son instinct.",
-        "utmos": 3.369,
         "sim": 0.7316
       },
       {
@@ -11704,7 +11334,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de se fier à son instinct.",
-        "utmos": 3.288,
         "sim": 0.7383
       },
       {
@@ -11730,7 +11359,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de se fier à son instinct.",
-        "utmos": 3.639,
         "sim": 0.7621
       },
       {
@@ -11756,7 +11384,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvaient leurs oeufs près du couvent abandonné.",
-        "utmos": 2.333,
         "sim": 0.7552
       },
       {
@@ -11782,7 +11409,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvent leurs oeufs près du couvent abandonné.",
-        "utmos": 2.67,
         "sim": 0.8
       },
       {
@@ -11808,7 +11434,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvant leurs oeufs près du couvent abandonné.",
-        "utmos": 2.626,
         "sim": 0.7967
       },
       {
@@ -11834,7 +11459,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 3.461,
         "sim": 0.7958
       },
       {
@@ -11860,7 +11484,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est c'est là qu'est notre maison.",
-        "utmos": 3.544,
         "sim": 0.8092
       },
       {
@@ -11886,7 +11509,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 3.604,
         "sim": 0.8091
       },
       {
@@ -11912,7 +11534,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 3.304,
         "sim": 0.7654
       },
       {
@@ -11938,7 +11559,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 2.997,
         "sim": 0.783
       },
       {
@@ -11964,7 +11584,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 3.238,
         "sim": 0.8103
       },
       {
@@ -11992,7 +11611,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sascha et Amélie habitent au 26 rue des Acacias à Bordeaux.",
-        "utmos": 3.654,
         "sim": 0.8122
       },
       {
@@ -12020,7 +11638,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sascha et Amélie habitent au 26 rue des Acacias à Bordeaux.",
-        "utmos": 3.662,
         "sim": 0.8293
       },
       {
@@ -12048,7 +11665,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sascha et Amélie habitent au 26 rue des Acacias à Bordeaux.",
-        "utmos": 3.54,
         "sim": 0.7906
       },
       {
@@ -12075,7 +11691,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Vroum ! La voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 3.006,
         "sim": 0.8301
       },
       {
@@ -12102,7 +11717,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Vroom ! La voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 2.982,
         "sim": 0.8459
       },
       {
@@ -12129,7 +11743,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Vroum ! La voiture bondit en avant, projetant des gravions contre la vieille barrière.",
-        "utmos": 2.901,
         "sim": 0.8327
       },
       {
@@ -12155,7 +11768,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore. Encore lui. Mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 2.832,
         "sim": 0.7252
       },
       {
@@ -12181,7 +11793,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore, encore lui. Mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 2.847,
         "sim": 0.6117
       },
       {
@@ -12207,7 +11818,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore, encore lui, mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 2.745,
         "sim": 0.7291
       },
       {
@@ -12234,7 +11844,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Oh ! Oh ! Le vieux moteur toussa 3 fois, puis se tut pour de bon.",
-        "utmos": 3.356,
         "sim": 0.7533
       },
       {
@@ -12261,7 +11870,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr le vieux moteur toussa 3 fois, puis se tut pour de bon.",
-        "utmos": 2.809,
         "sim": 0.826
       },
       {
@@ -12288,7 +11896,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Harheim, le vieux moteur toussa 3 fois, puis se tut pour de bon.",
-        "utmos": 2.946,
         "sim": 0.8437
       },
       {
@@ -12314,7 +11921,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 3.357,
         "sim": 0.7542
       },
       {
@@ -12340,7 +11946,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 3.306,
         "sim": 0.6711
       },
       {
@@ -12366,7 +11971,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 3.594,
         "sim": 0.6992
       },
       {
@@ -12390,7 +11994,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chapitre I Le Moulin Endormi.",
-        "utmos": 3.018,
         "sim": 0.7865
       },
       {
@@ -12414,7 +12017,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chapitre 1er. Le moulin endormi.",
-        "utmos": 3.34,
         "sim": 0.7408
       },
       {
@@ -12438,7 +12040,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "CHAPITRE 1er LE MOULIN ENDORMI.",
-        "utmos": 3.346,
         "sim": 0.7588
       },
       {
@@ -12467,7 +12068,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait, au bout de la vallée de Grismouton, un moulin que personne n'osait plus faire tourner les anciens racontaient qu'un hiver, il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture depuis, disait-on, le vent dormait dans la roue, et il ne fallait surtout pas le réveiller. Camille n'avait jamais cru à ces histoires. Ce matin-là, elle descendit le sentier gelé avant le jour, une lanterne à la main, la porte n'était pas fermée à clef, à l'intérieur la grande roue de bois attendait, immobile, et le bois, sous sa paume, était tiède. Il y a quelqu'un ? Demanda-t-elle, et sa voix lui parut minuscule. Rien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 2.609,
         "sim": 0.9513
       },
       {
@@ -12496,7 +12096,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait, au bout de la vallée de Grismouton, un moulin que personne n'osait plus faire tourner les anciens racontaient qu'un hiver il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture depuis, disait-on, le vent dormait dans la roue, et il ne fallait surtout pas le réveiller. Camille n'avait jamais cru à ces histoires ce matin-là, elle descendit le sentier gelé avant le jour, une lanterne à la main. La porte n'était pas fermée à clef. À l'intérieur, la grande roue de bois attendait, immobile, et le bois, sous sa paume, était tiède. Il y a quelqu'un ? Demanda-t-elle, et sa voix lui parut minuscule. Rien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 2.633,
         "sim": 0.9491
       },
       {
@@ -12525,7 +12124,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait, au bout de la vallée de Grismouton, un moulin que personne n'osait plus faire tourner les anciens racontaient qu'un hiver il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture depuis disait-on, le vent dormait dans la roue, et il ne fallait surtout pas le réveiller Camille n'avait jamais cru à ces histoires ce matin-là, elle descendit le sentier gelé avant le jour une lanterne à la main, la porte n'était pas fermée à clef à l'intérieur, la grande roue de bois attendait, immobile, et le bois, sous sa paume, était tiède. Il y a quelqu'un ? Demanda-t-elle, et sa voix lui parut minuscule. Rien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 2.773,
         "sim": 0.9507
       },
       {
@@ -12551,7 +12149,6 @@
         "anomalie_kind": "troncature:tail",
         "anomalie_detail": "mot(s) de fin non détecté(s) : « end »",
         "texte_transcrit": "Il a partagé le nouveau Starter Pack sur son feed juste avant le week.",
-        "utmos": 3.172,
         "sim": 0.8252
       },
       {
@@ -12577,7 +12174,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il a partagé le nouveau Starter Pack sur son feed juste avant le week-end.",
-        "utmos": 2.905,
         "sim": 0.8383
       },
       {
@@ -12603,7 +12199,6 @@
         "anomalie_kind": "troncature:tail",
         "anomalie_detail": "mot(s) de fin non détecté(s) : « le week end »",
         "texte_transcrit": "Il a partagé le nouveau Starter Pack sur son feed juste avant",
-        "utmos": 3.077,
         "sim": 0.8222
       },
       {
@@ -12630,7 +12225,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le manager a calé le kick-off du sprint avec Bradley en toute fin de meeting.",
-        "utmos": 3.396,
         "sim": 0.8753
       },
       {
@@ -12657,7 +12251,6 @@
         "anomalie_kind": "troncature:tail",
         "anomalie_detail": "mot(s) de fin non détecté(s) : « meeting »",
         "texte_transcrit": "Le manager a calé le kick-off du sprint avec Bradley en toute fin de minute.",
-        "utmos": 3.006,
         "sim": 0.8196
       },
       {
@@ -12684,7 +12277,6 @@
         "anomalie_kind": "troncature:tail",
         "anomalie_detail": "mot(s) de fin non détecté(s) : « meeting »",
         "texte_transcrit": "Le manager a calé le kick-off du sprint avec Bradley en toute fin de mi-temps.",
-        "utmos": 2.842,
         "sim": 0.8717
       },
       {
@@ -12710,7 +12302,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de 10 heures 45 du 14 juillet.",
-        "utmos": 3.151,
         "sim": 0.8487
       },
       {
@@ -12736,7 +12327,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de 10 heures 45 du 14 juillet.",
-        "utmos": 3.183,
         "sim": 0.846
       },
       {
@@ -12762,7 +12352,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de 10 heures 45 du 14 juillet.",
-        "utmos": 3.333,
         "sim": 0.8676
       },
       {
@@ -12788,7 +12377,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grismouton-le-vieux, près du bois de Kernide.",
-        "utmos": 3.067,
         "sim": 0.8965
       },
       {
@@ -12814,7 +12402,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grissemouton-le-vieux, près du bois de Kernide.",
-        "utmos": 2.769,
         "sim": 0.878
       },
       {
@@ -12840,7 +12427,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grismouton-le-Vieux, près du bois de Kernide.",
-        "utmos": 3.346,
         "sim": 0.8616
       },
       {
@@ -12866,7 +12452,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les Enfants Heureux ont ouvert, un à un, les anciens albums oubliés au grenier.",
-        "utmos": 2.916,
         "sim": 0.8283
       },
       {
@@ -12892,7 +12477,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les enfants heureux ont ouvert, un à un, les anciens albums oubliés au grenier.",
-        "utmos": 2.58,
         "sim": 0.8555
       },
       {
@@ -12918,7 +12502,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les Enfants Heureux ont ouvert, un à un, les anciens albums oubliés au grenier.",
-        "utmos": 2.897,
         "sim": 0.8634
       },
       {
@@ -12942,7 +12525,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 2.965,
         "sim": 0.8225
       },
       {
@@ -12966,7 +12548,6 @@
         "anomalie_kind": "troncature:tail",
         "anomalie_detail": "mot(s) de fin non détecté(s) : « les épaules »",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant",
-        "utmos": 2.931,
         "sim": 0.8338
       },
       {
@@ -12990,7 +12571,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 3.361,
         "sim": 0.8461
       },
       {
@@ -13016,7 +12596,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut, ne dis rien, ils sont juste derrière la porte.",
-        "utmos": 3.325,
         "sim": 0.7961
       },
       {
@@ -13042,7 +12621,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut, ne dis rien. Ils sont juste derrière la porte.",
-        "utmos": 2.857,
         "sim": 0.8185
       },
       {
@@ -13068,7 +12646,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut ! Ne dis rien ! Ils sont juste derrière la porte.",
-        "utmos": 3.191,
         "sim": 0.8595
       }
     ]
@@ -13093,7 +12670,6 @@
     "synthese": {
       "n_runs": 9,
       "n_verifiees": 9,
-      "utmos_moyen": 2.8292222222222225,
       "sim_moyen": 0.7794000000000001,
       "wer_moyen": 0.012345679012345678,
       "wer_ecart_type": 0.034918853391928274,
@@ -13236,7 +12812,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 2.493,
         "sim": 0.6966
       },
       {
@@ -13262,7 +12837,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un ! J'ai entendu du bruit.",
-        "utmos": 2.989,
         "sim": 0.6663
       },
       {
@@ -13288,7 +12862,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un... J'ai entendu du bruit.",
-        "utmos": 2.942,
         "sim": 0.7601
       },
       {
@@ -13314,7 +12887,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit. J'ai vu une ombre bouger près de la porte.",
-        "utmos": 2.975,
         "sim": 0.8188
       },
       {
@@ -13340,7 +12912,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas. Surtout ne fais aucun bruit. J'ai vu une ombre bouger près de la porte.",
-        "utmos": 2.992,
         "sim": 0.8494
       },
       {
@@ -13366,7 +12937,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu nombre bouger près de la porte.",
-        "utmos": 2.751,
         "sim": 0.8107
       },
       {
@@ -13392,7 +12962,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut, ne dis rien, ils sont juste derrière la porte.",
-        "utmos": 2.521,
         "sim": 0.7972
       },
       {
@@ -13418,7 +12987,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut ! Ne dis rien, ils sont juste derrière la porte.",
-        "utmos": 2.934,
         "sim": 0.8401
       },
       {
@@ -13444,7 +13012,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut, ne dis rien, ils sont juste derrière la porte.",
-        "utmos": 2.866,
         "sim": 0.7754
       }
     ]
@@ -13469,7 +13036,6 @@
     "synthese": {
       "n_runs": 6,
       "n_verifiees": 6,
-      "utmos_moyen": 2.7968333333333333,
       "sim_moyen": 0.7635333333333333,
       "wer_moyen": 0.0,
       "wer_ecart_type": 0.0,
@@ -13605,7 +13171,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque chaque jour un peu plus.",
-        "utmos": 3.142,
         "sim": 0.7603
       },
       {
@@ -13631,7 +13196,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque chaque jour un peu plus.",
-        "utmos": 2.747,
         "sim": 0.7415
       },
       {
@@ -13657,7 +13221,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque chaque jour un peu plus.",
-        "utmos": 2.729,
         "sim": 0.6992
       },
       {
@@ -13683,7 +13246,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais.",
-        "utmos": 2.471,
         "sim": 0.7412
       },
       {
@@ -13709,7 +13271,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais.",
-        "utmos": 2.865,
         "sim": 0.8495
       },
       {
@@ -13735,7 +13296,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais.",
-        "utmos": 2.827,
         "sim": 0.7895
       }
     ]
@@ -13760,7 +13320,6 @@
     "synthese": {
       "n_runs": 99,
       "n_verifiees": 99,
-      "utmos_moyen": 3.336262626262626,
       "sim_moyen": 0.8163282828282826,
       "wer_moyen": 0.6011693779237639,
       "wer_ecart_type": 0.6433043150282383,
@@ -14273,7 +13832,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ton Humor Justice. On a gagné, c'est incroyable.",
-        "utmos": 3.799,
         "sim": 0.8426
       },
       {
@@ -14297,7 +13855,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable !",
-        "utmos": 2.669,
         "sim": 0.8326
       },
       {
@@ -14321,7 +13878,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=33%; mot(s) de fin non détecté(s) : « incroyable »",
         "texte_transcrit": "C'est tort, ça, oui.",
-        "utmos": 3.533,
         "sim": 0.34
       },
       {
@@ -14345,7 +13901,6 @@
         "anomalie_kind": "hallucination:extra",
         "anomalie_detail": "transcription 3.0x plus longue, precision=33%",
         "texte_transcrit": "Ton au nord à teint d'or sèche en pot. Non, mais ça suffit maintenant.",
-        "utmos": 3.007,
         "sim": 0.8327
       },
       {
@@ -14369,7 +13924,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Niveaulx In Mule Value. Non, mais ça suffit maintenant.",
-        "utmos": 3.814,
         "sim": 0.8264
       },
       {
@@ -14393,7 +13947,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça suffit maintenant.",
-        "utmos": 3.819,
         "sim": 0.8464
       },
       {
@@ -14419,7 +13972,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tombe au blanchi, lâchant Cléphédée. Y a quelqu'un ? J'ai entendu du bruit.",
-        "utmos": 2.981,
         "sim": 0.8463
       },
       {
@@ -14445,7 +13997,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=50%",
         "texte_transcrit": "J'ai entendu du bruit.",
-        "utmos": 3.243,
         "sim": 0.779
       },
       {
@@ -14471,7 +14022,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=50%",
         "texte_transcrit": "J'ai entendu du bruit.",
-        "utmos": 3.463,
         "sim": 0.8184
       },
       {
@@ -14497,7 +14047,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il me manque chaque jour un peu plus »",
         "texte_transcrit": "Donc.",
-        "utmos": 3.024,
         "sim": 0.3327
       },
       {
@@ -14523,7 +14072,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il me manque chaque jour un peu plus »",
         "texte_transcrit": "C'était hostieux.",
-        "utmos": 3.346,
         "sim": 0.4091
       },
       {
@@ -14549,7 +14097,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il me manque chaque jour un peu plus »",
         "texte_transcrit": "Nuvant bbaye que nipote Andorre ntallewatu Kantsourek, nipotrit utpispiouda postitam, nipotemisprana.",
-        "utmos": 2.907,
         "sim": 0.8129
       },
       {
@@ -14575,7 +14122,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « considérons à présent l équation suivante »",
         "texte_transcrit": "Ton ou fokas iran, biézgo Champli, biézga Naoyor, ura ta, biézga Kuit, du po de Brno, Filtz, mennorka, intchaouia, du Fianbe, blamou, kabocheniou, intkare.",
-        "utmos": 3.126,
         "sim": 0.8427
       },
       {
@@ -14601,7 +14147,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=50%",
         "texte_transcrit": "L'équation suivante.",
-        "utmos": 3.925,
         "sim": 0.8536
       },
       {
@@ -14627,7 +14172,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Certains, il pond un bon ayer, considérons à présent l'équation suivante.",
-        "utmos": 3.53,
         "sim": 0.8801
       },
       {
@@ -14653,7 +14197,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=40%",
         "texte_transcrit": "Ton où l'a enfin décroché ce contrat.",
-        "utmos": 3.536,
         "sim": 0.8375
       },
       {
@@ -14679,7 +14222,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte, après tout ce travail, on l'a enfin décroché, ce contrat.",
-        "utmos": 3.382,
         "sim": 0.8761
       },
       {
@@ -14705,7 +14247,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après tout ce travail, on l'a enfin décroché ce contrat.",
-        "utmos": 3.293,
         "sim": 0.882
       },
       {
@@ -14731,7 +14272,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « je t avais pourtant prévenu cent fois et tu n as rien écouté encore une fois »",
         "texte_transcrit": "Tona Khubalare, des Deuxchamps Techtien, Wuhan, Wufan, Naui, Toronto.",
-        "utmos": 3.578,
         "sim": 0.8018
       },
       {
@@ -14757,7 +14297,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=19%",
         "texte_transcrit": "Encore une fois.",
-        "utmos": 3.521,
         "sim": 0.7012
       },
       {
@@ -14783,7 +14322,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=38%",
         "texte_transcrit": "Je t'entends, cieux d'Aranturum ! Et encore une fois !",
-        "utmos": 3.059,
         "sim": 0.7757
       },
       {
@@ -14809,7 +14347,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tom et Rupour, Elsie et Blenafalpour, Tintruna ! Ne bouge pas surtout, ne fesse aucun bruit. J'ai vu une ombre bouger près de la porte.",
-        "utmos": 3.271,
         "sim": 0.9039
       },
       {
@@ -14835,7 +14372,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=22%",
         "texte_transcrit": "Je vins un peu près de la porte.",
-        "utmos": 3.16,
         "sim": 0.811
       },
       {
@@ -14861,7 +14397,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ombre bouger près de la porte.",
-        "utmos": 3.58,
         "sim": 0.8813
       },
       {
@@ -14887,7 +14422,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=14%; mot(s) de fin non détecté(s) : « sens tu sais »",
         "texte_transcrit": "Un roc est tiré vers l'autre bout de l'intrigue, le 2nd noyé de route, accueille tout le temps ça, et tout d'un dire que lâche.",
-        "utmos": 3.034,
         "sim": 0.8687
       },
       {
@@ -14913,7 +14447,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « depuis qu elle est partie plus rien n a vraiment de sens tu sais »",
         "texte_transcrit": "Goutin, Orchki, Touarki, Pelerko, Teba.",
-        "utmos": 2.973,
         "sim": 0.7175
       },
       {
@@ -14939,7 +14472,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais.",
-        "utmos": 3.291,
         "sim": 0.8492
       },
       {
@@ -14966,7 +14498,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « mille sept cent quatre vingt neuf marque une rupture profonde avec l ancien régime »",
         "texte_transcrit": "Tonre puis Antès de Manafaregime.",
-        "utmos": 3.584,
         "sim": 0.7953
       },
       {
@@ -14993,7 +14524,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 3.331,
         "sim": 0.9084
       },
       {
@@ -15020,7 +14550,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 3.141,
         "sim": 0.901
       },
       {
@@ -15046,7 +14575,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne.",
-        "utmos": 3.127,
         "sim": 0.8938
       },
       {
@@ -15072,7 +14600,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=39%",
         "texte_transcrit": "Livarda pour n'en plus insouffler, mais heureux d'avoir vaincu la montagne.",
-        "utmos": 3.451,
         "sim": 0.8748
       },
       {
@@ -15098,7 +14625,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne.",
-        "utmos": 3.195,
         "sim": 0.8956
       },
       {
@@ -15124,7 +14650,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=17%; mot(s) de fin non détecté(s) : « aix en provence »",
         "texte_transcrit": "Donc, on m'a aussi allé à Champeaux, et le DANGARBOU et MAUVIGARLÈRE, et le PONTE MAROBAS.",
-        "utmos": 3.281,
         "sim": 0.8636
       },
       {
@@ -15150,7 +14675,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tadaphia. Anne-Sophie Legrand-Dubois a rencontré Grézégorz Wozniak à Aix-en-Provence.",
-        "utmos": 3.437,
         "sim": 0.8589
       },
       {
@@ -15176,7 +14700,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Anne-sophie Legrand du Bois a rencontré Grzegorz Wozniak à Aix-en-Provence.",
-        "utmos": 3.311,
         "sim": 0.8832
       },
       {
@@ -15202,7 +14725,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 3.285,
         "sim": 0.904
       },
       {
@@ -15228,7 +14750,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=5%; mot(s) de fin non détecté(s) : « laine tombés sur le sol les enroula avec soin puis rentra chez lui sous une pluie fine qui n en finissait pas de tomber sur les toits gris du village »",
         "texte_transcrit": "L'époux n'affronterait donc l'institut Morrelves, et j'en ai l'opportunité d'en avoir une à Tantorches. Le météorologiste Jérôme Paine est le plus meilleur, c'est qu'il n'y a aucune chose à se dire vif. Il y a beaucoup d'ambassade, voire à Bruneau et Montbois-cul-de-l'Oise.",
-        "utmos": 2.916,
         "sim": 0.8533
       },
       {
@@ -15254,7 +14775,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine, qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 3.341,
         "sim": 0.919
       },
       {
@@ -15281,7 +14801,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 3.258,
         "sim": 0.9033
       },
       {
@@ -15308,7 +14827,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=13%",
         "texte_transcrit": "Puis Vrakal, et 2 Choua Khot Nkorda Rantal, Mitenakoa Mola Rabaouan, Anderoidz Moitan, Nufonian Lugachita, et 2 Svostun Dokyomevengurehner, moteurs turc énergie chimique utilisables par la plante.",
-        "utmos": 2.987,
         "sim": 0.863
       },
       {
@@ -15335,7 +14853,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tintax pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 3.188,
         "sim": 0.9167
       },
       {
@@ -15361,7 +14878,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=11%",
         "texte_transcrit": "Tantois recoursant, s'était prononcé dans ce sens.",
-        "utmos": 3.584,
         "sim": 0.7025
       },
       {
@@ -15387,7 +14903,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pourcents des participants ont répondu par l'affirmative, un chiffre en nettose par rapport à l'année précédente où seulement 74 pourcents s'étaient prononcés dans ce sens.",
-        "utmos": 3.007,
         "sim": 0.8838
       },
       {
@@ -15413,7 +14928,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=11%",
         "texte_transcrit": "Un texte sur tant de cours d'êtres, des mots pour sens, était prononcé dans ce sens.",
-        "utmos": 3.089,
         "sim": 0.7965
       },
       {
@@ -15439,7 +14953,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il est fier de se fier à son instinct »",
         "texte_transcrit": "Ton ou m'envester le shurikén.",
-        "utmos": 3.632,
         "sim": 0.7754
       },
       {
@@ -15465,7 +14978,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il est fier de se fier à son instinct »",
         "texte_transcrit": "Hôtel d'Orchly.",
-        "utmos": 2.978,
         "sim": 0.3594
       },
       {
@@ -15491,7 +15003,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=11%; mot(s) de fin non détecté(s) : « son instinct »",
         "texte_transcrit": "Une autre voie d'acquit ne va trouver Erdogan assez à terme à Anderlecht.",
-        "utmos": 3.27,
         "sim": 0.742
       },
       {
@@ -15517,7 +15028,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « les poules couvent leurs œufs près du couvent abandonné »",
         "texte_transcrit": "Il tombe en l'épouvant Badis.",
-        "utmos": 3.322,
         "sim": 0.7317
       },
       {
@@ -15543,7 +15053,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Coëtus de muetres, des poules couvant leurs oeufs près du couvent abandonné.",
-        "utmos": 3.066,
         "sim": 0.883
       },
       {
@@ -15569,7 +15078,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvant leurs oeufs près du couvent abandonné.",
-        "utmos": 3.29,
         "sim": 0.8516
       },
       {
@@ -15595,7 +15103,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ton Mère Repos et Zizé Blalafa. Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 3.607,
         "sim": 0.8958
       },
       {
@@ -15621,7 +15128,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 3.427,
         "sim": 0.8606
       },
       {
@@ -15647,7 +15153,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=14%",
         "texte_transcrit": "De notre maison.",
-        "utmos": 3.452,
         "sim": 0.5928
       },
       {
@@ -15673,7 +15178,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=23%",
         "texte_transcrit": "Ton mère de plus que lui.",
-        "utmos": 3.536,
         "sim": 0.7665
       },
       {
@@ -15699,7 +15203,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 3.64,
         "sim": 0.8566
       },
       {
@@ -15725,7 +15228,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 3.657,
         "sim": 0.8817
       },
       {
@@ -15753,7 +15255,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tourne-Rue Sacha et Amélie habitent au 26 rue des Acacias à Bordeaux.",
-        "utmos": 3.853,
         "sim": 0.8457
       },
       {
@@ -15781,7 +15282,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=17%",
         "texte_transcrit": "Il dit Va t'asseoir à Bordeaux.",
-        "utmos": 3.639,
         "sim": 0.7435
       },
       {
@@ -15809,7 +15309,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « amélie habitent au vingt six rue des acacias à bordeaux »",
         "texte_transcrit": "C'était intense et équitant.",
-        "utmos": 2.893,
         "sim": 0.5512
       },
       {
@@ -15836,7 +15335,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Thomas Marley his des Doge Campo. La voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 3.266,
         "sim": 0.9039
       },
       {
@@ -15863,7 +15361,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 3.035,
         "sim": 0.8917
       },
       {
@@ -15890,7 +15387,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 3.604,
         "sim": 0.8934
       },
       {
@@ -15916,7 +15412,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 2.993,
         "sim": 0.8328
       },
       {
@@ -15942,7 +15437,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Elle a eu faim. Le roi n'a qu'envie. Encore lui, mais qu'est-ce qu'il veut à la fin ?",
-        "utmos": 3.524,
         "sim": 0.8659
       },
       {
@@ -15968,7 +15462,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore ! Mais qu'est-ce qu'il veut à la fin ?",
-        "utmos": 3.505,
         "sim": 0.8088
       },
       {
@@ -15995,7 +15488,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Cabertournore, le vieux moteur toussa 3 fois, puis se tut pour de bon.",
-        "utmos": 3.267,
         "sim": 0.8722
       },
       {
@@ -16022,7 +15514,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « bon »",
         "texte_transcrit": "C'est très livable d'un point de vue opéen de Prague.",
-        "utmos": 3.076,
         "sim": 0.7644
       },
       {
@@ -16049,7 +15540,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=38%",
         "texte_transcrit": "Tout remploie foi, puis se tue pour de bon.",
-        "utmos": 3.617,
         "sim": 0.7882
       },
       {
@@ -16075,7 +15565,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 3.763,
         "sim": 0.8537
       },
       {
@@ -16101,7 +15590,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 3.568,
         "sim": 0.7998
       },
       {
@@ -16127,7 +15615,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 3.646,
         "sim": 0.8527
       },
       {
@@ -16151,7 +15638,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=40%",
         "texte_transcrit": "Tonmé en dépourvant, Aizy-er-Limbialla fut emplie. JAPITRE 1er LE MOULIN ENDORMÉ",
-        "utmos": 3.425,
         "sim": 0.8837
       },
       {
@@ -16175,7 +15661,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « chapitre premier le moulin endormi »",
         "texte_transcrit": "L'hiver d'Arvide.",
-        "utmos": 3.501,
         "sim": 0.7226
       },
       {
@@ -16199,7 +15684,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chapitre 1er Le moulin endormi.",
-        "utmos": 3.743,
         "sim": 0.8651
       },
       {
@@ -16228,7 +15712,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture. Le vent dormait dans la roue, et il ne fallait surtout pas le réveiller. C'est où il n'y a rien. Camille n'avait jamais cru à ces histoires. Ce matin-là, elle descendit le sentier gelé avant le jour, une lanterne à la main, la porte n'était pas fermée à clef, à l'intérieur la grande roue de bois attendait, immobile, et le bois, sous sa paume, était tiède. Plouranit light, et sa voix lui parut minuscule. Ta point d'adresse ? Le jardin rependit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 3.053,
         "sim": 0.9229
       },
       {
@@ -16257,7 +15740,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Un moulin que personne n'osait plus faire tourner. Les anciens racontaient qu'un hiver, il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'au dernier jour. Tart, la crasse. Camille n'avait jamais cru à ces histoires. Ce matin-là, elle descendit le sentier gelé avant le jour, une lanterne à la main. La porte n'était pas fermée à clef, à l'intérieur la grande roue de bois attendait, immobile, et le bois, sous sa paume, était tiède. Droit. Il a quelqu'un, dit-elle, et sa voix lui parut minuscule. Tant,ien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 2.93,
         "sim": 0.9207
       },
       {
@@ -16286,7 +15768,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=38%; mot(s) de fin non détecté(s) : « rien ne répondit sinon un souffle très bas régulier patient qui semblait venir de la roue elle même »",
         "texte_transcrit": "Le meunier Aristide Vaillant Coste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture. Le vent dormait dans la roue, porte n'était pas fermée à clef. À l'intérieur, la grande roue de bois attendait, immobile, et le bois sous sa paume était tiède. Et sa voix lui parut minuscule.",
-        "utmos": 3.126,
         "sim": 0.9342
       },
       {
@@ -16312,7 +15793,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=33%",
         "texte_transcrit": "Taubes au nord et Snelles, le Blednof, à Poupan, Tvich, à Tombeurs, sur le week-end.",
-        "utmos": 2.959,
         "sim": 0.813
       },
       {
@@ -16338,7 +15818,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il a partagé le nouveau Starter Pack sur son feed juste avant le week-end.",
-        "utmos": 3.405,
         "sim": 0.8921
       },
       {
@@ -16364,7 +15843,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=53%",
         "texte_transcrit": "À un taxe sur son feed juste avant le week-end.",
-        "utmos": 3.361,
         "sim": 0.854
       },
       {
@@ -16391,7 +15869,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tom et son manager a calé le kick-off du sprint avec Bradley en toute fin de meeting.",
-        "utmos": 3.498,
         "sim": 0.8735
       },
       {
@@ -16418,7 +15895,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=44%",
         "texte_transcrit": "Avec Bradley en toute fin de meeting.",
-        "utmos": 3.491,
         "sim": 0.7725
       },
       {
@@ -16445,7 +15921,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=44%",
         "texte_transcrit": "J'entamai avec Bradley en toute fin de meeting.",
-        "utmos": 3.485,
         "sim": 0.7876
       },
       {
@@ -16471,7 +15946,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il gravit les soixante treize marches puis attendit le train de dix h quarante cinq du quatorze juillet »",
         "texte_transcrit": "Touan ou Zareh, Siti, Nafar, Boti, Tenecha, Dembiach, Boulou, Fanaouk, Térantar.",
-        "utmos": 3.334,
         "sim": 0.8479
       },
       {
@@ -16497,7 +15971,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=56%",
         "texte_transcrit": "Lui attendit le train de 10 heures 45 du 14 juillet.",
-        "utmos": 3.437,
         "sim": 0.8496
       },
       {
@@ -16523,7 +15996,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=11%",
         "texte_transcrit": "31 mai 14 juillet",
-        "utmos": 3.16,
         "sim": 0.6919
       },
       {
@@ -16549,7 +16021,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=33%",
         "texte_transcrit": "Tourner à l'écart d'arrêt, près du bois de Kernide.",
-        "utmos": 2.936,
         "sim": 0.821
       },
       {
@@ -16575,7 +16046,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grismouton-le-vieux, près du bois de Kernide.",
-        "utmos": 2.925,
         "sim": 0.8951
       },
       {
@@ -16601,7 +16071,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=33%",
         "texte_transcrit": "À Interaction, près du bois de Kernide.",
-        "utmos": 3.386,
         "sim": 0.7619
       },
       {
@@ -16627,7 +16096,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=14%",
         "texte_transcrit": "Ton oublié au grenier.",
-        "utmos": 3.555,
         "sim": 0.7232
       },
       {
@@ -16653,7 +16121,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Hôtel, les Enfants Heureux ont ouvert un à un les anciens albums oubliés au grenier.",
-        "utmos": 3.197,
         "sim": 0.8759
       },
       {
@@ -16679,7 +16146,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les Enfants Heureux ont ouvert, un à un, les anciens albums oubliés au grenier.",
-        "utmos": 3.31,
         "sim": 0.9168
       },
       {
@@ -16703,7 +16169,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=46%",
         "texte_transcrit": "Il tombe, répondit Juliette en haussant les épaules.",
-        "utmos": 3.375,
         "sim": 0.811
       },
       {
@@ -16727,7 +16192,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 3.601,
         "sim": 0.905
       },
       {
@@ -16751,7 +16215,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=46%",
         "texte_transcrit": "Répondit Juliette en haussant les épaules.",
-        "utmos": 3.367,
         "sim": 0.866
       },
       {
@@ -16777,7 +16240,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=40%",
         "texte_transcrit": "Il tombe et regarde quoi ? En fait, c'était un animal vacheux en beauté qui allait se faire. Lui, il se fait un an et demi de retard. Lui, il songe juste derrière la porte.",
-        "utmos": 2.828,
         "sim": 0.8546
       },
       {
@@ -16803,7 +16265,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ils sont juste derrière la porte.",
-        "utmos": 3.739,
         "sim": 0.8353
       },
       {
@@ -16829,7 +16290,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "C'était un torpilleur, ils sont juste derrière la porte.",
-        "utmos": 3.66,
         "sim": 0.8363
       }
     ]
@@ -16854,7 +16314,6 @@
     "synthese": {
       "n_runs": 99,
       "n_verifiees": 99,
-      "utmos_moyen": 2.4923737373737374,
       "sim_moyen": 0.7614222222222221,
       "wer_moyen": 0.04027970277970278,
       "wer_ecart_type": 0.0781375237684539,
@@ -17323,7 +16782,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable !",
-        "utmos": 2.446,
         "sim": 0.6749
       },
       {
@@ -17347,7 +16805,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable !",
-        "utmos": 2.642,
         "sim": 0.7412
       },
       {
@@ -17371,7 +16828,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "On a gagné, c'est incroyable !",
-        "utmos": 2.682,
         "sim": 0.7198
       },
       {
@@ -17395,7 +16851,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça suffit maintenant.",
-        "utmos": 2.633,
         "sim": 0.6044
       },
       {
@@ -17419,7 +16874,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça suffit maintenant.",
-        "utmos": 2.645,
         "sim": 0.6321
       },
       {
@@ -17443,7 +16897,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non mais ça suffit maintenant.",
-        "utmos": 3.135,
         "sim": 0.6275
       },
       {
@@ -17469,7 +16922,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 2.456,
         "sim": 0.7599
       },
       {
@@ -17495,7 +16947,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 2.518,
         "sim": 0.6493
       },
       {
@@ -17521,7 +16972,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y a quelqu'un, j'ai entendu du bruit.",
-        "utmos": 2.063,
         "sim": 0.6567
       },
       {
@@ -17547,7 +16997,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque, chaque jour, un peu plus.",
-        "utmos": 2.812,
         "sim": 0.6827
       },
       {
@@ -17573,7 +17022,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque, chaque jour, un peu plus.",
-        "utmos": 3.144,
         "sim": 0.6272
       },
       {
@@ -17599,7 +17047,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il me manque chaque jour un peu plus.",
-        "utmos": 2.993,
         "sim": 0.6916
       },
       {
@@ -17625,7 +17072,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 2.479,
         "sim": 0.6836
       },
       {
@@ -17651,7 +17097,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 2.413,
         "sim": 0.7754
       },
       {
@@ -17677,7 +17122,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Considérons à présent l'équation suivante.",
-        "utmos": 2.486,
         "sim": 0.7934
       },
       {
@@ -17703,7 +17147,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte, après tout ce travail, on l'a enfin décroché, ce contrat !",
-        "utmos": 1.947,
         "sim": 0.7468
       },
       {
@@ -17729,7 +17172,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte ? Après tout ce travail, on l'a enfin décroché ce contrat.",
-        "utmos": 2.702,
         "sim": 0.7446
       },
       {
@@ -17755,7 +17197,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tu te rends compte ? Après tout ce travail, on l'a enfin décroché, ce contrat.",
-        "utmos": 2.763,
         "sim": 0.7975
       },
       {
@@ -17781,7 +17222,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenu 100 fois, et tu n'as rien écouté, encore une fois.",
-        "utmos": 2.404,
         "sim": 0.7858
       },
       {
@@ -17807,7 +17247,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenu 100 fois, et tu n'as rien écouté encore une fois.",
-        "utmos": 2.346,
         "sim": 0.7822
       },
       {
@@ -17833,7 +17272,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je t'avais pourtant prévenu 100 fois, et tu n'as rien écouté, encore une fois.",
-        "utmos": 2.81,
         "sim": 0.7978
       },
       {
@@ -17859,7 +17297,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ombre bouger près de la porte.",
-        "utmos": 2.445,
         "sim": 0.7692
       },
       {
@@ -17885,7 +17322,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit ! J'ai vu une ombre bouger près de la porte.",
-        "utmos": 2.439,
         "sim": 0.7765
       },
       {
@@ -17911,7 +17347,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ne bouge pas, surtout ne fais aucun bruit, j'ai vu une ombre bouger près de la porte.",
-        "utmos": 2.3,
         "sim": 0.7688
       },
       {
@@ -17937,7 +17372,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais ?",
-        "utmos": 2.717,
         "sim": 0.786
       },
       {
@@ -17963,7 +17397,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais.",
-        "utmos": 2.574,
         "sim": 0.7585
       },
       {
@@ -17989,7 +17422,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Depuis qu'elle est partie, plus rien n'a vraiment de sens, tu sais.",
-        "utmos": 2.495,
         "sim": 0.7692
       },
       {
@@ -18016,7 +17448,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 2.329,
         "sim": 0.8237
       },
       {
@@ -18043,7 +17474,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 2.399,
         "sim": 0.8502
       },
       {
@@ -18070,7 +17500,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La Révolution française de 1789 marque une rupture profonde avec l'ancien régime.",
-        "utmos": 2.402,
         "sim": 0.8116
       },
       {
@@ -18096,7 +17525,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne.",
-        "utmos": 2.489,
         "sim": 0.8111
       },
       {
@@ -18122,7 +17550,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés, mais heureux d'avoir vaincu la montagne.",
-        "utmos": 2.57,
         "sim": 0.8388
       },
       {
@@ -18148,7 +17575,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Après des heures de marche, ils atteignirent enfin la crête, essoufflés mais heureux d'avoir vaincu la montagne.",
-        "utmos": 2.535,
         "sim": 0.8125
       },
       {
@@ -18174,7 +17600,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Anne-sophie Legrand-du-bois a rencontré Greuzégorz Wozniak à Aix-en-provence.",
-        "utmos": 2.617,
         "sim": 0.7732
       },
       {
@@ -18200,7 +17625,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Anne-Sophie Legrand-Dubois a rencontré Grassegorge Wozniak à Aix-en-Provence.",
-        "utmos": 2.617,
         "sim": 0.805
       },
       {
@@ -18226,7 +17650,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Anne-sophie Legrand-du-bois a rencontré Grégor Swozniak à Aix-en-provence.",
-        "utmos": 2.44,
         "sim": 0.7879
       },
       {
@@ -18252,7 +17675,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 2.388,
         "sim": 0.8114
       },
       {
@@ -18278,7 +17700,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 2.574,
         "sim": 0.8275
       },
       {
@@ -18304,7 +17725,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village.",
-        "utmos": 2.552,
         "sim": 0.8076
       },
       {
@@ -18331,7 +17751,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 2.33,
         "sim": 0.8186
       },
       {
@@ -18358,7 +17777,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 2.19,
         "sim": 0.84
       },
       {
@@ -18385,7 +17803,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Pour comprendre pleinement les mécanismes de la photosynthèse, il convient d'abord de rappeler que les chloroplastes, ces organites présents dans les cellules végétales, captent l'énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante.",
-        "utmos": 2.162,
         "sim": 0.8434
       },
       {
@@ -18411,7 +17828,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pour 100 des participants ont répondu par l'affirmative, un chiffre en nette hausse par rapport à l'année précédente où seulement 74 pour 100 s'étaient prononcés dans ce sens.",
-        "utmos": 1.994,
         "sim": 0.854
       },
       {
@@ -18437,7 +17853,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pourcents des participants ont répondu par l'affirmative, un chiffre en nette hausse par rapport à l'année précédente, où seulement 74 pourcents s'étaient prononcés dans ce sens.",
-        "utmos": 2.155,
         "sim": 0.8587
       },
       {
@@ -18463,7 +17878,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "91,3 pourcents des participants ont répondu par l'affirmative, un chiffre en nette hausse par rapport à l'année précédente, où seulement 74 pourcents s'étaient prononcés dans ce sens.",
-        "utmos": 2.287,
         "sim": 0.8134
       },
       {
@@ -18489,7 +17903,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de se fier à son instinct.",
-        "utmos": 2.903,
         "sim": 0.6952
       },
       {
@@ -18515,7 +17928,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de se fier à son instinct.",
-        "utmos": 2.807,
         "sim": 0.7414
       },
       {
@@ -18541,7 +17953,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il est fier de se fier à son instinct.",
-        "utmos": 2.806,
         "sim": 0.7032
       },
       {
@@ -18567,7 +17978,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvant leurs oeufs près du couvent abandonné",
-        "utmos": 2.254,
         "sim": 0.7863
       },
       {
@@ -18593,7 +18003,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvant leurs oeufs près du couvent abandonné.",
-        "utmos": 2.081,
         "sim": 0.7308
       },
       {
@@ -18619,7 +18028,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les poules couvant leurs oeufs près du couvent abandonné.",
-        "utmos": 1.761,
         "sim": 0.7706
       },
       {
@@ -18645,7 +18053,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 2.624,
         "sim": 0.7089
       },
       {
@@ -18671,7 +18078,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 2.845,
         "sim": 0.7193
       },
       {
@@ -18697,7 +18103,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le soleil se lève à l'est, c'est là qu'est notre maison.",
-        "utmos": 2.863,
         "sim": 0.6921
       },
       {
@@ -18723,7 +18128,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 2.614,
         "sim": 0.7257
       },
       {
@@ -18749,7 +18153,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 2.472,
         "sim": 0.7251
       },
       {
@@ -18775,7 +18178,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il n'en veut plus, même si j'en ai plus que lui.",
-        "utmos": 2.484,
         "sim": 0.749
       },
       {
@@ -18803,7 +18205,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sascha et Amélie habitent au 26 rue des Acacias à Bordeaux.",
-        "utmos": 2.899,
         "sim": 0.7734
       },
       {
@@ -18831,7 +18232,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sascha et Amélie habitent au 26 rue des Acacias à Bordeaux.",
-        "utmos": 2.762,
         "sim": 0.7699
       },
       {
@@ -18859,7 +18259,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Sacha et Amélie habitent au 26 rue des Acacias à Bordeaux.",
-        "utmos": 2.748,
         "sim": 0.701
       },
       {
@@ -18886,7 +18285,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Vroom ! La voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 2.5,
         "sim": 0.8153
       },
       {
@@ -18913,7 +18311,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Vroum ! La voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 2.291,
         "sim": 0.8153
       },
       {
@@ -18940,7 +18337,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Vroum ! La voiture bondit en avant, projetant des gravillons contre la vieille barrière.",
-        "utmos": 2.358,
         "sim": 0.7943
       },
       {
@@ -18966,7 +18362,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore ! Encore lui ! Mais qu'est-ce qu'il veut à la fin ?",
-        "utmos": 2.551,
         "sim": 0.7258
       },
       {
@@ -18992,7 +18387,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore ! Encore lui ! Mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 2.702,
         "sim": 0.7345
       },
       {
@@ -19018,7 +18412,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Encore ! Encore lui ! Mais qu'est-ce qu'il veut, à la fin ?",
-        "utmos": 2.699,
         "sim": 0.7522
       },
       {
@@ -19045,7 +18438,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Arrôme de vieux moteur toussa 3 fois, puis se tut pour de bon.",
-        "utmos": 2.451,
         "sim": 0.6299
       },
       {
@@ -19072,7 +18464,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le vieux moteur toussa 3 fois, puis se tut pour de bon.",
-        "utmos": 1.535,
         "sim": 0.4884
       },
       {
@@ -19099,7 +18490,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Ah ! Reine ! Le vieux moteur toussa 3 fois, puis se tut pour de bon.",
-        "utmos": 2.347,
         "sim": 0.6893
       },
       {
@@ -19125,7 +18515,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 2.361,
         "sim": 0.6728
       },
       {
@@ -19151,7 +18540,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 2.748,
         "sim": 0.6308
       },
       {
@@ -19177,7 +18565,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "La danse mystérieuse du kabuki.",
-        "utmos": 2.842,
         "sim": 0.6911
       },
       {
@@ -19201,7 +18588,6 @@
         "anomalie_kind": "troncature:tail",
         "anomalie_detail": "mot(s) de fin non détecté(s) : « endormi »",
         "texte_transcrit": "CHAPITRE 1er LE MOULIN DORMI",
-        "utmos": 2.527,
         "sim": 0.7005
       },
       {
@@ -19225,7 +18611,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chapitre 1er Le moulin endormi.",
-        "utmos": 2.785,
         "sim": 0.7125
       },
       {
@@ -19249,7 +18634,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chapitre 1er Le moulin endormi.",
-        "utmos": 2.659,
         "sim": 0.6986
       },
       {
@@ -19278,7 +18662,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait au bout de la vallée de Grismoutan un moulin que personne n'osait plus faire tourner. Les anciens racontaient qu'un hiver, il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture. Depuis, disait-on, le vent dormait dans la roue, et il ne fallait surtout pas le réveiller. Camille n'avait jamais cru à ces histoires. Ce matin-là, elle descendit le sentier gelé avant le jour, une lanterne à la main, la porte n'était pas fermée à clef. À l'intérieur, la grande roue de bois attendait, immobile, et le bois, sous sa paume, était tiède. Y a quelqu'un ? Demanda-t-elle, et sa voix lui parut minuscule. Rien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 2.047,
         "sim": 0.8803
       },
       {
@@ -19307,7 +18690,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait, au bout de la vallée de Gricemouton, un moulin que personne n'osait plus faire tourner. Les anciens racontaient qu'un hiver il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture. Depuis, disait-on, le vent dormait dans la roue, et il ne fallait surtout pas le réveiller. Camille n'avait jamais cru à ces histoires. Ce matin-là, elle descendit le sentier gelé avant le jour, une lanterne à la main, la porte n'était pas fermée à clef, à l'intérieur la grande roue de bois attendait, immobile, et le bois, sous sa paume, était tiède. Il y a quelqu'un ? Demanda-t-elle, et sa voix lui parut minuscule. Rien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 2.143,
         "sim": 0.8872
       },
       {
@@ -19336,7 +18718,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il y avait, au bout de la vallée de Gricemouton, un moulin que personne n'osait plus faire tourner. Les anciens racontaient qu'un hiver, il y a de cela 91 ans, le meunier Aristide Vaillancoste y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture. Depuis, disait-on, le vent dormait dans la roue, et il ne fallait surtout pas le réveiller. Camille n'avait jamais cru à ces histoires ce matin-là elle descendit le sentier gelé avant le jour, une lanterne à la main, la porte n'était pas fermée à clef, à l'intérieur la grande roue de bois attendait, immobile, et le bois, sous sa paume, était tiède. Il y a quelqu'un ? Demanda-t-elle, et sa voix lui parut minuscule. Rien ne répondit, sinon un souffle très bas, régulier, patient, qui semblait venir de la roue elle-même.",
-        "utmos": 2.219,
         "sim": 0.8755
       },
       {
@@ -19362,7 +18743,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il a partagé le nouveau starter pack sur son feed juste avant le week-end.",
-        "utmos": 2.745,
         "sim": 0.7469
       },
       {
@@ -19388,7 +18768,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il a partagé le nouveau starter pack sur son feed juste avant le week-end.",
-        "utmos": 2.841,
         "sim": 0.8126
       },
       {
@@ -19414,7 +18793,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il a partagé le nouveau starter pack sur son feed juste avant le week-end.",
-        "utmos": 2.361,
         "sim": 0.8178
       },
       {
@@ -19441,7 +18819,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le manager a calé le kick-off du sprint avec Bradley en toute fin de meeting.",
-        "utmos": 2.455,
         "sim": 0.8251
       },
       {
@@ -19468,7 +18845,6 @@
         "anomalie_kind": "troncature:tail",
         "anomalie_detail": "mot(s) de fin non détecté(s) : « meeting »",
         "texte_transcrit": "Le manager a calé le kick-off du sprint avec Bradley en toute fin de ligne.",
-        "utmos": 2.762,
         "sim": 0.8135
       },
       {
@@ -19495,7 +18871,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le manager a calé le kick off du sprint avec Bradley en toute fin de meeting.",
-        "utmos": 2.388,
         "sim": 0.8224
       },
       {
@@ -19521,7 +18896,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de 10 heures 45 du 14 juillet.",
-        "utmos": 2.659,
         "sim": 0.8185
       },
       {
@@ -19547,7 +18921,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de 10 heures 45 du 14 juillet.",
-        "utmos": 2.367,
         "sim": 0.8189
       },
       {
@@ -19573,7 +18946,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Il gravit les 73 marches, puis attendit le train de 10 heures 45 du 14 juillet.",
-        "utmos": 2.509,
         "sim": 0.8226
       },
       {
@@ -19599,7 +18971,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grismouton-le-Vieux, près du bois de Kernide.",
-        "utmos": 2.331,
         "sim": 0.7866
       },
       {
@@ -19625,7 +18996,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grismouton-le-Vieux, près du bois de Kernide.",
-        "utmos": 2.111,
         "sim": 0.7813
       },
       {
@@ -19651,7 +19021,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Le sorcier Franfreloup vivait au hameau de Grismouton le Vieux, près du bois de Kerniade.",
-        "utmos": 2.407,
         "sim": 0.8036
       },
       {
@@ -19677,7 +19046,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les enfants heureux ont ouvert, un à un, les anciens albums oubliés au grenier.",
-        "utmos": 2.125,
         "sim": 0.8417
       },
       {
@@ -19703,7 +19071,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les Enfants Heureux ont ouvert, un à un, les anciens albums oubliés au grenier.",
-        "utmos": 2.494,
         "sim": 0.8302
       },
       {
@@ -19729,7 +19096,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Les enfants heureux ont ouvert, un à un, les anciens albums oubliés au grenier.",
-        "utmos": 2.29,
         "sim": 0.827
       },
       {
@@ -19753,7 +19119,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 2.399,
         "sim": 0.7912
       },
       {
@@ -19777,7 +19142,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 2.517,
         "sim": 0.7465
       },
       {
@@ -19801,7 +19165,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Je n'y crois pas une 2nde, répondit Juliette en haussant les épaules.",
-        "utmos": 2.398,
         "sim": 0.7845
       },
       {
@@ -19827,7 +19190,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Tchout ne dit rien, ils sont juste derrière la porte.",
-        "utmos": 2.484,
         "sim": 0.7756
       },
       {
@@ -19853,7 +19215,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut ! Ne dis rien ! Ils sont juste derrière la porte.",
-        "utmos": 2.537,
         "sim": 0.7763
       },
       {
@@ -19879,7 +19240,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Chut ! Ne dis rien, ils sont juste derrière la porte.",
-        "utmos": 2.358,
         "sim": 0.7606
       }
     ]

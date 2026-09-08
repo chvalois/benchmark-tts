@@ -21,7 +21,6 @@
     "synthese": {
       "n_runs": 99,
       "n_verifiees": 99,
-      "utmos_moyen": 2.7377979797979797,
       "sim_moyen": 0.45994141414141404,
       "wer_moyen": 1.2360861273141974,
       "wer_ecart_type": 1.449363199275524,
@@ -559,7 +558,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « on a gagné c est incroyable »",
         "texte_transcrit": "Eh !",
-        "utmos": 1.498,
         "sim": 0.0005
       },
       {
@@ -583,7 +581,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=33%; mot(s) de fin non détecté(s) : « incroyable »",
         "texte_transcrit": "C'est un rêve.",
-        "utmos": 2.584,
         "sim": 0.3747
       },
       {
@@ -607,7 +604,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=33%; mot(s) de fin non détecté(s) : « incroyable »",
         "texte_transcrit": "C'est ça.",
-        "utmos": 3.6,
         "sim": 0.3324
       },
       {
@@ -631,7 +627,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « non mais ça suffit maintenant »",
         "texte_transcrit": "Hé !",
-        "utmos": 1.442,
         "sim": -0.025
       },
       {
@@ -655,7 +650,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « non mais ça suffit maintenant »",
         "texte_transcrit": "J'ai affamé.",
-        "utmos": 3.128,
         "sim": 0.3656
       },
       {
@@ -679,7 +673,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « non mais ça suffit maintenant »",
         "texte_transcrit": "T'es à sa table !",
-        "utmos": 2.958,
         "sim": 0.5016
       },
       {
@@ -705,7 +698,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=10%; mot(s) de fin non détecté(s) : « j ai entendu du bruit »",
         "texte_transcrit": "C'est un livre d'oïe ?",
-        "utmos": 2.48,
         "sim": 0.3568
       },
       {
@@ -731,7 +723,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=10%; mot(s) de fin non détecté(s) : « j ai entendu du bruit »",
         "texte_transcrit": "C'est un Hollywood.",
-        "utmos": 2.626,
         "sim": 0.2889
       },
       {
@@ -757,7 +748,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il y a quelqu un j ai entendu du bruit »",
         "texte_transcrit": "T'es achetée en vie.",
-        "utmos": 3.141,
         "sim": 0.358
       },
       {
@@ -783,7 +773,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il me manque chaque jour un peu plus »",
         "texte_transcrit": "Tiens ! Faisons.",
-        "utmos": 2.797,
         "sim": 0.4344
       },
       {
@@ -809,7 +798,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=12%; mot(s) de fin non détecté(s) : « peu plus »",
         "texte_transcrit": "Tu as un frère.",
-        "utmos": 3.288,
         "sim": 0.458
       },
       {
@@ -835,7 +823,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il me manque chaque jour un peu plus »",
         "texte_transcrit": "Tel serait-ce.",
-        "utmos": 3.511,
         "sim": 0.4826
       },
       {
@@ -861,7 +848,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « considérons à présent l équation suivante »",
         "texte_transcrit": "C'est un litosier.",
-        "utmos": 2.97,
         "sim": 0.361
       },
       {
@@ -887,7 +873,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « considérons à présent l équation suivante »",
         "texte_transcrit": "Chère mademoiselle",
-        "utmos": 2.801,
         "sim": 0.5394
       },
       {
@@ -913,7 +898,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « considérons à présent l équation suivante »",
         "texte_transcrit": "Tu as eu ça ou tu n'y as pas ça ?",
-        "utmos": 3.119,
         "sim": 0.2928
       },
       {
@@ -939,7 +923,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=7%; mot(s) de fin non détecté(s) : « a enfin décroché ce contrat »",
         "texte_transcrit": "C'est ami biscou, il aurait bien sauté en face de l'autre chambre.",
-        "utmos": 2.94,
         "sim": 0.4064
       },
       {
@@ -965,7 +948,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=13%; mot(s) de fin non détecté(s) : « travail on l a enfin décroché ce contrat »",
         "texte_transcrit": "Tu l'as enjoué, j'ai rien dit en ce temps, j'ai sorti le lancement.",
-        "utmos": 2.665,
         "sim": 0.5657
       },
       {
@@ -991,7 +973,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=7%; mot(s) de fin non détecté(s) : « ce travail on l a enfin décroché ce contrat »",
         "texte_transcrit": "Chéri, ça m'énerve, je vous donne ça à le faire, c'est tout, il n'en est pas.",
-        "utmos": 3.013,
         "sim": 0.4335
       },
       {
@@ -1017,7 +998,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « cent fois et tu n as rien écouté encore une fois »",
         "texte_transcrit": "C'est un université, il va se prendre prévenu de santé en fait.",
-        "utmos": 3.165,
         "sim": 0.5732
       },
       {
@@ -1043,7 +1023,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « as rien écouté encore une »",
         "texte_transcrit": "Tiens, ce joint, il n'a pas le choix de s'en tenir aux foils.",
-        "utmos": 2.922,
         "sim": 0.5364
       },
       {
@@ -1069,7 +1048,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=12%; mot(s) de fin non détecté(s) : « rien écouté encore une fois »",
         "texte_transcrit": "Tu as les 5 livres que tu voulais en faire, c'est ça, en fait ?",
-        "utmos": 2.422,
         "sim": 0.6366
       },
       {
@@ -1095,7 +1073,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « ombre bouger près de la porte »",
         "texte_transcrit": "C'est une excuse d'être sorti en face part chapeau.",
-        "utmos": 3.002,
         "sim": 0.5263
       },
       {
@@ -1121,7 +1098,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « ne bouge pas surtout ne fais aucun bruit j ai vu une ombre bouger près de la porte »",
         "texte_transcrit": "Cher Monsieur Joylin, je passe le temps, on sortira ensemble.",
-        "utmos": 2.794,
         "sim": 0.583
       },
       {
@@ -1147,7 +1123,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « ne bouge pas surtout ne fais aucun bruit j ai vu une ombre bouger près de la porte »",
         "texte_transcrit": "C'est les samedis, puis les vendes, les fêtes, les niveaux, tout ça.",
-        "utmos": 3.158,
         "sim": 0.5653
       },
       {
@@ -1173,7 +1148,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=14%; mot(s) de fin non détecté(s) : « n a vraiment de sens tu sais »",
         "texte_transcrit": "C'est mes viscoses, j'ai rien sauté en face.",
-        "utmos": 3.089,
         "sim": 0.4892
       },
       {
@@ -1199,7 +1173,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=7%; mot(s) de fin non détecté(s) : « partie plus rien n a vraiment de sens tu sais »",
         "texte_transcrit": "Chère produirez-en étant faite, c'est cela ?",
-        "utmos": 2.599,
         "sim": 0.5643
       },
       {
@@ -1225,7 +1198,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « depuis qu elle est partie plus rien n a vraiment de sens tu sais »",
         "texte_transcrit": "Tiens, les sanglots et les chaudins, ça en fait 6.",
-        "utmos": 3.317,
         "sim": 0.4736
       },
       {
@@ -1252,7 +1224,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « mille sept cent quatre vingt neuf marque une rupture profonde avec l ancien régime »",
         "texte_transcrit": "C'est une viscose, et elle est interdite enfin chez Armand Chassel, Sainte-Croix-de-Ville.",
-        "utmos": 2.674,
         "sim": 0.5103
       },
       {
@@ -1279,7 +1250,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « mille sept cent quatre vingt neuf marque une rupture profonde avec l ancien régime »",
         "texte_transcrit": "Si elle n'a fait rien, il va acheter un central et on change l'ordre de son fils.",
-        "utmos": 2.232,
         "sim": 0.637
       },
       {
@@ -1306,7 +1276,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « mille sept cent quatre vingt neuf marque une rupture profonde avec l ancien régime »",
         "texte_transcrit": "Certes, ils s'aménagent, ils perdent leurs têtes, ils ne font que leur religion, et ils m'en septent-quatre de venir.",
-        "utmos": 2.718,
         "sim": 0.4968
       },
       {
@@ -1332,7 +1301,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=11%; mot(s) de fin non détecté(s) : « crête essoufflés mais heureux d avoir vaincu la montagne »",
         "texte_transcrit": "C'est un des vices qu'on lui donne sans terre en fessure, si vous mangez assez, vous ne la faites pas monter.",
-        "utmos": 2.551,
         "sim": 0.4711
       },
       {
@@ -1358,7 +1326,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « après des heures de marche ils atteignirent enfin la crête essoufflés mais heureux d avoir vaincu la montagne »",
         "texte_transcrit": "Ce jeu-là est dangereux, tel qu'en fait, c'est absolument non-fondamental.",
-        "utmos": 2.608,
         "sim": 0.4869
       },
       {
@@ -1384,7 +1351,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « heures de marche ils atteignirent enfin la crête essoufflés mais heureux d avoir vaincu la montagne »",
         "texte_transcrit": "C'est des samedis pour des hôtels en face, et parce que c'est Jonathan qui m'a regardé mon texte.",
-        "utmos": 2.675,
         "sim": 0.5289
       },
       {
@@ -1410,7 +1376,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=17%; mot(s) de fin non détecté(s) : « provence »",
         "texte_transcrit": "C'est un éviscou, il a dit, d'en sortir en face-masse.",
-        "utmos": 2.84,
         "sim": 0.4869
       },
       {
@@ -1436,7 +1401,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « anne sophie legrand dubois a rencontré grzegorz wozniak à aix en provence »",
         "texte_transcrit": "Soit, on devait jouer l'interchâteur, non plus.",
-        "utmos": 2.77,
         "sim": 0.6028
       },
       {
@@ -1462,7 +1426,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « provence »",
         "texte_transcrit": "C'est les samedis du quart de l'heure en fait, c'est bon.",
-        "utmos": 3.03,
         "sim": 0.547
       },
       {
@@ -1488,7 +1451,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « enroula avec soin puis rentra chez lui sous une pluie fine qui n en finissait pas de tomber sur les toits gris du village »",
         "texte_transcrit": "C'est quand il me semble qu'il a vu ce qu'on dirait d'un saut d'un féchon. Faut-il nous marcher sur ce que l'on aime, sur ce que l'on saurait savoir, sur le genre chez les autres d'eux ?",
-        "utmos": 2.409,
         "sim": 0.5503
       },
       {
@@ -1514,7 +1476,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=5%; mot(s) de fin non détecté(s) : « finissait pas de tomber sur les toits gris du village »",
         "texte_transcrit": "Qui connaissait l'univers, il se fâchait de terre, il sortait de l'air, il se foutait de la masse, alors ça se fousait d'y aller, il tombait, il sortait de l'arbre, ça, on le prit, il en revit, ça, ça.",
-        "utmos": 2.317,
         "sim": 0.4611
       },
       {
@@ -1540,7 +1501,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « les enroula avec soin puis rentra chez lui sous une pluie fine qui n en finissait pas de tomber sur les toits gris du village »",
         "texte_transcrit": "J'ai dit ça, mais j'ai été insolent. Je lui ai dit Je ne l'aime pas, c'est furtif, l'intention, c'est le master, c'est le sol, c'est le pédage, c'est la solution.",
-        "utmos": 2.272,
         "sim": 0.5019
       },
       {
@@ -1567,7 +1527,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=15%; mot(s) de fin non détecté(s) : « plante »",
         "texte_transcrit": "C'est dit, ce n'est qu'un espace naturel, décédé, sans médaille, puisque aujourd'hui l'âge ne le fait pas, qu'on prenne le polymère, l'inspecteur, et subis la photo, c'est ça qu'on finit, c'est pour lui rappeler que la surplace, c'est sa zone, en fait, c'est pas la place.",
-        "utmos": 2.125,
         "sim": 0.548
       },
       {
@@ -1594,7 +1553,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « les chloroplastes ces organites présents dans les cellules végétales captent l énergie lumineuse afin de la convertir en énergie chimique utilisable par la »",
         "texte_transcrit": "Je ne crois plus pas bien, c'est la CIG, on sait que ça n'a rien à voir avec ce coup de juin, dans le temps, en fait, il se peut que le 1er ministre, le commissaire des affaires sociales, convie à boire du pavé à cause, tourne le cheval à ses têtes, passe ses cheveux, se repart à plainte.",
-        "utmos": 1.859,
         "sim": 0.4873
       },
       {
@@ -1621,7 +1579,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail + repetition:ratio",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « pour comprendre pleinement les mécanismes de la photosynthèse il convient d abord de rappeler que les chloroplastes ces organites présents dans les cellules végétales captent l énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante »; trigrammes dupliqués 94%",
         "texte_transcrit": "Je n'y connais pas mes sentiments, c'est immédiat, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un homme, c'est un",
-        "utmos": 2.029,
         "sim": 0.4796
       },
       {
@@ -1647,7 +1604,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=5%; mot(s) de fin non détecté(s) : « affirmative un chiffre en nette hausse par rapport à l année précédente où seulement soixante quatorze pour cent s étaient prononcés dans ce sens »",
         "texte_transcrit": "C'est une institution qui s'est rétablie dans l'école Joie et d'identité, hôtel en fait. Ce qu'on veut dire, c'est que l'autre chose, c'est qu'ils participent, ils sont prêts à répondre pendant la séparation pour l'annonce boursier.",
-        "utmos": 2.212,
         "sim": 0.5786
       },
       {
@@ -1673,7 +1629,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « seulement soixante quatorze pour cent s étaient prononcés dans ce sens »",
         "texte_transcrit": "J'ai commencé à dessiner, je crois, tout à l'heure, en sortant de l'école. J'avais une conjoncture, où j'apportais une disparition, de temps en temps, à l'enfant, mais il venait rarement se faire reprendre, il n'était pas jeunesse.",
-        "utmos": 2.488,
         "sim": 0.6233
       },
       {
@@ -1699,7 +1654,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « l affirmative un chiffre en nette hausse par rapport à l année précédente où seulement soixante quatorze pour cent s étaient prononcés dans ce sens »",
         "texte_transcrit": "J'ai essayé de s'y quitter, j'ai essayé de discuter avec des internautes, on s'est croisé, on a voulu le transport, ça a été dispensé, on a répondu par le fond, on a marché, on a fait le reste, on a fait d'autres choses.",
-        "utmos": 2.443,
         "sim": 0.6025
       },
       {
@@ -1725,7 +1679,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il est fier de se fier à son instinct »",
         "texte_transcrit": "5 secondes.",
-        "utmos": 3.019,
         "sim": 0.3953
       },
       {
@@ -1751,7 +1704,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=11%; mot(s) de fin non détecté(s) : « fier de se fier à son instinct »",
         "texte_transcrit": "C'est insensible.",
-        "utmos": 3.035,
         "sim": 0.4662
       },
       {
@@ -1777,7 +1729,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=22%; mot(s) de fin non détecté(s) : « son instinct »",
         "texte_transcrit": "C'est à ça, ainsi.",
-        "utmos": 3.122,
         "sim": 0.3668
       },
       {
@@ -1803,7 +1754,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « les poules couvent leurs œufs près du couvent abandonné »",
         "texte_transcrit": "C'est un livre scolaire, ça, ça m'a payé.",
-        "utmos": 2.964,
         "sim": 0.3942
       },
       {
@@ -1829,7 +1779,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « les poules couvent leurs œufs près du couvent abandonné »",
         "texte_transcrit": "Cher Anjou et Odin s'entendent.",
-        "utmos": 2.283,
         "sim": 0.3425
       },
       {
@@ -1855,7 +1804,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=11%; mot(s) de fin non détecté(s) : « couvent abandonné »",
         "texte_transcrit": "C'est l'essentiel du coeur de l'homme.",
-        "utmos": 2.995,
         "sim": 0.3656
       },
       {
@@ -1881,7 +1829,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=14%; mot(s) de fin non détecté(s) : « là qu est notre maison »",
         "texte_transcrit": "C'est un livre scolaire dans un seul terme.",
-        "utmos": 2.754,
         "sim": 0.3046
       },
       {
@@ -1907,7 +1854,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=7%; mot(s) de fin non détecté(s) : « l est c est là qu est notre maison »",
         "texte_transcrit": "Je suis en train de jouer à Eden, je t'en fais.",
-        "utmos": 2.512,
         "sim": 0.6107
       },
       {
@@ -1933,7 +1879,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=14%; mot(s) de fin non détecté(s) : « là qu est notre maison »",
         "texte_transcrit": "C'est les 5 milles aux derniers endroits.",
-        "utmos": 2.928,
         "sim": 0.5396
       },
       {
@@ -1959,7 +1904,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « veut plus même si j en ai plus que lui »",
         "texte_transcrit": "Ça m'est l'invité, en effet.",
-        "utmos": 2.766,
         "sim": 0.4995
       },
       {
@@ -1985,7 +1929,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il n en veut plus même si j en ai plus que lui »",
         "texte_transcrit": "Chers mademoiselles et adhérents, je vous remercie.",
-        "utmos": 2.222,
         "sim": 0.3429
       },
       {
@@ -2011,7 +1954,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « en ai plus que lui »",
         "texte_transcrit": "C'est les samedis que j'entends.",
-        "utmos": 2.557,
         "sim": 0.335
       },
       {
@@ -2039,7 +1981,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « vingt six rue des acacias à bordeaux »",
         "texte_transcrit": "Si on venait jusqu'au lieu, il y aurait un sauté en face.",
-        "utmos": 2.995,
         "sim": 0.3467
       },
       {
@@ -2067,7 +2008,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « bordeaux »",
         "texte_transcrit": "Ça m'allait à l'intention de parler.",
-        "utmos": 2.673,
         "sim": 0.5067
       },
       {
@@ -2095,7 +2035,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « sacha et amélie habitent au vingt six rue des acacias à bordeaux »",
         "texte_transcrit": "T'es allé s'amuser, t'es allé se faire une fesse ?",
-        "utmos": 2.976,
         "sim": 0.4661
       },
       {
@@ -2122,7 +2061,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « avant projetant des gravillons contre la vieille barrière »",
         "texte_transcrit": "C'est un livre scolaire, vous êtes attentifs, enfin, je m'en vais.",
-        "utmos": 2.839,
         "sim": 0.5428
       },
       {
@@ -2149,7 +2087,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « vroum la voiture bondit en avant projetant des gravillons contre la vieille barrière »",
         "texte_transcrit": "J'ai arrêté d'arriver, j'ai partagé le temps, on est sortis le lendemain.",
-        "utmos": 2.764,
         "sim": 0.4577
       },
       {
@@ -2176,7 +2113,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « voiture bondit en avant projetant des gravillons contre la vieille barrière »",
         "texte_transcrit": "C'est les 5 minutes qu'on tente de faire une fête, j'ai demandé de la faire.",
-        "utmos": 2.542,
         "sim": 0.4965
       },
       {
@@ -2202,7 +2138,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « ce qu il veut à la fin »",
         "texte_transcrit": "C'est une visqueux de l'Afrique.",
-        "utmos": 3.049,
         "sim": 0.3215
       },
       {
@@ -2228,7 +2163,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « ce qu il veut à la fin »",
         "texte_transcrit": "C'est un jeu qui va être un temps.",
-        "utmos": 2.865,
         "sim": 0.4316
       },
       {
@@ -2254,7 +2188,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « encore encore lui mais qu est ce qu il veut à la fin »",
         "texte_transcrit": "Tu as essayé d'enlever son texte, non ?",
-        "utmos": 3.176,
         "sim": 0.5271
       },
       {
@@ -2281,7 +2214,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « rrrmmm le vieux moteur toussa trois fois puis se tut pour de bon »",
         "texte_transcrit": "C'est un bénéfice cool d'être aidé en santé, en fait.",
-        "utmos": 3.106,
         "sim": 0.4699
       },
       {
@@ -2308,7 +2240,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=15%",
         "texte_transcrit": "Cher, on se dit aujourd'hui, là, ne t'en fais pas bon.",
-        "utmos": 2.931,
         "sim": 0.6212
       },
       {
@@ -2335,7 +2266,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « rrrmmm le vieux moteur toussa trois fois puis se tut pour de bon »",
         "texte_transcrit": "C'est les samedis qu'on donne sur Teleface ?",
-        "utmos": 2.94,
         "sim": 0.5011
       },
       {
@@ -2361,7 +2291,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « la danse mystérieuse du kabuki »",
         "texte_transcrit": "Oui.",
-        "utmos": 1.423,
         "sim": 0.0676
       },
       {
@@ -2387,7 +2316,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « la danse mystérieuse du kabuki »",
         "texte_transcrit": "Tiens, Faye.",
-        "utmos": 3.742,
         "sim": 0.428
       },
       {
@@ -2413,7 +2341,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « la danse mystérieuse du kabuki »",
         "texte_transcrit": "Tu as ça ?",
-        "utmos": 3.321,
         "sim": 0.3021
       },
       {
@@ -2437,7 +2364,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « chapitre premier le moulin endormi »",
         "texte_transcrit": "Qu'est-ce que...",
-        "utmos": 2.64,
         "sim": 0.3397
       },
       {
@@ -2461,7 +2387,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « chapitre premier le moulin »",
         "texte_transcrit": "Tiens, on est dormi.",
-        "utmos": 1.947,
         "sim": 0.212
       },
       {
@@ -2485,7 +2410,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « chapitre premier le moulin endormi »",
         "texte_transcrit": "Théotavé.",
-        "utmos": 3.271,
         "sim": 0.3827
       },
       {
@@ -2514,7 +2438,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=3%; mot(s) de fin non détecté(s) : « même un soir de tempête pour l empêcher d emporter la toiture depuis disait on le vent dormait dans la roue et il ne fallait surtout pas le réveiller camille n avait jamais cru à ces histoires ce matin là elle descendit le sentier gelé avant le jour une lanterne à la main la porte n était pas fermée à clé à l intérieur la grande roue de bois attendait immobile et le bois sous sa paume était tiède il y a quelqu un demanda t elle et sa voix lui parut minuscule rien ne répondit sinon un souffle très bas régulier patient qui semblait venir de la roue elle même »",
         "texte_transcrit": "Gilles Trudeau, en la cité, a tenu une excursion avec David Kojo et Jean-Baptiste Aurel pour leur envoyer des bourses montantes, mais en passant par Saint-Quentin-Cours, ils n'en évoluaient que sur le pôle, en finissant Saint-Quentin-Cours, ils n'en évoluaient que sur tout ça. Saint-Baptiste Kojo a dit à un sauté en face de lui, c'est en Nouvelle-Neuve, il s'est dit, Génie, quand la sauté a mené, il s'est dit à Saint-Baptiste Kojo, il a dit à un sauté en face de lui, c'est comme il avait dit en basse-cour, tu sais, qu'est-ce que tu dis ? Il a dit, Ah ! Mais, on n'a pas montré l'aile à toi, d'ailleurs, il a pris l'aile à tes mains. Saint-Baptiste Kojo a dit à Saint-Baptiste Kojo, il a dit à Saint-Baptiste Kojo, il a dit à Saint-Baptiste Kojo, il a pris l'aile à sa sauté en face de lui, il a pris l'aile à sa sauté en face de lui.",
-        "utmos": 1.739,
         "sim": 0.6134
       },
       {
@@ -2543,7 +2466,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail + repetition:ratio",
         "anomalie_detail": "recall=14%; mot(s) de fin non détecté(s) : « bois sous sa paume était tiède il y a quelqu un demanda t elle et sa voix lui parut minuscule rien ne répondit sinon un souffle très bas régulier patient qui semblait venir de la roue elle même »; trigrammes dupliqués 70%",
         "texte_transcrit": "Qu'est-ce que tu veux dire là ? C'est ainsi, qu'on sait que ça n'a rien à voir avec ce que j'ai dit, et tout le fait, je ne l'avais pas voulu voir, mais je vous en demande, moi, quoi, si on ne peut pas le faire, je vous en prie, on l'aide, si on ne t'a pas, je vous en prie, l'objet, c'est pas de la touche. Si on ne se veut jamais, attend, sauter, on fait, c'était, aussi, zéro. Qu'est-ce que tu veux dire là ? C'est ainsi, qu'on sait que ça n'a rien à voir avec ce que j'ai dit, et tout le fait, je ne l'avais pas voulu voir, moi, quoi, si on ne peut pas le faire, moi, quoi, si on ne se veut jamais, attend, sauter, on fait, c'était, aussi, zéro. Qu'est-ce que tu veux dire là ? C'est ainsi, qu'on sait que ça n'a rien à voir avec ce que j'ai dit, et tout le fait, c'est, aussi, zéro. Qu'est-ce que tu veux dire là ? C'est ainsi, qu'on sait que ça n'a rien à voir avec ce que j'ai dit, et tout le fait, c'est, aussi, zéro. Qu'est-ce que tu veux dire là ? C'est ainsi, qu'on sait que ça n'a rien à voir avec ce que j'ai dit, et tout le fait, c'est, aussi, zéro. Qu'est-ce que tu veux dire là ? C'est ainsi, qu'on sait que ça n'a rien à voir avec ce que j'ai dit, et tout le fait, c'est, ainsi, qu'on sait que ça n'a rien à voir avec ce que j'ai dit, et tout le fait",
-        "utmos": 1.722,
         "sim": 0.6395
       },
       {
@@ -2572,7 +2494,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail + repetition:run",
         "anomalie_detail": "recall=1%; mot(s) de fin non détecté(s) : « moulin que personne n osait plus faire tourner les anciens racontaient qu un hiver il y a de cela quatre vingt onze ans le meunier aristide vaillant coste y avait enfermé le vent lui même un soir de tempête pour l empêcher d emporter la toiture depuis disait on le vent dormait dans la roue et il ne fallait surtout pas le réveiller camille n avait jamais cru à ces histoires ce matin là elle descendit le sentier gelé avant le jour une lanterne à la main la porte n était pas fermée à clé à l intérieur la grande roue de bois attendait immobile et le bois sous sa paume était tiède il y a quelqu un demanda t elle et sa voix lui parut minuscule rien ne répondit sinon un souffle très bas régulier patient qui semblait venir de la roue elle même »; « bon » x3+",
         "texte_transcrit": "Je ne crois plus me placer dans l'extrégiste, je ne connaissais même pas sa vie, sa vie, elle était dans un hôtel, en fait, elle avait un bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon, bon,",
-        "utmos": 1.823,
         "sim": 0.6162
       },
       {
@@ -2598,7 +2519,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il a partagé le nouveau starter pack sur son feed juste avant le week end »",
         "texte_transcrit": "C'est miné, vous ne pouvez pas aller dans l'hôtel, mon fils.",
-        "utmos": 2.847,
         "sim": 0.4013
       },
       {
@@ -2624,7 +2544,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il a partagé le nouveau starter pack sur son feed juste avant le week end »",
         "texte_transcrit": "Cher, on se doit de joie d'être en château, non ?",
-        "utmos": 2.732,
         "sim": 0.5605
       },
       {
@@ -2650,7 +2569,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il a partagé le nouveau starter pack sur son feed juste avant le week end »",
         "texte_transcrit": "C'est à les 100 milles puis à l'ancien tunnel.",
-        "utmos": 3.117,
         "sim": 0.5361
       },
       {
@@ -2677,7 +2595,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « calé le kick off du sprint avec bradley en toute fin de meeting »",
         "texte_transcrit": "C'est un vice-président, je crois, qui a autant fait.",
-        "utmos": 3.179,
         "sim": 0.4039
       },
       {
@@ -2704,7 +2621,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=12%; mot(s) de fin non détecté(s) : « meeting »",
         "texte_transcrit": "Chère Angélique, je crache le temps de son feuillet.",
-        "utmos": 2.728,
         "sim": 0.5231
       },
       {
@@ -2731,7 +2647,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « toute fin de meeting »",
         "texte_transcrit": "C'est les 100 mille et 8 coureurs blancs en teuf et en humide.",
-        "utmos": 3.009,
         "sim": 0.5286
       },
       {
@@ -2757,7 +2672,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail + repetition:run",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il gravit les soixante treize marches puis attendit le train de dix h quarante cinq du quatorze juillet »; « est » x3+",
         "texte_transcrit": "C'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c' est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c' est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c'est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' est bien, c' Est bien, c' Est, Est, Est, Est, Est, Est, Est, Est, Est, Est, Est, Est, Est, Est, Est, Est,",
-        "utmos": 2.984,
         "sim": 0.4953
       },
       {
@@ -2783,7 +2697,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il gravit les soixante treize marches puis attendit le train de dix h quarante cinq du quatorze juillet »",
         "texte_transcrit": "Si on n'en faisait rien, ça marcherait fortement, ça.",
-        "utmos": 2.6,
         "sim": 0.5319
       },
       {
@@ -2809,7 +2722,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « dix h quarante cinq du quatorze juillet »",
         "texte_transcrit": "Qu'est-ce que ça veut dire que t'as une soif de feu ici, mec ?",
-        "utmos": 2.906,
         "sim": 0.4374
       },
       {
@@ -2835,7 +2747,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « le sorcier franfrelou vivait au hameau de grismouton le vieux près du bois de kernide »",
         "texte_transcrit": "5 minutes plus tôt, il y a eu des incertains, on fait saut sur un fleuve.",
-        "utmos": 3.154,
         "sim": 0.4547
       },
       {
@@ -2861,7 +2772,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=7%; mot(s) de fin non détecté(s) : « grismouton le vieux près du bois de kernide »",
         "texte_transcrit": "Chan, les sourds et les joaillons, ça sera fait. Tendez soin de vous réunir ensemble.",
-        "utmos": 2.567,
         "sim": 0.5164
       },
       {
@@ -2887,7 +2797,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « le sorcier franfrelou vivait au hameau de grismouton le vieux près du bois de kernide »",
         "texte_transcrit": "Tiens, il est 5 minutes, il est temps d'entendre si ce chiffre ne l'a pas dévermé.",
-        "utmos": 2.491,
         "sim": 0.5006
       },
       {
@@ -2913,7 +2822,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=7%; mot(s) de fin non détecté(s) : « à un les anciens albums oubliés au grenier »",
         "texte_transcrit": "C'est un minuscule et il a été traité en fait sur sa chambre.",
-        "utmos": 2.87,
         "sim": 0.5092
       },
       {
@@ -2939,7 +2847,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « les enfants heureux ont ouvert un à un les anciens albums oubliés au grenier »",
         "texte_transcrit": "Cher Aventure et Joyeux Lent, c'est en fait le terme de cette semaine.",
-        "utmos": 2.653,
         "sim": 0.5011
       },
       {
@@ -2965,7 +2872,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=7%; mot(s) de fin non détecté(s) : « à un les anciens albums oubliés au grenier »",
         "texte_transcrit": "Tiens, j'ai 180, j'ai 180, fais un sombreret.",
-        "utmos": 2.331,
         "sim": 0.574
       },
       {
@@ -2989,7 +2895,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « seconde répondit juliette en haussant les épaules »",
         "texte_transcrit": "C'est une évidence qu'il a aidé à s'attendre à son sens.",
-        "utmos": 2.676,
         "sim": 0.4668
       },
       {
@@ -3013,7 +2918,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « je n y crois pas une seconde répondit juliette en haussant les épaules »",
         "texte_transcrit": "Cher, on vous a dit que vous aviez l'intention de faire mon sensuel.",
-        "utmos": 2.809,
         "sim": 0.5835
       },
       {
@@ -3037,7 +2941,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=15%; mot(s) de fin non détecté(s) : « une seconde répondit juliette en haussant les épaules »",
         "texte_transcrit": "C'est à dire que ça n'a rien à voir avec ce que j'ai dans sa tête, je ne sais pas.",
-        "utmos": 3.093,
         "sim": 0.5402
       },
       {
@@ -3063,7 +2966,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=10%; mot(s) de fin non détecté(s) : « porte »",
         "texte_transcrit": "Ça m'évite de courir de la poche.",
-        "utmos": 3.379,
         "sim": 0.3755
       },
       {
@@ -3089,7 +2991,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=10%; mot(s) de fin non détecté(s) : « porte »",
         "texte_transcrit": "Chacun de vous soit joyeux à la partie !",
-        "utmos": 2.864,
         "sim": 0.3403
       },
       {
@@ -3115,7 +3016,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « chut ne dis rien ils sont juste derrière la »",
         "texte_transcrit": "C'est-à-dire, il s'en est chauffé le port.",
-        "utmos": 3.131,
         "sim": 0.4253
       }
     ]
@@ -3142,7 +3042,6 @@
     "synthese": {
       "n_runs": 99,
       "n_verifiees": 99,
-      "utmos_moyen": 2.893818181818182,
       "sim_moyen": 0.4676646464646466,
       "wer_moyen": 1.0461259353803214,
       "wer_ecart_type": 0.6090830111680433,
@@ -3397,7 +3296,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=33%; mot(s) de fin non détecté(s) : « gagné c »",
         "texte_transcrit": "On n'a guère d'un existant croyable.",
-        "utmos": 3.769,
         "sim": 0.4513
       },
       {
@@ -3421,7 +3319,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « on a gagné c est incroyable »",
         "texte_transcrit": "Tchou !",
-        "utmos": 1.422,
         "sim": 0.0249
       },
       {
@@ -3445,7 +3342,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « on a gagné c est incroyable »",
         "texte_transcrit": "Chut !",
-        "utmos": 2.975,
         "sim": -0.0438
       },
       {
@@ -3469,7 +3365,6 @@
         "anomalie_kind": "",
         "anomalie_detail": "",
         "texte_transcrit": "Non, mais ça, ça fait maintenant.",
-        "utmos": 3.399,
         "sim": 0.5107
       },
       {
@@ -3493,7 +3388,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « non mais ça suffit maintenant »",
         "texte_transcrit": "Chameau.",
-        "utmos": 1.609,
         "sim": 0.2647
       },
       {
@@ -3517,7 +3411,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « non mais ça suffit maintenant »",
         "texte_transcrit": "Chez toi.",
-        "utmos": 2.7,
         "sim": -0.041
       },
       {
@@ -3543,7 +3436,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=30%; mot(s) de fin non détecté(s) : « quelqu un j ai entendu du bruit »",
         "texte_transcrit": "Il y a quelques ans, Giant and Doodoo Brew",
-        "utmos": 3.408,
         "sim": 0.8199
       },
       {
@@ -3569,7 +3461,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il y a quelqu un j ai entendu du bruit »",
         "texte_transcrit": "Quel inquiète ?",
-        "utmos": 3.286,
         "sim": 0.4774
       },
       {
@@ -3595,7 +3486,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il y a quelqu un j ai entendu du bruit »",
         "texte_transcrit": "Chérie !",
-        "utmos": 2.672,
         "sim": 0.2711
       },
       {
@@ -3621,7 +3511,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il me manque chaque jour un peu plus »",
         "texte_transcrit": "Ah !",
-        "utmos": 1.388,
         "sim": 0.0026
       },
       {
@@ -3647,7 +3536,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il me manque chaque jour un peu plus »",
         "texte_transcrit": "Chose à moi.",
-        "utmos": 3.274,
         "sim": 0.5281
       },
       {
@@ -3673,7 +3561,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il me manque chaque jour un peu plus »",
         "texte_transcrit": "Soit.",
-        "utmos": 3.031,
         "sim": 0.1345
       },
       {
@@ -3699,7 +3586,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « considérons à présent l équation suivante »",
         "texte_transcrit": "Colombanais.",
-        "utmos": 2.613,
         "sim": 0.3775
       },
       {
@@ -3725,7 +3611,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « considérons à présent l équation suivante »",
         "texte_transcrit": "Je sais même.",
-        "utmos": 2.857,
         "sim": 0.4188
       },
       {
@@ -3751,7 +3636,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « considérons à présent l équation suivante »",
         "texte_transcrit": "Chez elle.",
-        "utmos": 3.47,
         "sim": 0.369
       },
       {
@@ -3777,7 +3661,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=20%; mot(s) de fin non détecté(s) : « a enfin décroché ce contrat »",
         "texte_transcrit": "Ce qu'on m'a l'air d'excuser, quoi, c'est chouette.",
-        "utmos": 3.401,
         "sim": 0.614
       },
       {
@@ -3803,7 +3686,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « tu te rends compte après tout ce travail on l a enfin décroché ce contrat »",
         "texte_transcrit": "Je chassais une comate, elle m'avait laissé qu'un choix.",
-        "utmos": 2.724,
         "sim": 0.534
       },
       {
@@ -3829,7 +3711,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=7%; mot(s) de fin non détecté(s) : « l a enfin décroché ce contrat »",
         "texte_transcrit": "C'est ça, c'est un genre qu'on fait se croire.",
-        "utmos": 3.449,
         "sim": 0.4742
       },
       {
@@ -3855,7 +3736,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « je t avais pourtant prévenu cent fois et tu n as rien écouté encore une fois »",
         "texte_transcrit": "On emmène donc sur l'écorce au sein.",
-        "utmos": 3.419,
         "sim": 0.46
       },
       {
@@ -3881,7 +3761,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « t avais pourtant prévenu cent fois et tu n as rien écouté encore une fois »",
         "texte_transcrit": "Je sais bien que lorsque l'on avait la conférence.",
-        "utmos": 2.56,
         "sim": 0.5073
       },
       {
@@ -3907,7 +3786,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « t avais pourtant prévenu cent fois et tu n as rien écouté encore une fois »",
         "texte_transcrit": "Ce n'est pas que je chante les couilles en fausse.",
-        "utmos": 3.083,
         "sim": 0.5067
       },
       {
@@ -3933,7 +3811,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=17%; mot(s) de fin non détecté(s) : « porte »",
         "texte_transcrit": "Un armand n'ose pas de la poche au seigneur.",
-        "utmos": 3.36,
         "sim": 0.6498
       },
       {
@@ -3959,7 +3836,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=11%; mot(s) de fin non détecté(s) : « surtout ne fais aucun bruit j ai vu une ombre bouger près de la porte »",
         "texte_transcrit": "Il a malheureusement ne connait pas un pont.",
-        "utmos": 3.344,
         "sim": 0.5638
       },
       {
@@ -3985,7 +3861,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « ne bouge pas surtout ne fais aucun bruit j ai vu une ombre bouger près de la porte »",
         "texte_transcrit": "Ce n'était que Jean-Louis.",
-        "utmos": 2.836,
         "sim": 0.4572
       },
       {
@@ -4011,7 +3886,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=7%; mot(s) de fin non détecté(s) : « vraiment de sens tu sais »",
         "texte_transcrit": "Que l'on m'a l'air d'excuser.",
-        "utmos": 3.042,
         "sim": 0.5853
       },
       {
@@ -4037,7 +3911,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=7%; mot(s) de fin non détecté(s) : « n a vraiment de sens tu sais »",
         "texte_transcrit": "Je n'en crains rien, parce que vous êtes honnête.",
-        "utmos": 3.021,
         "sim": 0.4083
       },
       {
@@ -4063,7 +3936,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « depuis qu elle est partie plus rien n a vraiment de sens tu sais »",
         "texte_transcrit": "65 rochers nécessaires.",
-        "utmos": 3.118,
         "sim": 0.5349
       },
       {
@@ -4090,7 +3962,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « mille sept cent quatre vingt neuf marque une rupture profonde avec l ancien régime »",
         "texte_transcrit": "Un armade, donc, se colle à l'opposition sénat-liberté de Chirac.",
-        "utmos": 3.067,
         "sim": 0.5964
       },
       {
@@ -4117,7 +3988,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « la révolution française de mille sept cent quatre vingt neuf marque une rupture profonde avec l ancien régime »",
         "texte_transcrit": "Chaussé en bobèles, maintenant les vagues sont fort posées, j'en vois d'ailleurs.",
-        "utmos": 3.152,
         "sim": 0.6146
       },
       {
@@ -4144,7 +4014,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « ancien régime »",
         "texte_transcrit": "Qu'il y a malheureusement un écho à l'exposition, je crois, besoin d'un.",
-        "utmos": 2.877,
         "sim": 0.5518
       },
       {
@@ -4170,7 +4039,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « après des heures de marche ils atteignirent enfin la crête essoufflés mais heureux d avoir vaincu la montagne »",
         "texte_transcrit": "On emmène donc ce qu'on écoche au sénégraphe le matin.",
-        "utmos": 3.379,
         "sim": 0.5214
       },
       {
@@ -4196,7 +4064,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « après des heures de marche ils atteignirent enfin la crête essoufflés mais heureux d avoir vaincu la montagne »",
         "texte_transcrit": "Je ne comprends pas ce que l'on crée là, qu'est-ce qu'il faut devenir pour l'inventer ?",
-        "utmos": 2.848,
         "sim": 0.5282
       },
       {
@@ -4222,7 +4089,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « après des heures de marche ils atteignirent enfin la crête essoufflés mais heureux d avoir vaincu la montagne »",
         "texte_transcrit": "Il a même annoncé connaître Korydak, sauf qu'à chaque fois, il m'éclatait.",
-        "utmos": 2.802,
         "sim": 0.6892
       },
       {
@@ -4248,7 +4114,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « anne sophie legrand dubois a rencontré grzegorz wozniak à aix en provence »",
         "texte_transcrit": "Qu'on emmène l'actualité.",
-        "utmos": 3.671,
         "sim": 0.5863
       },
       {
@@ -4274,7 +4139,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « aix en provence »",
         "texte_transcrit": "Chaussé un commun, à marge avec faim.",
-        "utmos": 2.983,
         "sim": 0.5242
       },
       {
@@ -4300,7 +4164,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « anne sophie legrand dubois a rencontré grzegorz wozniak à aix en provence »",
         "texte_transcrit": "Ça, c'est une chaleur profonde.",
-        "utmos": 3.092,
         "sim": 0.4699
       },
       {
@@ -4326,7 +4189,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=5%; mot(s) de fin non détecté(s) : « le sol les enroula avec soin puis rentra chez lui sous une pluie fine qui n en finissait pas de tomber sur les toits gris du village »",
         "texte_transcrit": "Ce que me l'a amené les majoros au Sénéglo-chrétien n'a marqué qu'il ne se pose rien à s'en saluer pour passer sur un surdouége.",
-        "utmos": 2.584,
         "sim": 0.5832
       },
       {
@@ -4352,7 +4214,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=3%; mot(s) de fin non détecté(s) : « laine tombés sur le sol les enroula avec soin puis rentra chez lui sous une pluie fine qui n en finissait pas de tomber sur les toits gris du village »",
         "texte_transcrit": "Chose un jeu notamment élané d'un alors peu souvent accroyé de jeu sportive basse-mainte, Chauvin's House of Scrooge.",
-        "utmos": 2.496,
         "sim": 0.5277
       },
       {
@@ -4378,7 +4239,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=3%; mot(s) de fin non détecté(s) : « pluie fine qui n en finissait pas de tomber sur les toits gris du village »",
         "texte_transcrit": "C'est aussi une chaîne nette web, dans laquelle on s'enseigne d'ailleurs d'exposés à tous mes shows à la semaine suivante.",
-        "utmos": 2.878,
         "sim": 0.5415
       },
       {
@@ -4405,7 +4265,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=10%; mot(s) de fin non détecté(s) : « rappeler que les chloroplastes ces organites présents dans les cellules végétales captent l énergie lumineuse afin de la convertir en énergie chimique utilisable par la plante »",
         "texte_transcrit": "C'est lui où la maquillage fonce, et où s'installe un tombéumène, que les autres internautes de ce genre bâchent une championne de la Nouvelle-Zélande, soit reconnue de parler.",
-        "utmos": 2.676,
         "sim": 0.6315
       },
       {
@@ -4432,7 +4291,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « photosynthèse il convient d abord de rappeler que les chloroplastes ces organites présents dans les cellules végétales captent l énergie lumineuse afin de la convertir en énergie chimique utilisable par »",
         "texte_transcrit": "Chez Julien Lamanscoulin, il a été un empereur scolaire et après-spoil, s'est représenté à l'Espagne aux Sponses Globales et Jeux d'Intelligence Civiles pour Père-de-la-Planète.",
-        "utmos": 2.474,
         "sim": 0.648
       },
       {
@@ -4459,7 +4317,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail + repetition:run",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « énergie chimique utilisable par la plante »; « you » x3+",
         "texte_transcrit": "Chimie, soigneuse, je t'aime, Edweber. Alors, maintenant, il y a d'autres choses, s'il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y en a, il y, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, you, You, You, You, You, You, You, You, You, You, You, You, You, You, You, You, You, You, You, You, You, You, You, You, You, You, You, You, You",
-        "utmos": 2.311,
         "sim": 0.594
       },
       {
@@ -4485,7 +4342,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « ce sens »",
         "texte_transcrit": "Si l'Irlandais croit qu'il se contient une sénégalienne, on met un exposé dans le récompensement, c'est une seule base, c'est une seule base qui contient ça.",
-        "utmos": 2.863,
         "sim": 0.6466
       },
       {
@@ -4511,7 +4367,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=11%; mot(s) de fin non détecté(s) : « étaient prononcés dans ce sens »",
         "texte_transcrit": "Chose un jeu méta-modin à l'élan en appelant ce courant à cause d'un général particulier, tant c'est aujourd'hui le monsieur Jean-laure Blanc qui s'y insiste.",
-        "utmos": 2.018,
         "sim": 0.653
       },
       {
@@ -4537,7 +4392,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=5%; mot(s) de fin non détecté(s) : « l année précédente où seulement soixante quatorze pour cent s étaient prononcés dans ce sens »",
         "texte_transcrit": "Chien sur un chien, chien net, ouais. Alors, Martin, alors, c'est intérieur, point de temps, on pense que c'est aussi chien, bah, je me sers de boisson, à 5, 6, 7, 10, 7.",
-        "utmos": 2.772,
         "sim": 0.6632
       },
       {
@@ -4563,7 +4417,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=11%; mot(s) de fin non détecté(s) : « fier de se fier à son instinct »",
         "texte_transcrit": "Qu'est-ce ?",
-        "utmos": 1.442,
         "sim": 0.0274
       },
       {
@@ -4589,7 +4442,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il est fier de se fier à son instinct »",
         "texte_transcrit": "Chosem.",
-        "utmos": 3.396,
         "sim": 0.588
       },
       {
@@ -4615,7 +4467,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il est fier de se fier à son instinct »",
         "texte_transcrit": "C'était.",
-        "utmos": 3.534,
         "sim": 0.1779
       },
       {
@@ -4641,7 +4492,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « les poules couvent leurs œufs près du couvent abandonné »",
         "texte_transcrit": "Un nommé à Pascal.",
-        "utmos": 2.852,
         "sim": 0.443
       },
       {
@@ -4667,7 +4517,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « les poules couvent leurs œufs près du couvent abandonné »",
         "texte_transcrit": "Tu te souviens de Mme Manet ?",
-        "utmos": 3.393,
         "sim": 0.4649
       },
       {
@@ -4693,7 +4542,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « les poules couvent leurs œufs près du couvent abandonné »",
         "texte_transcrit": "C'est ça, c'est une vraie fenêtre.",
-        "utmos": 3.139,
         "sim": 0.4629
       },
       {
@@ -4719,7 +4567,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=7%; mot(s) de fin non détecté(s) : « soleil se lève à l est c est là qu est notre maison »",
         "texte_transcrit": "On n'a même pas su que le...",
-        "utmos": 3.02,
         "sim": 0.439
       },
       {
@@ -4745,7 +4592,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « le soleil se lève à l est c est là qu est notre maison »",
         "texte_transcrit": "Les choses saines commencent quand même.",
-        "utmos": 3.187,
         "sim": 0.6027
       },
       {
@@ -4771,7 +4617,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=14%; mot(s) de fin non détecté(s) : « là qu est notre maison »",
         "texte_transcrit": "Ressort, c'est la prochaine.",
-        "utmos": 3.249,
         "sim": 0.4602
       },
       {
@@ -4797,7 +4642,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il n en veut plus même si j en ai plus que lui »",
         "texte_transcrit": "Un amende aussi.",
-        "utmos": 2.915,
         "sim": 0.4497
       },
       {
@@ -4823,7 +4667,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il n en veut plus même si j en ai plus que lui »",
         "texte_transcrit": "Chaussin est bonnet.",
-        "utmos": 2.961,
         "sim": 0.4674
       },
       {
@@ -4849,7 +4692,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « en veut plus même si j en ai plus que lui »",
         "texte_transcrit": "Si ça n'écoute.",
-        "utmos": 3.544,
         "sim": 0.4222
       },
       {
@@ -4877,7 +4719,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « sacha et amélie habitent au vingt six rue des acacias à bordeaux »",
         "texte_transcrit": "Elle emmène dans ce qu'elle a fait.",
-        "utmos": 3.276,
         "sim": 0.5225
       },
       {
@@ -4905,7 +4746,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « sacha et amélie habitent au vingt six rue des acacias à bordeaux »",
         "texte_transcrit": "Je ne choquerai rien parce que vous l'engueuladez.",
-        "utmos": 2.717,
         "sim": 0.4843
       },
       {
@@ -4933,7 +4773,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « sacha et amélie habitent au vingt six rue des acacias à bordeaux »",
         "texte_transcrit": "Ce n'est pas dur chez les éboués.",
-        "utmos": 2.928,
         "sim": 0.4877
       },
       {
@@ -4960,7 +4799,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « vroum la voiture bondit en avant projetant des gravillons contre la vieille barrière »",
         "texte_transcrit": "On emmène donc ce qu'on est content d'avoir.",
-        "utmos": 3.149,
         "sim": 0.5466
       },
       {
@@ -4987,7 +4825,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=15%; mot(s) de fin non détecté(s) : « vieille barrière »",
         "texte_transcrit": "Chasser un colosse courant, c'est la rive la plus grave.",
-        "utmos": 2.777,
         "sim": 0.5353
       },
       {
@@ -5014,7 +4851,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « vroum la voiture bondit en avant projetant des gravillons contre la vieille barrière »",
         "texte_transcrit": "Ce n'est pas juste un incroyable processus.",
-        "utmos": 2.79,
         "sim": 0.4043
       },
       {
@@ -5040,7 +4876,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « encore encore lui mais qu est ce qu il veut à la fin »",
         "texte_transcrit": "Comme le Darfin.",
-        "utmos": 2.838,
         "sim": 0.5074
       },
       {
@@ -5066,7 +4901,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « encore encore lui mais qu est ce qu il veut à la fin »",
         "texte_transcrit": "Je sais un poète.",
-        "utmos": 3.415,
         "sim": 0.4429
       },
       {
@@ -5092,7 +4926,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « ce qu il veut à la fin »",
         "texte_transcrit": "Ce c'est quoi ?",
-        "utmos": 3.393,
         "sim": 0.5391
       },
       {
@@ -5119,7 +4952,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « rrrmmm le vieux moteur toussa trois fois puis se tut pour de bon »",
         "texte_transcrit": "Qu'on emmène l'excursionniste.",
-        "utmos": 2.756,
         "sim": 0.4929
       },
       {
@@ -5146,7 +4978,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « tut pour de bon »",
         "texte_transcrit": "Et la manière dont on se concrétise.",
-        "utmos": 3.146,
         "sim": 0.5521
       },
       {
@@ -5173,7 +5004,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « rrrmmm le vieux moteur toussa trois fois puis se tut pour de bon »",
         "texte_transcrit": "C'est un gâteau, c'est un cours.",
-        "utmos": 3.397,
         "sim": 0.4601
       },
       {
@@ -5199,7 +5029,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « la danse mystérieuse du kabuki »",
         "texte_transcrit": "Merci.",
-        "utmos": 1.618,
         "sim": -0.069
       },
       {
@@ -5225,7 +5054,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « la danse mystérieuse du kabuki »",
         "texte_transcrit": "Chapeau.",
-        "utmos": 1.655,
         "sim": 0.109
       },
       {
@@ -5251,7 +5079,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « la danse mystérieuse du kabuki »",
         "texte_transcrit": "Chine.",
-        "utmos": 2.066,
         "sim": -0.1328
       },
       {
@@ -5275,7 +5102,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « chapitre premier le moulin endormi »",
         "texte_transcrit": "Ah ! Manon !",
-        "utmos": 1.781,
         "sim": 0.238
       },
       {
@@ -5299,7 +5125,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « chapitre premier le moulin endormi »",
         "texte_transcrit": "Les lapins ?",
-        "utmos": 2.224,
         "sim": 0.4353
       },
       {
@@ -5323,7 +5148,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « chapitre premier le moulin endormi »",
         "texte_transcrit": "Qu'est-ce ?",
-        "utmos": 2.379,
         "sim": 0.2929
       },
       {
@@ -5352,7 +5176,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « y a quelqu un demanda t elle et sa voix lui parut minuscule rien ne répondit sinon un souffle très bas régulier patient qui semblait venir de la roue elle même »",
         "texte_transcrit": "Si le royaume-est proche force un serin à tomber en l'air, un arbre contre l'arbre de l'autre, sans s'en combler, s'installe devant un dos en l'air, une poitrine s'entraîne, s'abat, s'ensait, qu'un arbre en l'air, d'excoeur, accroît son serin en l'air. Si le royaume-est proche force un serin à tomber en l'air, un arbre posé sur la tête, un grand verrou, s'installe au côté, avec la grande roue, dépose ses cheveux, une poitrine, s'entraîne, qu'un arbre en l'air, d'excoeur, accroît son serin en l'air, d'où il humait.",
-        "utmos": 2.341,
         "sim": 0.6542
       },
       {
@@ -5381,7 +5204,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail + repetition:ratio",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « roue elle même »; trigrammes dupliqués 82%",
         "texte_transcrit": "Je suis content que l'on m'encourage à l'élan en plus l'encouragé de la Nouvelle-Bretagne, d'agrandir l'épanouissement de l'île à vos échelles, de Cécy, à Porte-et-Été, d'Élé. Je suis content que l'on m'encourage à l'élan en plus l'encouragé de la Nouvelle-Bretagne, de Cécy, à Porte-et-Été, d'Élé. Je suis content que l'on m'encourage à l'élan en plus l'encouragé de la Nouvelle-Bretagne, de Cécy, à Porte-et-Été, d'Élé. Je suis content que l'on m'encourage à l'élan en plus l'encouragé de la Nouvelle-Bretagne, de Cécy, à Porte-et-Été, d'Élé. Je suis content que l'on m'encourage à l'élan en plus l'encouragé de la Nouvelle-Bretagne, de Cécy, à Porte-et-Été, d'Élé. Je suis content que l'on m'encourage à l'élan en plus l'encouragé de la Nouvelle-Bretagne, de Cécy, à Porte-et-Été, d'Élé. Je suis content que l'on m'encourage à l'élan en plus l'encouragé de la Nouvelle-Bretagne, de Cécy, à Porte-et-Été, d'Élé. Je suis content que l'on m'encourage à l'élan en plus l'encouragé de la Nouvelle-Bretagne, de Cécy, à Porte-et-",
-        "utmos": 2.018,
         "sim": 0.7229
       },
       {
@@ -5410,7 +5232,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail + repetition:ratio",
         "anomalie_detail": "recall=10%; mot(s) de fin non détecté(s) : « roue elle même »; trigrammes dupliqués 92%",
         "texte_transcrit": "Si vous êtes sur une chaîne web, alors mettez-la sur Senteco et exposez-vous à vos collègues. Si vous êtes sur une chaîne web, alors mettez-la sur Senteco et exposez-vous à vos collègues. Si vous êtes sur une chaîne web, alors mettez-la sur Senteco et exposez-vous à vos collègues. Si vous êtes sur une chaîne web, alors mettez-la sur Senteco et exposez-vous à vos collègues. Si vous êtes sur une chaîne web, alors mettez-la sur Senteco et exposez-vous à vos collègues. Si vous êtes sur une chaîne web, alors mettez-la sur Senteco et exposez-vous à vos collègues. Si vous êtes sur une chaîne web, alors mettez-la sur Senteco et exposez-vous à vos collègues. Si vous êtes sur une chaîne web, alors mettez-la sur Senteco et causez-vous à vos collègues. Si vous êtes sur une chaîne web, alors mettez-la sur Senteco et causez-vous à vos collègues. Si vous êtes sur une chaîne web, alors mettez-la sur Senteco et causez-vous à vos collègues. Si vous êtes sur une chaîne, alors mettez-la sur Senteco et causez-vous à vos collègues. Si vous êtes sur une chaîne, alors mettez-la sur Senteco et causez-vous à vos collègues. Si vous êtes sur une chaîne, alors mettez-la sur Senteco et causez-vous à vos collègues. Si vous êtes sur une chaîne, alors mettez-la sur Senteco et causez-vous à vos collègues. Si vous êtes sur une chaîne, alors mettez-la sur Senteco et causez-vous à vos collègues. Si vous êtes sur une chaîne, alors mettez-la sur Senteco et causez-vous à vos collègues. Si vous",
-        "utmos": 2.06,
         "sim": 0.5906
       },
       {
@@ -5436,7 +5257,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=7%; mot(s) de fin non détecté(s) : « partagé le nouveau starter pack sur son feed juste avant le week »",
         "texte_transcrit": "Qu'on a mal à l'action à Josias and",
-        "utmos": 3.361,
         "sim": 0.5793
       },
       {
@@ -5462,7 +5282,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il a partagé le nouveau starter pack sur son feed juste avant le week end »",
         "texte_transcrit": "Elle emmène un rescroulant à l'hôpital.",
-        "utmos": 2.777,
         "sim": 0.5918
       },
       {
@@ -5488,7 +5307,6 @@
         "anomalie_kind": "hallucination:recall",
         "anomalie_detail": "recall=20%",
         "texte_transcrit": "Pour ça c'est qu'on est déjà dans le week-end.",
-        "utmos": 3.28,
         "sim": 0.4603
       },
       {
@@ -5515,7 +5333,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « le manager a calé le kick off du sprint avec bradley en toute fin de meeting »",
         "texte_transcrit": "Elle emmène l'obscur à la pièce Métée.",
-        "utmos": 3.341,
         "sim": 0.5873
       },
       {
@@ -5542,7 +5359,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=6%; mot(s) de fin non détecté(s) : « toute fin de meeting »",
         "texte_transcrit": "Les choses s'en commencent comme il fallait les bien.",
-        "utmos": 3.172,
         "sim": 0.6568
       },
       {
@@ -5569,7 +5385,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « le manager a calé le kick off du sprint avec bradley en toute fin de meeting »",
         "texte_transcrit": "Ce serait une couche à l'infodémine.",
-        "utmos": 3.292,
         "sim": 0.5458
       },
       {
@@ -5595,7 +5410,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il gravit les soixante treize marches puis attendit le train de dix h quarante cinq du quatorze juillet »",
         "texte_transcrit": "Qu'on a mal indiqué sur l'électro-tif.",
-        "utmos": 3.199,
         "sim": 0.5343
       },
       {
@@ -5621,7 +5435,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il gravit les soixante treize marches puis attendit le train de dix h quarante cinq du quatorze juillet »",
         "texte_transcrit": "Je t'entraîne comme un croyant sur la lettre.",
-        "utmos": 3.46,
         "sim": 0.5786
       },
       {
@@ -5647,7 +5460,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « il gravit les soixante treize marches puis attendit le train de dix h quarante cinq du quatorze juillet »",
         "texte_transcrit": "C'est ça, ce genre d'infogène.",
-        "utmos": 3.139,
         "sim": 0.4766
       },
       {
@@ -5673,7 +5485,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=7%; mot(s) de fin non détecté(s) : « grismouton le vieux près du bois de kernide »",
         "texte_transcrit": "On emmène donc ce qu'il a de quoi s'installer.",
-        "utmos": 3.315,
         "sim": 0.4638
       },
       {
@@ -5699,7 +5510,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « le sorcier franfrelou vivait au hameau de grismouton le vieux près du bois de kernide »",
         "texte_transcrit": "Chassin, qu'allons-nous courir, qu'allons-nous faire faute ?",
-        "utmos": 3.229,
         "sim": 0.6426
       },
       {
@@ -5725,7 +5535,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « le sorcier franfrelou vivait au hameau de grismouton le vieux près du bois de kernide »",
         "texte_transcrit": "Qui n'en est besoin à quoi exploser ?",
-        "utmos": 2.695,
         "sim": 0.5398
       },
       {
@@ -5751,7 +5560,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « les enfants heureux ont ouvert un à un les anciens albums oubliés au grenier »",
         "texte_transcrit": "On emmène donc ce qu'on leur propose d'installer.",
-        "utmos": 2.878,
         "sim": 0.576
       },
       {
@@ -5777,7 +5585,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « les enfants heureux ont ouvert un à un les anciens albums oubliés au grenier »",
         "texte_transcrit": "Elle en mêle, on se croit dans la bête lui-même.",
-        "utmos": 2.744,
         "sim": 0.5755
       },
       {
@@ -5803,7 +5610,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « les enfants heureux ont ouvert un à un les anciens albums oubliés au grenier »",
         "texte_transcrit": "Ce s'est né parce qu'on n'a pas besoin de lui là.",
-        "utmos": 2.861,
         "sim": 0.5555
       },
       {
@@ -5827,7 +5633,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « haussant les épaules »",
         "texte_transcrit": "Un homme âne dans un chalet d'attrace en Seine.",
-        "utmos": 3.116,
         "sim": 0.6297
       },
       {
@@ -5851,7 +5656,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=8%; mot(s) de fin non détecté(s) : « n y crois pas une seconde répondit juliette en haussant les épaules »",
         "texte_transcrit": "Je sais que l'on se connait qu'à la rachetante.",
-        "utmos": 3.04,
         "sim": 0.4849
       },
       {
@@ -5875,7 +5679,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « je n y crois pas une seconde répondit juliette en haussant les épaules »",
         "texte_transcrit": "Qu'est-ce que c'est qu'un chariote ? C'est ça.",
-        "utmos": 3.184,
         "sim": 0.4134
       },
       {
@@ -5901,7 +5704,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « chut ne dis rien ils sont juste derrière la porte »",
         "texte_transcrit": "Qu'on emmène l'Oscar.",
-        "utmos": 3.222,
         "sim": 0.5009
       },
       {
@@ -5927,7 +5729,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « chut ne dis rien ils sont juste derrière la porte »",
         "texte_transcrit": "Je s'en tiendrai, ma dame.",
-        "utmos": 2.695,
         "sim": 0.2881
       },
       {
@@ -5953,7 +5754,6 @@
         "anomalie_kind": "hallucination:recall + troncature:tail",
         "anomalie_detail": "recall=0%; mot(s) de fin non détecté(s) : « chut ne dis rien ils sont juste derrière la porte »",
         "texte_transcrit": "Ce sera.",
-        "utmos": 2.959,
         "sim": 0.3643
       }
     ]
