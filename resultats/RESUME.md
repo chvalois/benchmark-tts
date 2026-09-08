@@ -198,10 +198,10 @@ Tous les candidats retenus sont **Apache-2.0 ou MIT** → usage commercial OK.
 
 ## Limites de cette v1 (à lever)
 
-1. **Écoute pas encore dépouillée** — le test en aveugle est prêt
-   (`site/ecoute/` : MOS 1–5, A/B préférence, A/B émotion) mais aucun
-   auditeur n'a encore renvoyé d'export. Obligatoire avant de publier un
-   classement « officiel ».
+1. **Écoute encore légère** — dépouillée (`resultats/ecoute.md` :
+   60 votes A/B, 120 notes MOS, 60 votes émotion) mais **2 auditeurs
+   distincts seulement** (charles en séries cumulatives, pyrame). Élargir
+   le panel avant de publier un classement « officiel ».
 2. **WER brut** — enregistrer les 34 phrases en voix humaine pour poser le
    plancher ASR et lire les WER *au-dessus*.
 3. **Passe-1 seulement** — `chars_per_second` calibré par voix non appliqué

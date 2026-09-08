@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Benchmark TTS français</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f7f6f2; --panel:#ffffff; --panel2:#f1efe8; --line:#e3ded2;
+  --ink:#1b1f1e; --muted:#66706e; --faint:#9aa19d;
+  --trace:#14806f; --trace-soft:#dcefe9;
+  --ok:#2f8a44; --warn:#a9791b; --crit:#b8443b;
+  --shadow:0 1px 2px rgba(20,30,28,.06),0 8px 24px -12px rgba(20,30,28,.14);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1214; --panel:#151b1d; --panel2:#101617; --line:#242e30;
+  --ink:#dfe6e3; --muted:#8f9c99; --faint:#5c6a68;
+  --trace:#6fd0c0; --trace-soft:#16302c;
+  --ok:#6bbf73; --warn:#d6a447; --crit:#d9695f;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px -14px rgba(0,0,0,.55);
+}}
+:root[data-theme="dark"]{
+  --bg:#0e1214; --panel:#151b1d; --panel2:#101617; --line:#242e30;
+  --ink:#dfe6e3; --muted:#8f9c99; --faint:#5c6a68;
+  --trace:#6fd0c0; --trace-soft:#16302c;
+  --ok:#6bbf73; --warn:#d6a447; --crit:#d9695f;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px -14px rgba(0,0,0,.55);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+::selection{background:var(--trace);color:var(--bg)}
+a{color:inherit;text-decoration:none}
+a.link{color:var(--trace);text-decoration:underline;text-underline-offset:2px;
+  text-decoration-thickness:1px;
+  text-decoration-color:color-mix(in oklab,var(--trace) 45%,transparent)}
+a.link:hover{text-decoration-color:var(--trace)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-variant-numeric:tabular-nums}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+
+/* header */
+header.bar{position:sticky;top:0;z-index:20;
+  background:color-mix(in oklab,var(--bg) 86%,transparent);
+  backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line)}
+header.bar .wrap{display:flex;align-items:center;gap:14px;height:56px}
+.brand{font-family:"Newsreader",Georgia,serif;font-size:1.1rem;font-weight:500;
+  display:flex;align-items:center;gap:8px;white-space:nowrap}
+.brand .fr{font:500 .6rem/1 "IBM Plex Mono",monospace;letter-spacing:.14em;
+  color:var(--trace);border:1px solid color-mix(in oklab,var(--trace) 40%,var(--line));
+  border-radius:4px;padding:3px 5px 2px;text-transform:uppercase}
+header.bar nav{margin-left:auto;display:flex;align-items:center;gap:2px}
+header.bar nav a{font-size:.84rem;color:var(--muted);padding:7px 9px;border-radius:7px}
+header.bar nav a:hover{color:var(--ink)}
+header.bar nav a.on{color:var(--ink);background:var(--panel2)}
+.tgl{margin-left:4px;width:32px;height:32px;display:grid;place-items:center;border-radius:7px;
+  border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer}
+.tgl:hover{color:var(--ink)}
+
+/* hero */
+.hero{padding:48px 0 36px;border-bottom:1px solid var(--line)}
+.eyebrow{font:500 .7rem/1 "IBM Plex Mono",monospace;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--trace);margin-bottom:16px}
+.hero h1{font-family:"Newsreader",Georgia,serif;font-weight:400;
+  font-size:clamp(1.9rem,6vw,3.1rem);line-height:1.08;letter-spacing:-.012em;
+  text-wrap:balance;margin:0 0 14px;max-width:16ch}
+.hero .thesis{font-size:1.02rem;color:var(--muted);max-width:56ch;margin:0 0 24px}
+.hero .thesis em{font-family:"Newsreader",serif;font-style:italic;color:var(--ink)}
+.facts{display:flex;flex-wrap:wrap;gap:8px}
+.fact{font:.76rem/1 "IBM Plex Mono",monospace;color:var(--muted);
+  border:1px solid var(--line);border-radius:6px;padding:7px 9px;background:var(--panel)}
+.fact b{color:var(--ink);font-weight:500}
+.scope{margin-top:30px;border:1px solid var(--line);border-radius:12px;
+  background:var(--panel);padding:16px 16px 8px;box-shadow:var(--shadow);overflow-x:auto}
+.scope .cap{font:.7rem/1 "IBM Plex Mono",monospace;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+
+main .wrap{padding-top:44px;padding-bottom:20px}
+section+section{margin-top:48px}
+section[id],[id="top"]{scroll-margin-top:72px}
+.sec-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.sec-h h2{font-family:"Newsreader",serif;font-weight:500;font-size:1.45rem;
+  letter-spacing:-.01em;margin:0}
+.sec-h .n{font:.7rem/1 "IBM Plex Mono",monospace;color:var(--faint);letter-spacing:.08em}
+.lead{color:var(--muted);max-width:66ch;margin:-4px 0 18px;font-size:.95rem}
+
+/* --- table --- */
+.tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+select{font:inherit;font-size:.9rem;border:1px solid var(--line);background:var(--panel);
+  color:var(--ink);border-radius:8px;padding:8px 11px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font:.74rem/1 "IBM Plex Mono",monospace;
+  color:var(--muted);margin-bottom:12px}
+.legend b{font-weight:400;display:inline-flex;align-items:center;gap:6px}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.sw-g{background:color-mix(in oklab,var(--ok) 55%,var(--panel))}
+.sw-m{background:color-mix(in oklab,var(--warn) 55%,var(--panel))}
+.sw-b{background:color-mix(in oklab,var(--crit) 60%,var(--panel))}
+
+.board{border:1px solid var(--line);border-radius:12px;background:var(--panel);
+  box-shadow:var(--shadow);overflow:hidden}
+.tablewrap{overflow-x:auto}
+table.rt{border-collapse:collapse;width:100%}
+.rt thead th{background:var(--panel);
+  font:500 .66rem/1.3 "IBM Plex Mono",monospace;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--muted);text-align:right;
+  padding:12px 12px;border-bottom:1px solid var(--line);cursor:pointer;
+  white-space:nowrap;user-select:none}
+.rt thead th:first-child,.rt thead th.name{text-align:left}
+.rt thead th.rk{text-align:center;width:40px;cursor:default}
+.rt thead th:hover:not(.rk){color:var(--ink)}
+.rt thead th .ar{color:var(--faint);font-weight:400;margin-left:3px}
+.rt thead th[data-active] .ar{color:var(--trace)}
+.rt tbody td{padding:12px;border-bottom:1px solid var(--line);text-align:right;
+  font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;
+  font-size:.88rem;white-space:nowrap}
+.rt tbody tr:last-child td{border-bottom:0}
+.rt td.name{font-family:"IBM Plex Sans",sans-serif;font-weight:500;font-size:.96rem;text-align:left}
+.rt td.name a{border-bottom:1px solid transparent}
+.rt td.name a:hover{border-bottom-color:var(--trace)}
+.rt td.name .sub{display:block;font:.7rem/1.3 "IBM Plex Mono",monospace;
+  color:var(--faint);margin-top:3px;font-weight:400}
+.rt td.rk{text-align:center;color:var(--faint)}
+.rt tr.top td.rk{color:var(--trace);font-weight:600}
+.rt tr.exp{cursor:pointer}
+.rt tr.exp:hover td{background:var(--panel2)}
+td.m-good{background:color-mix(in oklab,var(--ok) 11%,transparent)}
+td.m-mid{background:color-mix(in oklab,var(--warn) 12%,transparent)}
+td.m-bad{background:color-mix(in oklab,var(--crit) 13%,transparent);
+  color:var(--crit);font-weight:500}
+.werbar{display:inline-flex;align-items:center;gap:8px;justify-content:flex-end}
+.werbar i{display:block;height:6px;border-radius:3px;background:var(--trace);opacity:.6;min-width:2px}
+.dot{display:none}
+.chip{display:inline-block;font:.68rem/1 "IBM Plex Mono",monospace;padding:4px 7px;
+  border-radius:5px;border:1px solid var(--line);color:var(--muted)}
+.chip.ok{color:var(--ok);border-color:color-mix(in oklab,var(--ok) 35%,var(--line))}
+.chip.warn{color:var(--warn);border-color:color-mix(in oklab,var(--warn) 35%,var(--line))}
+.chip.crit{color:var(--crit);border-color:color-mix(in oklab,var(--crit) 40%,var(--line))}
+.rt tr.detail td{background:var(--panel2);text-align:left;white-space:normal;
+  font-family:"IBM Plex Sans",sans-serif;padding:16px 18px 20px}
+.rt tr.detail .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px}
+.rt tr.detail .grid table{width:100%;border-collapse:collapse}
+.rt tr.detail .grid th{position:static;font-size:.6rem;padding:5px 7px;text-align:left;
+  border-bottom:1px solid var(--line);color:var(--muted)}
+.rt tr.detail .grid td{padding:5px 7px;font-size:.78rem;border-bottom:1px solid var(--line)}
+.flags{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
+.board-foot{padding:11px 15px;border-top:1px solid var(--line);
+  font:.76rem/1.5 "IBM Plex Mono",monospace;color:var(--faint)}
+
+/* --- responsif : on masque les colonnes secondaires, la table reste
+   une table et tient sans scroll horizontal --- */
+@media (max-width:900px){ .rt .p3{display:none} }
+@media (max-width:620px){
+  .rt .p2{display:none}
+  .rt thead th{padding:10px 8px;font-size:.62rem}
+  .rt tbody td{padding:11px 8px;font-size:.82rem}
+  .rt td.name{font-size:.9rem}
+  .rt td.name .sub{font-size:.64rem;white-space:normal}
+  .legend{gap:10px;font-size:.7rem}
+  .md table{font-size:.72rem}
+  .md th,.md td{padding:6px 7px}
+}
+
+/* callout / cards */
+.callout{border:1px solid var(--line);border-left:3px solid var(--trace);
+  border-radius:0 12px 12px 0;background:var(--panel);padding:18px 20px;box-shadow:var(--shadow)}
+.callout .k{font-family:"Newsreader",serif;font-style:italic;font-size:1.08rem;
+  color:var(--ink);display:block;margin-bottom:6px}
+.callout .d{color:var(--muted);font-size:.92rem}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.mcard{border:1px solid var(--line);border-radius:12px;background:var(--panel);
+  padding:15px 17px;display:flex;flex-direction:column;gap:8px}
+.mhead{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.mhead .mrk{font:600 .78rem/1 "IBM Plex Mono",monospace;color:var(--faint);
+  border:1px solid var(--line);border-radius:5px;padding:3px 6px}
+.mcard:first-child .mhead .mrk{color:var(--trace);border-color:var(--trace)}
+.mhead a{font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:1rem;
+  border-bottom:1px solid transparent}
+.mhead a:hover{border-bottom-color:var(--trace)}
+.mhead .chip{margin-left:auto}
+.msub{color:var(--faint);font-size:.72rem;line-height:1.5}
+.mstat{font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;align-items:baseline;
+  gap:3px 4px}
+.mstat b{color:var(--ink);font-weight:500}
+.mstat b.m-bad{color:var(--crit)} .mstat b.m-mid{color:var(--warn)} .mstat b.m-good{color:var(--ok)}
+.mstat .sep{color:var(--faint);margin:0 4px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:16px 18px}
+.card h3{margin:0 0 6px;font-size:.94rem;font-weight:600}
+.card p{margin:0;color:var(--muted);font-size:.88rem}
+.card .tag{font:.66rem/1 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--trace);display:block;margin-bottom:9px}
+.repro{font-family:"IBM Plex Mono",monospace;font-size:.8rem;line-height:1.8}
+.repro div{display:flex;gap:12px;justify-content:space-between;
+  border-bottom:1px dashed var(--line);padding:4px 0}
+.repro span:last-child{color:var(--faint)}
+
+/* md */
+.md h1{font-family:"Newsreader",serif;font-weight:400;font-size:1.9rem;margin:0 0 8px}
+.md h2{font-family:"Newsreader",serif;font-weight:500;font-size:1.35rem;margin:1.8em 0 .5em}
+.md h3{font-size:.98rem;margin:1.5em 0 .4em;color:var(--muted)}
+.md p,.md ul{color:var(--muted);max-width:70ch}
+.md code{font-family:"IBM Plex Mono",monospace;font-size:.85em;background:var(--panel2);
+  padding:2px 5px;border-radius:4px}
+.md .tablewrap{border:1px solid var(--line);border-radius:10px;margin:1em 0;
+  background:var(--panel);overflow-x:auto}
+.md table{border-collapse:collapse;width:100%;font-size:.84rem}
+.md th,.md td{padding:9px 11px;border-bottom:1px solid var(--line);text-align:right}
+.md th:first-child,.md td:first-child{text-align:left}
+.md thead th{background:var(--panel2);font:500 .7rem/1 "IBM Plex Mono",monospace;
+  text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.md td{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.md blockquote{margin:1em 0;padding:.4em 1em;border-left:3px solid var(--trace);
+  background:var(--panel);border-radius:0 8px 8px 0;color:var(--ink)}
+.md table.rank td:nth-child(2){text-align:left}
+.md table.rank td:first-child{color:var(--faint)}
+.md .ic{color:var(--faint);font-size:.85em;font-weight:400}
+#ecoute .md .tablewrap{margin:.4em 0 1.1em}
+
+footer{border-top:1px solid var(--line);margin-top:56px}
+footer .wrap{padding:24px 22px 44px;color:var(--faint);
+  font:.78rem/1.7 "IBM Plex Mono",monospace;display:flex;flex-wrap:wrap;gap:6px 22px}
+footer a{color:var(--muted)}
+footer a:hover{color:var(--trace)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="bar"><div class="wrap">
+  <span class="brand">Benchmark&nbsp;TTS<span class="fr">FR</span></span>
+  <nav><a href="index.html" class="on">Aperçu</a><a href="objectif.html">Recap</a><a href="ecoute.html">Écoute</a><a href="https://github.com/chvalois/benchmark-tts" class="link" style="text-decoration:none">Dépôt&nbsp;↗</a><button class="tgl" id="tgl" title="Thème" aria-label="Changer de thème">◑</button></nav>
+</div></header>
+<div class="hero" id="top"><div class="wrap">
+  <div class="eyebrow">Benchmark · TTS open-source · Français</div>
+  <h1>Quel modèle de synthèse vocale pour le français ?</h1>
+  <p class="thesis">Huit modèles open-source clonent 6 voix de référence sur un
+    corpus français annoté (liaison, nombres, noms propres, homographes, dialogue
+    émotionnel). Métriques auto reproductibles pour l'intelligibilité et l'identité —
+    <em>la naturalité, elle, se juge à l'écoute humaine en aveugle</em>.</p>
+  <div class="facts">
+    <span class="fact"><b>7</b> modèles classés</span>
+    <span class="fact"><b>34</b> phrases annotées</span>
+    <span class="fact"><b>3</b> répétitions</span>
+    <span class="fact"><b>6</b> voix de référence</span>
+    <span class="fact"><b>RTX&nbsp;4090</b></span>
+    <span class="fact">révisions HF <b>épinglées</b></span>
+  </div>
+  <div class="scope">
+    <div class="cap">WER moyen (toutes voix confondues) — barre courte = meilleur</div>
+    <svg viewBox="0 0 560 224" width="100%" role="img" aria-label="WER par modèle" style="min-width:460px;font-family:'IBM Plex Mono',monospace"><line x1="140" y1="12" x2="140" y2="208" stroke="var(--line)" stroke-width="1"/><text x="140" y="221" text-anchor="middle" font-size="9" fill="var(--faint)">0%</text><line x1="203" y1="12" x2="203" y2="208" stroke="var(--line)" stroke-width="1"/><text x="203" y="221" text-anchor="middle" font-size="9" fill="var(--faint)">2%</text><line x1="266" y1="12" x2="266" y2="208" stroke="var(--line)" stroke-width="1"/><text x="266" y="221" text-anchor="middle" font-size="9" fill="var(--faint)">4%</text><line x1="329" y1="12" x2="329" y2="208" stroke="var(--line)" stroke-width="1"/><text x="329" y="221" text-anchor="middle" font-size="9" fill="var(--faint)">6%</text><line x1="393" y1="12" x2="393" y2="208" stroke="var(--line)" stroke-width="1"/><text x="393" y="221" text-anchor="middle" font-size="9" fill="var(--faint)">8%</text><line x1="456" y1="12" x2="456" y2="208" stroke="var(--line)" stroke-width="1"/><text x="456" y="221" text-anchor="middle" font-size="9" fill="var(--faint)">10%</text><text x="130" y="26" text-anchor="end" font-size="10.5" fill="var(--muted)">VoxCPM2</text><line x1="140" y1="22" x2="286" y2="22" stroke="var(--trace)" stroke-width="6" stroke-linecap="round" opacity="0.72"/><circle cx="286" cy="22" r="3.4" fill="var(--trace)"/><text x="294" y="26" font-size="10.5" fill="var(--ink)">4.6%</text><text x="130" y="54" text-anchor="end" font-size="10.5" fill="var(--muted)">FireRed TTS3</text><line x1="140" y1="50" x2="291" y2="50" stroke="var(--trace)" stroke-width="6" stroke-linecap="round" opacity="0.72"/><circle cx="291" cy="50" r="3.4" fill="var(--trace)"/><text x="299" y="54" font-size="10.5" fill="var(--ink)">4.8%</text><text x="130" y="82" text-anchor="end" font-size="10.5" fill="var(--muted)">Chatterbox v3</text><line x1="140" y1="78" x2="301" y2="78" stroke="var(--trace)" stroke-width="6" stroke-linecap="round" opacity="0.71"/><circle cx="301" cy="78" r="3.4" fill="var(--trace)"/><text x="309" y="82" font-size="10.5" fill="var(--ink)">5.1%</text><text x="130" y="110" text-anchor="end" font-size="10.5" fill="var(--muted)">XTTS-v2</text><line x1="140" y1="106" x2="327" y2="106" stroke="var(--trace)" stroke-width="6" stroke-linecap="round" opacity="0.67"/><circle cx="327" cy="106" r="3.4" fill="var(--trace)"/><text x="335" y="110" font-size="10.5" fill="var(--ink)">5.9%</text><text x="130" y="138" text-anchor="end" font-size="10.5" fill="var(--muted)">Kokoro-82M</text><line x1="140" y1="134" x2="377" y2="134" stroke="var(--trace)" stroke-width="6" stroke-linecap="round" opacity="0.62"/><circle cx="377" cy="134" r="3.4" fill="var(--trace)"/><text x="385" y="138" font-size="10.5" fill="var(--ink)">7.5%</text><text x="130" y="166" text-anchor="end" font-size="10.5" fill="var(--muted)">MOSS-1.5</text><line x1="140" y1="162" x2="424" y2="162" stroke="var(--trace)" stroke-width="6" stroke-linecap="round" opacity="0.56"/><circle cx="424" cy="162" r="3.4" fill="var(--trace)"/><text x="432" y="166" font-size="10.5" fill="var(--ink)">9.0%</text><text x="130" y="194" text-anchor="end" font-size="10.5" fill="var(--muted)">CosyVoice3-0.5B</text><line x1="140" y1="190" x2="474" y2="190" stroke="var(--trace)" stroke-width="6" stroke-linecap="round" opacity="0.50"/><circle cx="474" cy="190" r="3.4" fill="var(--trace)"/><text x="482" y="194" font-size="10.5" fill="var(--ink)">10.6%</text></svg>
+  </div>
+</div></div>
+<main><div class="wrap">
+<section id="classement">
+  <div class="sec-h"><h2>Métriques auto — intelligibilité &amp; identité</h2>
+    <span class="n">toutes voix confondues · passe-1</span></div>
+  <p class="lead">Moyenne pondérée (par nb de runs) sur les 6 voix de référence.
+    <b>WER</b> = taux d'erreur de transcription
+    (<span class="mono">whisper-large-v3-french</span> + <span class="mono">jiwer</span>),
+    ↓ meilleur — c'est l'<b>intelligibilité</b>. <b>SIM</b> = similarité au locuteur
+    de référence (embeddings ECAPA), ↑ meilleur — c'est l'<b>identité de timbre</b>.
+    <b>La naturalité n'est pas mesurée ici</b> (UTMOS, TTSDS2, NISQA tous écartés en
+    français) : voir <a class="link" href="ecoute.html">le classement à l'écoute</a>.
+    Clic sur un en-tête pour trier, ou&nbsp;:</p>
+  <div class="legend"><b><i class="sw-g"></i>meilleur</b><b><i class="sw-m"></i>correct</b><b><i class="sw-b"></i>à surveiller</b><b>↓ plus bas = mieux</b><b>↑ plus haut = mieux</b></div>
+  <div class="tools"><label>Trier&nbsp;:
+    <select id="msort">
+      <option value="wer|a">WER — meilleur d'abord</option>
+      <option value="wer|d">WER — pire d'abord</option>
+      <option value="sim|d">SIM — meilleur d'abord</option>
+      <option value="sim|a">SIM — pire d'abord</option>
+    </select></label></div>
+  <div class="board"><div id="lb"></div><div class="board-foot">hors classement — F5-TTS (FR non supporté)</div></div>
+</section>
+
+<section id="ecoute"><div class="sec-h"><h2>À l'écoute — le classement qui compte</h2><span class="n">MOS · A/B · émotion, en aveugle</span></div><p class="lead"><b>Panel</b> : 7 auditeur·rice·s, en aveugle — 60 comparaisons A/B, 120 notes MOS (1–5), 60 votes émotion. Aucun nom de voix ni de participant n'est publié.</p><div class="md"><div class='tablewrap'><table class='rank'><thead><tr><th>#</th><th>modèle</th><th>MOS «&nbsp;Naturel&nbsp;»</th><th>Intel.</th><th>Simil.</th><th>Express.</th><th>Win-rate A/B</th></tr></thead><tbody><tr><td>1</td><td><b>FireRed TTS3</b></td><td class="num"><b>4.06</b> <span class="ic">±0.36</span></td><td class="num">4.53</td><td class="num">4.41</td><td class="num">3.24</td><td class="num">78%</td></tr><tr><td>2</td><td><b>VoxCPM2</b></td><td class="num"><b>3.20</b> <span class="ic">±0.44</span></td><td class="num">3.40</td><td class="num">3.47</td><td class="num">2.87</td><td class="num">64%</td></tr><tr><td>3</td><td><b>Chatterbox v3</b></td><td class="num"><b>3.05</b> <span class="ic">±0.39</span></td><td class="num">3.45</td><td class="num">2.20</td><td class="num">2.95</td><td class="num">36%</td></tr><tr><td>4</td><td><b>MOSS-1.5</b></td><td class="num"><b>2.91</b> <span class="ic">±0.56</span></td><td class="num">3.70</td><td class="num">3.87</td><td class="num">2.70</td><td class="num">27%</td></tr><tr><td>5</td><td><b>XTTS-v2</b></td><td class="num"><b>2.88</b> <span class="ic">±0.56</span></td><td class="num">3.32</td><td class="num">1.88</td><td class="num">2.60</td><td class="num">38%</td></tr><tr><td>6</td><td><b>CosyVoice3-0.5B</b></td><td class="num"><b>2.50</b> <span class="ic">±0.50</span></td><td class="num">2.75</td><td class="num">2.80</td><td class="num">2.40</td><td class="num">44%</td></tr></tbody></table></div></div><p class="lead">MOS « Naturel » = moyenne des notes 1–5 sur l'axe naturel (± IC 95 %). Win-rate A/B = part de préférences « globalement meilleur » sur l'ensemble des duels. Le classement de naturalité du benchmark, c'est cette colonne — pas le WER.</p><p class="lead" style="margin-top:14px"><a class="link" href="ecoute.html">Détail : matrice des duels, MOS par axe, émotion &rarr;</a></p></section>
+
+<section id="modeles">
+  <div class="sec-h"><h2>Les modèles</h2><span class="n">contexte · vitesse · stabilité</span></div>
+  <div class="mgrid"><div class="mcard"><div class="mhead"><span class="mrk">1</span><a href="objectif.html"><b>VoxCPM2</b></a><span class="chip ok">Apache-2.0</span></div><div class="msub mono">32279effe8 · candidat de référence (veille juin 2026)</div><div class="mstat mono"><b class="">0.41×</b>&nbsp;RTF<span class="sep">·</span><b class="m-good">6%</b>&nbsp;CV<span class="sep">·</span><b class="m-mid">2%</b>&nbsp;anom.<span class="sep">·</span><b>6 Go</b>&nbsp;VRAM~</div></div><div class="mcard"><div class="mhead"><span class="mrk">2</span><a href="objectif.html"><b>FireRed TTS3</b></a><span class="chip ok">Apache-2.0</span></div><div class="msub mono">dcf1bdcd1b · candidat SOTA n°1 (veille sept. 2026)</div><div class="mstat mono"><b class="">0.94×</b>&nbsp;RTF<span class="sep">·</span><b class="m-good">4%</b>&nbsp;CV<span class="sep">·</span><b class="m-mid">1%</b>&nbsp;anom.<span class="sep">·</span><b>8 Go</b>&nbsp;VRAM~</div></div><div class="mcard"><div class="mhead"><span class="mrk">3</span><a href="objectif.html"><b>Chatterbox v3</b></a><span class="chip ok">MIT</span></div><div class="msub mono">5bb1f6ee58 · baseline de référence (moteur de prod avisol)</div><div class="mstat mono"><b class="">0.54×</b>&nbsp;RTF<span class="sep">·</span><b class="m-good">5%</b>&nbsp;CV<span class="sep">·</span><b class="m-mid">1%</b>&nbsp;anom.<span class="sep">·</span><b>4 Go</b>&nbsp;VRAM~</div></div><div class="mcard"><div class="mhead"><span class="mrk">4</span><a href="objectif.html"><b>XTTS-v2</b></a><span class="chip crit">CPML · non&nbsp;comm.</span></div><div class="msub mono">6c2b0d75ea · référence qualité (hors service : licence non commerciale)</div><div class="mstat mono"><b class="">0.24×</b>&nbsp;RTF<span class="sep">·</span><b class="m-good">9%</b>&nbsp;CV<span class="sep">·</span><b class="m-mid">3%</b>&nbsp;anom.<span class="sep">·</span><b>4 Go</b>&nbsp;VRAM~</div></div><div class="mcard"><div class="mhead"><span class="mrk">5</span><a href="objectif.html"><b>Kokoro-82M</b></a><span class="chip ok">Apache-2.0</span></div><div class="msub mono">f3ff357179 · plancher légèreté / vitesse</div><div class="mstat mono"><b class="">0.02×</b>&nbsp;RTF<span class="sep">·</span><b class="m-good">0%</b>&nbsp;CV<span class="sep">·</span><b class="m-bad">6%</b>&nbsp;anom.<span class="sep">·</span><b>2 Go</b>&nbsp;VRAM~</div></div><div class="mcard"><div class="mhead"><span class="mrk">6</span><a href="objectif.html"><b>MOSS-1.5</b></a><span class="chip ok">Apache-2.0</span></div><div class="msub mono">be7766a673 · moteur de prod avisol (5B, piloté par durée cible)</div><div class="mstat mono"><b class="">0.65×</b>&nbsp;RTF<span class="sep">·</span><b class="m-mid">11%</b>&nbsp;CV<span class="sep">·</span><b class="m-mid">2%</b>&nbsp;anom.<span class="sep">·</span><b>15 Go</b>&nbsp;VRAM~</div></div><div class="mcard"><div class="mhead"><span class="mrk">7</span><a href="objectif.html"><b>CosyVoice3-0.5B</b></a><span class="chip ok">Apache-2.0</span></div><div class="msub mono">29e01c4e8d · backup stable, FR inclus</div><div class="mstat mono"><b class="">0.91×</b>&nbsp;RTF<span class="sep">·</span><b class="m-good">8%</b>&nbsp;CV<span class="sep">·</span><b class="m-bad">8%</b>&nbsp;anom.<span class="sep">·</span><b>5 Go</b>&nbsp;VRAM~</div></div></div>
+  <p class="lead" style="margin-top:16px"><a class="link" href="objectif.html">Table
+    complète (toutes métriques, toutes voix confondues, détail par phrase) &rarr;</a></p>
+</section>
+
+<section id="lecture"><div class="callout">
+  <p><span class="k">Les métriques auto ne tranchent pas — l'écoute, oui.</span>
+  <span class="d">Le WER est brut (une vraie voix humaine dans le même Whisper fait
+  déjà 2–4 %). La naturalité n'a aucune métrique auto fiable en français : UTMOS,
+  TTSDS2 et NISQA ont été essayés puis écartés (corrélation nulle voire négative
+  avec la note humaine). Le classement de naturalité vient du test d'écoute en
+  aveugle ci-dessus.</span></p>
+</div></section>
+
+<section id="methode">
+  <div class="sec-h"><h2>Méthode</h2><span class="n">détail : docs/METHODOLOGIE.md</span></div>
+  <div class="cards">
+    <div class="card"><span class="tag">Corpus</span><h3>34 phrases annotées</h3>
+      <p>Croisement longueur × registre × piège : liaison, nombre, nom propre,
+      silence/rythme, homographe hétérophone, emprunt anglais, ponctuation répétée,
+      onomatopée. Plus un volet long-form (podcast, journalisme).</p></div>
+    <div class="card"><span class="tag">Pré-traitement</span><h3>Identique pour tous</h3>
+      <p>Même pipeline de normalisation appliqué à l'entrée de chaque modèle. Les
+      nombres ne sont pas développés en amont : on teste la normalisation de texte
+      propre à chaque modèle.</p></div>
+    <div class="card"><span class="tag">Voix de référence</span><h3>Clonage zero-shot, 6 voix</h3>
+      <p>Une voix propre, une « difficile » (source brute), une féminine, deux âgées,
+      un accent régional, plus les registres émotionnels. Aucun nom n'est publié ;
+      les voix restent identiques d'une passe à l'autre.</p></div>
+    <div class="card"><span class="tag">Écoute</span><h3>Test MOS + A/B en aveugle</h3>
+      <p>Panel humain, clips anonymisés, plusieurs voix et phrases tirées au hasard
+      par session. C'est ce test qui produit le <b>classement de naturalité</b> ;
+      WER et SIM ne font que le préparer.</p></div>
+    <div class="card"><span class="tag">Reproductibilité</span><h3>models.lock</h3>
+      <p>repo_id + révision SHA Hugging&nbsp;Face épinglée + commit GitHub pour le code.
+      Re-téléchargement bit-à-bit ; une révision non épinglée est refusée.</p></div>
+  </div>
+</section>
+
+<section id="repro">
+  <div class="sec-h"><h2>Révisions épinglées</h2><span class="n">Hugging Face</span></div>
+  <div class="card repro"><div><span>Chatterbox v3</span><span>5bb1f6ee58</span></div><div><span>CosyVoice3-0.5B</span><span>29e01c4e8d</span></div><div><span>FireRed TTS3</span><span>dcf1bdcd1b</span></div><div><span>Kokoro-82M</span><span>f3ff357179</span></div><div><span>MOSS-1.5</span><span>be7766a673</span></div><div><span>VoxCPM2</span><span>32279effe8</span></div><div><span>XTTS-v2</span><span>6c2b0d75ea</span></div></div>
+</section>
+</div></main>
+<footer><div class="wrap">
+  <span>Généré 2026-09-08 18:15 UTC · <span style="color:var(--muted)">benchmark/build_pages.py</span></span>
+  <span>Métriques automatiques — <span style="color:var(--muted)">l'écoute humaine tranche</span></span>
+  <span><a href="https://github.com/chvalois/benchmark-tts">github.com/chvalois/benchmark-tts</a></span>
+</div></footer>
+<script>
+(function(){var r=document.documentElement,K='tts-bench-theme';
+try{var s=localStorage.getItem(K);if(s)r.setAttribute('data-theme',s);}catch(e){}
+var b=document.getElementById('tgl');if(!b)return;
+function cur(){return r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');}
+b.onclick=function(){var n=cur()==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(K,n);}catch(e){}};})();
+
+
+function ttsTable(mountSel, cfg){
+  var mount=document.querySelector(mountSel);
+  var sort=cfg.sort||{k:cfg.cols[1]?cfg.cols[1].k:cfg.cols[0].k, asc:true};
+  var open={};
+  function fmt(c,x){ if(x===null||x===undefined) return '\u2014';
+    if(c.fmt==='pct') return (x*100).toFixed(1)+'%';
+    if(c.fmt==='num2') return (+x).toFixed(2);
+    if(c.fmt==='num3') return (+x).toFixed(3);
+    if(c.fmt==='x') return (+x).toFixed(2)+'\u00d7';
+    if(c.fmt==='oui') return x?'oui':'non';
+    return ''+x; }
+  function cls(c,x){ if(x===null||x===undefined||!c.dir||c.g===null||c.g===undefined) return '';
+    if(c.dir<0) return x<=c.g?'m-good':(x>=c.b?'m-bad':'m-mid');
+    return x>=c.g?'m-good':(x<=c.b?'m-bad':'m-mid'); }
+  function arrow(k){ if(sort.k!==k) return '';
+    return '<span class="ar">'+(sort.asc?'\u25B2':'\u25BC')+'</span>'; }
+  function dirGlyph(c){ return c.dir<0?' \u2193':(c.dir>0?' \u2191':''); }
+  function sorted(){
+    var r=cfg.rows.slice();
+    r.sort(function(a,b){ var x=a[sort.k],y=b[sort.k];
+      if(x===null||x===undefined)x=Infinity; if(y===null||y===undefined)y=Infinity;
+      if(typeof x==='boolean'){x=x?1:0;y=y?1:0;}
+      if(typeof x==='string'){ return x.localeCompare(y)*(sort.asc?1:-1); }
+      return (x<y?-1:x>y?1:0)*(sort.asc?1:-1); });
+    return r;
+  }
+  function render(){
+    var rows=sorted();
+    var th='<tr>'+(cfg.rankcol?'<th class="rk">#</th>':'');
+    cfg.cols.forEach(function(c){
+      var pc=c.p?' p'+c.p:'';
+      th+='<th class="'+(c.k==='_nom'?'name':'')+pc.trim()+'" data-k="'+c.k+'"'
+        +(sort.k===c.k?' data-active':'')+'>'+c.label
+        +'<span style="color:var(--faint)">'+dirGlyph(c)+'</span>'+arrow(c.k)+'</th>'; });
+    th+='</tr>';
+    var body='';
+    rows.forEach(function(row,i){
+      var nm=row._href?'<a href="'+row._href+'">'+row._nom+'</a>':row._nom;
+      var sub=row._sub?'<span class="sub">'+row._sub+'</span>':'';
+      var tr='<tr class="'+(row._detail?'exp ':'')+(i===0&&sort.k==='wer'&&sort.asc?'top':'')+'" data-i="'+i+'">';
+      if(cfg.rankcol) tr+='<td class="rk">'+(i+1)+'</td>';
+      tr+='<td class="name">'+nm+sub+'</td>';
+      cfg.cols.slice(1).forEach(function(c){
+        var v=row[c.k], k=cls(c,v), pc=c.p?' p'+c.p:'';
+        var inner=fmt(c,v);
+        if(c.kind==='werbar' && v!=null){
+          var w=Math.max(6, 62*v/(cfg.wermax||0.1));
+          inner='<span class="werbar"><i style="width:'+w.toFixed(0)+'px"></i>'+(v*100).toFixed(1)+'%</span>';
+        } else if(c.kind==='chip'){
+          inner='<span class="chip '+(k==='m-bad'?'crit':k==='m-good'?'ok':k==='m-mid'?'warn':'')+'">'+inner+'</span>'; k='';
+        } else if(c.kind==='lic'){
+          inner=row._lic; k='';
+        }
+        tr+='<td class="'+(k+pc).trim()+'">'+inner+'</td>';
+      });
+      tr+='</tr>';
+      if(row._detail){
+        tr+='<tr class="detail" data-i="'+i+'"'+(open[row._nom]?'':' hidden')+'><td colspan="'
+          +(cfg.cols.length+(cfg.rankcol?1:0))+'">'+row._detail+'</td></tr>';
+      }
+      body+=tr;
+    });
+    mount.innerHTML='<div class="tablewrap"><table class="rt"><thead>'+th
+      +'</thead><tbody>'+body+'</tbody></table></div>';
+    mount.querySelectorAll('thead th[data-k]').forEach(function(h){
+      h.onclick=function(){ var k=h.dataset.k;
+        if(sort.k===k){ sort.asc=!sort.asc; }
+        else { sort.k=k; var c=cfg.cols.find(function(x){return x.k===k;});
+          sort.asc=!(c&&c.dir>0); }        /* ↑-mieux -> desc d'abord, sinon asc */
+        render(); if(cfg.msort) cfg.msort.value=sort.k+'|'+(sort.asc?'a':'d'); };
+    });
+    mount.querySelectorAll('tr.exp').forEach(function(tr){
+      tr.onclick=function(){ var d=tr.nextElementSibling;
+        if(d&&d.classList.contains('detail')){ d.hidden=!d.hidden;
+          open[cfg.rows[+tr.dataset.i]._nom]=!d.hidden; } };
+    });
+  }
+  if(cfg.msort){ cfg.msort.onchange=function(){
+    var p=cfg.msort.value.split('|'); sort.k=p[0]; sort.asc=p[1]==='a'; render(); }; }
+  cfg.rerender=render;
+  render();
+}
+
+var CFG={"cols": [{"k": "_nom", "label": "modèle"}, {"k": "wer", "label": "WER", "dir": -1, "fmt": "pct", "g": 0.05, "b": 0.1}, {"k": "sim", "label": "SIM", "dir": 1, "fmt": "num3", "g": 0.8, "b": 0.72}], "rows": [{"_nom": "VoxCPM2", "_rank": 1, "wer": 0.04625460484812254, "sim": 0.7890734463276835}, {"_nom": "FireRed TTS3", "_rank": 2, "wer": 0.047657343635636826, "sim": 0.8100774011299434}, {"_nom": "Chatterbox v3", "_rank": 3, "wer": 0.05110852424762199, "sim": 0.7663455555555555}, {"_nom": "XTTS-v2", "_rank": 4, "wer": 0.05935298245448622, "sim": 0.6856720634920637}, {"_nom": "Kokoro-82M", "_rank": 5, "wer": 0.07497077497077498, "sim": null}, {"_nom": "MOSS-1.5", "_rank": 6, "wer": 0.08988399278812814, "sim": 0.7264379365079365}, {"_nom": "CosyVoice3-0.5B", "_rank": 7, "wer": 0.10573798406208379, "sim": 0.7995958733050755}], "sort": {"k": "wer", "asc": true}, "rankcol": true};CFG.msort=document.getElementById('msort');ttsTable('#lb',CFG);</script>
+</body></html>

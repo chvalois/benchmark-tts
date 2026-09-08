@@ -1,28 +1,28 @@
 # Test d'écoute — agrégation
 
-6 auditeur(s) — 40 votes A/B, 120 notes MOS, 40 votes émotion.
+7 auditeur(s) — 60 votes A/B, 120 notes MOS, 60 votes émotion.
 
 ## A/B — win-rate par modèle
 
 | modèle | win-rate | (victoires / duels) | défauts entendus |
 |---|---|---|---|
-| firered_tts3 | 79% | 15.0 / 19 | accent:2 |
-| voxcpm2 | 71% | 10.0 / 14 | — |
-| cosyvoice3_05b | 50% | 6.0 / 12 | voix_diff:6 accent:2 tronque:1 repetition:1 artefact:1 |
-| chatterbox_v3 | 33% | 4.0 / 12 | voix_diff:5 accent:2 artefact:2 repetition:1 |
-| moss_tts_local_v15 | 25% | 2.5 / 10 | voix_diff:1 artefact:1 |
-| xtts_v2 | 19% | 2.5 / 13 | voix_diff:7 artefact:4 accent:1 |
+| firered_tts3 | 78% | 19.5 / 25 | accent:2 |
+| voxcpm2 | 64% | 14.0 / 22 | tronque:1 |
+| cosyvoice3_05b | 44% | 7.5 / 17 | voix_diff:7 accent:4 tronque:2 repetition:1 artefact:1 |
+| xtts_v2 | 38% | 7.5 / 20 | voix_diff:11 artefact:5 accent:2 tronque:1 |
+| chatterbox_v3 | 36% | 7.5 / 21 | voix_diff:7 accent:4 artefact:2 tronque:1 repetition:1 |
+| moss_tts_local_v15 | 27% | 4.0 / 15 | voix_diff:2 artefact:1 |
 
 ## A/B — matrice des duels (gauche bat haut)
 
 | | chatterbox_v3 | cosyvoice3_05b | firered_tts3 | moss_tts_local_v15 | voxcpm2 | xtts_v2 |
 |---|---|---|---|---|---|---|
-| **chatterbox_v3** | · | 0/1 | 0/3 | 1/2 | 0/1 | 1/1 |
-| **cosyvoice3_05b** | 1/1 | · | 1/3 | 1/1 | 0/2 | 1/1 |
-| **firered_tts3** | 3/3 | 2/3 | · | 3/3 | 2/3 | 4/5 |
-| **moss_tts_local_v15** | 1/2 | 0/1 | 0/3 | · | 1/3 | — |
-| **voxcpm2** | 1/1 | 2/2 | 1/3 | 2/3 | · | 3/3 |
-| **xtts_v2** | 0/1 | 0/1 | 1/5 | — | 0/3 | · |
+| **chatterbox_v3** | · | 0/1 | 0/5 | 2/3 | 0/2 | 2/3 |
+| **cosyvoice3_05b** | 1/1 | · | 1/4 | 1/1 | 1/4 | 1/2 |
+| **firered_tts3** | 5/5 | 3/4 | · | 3/3 | 3/5 | 4/5 |
+| **moss_tts_local_v15** | 1/3 | 0/1 | 0/3 | · | 2/4 | 0/2 |
+| **voxcpm2** | 2/2 | 3/4 | 2/5 | 2/4 | · | 3/3 |
+| **xtts_v2** | 1/3 | 1/2 | 1/5 | 2/2 | 0/3 | · |
 
 ## MOS — moyenne ± IC 95 % par axe
 
@@ -48,20 +48,20 @@ A/B en aveugle : deux modèles disent la même phrase, tous deux clonés depuis 
 
 | modèle | win-rate | (victoires / duels) |
 |---|---|---|
-| firered_tts3 | 88% | 7.0 / 8 |
-| xtts_v2 | 62% | 2.5 / 4 |
-| chatterbox_v3 | 50% | 3.0 / 6 |
-| voxcpm2 | 44% | 4.0 / 9 |
-| cosyvoice3_05b | 42% | 2.5 / 6 |
-| moss_tts_local_v15 | 14% | 1.0 / 7 |
+| firered_tts3 | 78% | 12.5 / 16 |
+| chatterbox_v3 | 54% | 6.5 / 12 |
+| voxcpm2 | 53% | 9.0 / 17 |
+| xtts_v2 | 50% | 4.0 / 8 |
+| cosyvoice3_05b | 42% | 5.0 / 12 |
+| moss_tts_local_v15 | 20% | 3.0 / 15 |
 
 ### Émotion — win-rate par (modèle, émotion)
 
 | modèle | colere | joie | peur | tristesse |
 |---|---|---|---|---|
-| chatterbox_v3 | 67% (2.0/3) | 0% (0.0/1) | 0% (0.0/1) | 100% (1.0/1) |
-| cosyvoice3_05b | 25% (0.5/2) | 0% (0.0/1) | 0% (0.0/1) | 100% (2.0/2) |
-| firered_tts3 | 80% (4.0/5) | — | 100% (1.0/1) | 100% (2.0/2) |
-| moss_tts_local_v15 | 0% (0.0/4) | 100% (1.0/1) | — | 0% (0.0/2) |
-| voxcpm2 | 50% (2.0/4) | 100% (1.0/1) | 50% (1.0/2) | 0% (0.0/2) |
-| xtts_v2 | 75% (1.5/2) | — | 100% (1.0/1) | 0% (0.0/1) |
+| chatterbox_v3 | 67% (4.0/6) | 0% (0.0/2) | 25% (0.5/2) | 100% (2.0/2) |
+| cosyvoice3_05b | 33% (1.0/3) | 50% (1.0/2) | 0% (0.0/4) | 100% (3.0/3) |
+| firered_tts3 | 81% (6.5/8) | 0% (0.0/1) | 100% (3.0/3) | 75% (3.0/4) |
+| moss_tts_local_v15 | 11% (1.0/9) | 100% (2.0/2) | 0% (0.0/1) | 0% (0.0/3) |
+| voxcpm2 | 50% (3.0/6) | 100% (2.0/2) | 60% (3.0/5) | 25% (1.0/4) |
+| xtts_v2 | 75% (1.5/2) | 0% (0.0/1) | 83% (2.5/3) | 0% (0.0/2) |
