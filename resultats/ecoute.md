@@ -1,6 +1,6 @@
 # Test d'écoute — agrégation
 
-3 auditeur(s) : charles, charles_2, pyrame  — 40 votes A/B, 60 notes MOS, 40 votes émotion.
+3 auditeur(s) — 40 votes A/B, 60 notes MOS, 40 votes émotion.
 
 ## A/B — win-rate par modèle
 
@@ -61,7 +61,7 @@
 
 | axe humain | métrique auto | Pearson r | n |
 |---|---|---|---|
-| naturel | UTMOS | -0.12 | 60 |
+| naturel | NISQA | -0.03 | 60 |
 | intelligibilite | 1-WER | 0.12 | 60 |
 | similarite | SIM | 0.22 | 60 |
 
