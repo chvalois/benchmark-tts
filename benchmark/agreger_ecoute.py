@@ -5,8 +5,9 @@ Dé-anonymise via `_solution.json` puis produit :
 - **A/B** : win-rate par modèle (victoires + ½ nuls), matrice des duels,
   défauts entendus attribués au bon modèle ;
 - **MOS** : moyenne ± IC 95 % par modèle et par axe ;
-- **corrélations** MOS ↔ métriques auto (par clip) : naturel↔NISQA,
-  intelligibilité↔(1−WER), similarité↔SIM ;
+- **corrélations** MOS ↔ métriques auto (par clip) : intelligibilité↔(1−WER),
+  similarité↔SIM (le **naturel** n'a pas de contrepartie auto : UTMOS/TTSDS2/
+  NISQA écartés, cf. `docs/METHODOLOGIE.md` §10) ;
 - **ÉMOTION** : taux de transfert (l'auditeur juge le clip cloné depuis la
   voix de réf émotionnelle plus expressif que celui cloné depuis la voix
   neutre), par (modèle, émotion) et global par modèle.
@@ -53,14 +54,14 @@ def _pearson(xs: list[float], ys: list[float]) -> float | None:
 
 
 def _lignes_objectives() -> dict[tuple[str, str, int], dict]:
-    """(modele, phrase, rep) -> {wer, nisqa, sim} depuis resultats/*.json."""
+    """(modele, phrase, rep) -> {wer, sim} depuis resultats/*.json."""
     out: dict[tuple[str, str, int], dict] = {}
     for f in RESULTATS.glob("*.json"):
         modele = f.stem
         for _voix, r in json.loads(f.read_text(encoding="utf-8")).items():
             for l in r.get("lignes", []):
                 out[(modele, l["id_phrase"], l["repetition"])] = {
-                    "wer": l["wer"], "nisqa": l.get("nisqa"), "sim": l.get("sim"),
+                    "wer": l["wer"], "sim": l.get("sim"),
                 }
     return out
 
@@ -190,9 +191,6 @@ def agreger(exports: list[Path]) -> str:
                 par_vx[voix][m].append(sum(notes) / len(notes))
             o = obj.get((m, phrase, sol["build"]["rep"]))
             if o:
-                if v.get("naturel") is not None and o["nisqa"] is not None:
-                    xs, ys = corr_pts[("naturel", "NISQA")]
-                    xs.append(float(v["naturel"])); ys.append(o["nisqa"])
                 if v.get("intelligibilite") is not None:
                     xs, ys = corr_pts[("intelligibilite", "1-WER")]
                     xs.append(float(v["intelligibilite"])); ys.append(1 - o["wer"])

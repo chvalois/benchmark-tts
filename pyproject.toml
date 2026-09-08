@@ -20,9 +20,6 @@ omit = [
   "benchmark/rapport.py",
   "benchmark/comparatif.py",
   "benchmark/mesurer_perceptuel.py",
-  "benchmark/mesurer_nisqa.py",
-  "benchmark/mesurer_ttsds2.py",
-  "benchmark/build_ref_ttsds2.py",
 ]
 
 [tool.coverage.report]

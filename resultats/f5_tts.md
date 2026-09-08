@@ -2,10 +2,10 @@
 
 ## Vue globale (par voix)
 
-| voix | runs ok | WER moyen | ±σ | TTSDS2 | NISQA | SIM | hallu. | rép. | tronc. | RTF méd. | VRAM pic | CV durée |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| johnny | 99/99 | 123.6% | 144.9% | 60.0 | 2.96 | 0.460 | 100.0% | 4.0% | 99.0% | 0.45 | 2921 Mo | 0.0% |
-| papa_narration | 99/99 | 104.6% | 60.9% | 60.5 | 3.43 | 0.468 | 99.0% | 3.0% | 98.0% | 0.33 | 2889 Mo | 0.0% |
+| voix | runs ok | WER moyen | ±σ | SIM | hallu. | rép. | tronc. | RTF méd. | VRAM pic | CV durée |
+|---|---|---|---|---|---|---|---|---|---|---|
+| johnny | 99/99 | 123.6% | 144.9% | 0.460 | 100.0% | 4.0% | 99.0% | 0.45 | 2921 Mo | 0.0% |
+| papa_narration | 99/99 | 104.6% | 60.9% | 0.468 | 99.0% | 3.0% | 98.0% | 0.33 | 2889 Mo | 0.0% |
 
 ## johnny — WER par catégorie
 

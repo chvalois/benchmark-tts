@@ -8,35 +8,35 @@ Sud-Ouest) — cf. « Sensibilité à la voix de référence ». Transcription
 `whisper-large-v3-french`, WER `jiwer` + détecteurs de fidélité
 *language-agnostic* (portés d'`avisol`). RTX 4090, un modèle à la fois.
 
-> ⚠️ **Métriques automatiques uniquement — pas encore d'écoute MOS/A-B.**
+> ⚠️ **Métriques auto = WER (intelligibilité) + SIM (identité) seulement.**
 > WER **brut** (aucun plancher humain soustrait ; une vraie voix humaine
-> passée dans le même Whisper fait déjà ~2–4 %). Les métriques **priorisent
-> l'écoute**, elles ne tranchent pas seules.
+> passée dans le même Whisper fait déjà ~2–4 %). **La naturalité n'a aucune
+> métrique auto** (UTMOS / TTSDS2 / NISQA essayés puis retirés — voir §
+> « Naturalité ») : elle se classe au **test d'écoute** (`resultats/ecoute.md`,
+> n=60), qui devient l'élément décisif du classement.
 
 ## Classement (voix `papa_narration`, la plus propre)
 
-| # | modèle | WER | ±σ | TTSDS2 | NISQA | SIM | anom. (h/r/t) | RTF | VRAM | clon. | licence |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **FireRedTTS3** | **3,6 %** | 6,5 | 73,1 | 3,55 | 0,844 | 0/0/0 | 1,00 | 17 Go | oui | Apache-2.0 |
-| 2 | **VoxCPM2** | 4,2 % | 8,0 | 73,6 | 3,54 | 0,822 | 0/0/**6,1 %** | 0,42 | 10 Go | oui | Apache-2.0 |
-| 3 | **Chatterbox v3** | 4,8 % | 7,6 | 73,7 | 3,72 | 0,800 | 0/0/2 % | 0,59 | 6,5 Go | oui | MIT |
-| 4 | **CosyVoice3-0.5B** | 4,9 % | 8,9 | **76,3** | 3,24 | 0,823 | 0/0/0 | 0,82 | 5 Go | oui | Apache-2.0 |
-| 5 | **XTTS-v2** | 7,4 % | 19,6 | **77,3** | 3,79 | 0,745 | 1 %/0/0 | **0,24** | 4 Go | oui | **CPML — non comm.** |
-| 6 | **Kokoro-82M** | 7,5 % | 18,0 | **78,7** | **3,95** | — | 3 %/0/3 % | **0,01** | 3 Go | **non** | Apache-2.0 |
-| 7 | **MOSS-1.5** *(défauts)* | 7,9 % | **27,8** | 70,6 | 3,51 | 0,772 | 2 %/0/1 % | 0,69 | 16 Go | oui | Apache-2.0 |
+| # | modèle | WER | ±σ | SIM | anom. (h/r/t) | RTF | VRAM | clon. | licence |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | **FireRedTTS3** | **3,6 %** | 6,5 | 0,844 | 0/0/0 | 1,00 | 17 Go | oui | Apache-2.0 |
+| 2 | **VoxCPM2** | 4,2 % | 8,0 | 0,822 | 0/0/**6,1 %** | 0,42 | 10 Go | oui | Apache-2.0 |
+| 3 | **Chatterbox v3** | 4,8 % | 7,6 | 0,800 | 0/0/2 % | 0,59 | 6,5 Go | oui | MIT |
+| 4 | **CosyVoice3-0.5B** | 4,9 % | 8,9 | 0,823 | 0/0/0 | 0,82 | 5 Go | oui | Apache-2.0 |
+| 5 | **XTTS-v2** | 7,4 % | 19,6 | 0,745 | 1 %/0/0 | **0,24** | 4 Go | oui | **CPML — non comm.** |
+| 6 | **Kokoro-82M** | 7,5 % | 18,0 | — | 3 %/0/3 % | **0,01** | 3 Go | **non** | Apache-2.0 |
+| 7 | **MOSS-1.5** *(défauts)* | 7,9 % | **27,8** | 0,772 | 2 %/0/1 % | 0,69 | 16 Go | oui | Apache-2.0 |
 
-*(h/r/t = hallucination / répétition / troncature ; **TTSDS2** ↑ mieux 0–100,
-distributionnel vs vraie parole FR ; **NISQA** ↑ mieux ~1–5, contre-vérification ;
-SIM = cosinus **ECAPA-TDNN** ↑ mieux 0–1 ; RTF < 1 = + rapide que le temps réel)*
+*(WER = intelligibilité, ↓ mieux ; h/r/t = hallucination / répétition / troncature ;
+SIM = cosinus **ECAPA-TDNN** ↑ mieux 0–1 ; RTF < 1 = + rapide que le temps réel.
+**Ce tableau ne classe pas la naturalité** — voir « Naturalité » ci-dessous.)*
 
-**UTMOS retiré** — non calibré FR (les voix de référence *humaines* y scoraient
-1,5–2,9, *sous* les TTS ; cf. `docs/METHODOLOGIE.md` §9), remplacé par TTSDS2
-(principal) + NISQA. Sur `papa_narration` les 7 modèles se tiennent en **70–79**
-TTSDS2 : aucun ne se détache, et l'ordre (Kokoro / XTTS / CosyVoice3 devant,
-MOSS derrière) **n'est pas celui du WER**. NISQA (3,2–4,0) place Kokoro et XTTS
-en tête, CosyVoice3 en bas — divergence nette avec TTSDS2 sur CosyVoice3
-(TTSDS2 le voit proche de la vraie parole, NISQA le trouve peu naturel).
-Rien ne tranche sans écoute.
+**Naturalité → test d'écoute uniquement.** Aucune métrique automatique de
+naturalité dans le benchmark : UTMOS, TTSDS2 et NISQA ont été essayés puis
+retirés (§ « Naturalité : pourquoi aucune métrique auto » plus bas). Le
+classement de naturalité vient du MOS humain (`resultats/ecoute.md`) :
+**FireRed 4,12 · MOSS 3,75 · VoxCPM 3,43 · XTTS 3,36 · Chatterbox 3,20 ·
+CosyVoice3 2,89** (n=60, IC ±0,4–0,8).
 
 Sur la voix difficile `johnny` : FireRed 4,3 % (WER quasi inchangé, il
 encaisse le mieux) ; ensuite VoxCPM/XTTS 7,3 %, Kokoro 7,5 %, MOSS 7,7 %,
@@ -53,23 +53,27 @@ l'écart de classement vient surtout de l'intelligibilité / la prosodie.
 | **PocketTTS** (Kyutai) | 🔒 bloqué | poids voice-cloning + voix catalogue derrière l'acceptation explicite des conditions sur huggingface.co/kyutai/pocket-tts (le token seul ne suffit pas). Déblocable côté compte HF. |
 | **Audio8-0.6B**, **Parler-TTS FR** | ⬜ non tentés | prévus, pas encore intégrés |
 
-### ⚠️ La naturalité automatique ne suit pas le WER
+### Naturalité : pourquoi aucune métrique automatique
 
-Sur `papa_narration`, les 7 modèles tiennent en **70–79** de TTSDS2 : aucun
-ne se détache et le classement (Kokoro 78,7 · XTTS 77,3 · CosyVoice3 76,3
-devant ; MOSS 70,6 · FireRed 73,1 derrière) **ne suit pas celui du WER**.
-NISQA (3,2–4,0) confirme Kokoro/XTTS en tête mais **contredit TTSDS2 sur
-CosyVoice3** (NISQA 3,24, dernier ; TTSDS2 le voit proche du vrai). Sur
-`johnny`, TTSDS2 chute surtout pour VoxCPM (68,4) et MOSS (70,6). F5-TTS
-(FR non supporté) tombe au plancher TTSDS2 ~60 — bon signe de calibrage.
+**Trois métriques essayées, trois échecs sur le français** (validés contre
+les 60 notes MOS « Naturel » du test d'écoute) :
 
-**UTMOS a été retiré** : les voix de référence *humaines* y scoraient
-1,5–2,9 (`papa_narration.wav` = 2,89, `Aurore 2` = 1,56), *sous* les
-sorties TTS — non calibré FR. Remplacé par **TTSDS2** (distributionnel vs
-MLS-French, principal, SPEAKER exclu — couvert par SIM) + **NISQA-TTS**
-(par énoncé, biais anglophone, contre-vérification). « Dit exactement le
-texte » ≠ « sonne le plus naturel » → plusieurs métriques + écoute
-obligatoires, aucune ne tranche seule.
+| métrique | ce qu'elle mesure | résultat |
+|---|---|---|
+| **UTMOS** (`utmos22_strong`) | MOS prédit sans référence, SSL entraîné VoiceMOS EN | non calibré FR : les voix de réf **humaines** y scoraient 1,5–2,9, *sous* les TTS. Corr. MOS humain ≈ **−0,12**. |
+| **TTSDS2** | distance distributionnelle vs vraie parole FR (MLS-French) | **anti-corrélé** : Spearman ≈ **−0,77** avec le MOS humain. Récompense les modèles plats/propres (Kokoro, XTTS) qui collent à la réf amateur ; pénalise FireRed/MOSS, jugés plus naturels à l'oreille. |
+| **NISQA-TTS** | *Naturalness* prédite par énoncé, modèle 2020 EN | corr. MOS humain ≈ **−0,03** (nulle). |
+
+**Cause commune** : ces métriques sont calibrées sur du MOS anglophone et/ou
+sur une notion « proche de la vraie parole » qui, sur du TTS FR moderne
+tous à quasi-parité (bande étroite), ne capte pas ce que l'oreille entend
+— expressivité, chaleur, micro-prosodie. La proximité distributionnelle
+n'est pas la qualité perçue.
+
+**Conséquence** : la naturalité (et l'expressivité) se classent **à
+l'écoute**, point. WER + SIM restent les seules métriques auto retenues
+(intelligibilité, identité — validées : corr. MOS +0,12 et +0,22). Cf.
+`docs/METHODOLOGIE.md` §10.
 
 ## Run émotions (`resultats/EMOTIONS.md`)
 
@@ -163,9 +167,9 @@ c'est la démonstration que *passe-1 = défauts* ne suffit pas pour MOSS.
 → *À re-tester en passe-2 avec les réglages de prod.*
 
 **CosyVoice3-0.5B — solide et léger, dépendances lourdes.**
-WER 4,9 % sur `papa_narration`, **zéro anomalie**, TTSDS2 76,3 (bon) mais
-NISQA 3,24 (le plus bas du lot — les deux métriques divergent), seulement
-5 Go de VRAM, RTF 0,82. Se dégrade sur `johnny` (WER 10,4 %, SIM 0,74).
+WER 4,9 % sur `papa_narration`, **zéro anomalie**, seulement 5 Go de VRAM,
+RTF 0,82. Mais **dernier à l'écoute pour la naturalité** (MOS 2,89). Se
+dégrade sur `johnny` (WER 10,4 %, SIM 0,74).
 Installation la plus pénible du lot (dépôt + sous-module Matcha-TTS, deps
 pinnées, `<|endofprompt|>` obligatoire dans le prompt).
 → *Bon rapport qualité/VRAM si on accepte le coût de mise en place.*

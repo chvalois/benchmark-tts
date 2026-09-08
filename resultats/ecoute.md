@@ -61,7 +61,6 @@
 
 | axe humain | métrique auto | Pearson r | n |
 |---|---|---|---|
-| naturel | NISQA | -0.03 | 60 |
 | intelligibilite | 1-WER | 0.12 | 60 |
 | similarite | SIM | 0.22 | 60 |
 

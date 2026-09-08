@@ -9,10 +9,11 @@ de référence).
   `wavlm-base-plus-sv` (dont les cosinus, tous ~0,96, ne discriminaient
   pas — cf. corrélation nulle avec la note humaine de similarité).
 
-La **naturalité** n'est plus mesurée ici : UTMOS (`utmos22_strong`) a été
-retiré — non calibré pour le FR au point d'être quasi du bruit (les voix
-de référence *humaines* y scoraient 1,5–2,9, sous les sorties TTS). Voir
-`mesurer_ttsds2.py` (principal) et `mesurer_nisqa.py` (contre-vérification).
+**Aucune métrique de naturalité automatique** dans le benchmark : UTMOS,
+TTSDS2 et NISQA ont tous été testés et écartés (non pertinents /
+anti-corrélés avec la note humaine en français) — cf.
+`docs/METHODOLOGIE.md` §10. La naturalité se juge à l'écoute
+(`benchmark/agreger_ecoute.py`, `resultats/ecoute.md`).
 
 Modèle-dépendant : tourne dans le venv `_commun`. Les helpers d'I/O
 (`lire_perceptuel`, `_lister_wavs`) restent purs et testés.

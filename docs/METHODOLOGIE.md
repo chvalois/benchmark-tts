@@ -153,15 +153,17 @@ température MOSS abaissée…) **non faite**.
 | **WER FR** | transcription `bofenghuang/whisper-large-v3-french` (révision épinglée), `jiwer`, **normalisation identique ref/hyp** (retrait balises, `num2words`) | `transcrire.py` + `mesurer_wer.py` |
 | **Fidélité** *language-agnostic* | portage de `avisol/transcription_check.py` : recall/precision mot-à-mot, hallucination (recall < 0,6 ou digression), répétition (run / n-gramme / ratio trigrammes), **troncature de fin** (`trailing_missing_words`) ; sauvetages anti-faux-positifs **orthographique** (Levenshtein suffixe) puis **phonétique** (espeak-ng) | `fidelite.py` + `evaluer.py` |
 | **Vitesse** | RTF = `gen_s / audio_s` (à chaud), TTFA, cold start séparé | `mesurer_vitesse.py` |
-| **TTSDS2** *(naturalité, principal)* | score **distributionnel** (0–100) : distance entre la parole générée du système `(modèle, voix)` et un corpus de **vraie parole FR** (MLS-French, `benchmark/build_ref_ttsds2.py`), sur **intelligibilité + prosodie + générique** (1/3 chacune ; Speaker et Environment exclus — `wespeaker` cassé dans ttsds 2.1.3, l'identité locuteur reste couverte par SIM). Multilingue. Seule des 16 métriques du papier à corréler > 0,5 avec le MOS humain sur tous les domaines. Par (modèle, voix), pas par énoncé → `ttsds2.json` | `mesurer_ttsds2.py` (venv `_ttsds2`) |
-| **NISQA** *(naturalité, contre-vérification)* | NISQA-TTS (`gabrielmittag/NISQA`, poids CC BY-NC-SA), *Naturalness* prédite par énoncé ~1–5, **sans référence**. Biais anglophone connu (comme UTMOS) mais entraînement TTS explicite → garde-fou secondaire sur le classement, jamais décisif | `mesurer_nisqa.py` (venv `_nisqa`) |
 | **SIM** | similarité locuteur — cosinus embeddings **ECAPA-TDNN** (`speechbrain/spkrec-ecapa-voxceleb`), **silences rognés** (30 dB) des deux côtés. `wavlm-base-plus-sv` abandonné : cosinus tous ~0,96, aucune discrimination, corrélation nulle avec la note humaine. ECAPA : même-locuteur ~0,75–0,9, écart net entre modèles. Clip < 0,4 s → **pas de score** | `mesurer_perceptuel.py` |
+| **Naturalité** | **aucune métrique automatique** — cf. §10.8. Se juge au **test d'écoute** (MOS + A/B, `benchmark/agreger_ecoute.py` → `resultats/ecoute.md`). | *(écoute)* |
 
-> **UTMOS retiré.** `utmos22_strong` (torch.hub) était non calibré pour le FR
-> au point d'être quasi du bruit : les voix de référence *humaines* y scoraient
-> **1,5–2,9** (`papa_narration.wav` = 2,89 ; `Aurore 2` = 1,56), soit **sous** les
-> sorties TTS (2,1–3,8). Il favorise le signal lisse/débruité et pénalise la
-> phonétique/prosodie française. Remplacé par TTSDS2 + NISQA ci-dessus.
+> **Pas de naturalité automatique.** Trois métriques essayées et retirées :
+> **UTMOS** (`utmos22_strong`, MOS SSL EN) — non calibré FR, les voix de réf
+> *humaines* y scoraient 1,5–2,9, *sous* les TTS ; corr. MOS humain −0,12.
+> **TTSDS2** (distance distributionnelle vs MLS-French) — **anti-corrélé**,
+> Spearman −0,77 : récompense les voix plates/propres qui collent au corpus
+> de réf, pénalise celles jugées plus naturelles à l'oreille. **NISQA-TTS**
+> (naturalness prédite, modèle 2020 EN) — corr. MOS humain −0,03 (nulle).
+> Détail et cause commune : §10.8.
 | **Stabilité** | écart-type + **coefficient de variation** de la durée audio sur les 3 reps ; flag si CV > 15 % | `stabilite.py` |
 | **VRAM** | pic pendant la génération (NVML) | `vram.py` |
 | **Licence** | registre déclaré + vérifié à la main (`licences.yaml`), **croisé** avec `models.lock` (incohérence = bug) | `mesurer_licence.py` |
@@ -202,10 +204,33 @@ couverture ; seuls les runners qui chargent un modèle sont hors mesure).
    validé (narration + podcast + journalisme), mais la génération et le
    scoring dédié (dérive de durée vs `duree_cible_s`, tenue du timbre,
    prosodie de registre) restent à lancer.
-8. **Naturalité TTSDS2/NISQA — re-scoring en attente.** Le code produit
-   désormais TTSDS2 (`ttsds2.json`) + NISQA (`nisqa.csv`) à la place d'UTMOS,
-   mais les 8 modèles × ~6 voix (+ run émotions) n'ont pas encore été
-   re-scorés : tant que ce run GPU n'a pas tourné, `resultats/*.{md,json}`,
-   `comparatif.md`, `RESUME.md` et les pages `site/resultats/` gardent
-   l'ancienne colonne UTMOS. `benchmark/build_pages.py` reste à adapter
-   (colonnes + tri) une fois les données disponibles.
+8. **Naturalité : aucune métrique automatique retenue.** Trois essayées,
+   trois échecs sur le français (validés contre les 60 notes MOS « Naturel »
+   du test d'écoute) :
+   - **UTMOS** (`tarepan/SpeechMOS`, `utmos22_strong` ; MOS SSL entraîné
+     VoiceMOS EN) — non calibré FR : les voix de référence *humaines* y
+     scoraient **1,5–2,9** (`papa_narration.wav` = 2,89 ; `Aurore 2` = 1,56),
+     *sous* les sorties TTS. Corr. MOS humain ≈ **−0,12**.
+   - **TTSDS2** (Text-to-Speech Distribution Score ; distance
+     distributionnelle multi-features gén. vs vraie parole FR, réf.
+     MLS-French) — **anti-corrélé** : Spearman ≈ **−0,77** avec le MOS
+     humain. Il récompense les modèles plats et propres (Kokoro, XTTS,
+     CosyVoice3) qui collent statistiquement au corpus de réf (audiobook
+     amateur, prosodie mesurée), et pénalise FireRed / MOSS que l'oreille
+     juge plus naturels. Speaker exclu (bench `wespeaker` cassé) ; ce n'est
+     pas ce qui explique l'inversion.
+   - **NISQA-TTS** (`gabrielmittag/NISQA` ; *Naturalness* prédite par
+     énoncé, modèle 2020 EN) — corr. MOS humain ≈ **−0,03** (nulle).
+
+   **Cause commune** : ces métriques sont calibrées sur du MOS anglophone
+   et/ou sur « proximité à la vraie parole », notion qui ne discrimine pas
+   du TTS FR moderne tous à quasi-parité (bande étroite) — ce que l'oreille
+   entend (expressivité, chaleur, micro-prosodie) n'est pas la proximité
+   distributionnelle. **UTMOSv2** (successeur 2024, toujours EN/VoiceMOS)
+   n'a pas été testé : même biais de fond attendu.
+
+   → **La naturalité et l'expressivité se classent au test d'écoute**
+   (MOS + A/B, n=60 à date), qui devient l'élément décisif du classement.
+   WER (intelligibilité) et SIM (identité) restent les seules métriques
+   auto — validées : corr. MOS +0,12 et +0,22. Le code TTSDS2/NISQA a été
+   retiré (`git log` : branche `feat/ttsds2-nisqa-naturalite`).

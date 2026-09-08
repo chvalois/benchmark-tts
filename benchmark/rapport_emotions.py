@@ -6,8 +6,8 @@ Le run émotions : chaque voix de référence émotionnelle
 de son registre (joie : p01,p06 · colère : p02,p07,p19,p22,p33 · peur :
 p03,p08,p34 · tristesse : p04,p09), 3 reps. Kokoro est exclu (voix interne,
 pas de clonage). On vérifie que l'émotion ne casse ni l'intelligibilité
-(WER) ni l'identité (SIM), et on regarde la NISQA (TTSDS2 inexploitable
-sur 6–15 clips).
+(WER) ni l'identité (SIM) ; la naturalité / l'expressivité se jugent à
+l'écoute (aucune métrique auto — cf. `docs/METHODOLOGIE.md` §10).
 
     source env.sh
     python3 benchmark/rapport_emotions.py           # tous les resultats/*.json
@@ -33,20 +33,19 @@ Kokoro exclu (pas de clonage). Question testée (APIAVISOL §3.5) : **cloner
 une voix de référence émotionnelle transporte-t-il l'émotion ?** — réponse
 surtout à l'écoute (voir le mode ÉMOTION du test `site/ecoute/`) ; ici on
 vérifie que l'émotion ne casse pas l'intelligibilité (WER) ni l'identité
-(SIM), et on regarde la NISQA (TTSDS2, distributionnel, est inexploitable
-sur 6–15 clips).
+(SIM). Aucune métrique de naturalité automatique (UTMOS / TTSDS2 / NISQA
+tous écartés — cf. `docs/METHODOLOGIE.md` §10).
 
 Audio : `D:\\tts-benchmark-data\\audio_genere\\<modèle>\\papa_<émotion>\\`.
 
 Métriques **automatiques** : WER (whisper-large-v3-french), fidélité
-language-agnostic, **NISQA** (naturalité prédite NISQA-TTS, ↑ mieux ~1–5),
-**SIM** (similarité au locuteur de réf émotionnel, ECAPA, ↑ mieux). **Pas
-encore d'écoute MOS humaine.** WER brut (aucun plancher humain soustrait).
+language-agnostic, **SIM** (similarité au locuteur de réf émotionnel,
+ECAPA, ↑ mieux). L'expressivité se juge à l'écoute. WER brut (aucun
+plancher humain soustrait).
 """
 
 PIED = """
 - **RTF** = temps de génération / durée audio (< 1 = plus rapide que le temps réel).
-- **NISQA** ~1–5 (NISQA-TTS) — biais anglophone connu, en contre-vérification.
 - **SIM** = cosinus embeddings **ECAPA-TDNN** gén. vs voix de réf émotionnelle (0–1).
 - **CV durée** = écart-type / moyenne de la durée sur les 3 reps (stabilité).
 - Détail par catégorie + WER par piège : `resultats/<modele>.md`.
@@ -66,9 +65,6 @@ def _lignes(chemins: list[Path]) -> list[dict]:
                 "voix": voix,
                 "wer": s["wer_moyen"],
                 "sigma": s["wer_ecart_type"],
-                # TTSDS2 (distributionnel) inexploitable sur 6–15 clips émotion
-                # -> on garde NISQA (par énoncé) pour la naturalité ici.
-                "nisqa": s.get("nisqa_moyen"),
                 "sim": s.get("sim_moyen"),
                 "hallu": s["taux_hallucination"],
                 "rep": s["taux_repetition"],
@@ -90,12 +86,12 @@ def _f(x, suffixe="", digits=2) -> str:
 def construire(chemins: list[Path]) -> str:
     lignes = sorted(_lignes(chemins), key=lambda d: (d["wer"], d["modele"], d["voix"]))
     L = [ENTETE, ""]
-    L.append("| modèle | voix | clon. | WER | ±σ | NISQA | SIM | hallu. | rép. | tronc. | RTF | CV dur. |")
-    L.append("|---|---|---|---|---|---|---|---|---|---|---|---|")
+    L.append("| modèle | voix | clon. | WER | ±σ | SIM | hallu. | rép. | tronc. | RTF | CV dur. |")
+    L.append("|---|---|---|---|---|---|---|---|---|---|---|")
     for d in lignes:
         L.append(
             f"| {d['modele']} | {d['voix']} | oui | {_f(d['wer'], '%')} | {_f(d['sigma'], '%')} | "
-            f"{_f(d['nisqa'])} | {_f(d['sim'], digits=3)} | {_f(d['hallu'], '%')} | {_f(d['rep'], '%')} | "
+            f"{_f(d['sim'], digits=3)} | {_f(d['hallu'], '%')} | {_f(d['rep'], '%')} | "
             f"{_f(d['tronc'], '%')} | {_f(d['rtf'])} | {_f(d['cv'], '%')} |"
         )
     n_modeles = len({d["modele"] for d in lignes})

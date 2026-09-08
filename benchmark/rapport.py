@@ -20,9 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from benchmark.corpus import charger_corpus  # noqa: E402
 from benchmark.evaluer import evaluer_runs, synthese  # noqa: E402
-from benchmark.mesurer_nisqa import lire_nisqa  # noqa: E402
 from benchmark.mesurer_perceptuel import lire_perceptuel  # noqa: E402
-from benchmark.mesurer_ttsds2 import lire_ttsds2  # noqa: E402
 from benchmark.mesurer_vitesse import agreger_vitesse, charger_timings  # noqa: E402
 from benchmark.stabilite import stabilite_duree  # noqa: E402
 from benchmark.transcrire import lire_transcriptions  # noqa: E402
@@ -31,18 +29,15 @@ from benchmark.transcrire import lire_transcriptions  # noqa: E402
 def rapport_voix(dossier_voix: Path, phrases, *, plancher_wer: float = 0.0) -> dict:
     f_perc = dossier_voix / "perceptuel.csv"
     perc = lire_perceptuel(f_perc) if f_perc.is_file() else None
-    f_nisqa = dossier_voix / "nisqa.csv"
-    nis = lire_nisqa(f_nisqa) if f_nisqa.is_file() else None
-    ttsds2 = lire_ttsds2(dossier_voix / "ttsds2.json")
     lignes = evaluer_runs(
         lire_transcriptions(dossier_voix / "transcriptions.csv"), phrases,
-        perceptuel=perc, nisqa=nis,
+        perceptuel=perc,
     )
     timings = charger_timings(dossier_voix / "timings.csv")
     meta = json.loads((dossier_voix / "meta.json").read_text(encoding="utf-8"))
     return {
         "meta": meta,
-        "synthese": synthese(lignes, plancher_wer=plancher_wer, ttsds2=ttsds2),
+        "synthese": synthese(lignes, plancher_wer=plancher_wer),
         "vitesse": agreger_vitesse(timings),
         "stabilite": stabilite_duree(timings),
         "lignes": lignes,
@@ -67,18 +62,15 @@ def markdown(nom_modele: str, rap: dict) -> str:
 
     L.append("## Vue globale (par voix)")
     L.append("")
-    L.append("| voix | runs ok | WER moyen | ±σ | TTSDS2 | NISQA | SIM | hallu. | rép. | tronc. | RTF méd. | VRAM pic | CV durée |")
-    L.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+    L.append("| voix | runs ok | WER moyen | ±σ | SIM | hallu. | rép. | tronc. | RTF méd. | VRAM pic | CV durée |")
+    L.append("|---|---|---|---|---|---|---|---|---|---|---|")
     for voix, r in rap.items():
         s, v, st = r["synthese"], r["vitesse"], r["stabilite"]
         vram = max((x.get("vram_pic_mo") or 0 for x in r.get("_timings", [])), default=0)
-        t2 = s.get("ttsds2") or {}
-        ttsds2 = f"{t2['score_global']:.1f}" if t2.get("score_global") is not None else "—"
-        nisqa = f"{s['nisqa_moyen']:.2f}" if s.get("nisqa_moyen") is not None else "—"
         sim = f"{s['sim_moyen']:.3f}" if s.get("sim_moyen") is not None else "—"
         L.append(
             f"| {voix} | {s['n_verifiees']}/{s['n_runs']} | {_pct(s['wer_moyen'])} | "
-            f"{_pct(s['wer_ecart_type'])} | {ttsds2} | {nisqa} | {sim} | {_pct(s['taux_hallucination'])} | "
+            f"{_pct(s['wer_ecart_type'])} | {sim} | {_pct(s['taux_hallucination'])} | "
             f"{_pct(s['taux_repetition'])} | {_pct(s['taux_troncature'])} | "
             f"{v['global']['rtf']['moyenne']:.2f} | {vram or '?'} Mo | "
             f"{_pct(st['cv_median'])} |"
