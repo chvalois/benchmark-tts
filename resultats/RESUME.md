@@ -13,7 +13,7 @@ Sud-Ouest) — cf. « Sensibilité à la voix de référence ». Transcription
 > passée dans le même Whisper fait déjà ~2–4 %). **La naturalité n'a aucune
 > métrique auto** (UTMOS / TTSDS2 / NISQA essayés puis retirés — voir §
 > « Naturalité ») : elle se classe au **test d'écoute** (`resultats/ecoute.md`,
-> n=80), qui devient l'élément décisif du classement.
+> n=100), qui devient l'élément décisif du classement.
 
 ## Classement (voix `papa_narration`, la plus propre)
 
@@ -35,9 +35,10 @@ SIM = cosinus **ECAPA-TDNN** ↑ mieux 0–1 ; RTF < 1 = + rapide que le temps r
 naturalité dans le benchmark : UTMOS, TTSDS2 et NISQA ont été essayés puis
 retirés (§ « Naturalité : pourquoi aucune métrique auto » plus bas). Le
 classement de naturalité vient du MOS humain « Naturel » (`resultats/ecoute.md`,
-n=80, IC ±0,45–0,70) :
-**FireRed 4,08 · MOSS 3,25 · XTTS 3,22 · Chatterbox 3,17 · VoxCPM 3,10 ·
-CosyVoice3 2,42**. FireRed se détache nettement ; CosyVoice3 décroche.
+n=100, IC ±0,4–0,65) :
+**FireRed 4,06 · VoxCPM 3,23 · XTTS 3,05 · Chatterbox 3,00 · MOSS 3,00 ·
+CosyVoice3 2,50**. FireRed se détache nettement, CosyVoice3 décroche ; les
+quatre du milieu se tiennent dans le bruit (~3,0, IC ±0,5).
 
 Sur la voix difficile `johnny` : FireRed 4,3 % (WER quasi inchangé, il
 encaisse le mieux) ; ensuite VoxCPM/XTTS 7,3 %, Kokoro 7,5 %, MOSS 7,7 %,
@@ -74,8 +75,8 @@ n'est pas la qualité perçue.
 
 **Conséquence** : la naturalité (et l'expressivité) se classent **à
 l'écoute**, point. WER + SIM restent les seules métriques auto retenues
-(intelligibilité, identité). Sur n=80 la corrélation MOS↔auto reste faible
-(1−WER : r 0,02 ; SIM : r 0,14) — normal, ces axes bougent peu entre
+(intelligibilité, identité). Sur n=100 la corrélation MOS↔auto reste faible
+(1−WER : r 0,03 ; SIM : r 0,18) — normal, ces axes bougent peu entre
 modèles corrects. Cf. `docs/METHODOLOGIE.md` §10.
 
 ## Run émotions (`resultats/EMOTIONS.md`)
@@ -171,7 +172,7 @@ c'est la démonstration que *passe-1 = défauts* ne suffit pas pour MOSS.
 
 **CosyVoice3-0.5B — solide et léger, dépendances lourdes.**
 WER 4,9 % sur `papa_narration`, **zéro anomalie**, seulement 5 Go de VRAM,
-RTF 0,82. Mais **dernier à l'écoute pour la naturalité** (MOS 2,42). Se
+RTF 0,82. Mais **dernier à l'écoute pour la naturalité** (MOS 2,50). Se
 dégrade sur `johnny` (WER 10,4 %, SIM 0,74).
 Installation la plus pénible du lot (dépôt + sous-module Matcha-TTS, deps
 pinnées, `<|endofprompt|>` obligatoire dans le prompt).

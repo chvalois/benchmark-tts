@@ -11,6 +11,10 @@ phrases ne sont jamais toujours les mêmes et une session reste courte.
   (papa / aurore2 / tonton_marc / papy / johnny / manou) — chaque item porte
   sa voix ; MOS joue la `ref_<voix>.wav` correspondante. Les combos
   (modèle, voix) au WER > `WER_MAX_ECOUTE` (clips cassés) sont exclus ;
+- **MOS + registres émotionnels** : les phrases de registre joie / colère /
+  peur / tristesse (cf. `EMOTIONS`) ne sont notées en MOS que sur des clips
+  clonés depuis la **voix de réf émotionnelle** correspondante
+  (`papa_<émotion>`) — jamais depuis une voix de narration neutre ;
 - pool A/B : chaque tête `TETES` vs les challengers + duels
   challenger-vs-challenger + paires aléatoires ;
 - pool MOS : `N_MODELES_MOS` modèles tournants par phrase ;
@@ -92,6 +96,10 @@ EMOTIONS = {                       # émotion -> (voix de réf, phrases, mot pou
     "peur":      ("papa_peur",      ["p03", "p08", "p34"],               "APEURÉ / INQUIET"),
     "tristesse": ("papa_tristesse", ["p04", "p09"],                      "TRISTE"),
 }
+# phrase de registre émotionnel -> voix de réf émotionnelle correspondante.
+# En MOS, ces phrases ne sont notées QUE sur des clips clonés depuis la voix
+# émotionnelle (`papa_<émotion>`), jamais depuis une voix de narration neutre.
+MOS_VOIX_EMO = {p: vw for (vw, phs, _m) in EMOTIONS.values() for p in phs}
 
 DEFAUTS = [
     {"k": "tronque", "label": "coupé / tronqué"},
@@ -272,11 +280,15 @@ def build() -> None:
         solution_ab[aid] = {"phrase": pr["phrase"], "voix": pr["voix"],
                             "A_modele": m_a, "B_modele": m_b}
 
-    # --- clips MOS, PAR VOIX : 2 modèles tournants par phrase ------------
+    # --- clips MOS : 2 modèles tournants par (phrase, voix) -------------
+    # Phrase de registre émotionnel  -> UNIQUEMENT la voix `papa_<émotion>`
+    # correspondante (pas de rendu neutre d'une réplique en colère, etc.).
+    # Phrase neutre                  -> les voix de `VOIX_ECOUTE`.
     mos: list[dict] = []
     solution_mos: dict[str, dict] = {}
-    for voix in VOIX_ECOUTE:
-        for i, phrase in enumerate(phrases_mos):
+    for i, phrase in enumerate(phrases_mos):
+        voix_list = [MOS_VOIX_EMO[phrase]] if phrase in MOS_VOIX_EMO else VOIX_ECOUTE
+        for voix in voix_list:
             dispo = [m for m in MODELES if _ok(m, voix, phrase)]
             if not dispo:
                 continue
@@ -334,7 +346,9 @@ def build() -> None:
               + (" …" if len(emo_sautes) > 6 else ""))
 
     shutil.copy2(REF_WAV, audio_dir / "ref.wav")
-    for voix in VOIX_ECOUTE:                      # réf jouée en MOS, par voix
+    # réf jouée en MOS (axe similarité) : voix de `VOIX_ECOUTE` + voix
+    # émotionnelles utilisées pour les phrases de registre émotionnel.
+    for voix in sorted(set(VOIX_ECOUTE) | set(MOS_VOIX_EMO.values())):
         src = RACINE / "corpus" / "voix_reference" / f"{voix}.wav"
         if src.is_file():
             shutil.copy2(src, audio_dir / f"ref_{voix}.wav")
