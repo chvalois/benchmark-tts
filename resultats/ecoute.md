@@ -1,6 +1,6 @@
 # Test d'écoute — agrégation
 
-3 auditeur(s) — 40 votes A/B, 60 notes MOS, 40 votes émotion.
+4 auditeur(s) — 40 votes A/B, 80 notes MOS, 40 votes émotion.
 
 ## A/B — win-rate par modèle
 
@@ -39,30 +39,30 @@
 
 | modèle | Naturel | Intelligibilite | Similarite | Expressivite |
 |---|---|---|---|---|
-| chatterbox_v3 | 3.20 ±0.57 | 3.30 ±0.59 | 2.00 ±0.58 | 2.90 ±0.54 |
-| cosyvoice3_05b | 2.89 ±0.69 | 3.22 ±0.44 | 2.89 ±0.69 | 2.22 ±0.54 |
-| firered_tts3 | 4.12 ±0.58 | 4.75 ±0.32 | 4.38 ±0.36 | 3.38 ±0.73 |
-| moss_tts_local_v15 | 3.75 ±0.60 | 4.00 ±0.59 | 4.25 ±0.43 | 2.83 ±0.63 |
-| voxcpm2 | 3.43 ±0.40 | 3.57 ±0.40 | 3.43 ±0.58 | 2.86 ±1.00 |
-| xtts_v2 | 3.36 ±0.79 | 3.64 ±0.67 | 1.86 ±0.54 | 2.71 ±0.52 |
+| chatterbox_v3 | 3.17 ±0.53 | 3.33 ±0.50 | 2.33 ±0.70 | 2.92 ±0.51 |
+| cosyvoice3_05b | 2.42 ±0.70 | 2.92 ±0.51 | 2.50 ±0.66 | 2.08 ±0.51 |
+| firered_tts3 | 4.08 ±0.45 | 4.58 ±0.38 | 4.33 ±0.37 | 3.25 ±0.49 |
+| moss_tts_local_v15 | 3.25 ±0.66 | 3.94 ±0.49 | 4.19 ±0.37 | 2.69 ±0.50 |
+| voxcpm2 | 3.10 ±0.46 | 3.30 ±0.51 | 3.60 ±0.52 | 2.80 ±0.70 |
+| xtts_v2 | 3.22 ±0.66 | 3.56 ±0.62 | 1.83 ±0.51 | 2.67 ±0.45 |
 
 ## MOS — note globale moyenne (4 axes) par voix de référence
 
 | modèle | ? | aurore2_narration | johnny | papa_narration | papy_narration | tonton_marc_narration |
 |---|---|---|---|---|---|---|
-| chatterbox_v3 | 2.83 (n=3) | 3.12 (n=2) | 2.25 (n=1) | 3.50 (n=1) | 2.75 (n=2) | 2.50 (n=1) |
-| cosyvoice3_05b | 2.42 (n=3) | 3.25 (n=2) | 3.50 (n=1) | 2.75 (n=2) | — | 2.50 (n=1) |
-| firered_tts3 | 4.42 (n=3) | 4.25 (n=2) | — | 4.12 (n=2) | — | 3.25 (n=1) |
-| moss_tts_local_v15 | 3.70 (n=5) | 3.25 (n=2) | 3.50 (n=1) | 4.75 (n=1) | — | 3.75 (n=3) |
-| voxcpm2 | 3.69 (n=4) | — | — | 3.00 (n=1) | — | 2.75 (n=2) |
-| xtts_v2 | 2.75 (n=2) | 3.25 (n=3) | — | 2.50 (n=5) | 3.25 (n=2) | 3.12 (n=2) |
+| chatterbox_v3 | 2.83 (n=3) | 3.12 (n=2) | 2.38 (n=2) | 3.50 (n=1) | 2.75 (n=2) | 3.38 (n=2) |
+| cosyvoice3_05b | 2.42 (n=3) | 3.25 (n=2) | 2.50 (n=2) | 2.75 (n=2) | 1.50 (n=2) | 2.50 (n=1) |
+| firered_tts3 | 4.42 (n=3) | 4.31 (n=4) | — | 4.00 (n=3) | — | 3.12 (n=2) |
+| moss_tts_local_v15 | 3.70 (n=5) | 3.25 (n=3) | 3.25 (n=3) | 4.75 (n=1) | 2.25 (n=1) | 3.75 (n=3) |
+| voxcpm2 | 3.69 (n=4) | — | 2.62 (n=2) | 3.25 (n=2) | — | 2.75 (n=2) |
+| xtts_v2 | 2.75 (n=2) | 3.25 (n=4) | — | 2.36 (n=7) | 3.17 (n=3) | 3.12 (n=2) |
 
 ## Corrélation MOS (humain) ↔ métrique automatique (par clip)
 
 | axe humain | métrique auto | Pearson r | n |
 |---|---|---|---|
-| intelligibilite | 1-WER | 0.12 | 60 |
-| similarite | SIM | 0.22 | 60 |
+| intelligibilite | 1-WER | 0.02 | 80 |
+| similarite | SIM | 0.14 | 80 |
 
 ## Émotion — quel modèle rend le mieux l'émotion ?
 

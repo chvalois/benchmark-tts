@@ -13,7 +13,7 @@ Sud-Ouest) — cf. « Sensibilité à la voix de référence ». Transcription
 > passée dans le même Whisper fait déjà ~2–4 %). **La naturalité n'a aucune
 > métrique auto** (UTMOS / TTSDS2 / NISQA essayés puis retirés — voir §
 > « Naturalité ») : elle se classe au **test d'écoute** (`resultats/ecoute.md`,
-> n=60), qui devient l'élément décisif du classement.
+> n=80), qui devient l'élément décisif du classement.
 
 ## Classement (voix `papa_narration`, la plus propre)
 
@@ -34,9 +34,10 @@ SIM = cosinus **ECAPA-TDNN** ↑ mieux 0–1 ; RTF < 1 = + rapide que le temps r
 **Naturalité → test d'écoute uniquement.** Aucune métrique automatique de
 naturalité dans le benchmark : UTMOS, TTSDS2 et NISQA ont été essayés puis
 retirés (§ « Naturalité : pourquoi aucune métrique auto » plus bas). Le
-classement de naturalité vient du MOS humain (`resultats/ecoute.md`) :
-**FireRed 4,12 · MOSS 3,75 · VoxCPM 3,43 · XTTS 3,36 · Chatterbox 3,20 ·
-CosyVoice3 2,89** (n=60, IC ±0,4–0,8).
+classement de naturalité vient du MOS humain « Naturel » (`resultats/ecoute.md`,
+n=80, IC ±0,45–0,70) :
+**FireRed 4,08 · MOSS 3,25 · XTTS 3,22 · Chatterbox 3,17 · VoxCPM 3,10 ·
+CosyVoice3 2,42**. FireRed se détache nettement ; CosyVoice3 décroche.
 
 Sur la voix difficile `johnny` : FireRed 4,3 % (WER quasi inchangé, il
 encaisse le mieux) ; ensuite VoxCPM/XTTS 7,3 %, Kokoro 7,5 %, MOSS 7,7 %,
@@ -55,8 +56,9 @@ l'écart de classement vient surtout de l'intelligibilité / la prosodie.
 
 ### Naturalité : pourquoi aucune métrique automatique
 
-**Trois métriques essayées, trois échecs sur le français** (validés contre
-les 60 notes MOS « Naturel » du test d'écoute) :
+**Trois métriques essayées, trois échecs sur le français** (corrélations
+mesurées sur les 60 premières notes MOS « Naturel » ; le code de ces
+métriques a depuis été retiré) :
 
 | métrique | ce qu'elle mesure | résultat |
 |---|---|---|
@@ -72,8 +74,9 @@ n'est pas la qualité perçue.
 
 **Conséquence** : la naturalité (et l'expressivité) se classent **à
 l'écoute**, point. WER + SIM restent les seules métriques auto retenues
-(intelligibilité, identité — validées : corr. MOS +0,12 et +0,22). Cf.
-`docs/METHODOLOGIE.md` §10.
+(intelligibilité, identité). Sur n=80 la corrélation MOS↔auto reste faible
+(1−WER : r 0,02 ; SIM : r 0,14) — normal, ces axes bougent peu entre
+modèles corrects. Cf. `docs/METHODOLOGIE.md` §10.
 
 ## Run émotions (`resultats/EMOTIONS.md`)
 
@@ -168,7 +171,7 @@ c'est la démonstration que *passe-1 = défauts* ne suffit pas pour MOSS.
 
 **CosyVoice3-0.5B — solide et léger, dépendances lourdes.**
 WER 4,9 % sur `papa_narration`, **zéro anomalie**, seulement 5 Go de VRAM,
-RTF 0,82. Mais **dernier à l'écoute pour la naturalité** (MOS 2,89). Se
+RTF 0,82. Mais **dernier à l'écoute pour la naturalité** (MOS 2,42). Se
 dégrade sur `johnny` (WER 10,4 %, SIM 0,74).
 Installation la plus pénible du lot (dépôt + sous-module Matcha-TTS, deps
 pinnées, `<|endofprompt|>` obligatoire dans le prompt).
