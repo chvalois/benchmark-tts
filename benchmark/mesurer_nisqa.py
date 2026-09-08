@@ -28,12 +28,16 @@ import argparse
 import csv
 import math
 import os
+import tempfile
 from pathlib import Path
 
 from benchmark.mesurer_perceptuel import _lister_wavs
 
 RACINE = Path(__file__).resolve().parent.parent
 COLONNES_NISQA = ("id_phrase", "repetition", "nisqa")
+# Sous ce seuil, le mel-spec fait moins d'une fenêtre NISQA -> `segment_specs`
+# lève `torch.arange(n_wins<0)`. Génération quasi vide = pas de score (idem SIM).
+MIN_SECONDES = 1.0
 # Colonnes candidates pour la prédiction de naturalité dans le df NISQA.
 _COLS_PRED = ("mos_pred", "nat_pred", "naturalness_pred", "NAT_pred")
 
@@ -84,8 +88,22 @@ def _colonne_pred(df) -> str:
     return preds[0]
 
 
+def _duree_s(chemin: Path) -> float:
+    import soundfile as sf
+
+    try:
+        info = sf.info(str(chemin))
+        return info.frames / info.samplerate
+    except Exception:  # noqa: BLE001 — fichier illisible => traité comme trop court
+        return 0.0
+
+
 def nisqa_dossier(audio_dir: Path | str, poids: Path | str) -> list[dict]:
-    """NISQA-TTS sur chaque `<id>_<rep>.wav` de `audio_dir`."""
+    """NISQA-TTS sur chaque `<id>_<rep>.wav` de `audio_dir`.
+
+    Les fichiers < `MIN_SECONDES` (générations quasi vides : troncatures
+    sévères de CosyVoice3 / F5, etc.) sont écartés — `segment_specs` de NISQA
+    plante dessus. Ils ressortent avec `nisqa` vide."""
     from nisqa.NISQA_model import nisqaModel
 
     audio_dir, poids = Path(audio_dir), Path(poids)
@@ -96,27 +114,40 @@ def nisqa_dossier(audio_dir: Path | str, poids: Path | str) -> list[dict]:
         raise SystemExit(f"[FAIL] poids NISQA introuvables : {poids} "
                          f"(cloner gabrielmittag/NISQA -> weights/nisqa_tts.tar)")
 
-    # Mêmes clés que run_predict.py : le reste (ms_*, td_*, model, dim,
-    # tr_parallel…) vient du checkpoint via `checkpoint['args'].update(args)`.
-    args = {
-        "mode": "predict_dir",
-        "pretrained_model": str(poids),
-        "deg": None,
-        "data_dir": str(audio_dir),
-        "output_dir": "",          # pas de NISQA_results.csv : on récupère le df
-        "csv_file": None, "csv_deg": None,
-        "num_workers": 0, "bs": 10,
-        "tr_bs_val": 10, "tr_num_workers": 0,
-        "ms_channel": None,
-    }
-    df = nisqaModel(args).predict()
-    col = _colonne_pred(df)
+    exploitables = [(p, r, c) for (p, r, c) in wavs if _duree_s(c) >= MIN_SECONDES]
+    n_courts = len(wavs) - len(exploitables)
+    if n_courts:
+        print(f"[nisqa] {n_courts}/{len(wavs)} fichier(s) < {MIN_SECONDES}s -> score omis",
+              flush=True)
+    if not exploitables:
+        return [{"id_phrase": p, "repetition": r, "nisqa": ""} for p, r, _ in wavs]
 
-    par_fichier = {Path(str(d)).name: v for d, v in zip(df["deg"], df[col])}
+    # NISQA globe `data_dir/*.wav` lui-même : on l'aiguille vers un dossier
+    # temporaire de liens ne contenant que les fichiers exploitables.
+    par_fichier: dict[str, object] = {}
+    with tempfile.TemporaryDirectory(prefix="nisqa_") as td:
+        for _p, _r, c in exploitables:
+            os.symlink(c.resolve(), Path(td) / c.name)
+        # Mêmes clés que run_predict.py : le reste (ms_*, td_*, model, dim,
+        # tr_parallel…) vient du checkpoint via `checkpoint['args'].update(args)`.
+        args = {
+            "mode": "predict_dir",
+            "pretrained_model": str(poids),
+            "deg": None,
+            "data_dir": td,
+            "output_dir": "",          # pas de NISQA_results.csv : on récupère le df
+            "csv_file": None, "csv_deg": None,
+            "num_workers": 0, "bs": 10,
+            "tr_bs_val": 10, "tr_num_workers": 0,
+            "ms_channel": None,
+        }
+        df = nisqaModel(args).predict()
+        col = _colonne_pred(df)
+        par_fichier = {Path(str(d)).name: v for d, v in zip(df["deg"], df[col])}
+
     lignes: list[dict] = []
     for pid, rep, chemin in wavs:
-        val = par_fichier.get(chemin.name)
-        n = _num(val)
+        n = _num(par_fichier.get(chemin.name))
         lignes.append({
             "id_phrase": pid, "repetition": rep,
             "nisqa": round(n, 3) if n is not None else "",
