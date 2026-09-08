@@ -38,6 +38,11 @@ COLONNES_NISQA = ("id_phrase", "repetition", "nisqa")
 # Sous ce seuil, le mel-spec fait moins d'une fenêtre NISQA -> `segment_specs`
 # lève `torch.arange(n_wins<0)`. Génération quasi vide = pas de score (idem SIM).
 MIN_SECONDES = 1.0
+# Au-dessus, NISQA dépasse son `ms_max_segments` (~6000 fenêtres ≈ 60 s) et
+# plante (`n_wins > max_length`). Les runaway MOSS (jusqu'à 328 s) et les
+# fins longues sont **tronquées à MAX_SECONDES** avant scoring (même fenêtre
+# d'analyse que `mesurer_perceptuel`), pas omises.
+MAX_SECONDES = 30
 # Colonnes candidates pour la prédiction de naturalité dans le df NISQA.
 _COLS_PRED = ("mos_pred", "nat_pred", "naturalness_pred", "NAT_pred")
 
@@ -114,20 +119,32 @@ def nisqa_dossier(audio_dir: Path | str, poids: Path | str) -> list[dict]:
         raise SystemExit(f"[FAIL] poids NISQA introuvables : {poids} "
                          f"(cloner gabrielmittag/NISQA -> weights/nisqa_tts.tar)")
 
-    exploitables = [(p, r, c) for (p, r, c) in wavs if _duree_s(c) >= MIN_SECONDES]
+    exploitables = [(p, r, c, _duree_s(c)) for (p, r, c) in wavs]
+    exploitables = [(p, r, c, d) for (p, r, c, d) in exploitables if d >= MIN_SECONDES]
     n_courts = len(wavs) - len(exploitables)
+    n_longs = sum(1 for *_, d in exploitables if d > MAX_SECONDES)
     if n_courts:
         print(f"[nisqa] {n_courts}/{len(wavs)} fichier(s) < {MIN_SECONDES}s -> score omis",
+              flush=True)
+    if n_longs:
+        print(f"[nisqa] {n_longs}/{len(wavs)} fichier(s) > {MAX_SECONDES}s -> tronqué·s",
               flush=True)
     if not exploitables:
         return [{"id_phrase": p, "repetition": r, "nisqa": ""} for p, r, _ in wavs]
 
     # NISQA globe `data_dir/*.wav` lui-même : on l'aiguille vers un dossier
-    # temporaire de liens ne contenant que les fichiers exploitables.
+    # temporaire (liens pour les fichiers ok, copie tronquée pour les trop longs).
     par_fichier: dict[str, object] = {}
     with tempfile.TemporaryDirectory(prefix="nisqa_") as td:
-        for _p, _r, c in exploitables:
-            os.symlink(c.resolve(), Path(td) / c.name)
+        for _p, _r, c, d in exploitables:
+            dest = Path(td) / c.name
+            if d <= MAX_SECONDES:
+                os.symlink(c.resolve(), dest)
+            else:
+                import soundfile as sf
+
+                y, srate = sf.read(str(c))
+                sf.write(str(dest), y[: int(MAX_SECONDES * srate)], srate)
         # Mêmes clés que run_predict.py : le reste (ms_*, td_*, model, dim,
         # tr_parallel…) vient du checkpoint via `checkpoint['args'].update(args)`.
         args = {
