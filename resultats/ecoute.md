@@ -24,17 +24,6 @@
 | **voxcpm2** | 1/1 | 2/2 | 1/3 | 2/3 | · | 3/3 |
 | **xtts_v2** | 0/1 | 0/1 | 1/5 | — | 0/3 | · |
 
-## A/B — win-rate par voix de référence (victoires / duels)
-
-| modèle | ? | aurore2_narration | johnny | papy_narration | tonton_marc_narration |
-|---|---|---|---|---|---|
-| chatterbox_v3 | 30% (1.5/5) | 0% (0.0/1) | 50% (0.5/1) | 50% (2.0/4) | 0% (0.0/1) |
-| cosyvoice3_05b | 20% (1.0/5) | 67% (2.0/3) | — | 75% (1.5/2) | 75% (1.5/2) |
-| firered_tts3 | 73% (8.0/11) | 100% (3.0/3) | 100% (2.0/2) | — | 67% (2.0/3) |
-| moss_tts_local_v15 | 25% (1.0/4) | 0% (0.0/2) | 0% (0.0/1) | 100% (1.0/1) | 25% (0.5/2) |
-| voxcpm2 | 78% (7.0/9) | 100% (1.0/1) | 0% (0.0/1) | — | 67% (2.0/3) |
-| xtts_v2 | 25% (1.5/6) | 0% (0.0/2) | 50% (0.5/1) | 17% (0.5/3) | 0% (0.0/1) |
-
 ## MOS — moyenne ± IC 95 % par axe
 
 | modèle | Naturel | Intelligibilite | Similarite | Expressivite |

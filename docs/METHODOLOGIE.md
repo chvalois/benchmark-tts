@@ -92,16 +92,20 @@ modèle : c'est le TN de chaque modèle qui est testé (p30). Le
 
 ## 6. Voix de référence (`corpus/voix_reference/`)
 
-- **Personnelles → jamais poussées** (`.gitignore` sur `*.wav`, `*.prompt.txt`).
-- v1 : `papa_narration` (27 s, 24 kHz, nettoyée) et `johnny` (21 s, converti
-  du 44 kHz stéréo, brut) — délibérément une propre + une « difficile »
-  pour mesurer la sensibilité à la qualité de la référence.
-- \+ 4 voix d'émotion (`papa_{joie,colere,peur,tristesse}`) pour le run
-  émotions : chaque voix ne génère que les phrases de son registre
-  (`--voix-phrases`). Couvert par **6 modèles** (FireRed, VoxCPM2,
-  Chatterbox, MOSS, CosyVoice3, XTTS-v2 ; Kokoro exclu — voix interne).
-  Résultats : `resultats/EMOTIONS.md` (régénéré par
-  `benchmark/rapport_emotions.py`).
+**Voix personnelles → jamais poussées** (`.gitignore` sur `*.wav`,
+`*.prompt.txt`) ; **aucun nom n'apparaît dans les résultats ni sur le
+site** — uniquement des descripteurs. Elles restent identiques d'une passe
+à l'autre.
+
+- **6 voix de narration** : une voix propre (H, ~27 s, 24 kHz) ; une voix
+  « difficile » (H, source brute convertie 44 kHz stéréo) ; une voix
+  féminine ; deux voix âgées (H et F) ; une voix à accent régional
+  (Sud-Ouest). Choix délibéré pour mesurer la sensibilité à la référence.
+- **4 registres émotionnels** (joie / colère / peur / tristesse, même
+  locuteur H) pour le run émotions : chaque registre ne génère que les
+  phrases de dialogue correspondantes (`--voix-phrases`). Couvert par
+  **6 modèles** (FireRed, VoxCPM2, Chatterbox, MOSS, CosyVoice3, XTTS-v2 ;
+  Kokoro exclu — voix interne). Résultats : `resultats/EMOTIONS.md`.
 - Transcription de chaque référence (`<voix>.prompt.txt`, via
   `whisper-large-v3-french`) — requise par FireRed / VoxCPM / MOSS (clonage
   « ultimate » = audio + transcript).
@@ -111,7 +115,7 @@ modèle : c'est le TN de chaque modèle qui est testé (p30). Le
 | clé | modèle | checkpoint / code exact | licence |
 |---|---|---|---|
 | `chatterbox_v3` | Chatterbox Multilingual | poids `ResembleAI/chatterbox@5bb1f6ee` + **code GitHub `@5de7a54a`** (le wheel PyPI ne câble que le T3 v2 ; on force `t3_model="v3"` comme la prod avisol) ; `setuptools<80` (pkg_resources pour resemble-perth) | MIT |
-| `kokoro_82m` | Kokoro-82M | `hexgrad/Kokoro-82M@f3ff3571` ; **pas de clonage** → voix interne `ff_siwis` (baseline, non comparable voix-à-voix) | Apache-2.0 |
+| `kokoro_82m` | Kokoro-82M | `hexgrad/Kokoro-82M@f3ff3571` ; **pas de clonage** → voix interne fixe du modèle (baseline, non comparable voix-à-voix) | Apache-2.0 |
 | `firered_tts3` | FireRedTTS3 (base) | poids `@dcf1bdcd` + code `FireRedTeam/FireRedTTS3@1d32ba78` ; `flash-attn==2.8.3` **obligatoire** (redae code `flash_attention_2` en dur) | Apache-2.0 |
 | `voxcpm2` | VoxCPM2 (2B) | `voxcpm==2.0.3`, poids `openbmb/VoxCPM2@32279eff`, `load_denoiser=False`, 48 kHz | Apache-2.0 |
 | `moss_tts_local_v15` | MOSS-TTS-Local-Transformer-v1.5 (5B) | poids `@be7766a6` + tokenizer audio `MOSS-Audio-Tokenizer-v2` (~8 Go, implicite) + code `OpenMOSS/MOSS-TTS@fb6e6a5` ; **défauts du model card** (`audio_temperature=1.7`), **PAS le handler avisol calibré** | Apache-2.0 |
@@ -175,28 +179,34 @@ longueur/registre/piège + phrases à écouter en priorité) →
 `resultats/RESUME.md`.
 
 Pages HTML statiques (autonomes, `file://`) : `build_pages.py` →
-`site/resultats/{index,objectif,ecoute}.html` — `objectif.html` = table
-triable des métriques auto par voix (défaut `papa_narration`, détail par
-modèle) ; `ecoute.html` = rendu de `resultats/ecoute.md`. `f5_tts` (FR non
-supporté) et Kokoro (voix fixe) hors classement.
+`site/resultats/{index,objectif,ecoute}.html`. `index.html` = classement
+métriques auto (toutes voix confondues, moyenne pondérée par nb de runs,
+hors combinaisons au WER > 30 %) **+ le classement à l'écoute** (MOS
+« Naturel » + win-rate A/B) qui est l'élément décisif. `objectif.html` =
+table triable des métriques auto, toutes voix confondues, détail par
+modèle. `ecoute.html` = rendu de `resultats/ecoute.md`. `f5_tts` (FR non
+supporté) hors classement. **Aucun nom de voix ni de participant** sur le
+site.
 
-Le module `benchmark/` est **pur et testé** (~140 tests, ≥ 90 % de
-couverture ; seuls les runners qui chargent un modèle sont hors mesure).
+Le module `benchmark/` est **pur et testé** (~160 tests ; seuls les runners
+qui chargent un modèle sont hors mesure).
 
 ## 10. Limites assumées de la v1 (à lever)
 
-1. **Aucune écoute** — MOS / A-B en aveugle (Phase 4) obligatoire avant un
-   classement « officiel ». Les métriques **priorisent** l'écoute, elles ne
-   tranchent pas.
+1. **Panel d'écoute encore réduit** — le test MOS + A/B en aveugle a tourné
+   (n≈120 notes MOS, 6 auditeur·rice·s) et **fournit le classement de
+   naturalité**, mais les IC 95 % restent larges (± 0,4–0,6). À élargir :
+   plus d'auditeur·rice·s, couverture complète des voix et des phrases.
 2. **WER brut** — aucun plancher humain soustrait (une vraie voix dans le
    même Whisper fait déjà 2-4 %). → enregistrer les 34 phrases en voix
    humaine.
 3. **Passe-1 seulement** — pas de `chars_per_second` par voix ; critique
    pour MOSS (défauts model card = instable, cf. RESUME).
-4. **Voix de référence** : `aurore2` (F), `papy` (âgé, mais récitation de
-   poème → confond âge/registre), `tonton_marc` (accent SO), + `papa` /
-   `johnny` (H). Manque un locuteur âgé en narration neutre, une voix
-   d'enfant, une qualité téléphone. Cf. `RESUME.md` § sensibilité voix.
+4. **Voix de référence** : 6 voix (voix propre, voix « difficile » brute,
+   féminine, deux âgées, accent régional). Une combinaison (voix âgée ×
+   texte) sort du domaine exploitable pour les modèles « audio +
+   transcript » (WER > 60 %) — cas isolé, écarté des moyennes. Manque une
+   voix d'enfant, une qualité téléphone. Cf. `RESUME.md` § sensibilité voix.
 5. **Artefacts ASR connus** : Whisper écrit « seconde » → « 2nde » (p33),
    « quatre-vingt-onze… » → « 91,3 % » (p15) — gonfle le WER de ces items.
 6. Kokoro non comparable voix-à-voix (voix fixe).
@@ -205,11 +215,11 @@ couverture ; seuls les runners qui chargent un modèle sont hors mesure).
    scoring dédié (dérive de durée vs `duree_cible_s`, tenue du timbre,
    prosodie de registre) restent à lancer.
 8. **Naturalité : aucune métrique automatique retenue.** Trois essayées,
-   trois échecs sur le français (validés contre les 60 notes MOS « Naturel »
-   du test d'écoute) :
+   trois échecs sur le français (corrélations mesurées contre les premières
+   notes MOS « Naturel » du test d'écoute, n=60) :
    - **UTMOS** (`tarepan/SpeechMOS`, `utmos22_strong` ; MOS SSL entraîné
      VoiceMOS EN) — non calibré FR : les voix de référence *humaines* y
-     scoraient **1,5–2,9** (`papa_narration.wav` = 2,89 ; `Aurore 2` = 1,56),
+     scoraient **1,5–2,9** (la voix propre = 2,89 ; une voix féminine = 1,56),
      *sous* les sorties TTS. Corr. MOS humain ≈ **−0,12**.
    - **TTSDS2** (Text-to-Speech Distribution Score ; distance
      distributionnelle multi-features gén. vs vraie parole FR, réf.
@@ -230,7 +240,8 @@ couverture ; seuls les runners qui chargent un modèle sont hors mesure).
    n'a pas été testé : même biais de fond attendu.
 
    → **La naturalité et l'expressivité se classent au test d'écoute**
-   (MOS + A/B, n=60 à date), qui devient l'élément décisif du classement.
-   WER (intelligibilité) et SIM (identité) restent les seules métriques
-   auto — validées : corr. MOS +0,12 et +0,22. Le code TTSDS2/NISQA a été
-   retiré (`git log` : branche `feat/ttsds2-nisqa-naturalite`).
+   (MOS + A/B en aveugle), qui est l'élément décisif du classement — repris
+   tel quel sur la page d'accueil du site. WER (intelligibilité) et SIM
+   (identité) restent les seules métriques auto ; leur corrélation avec le
+   MOS reste faible (r ≈ 0,1–0,2 sur n=120), attendu entre modèles tous
+   corrects. Le code TTSDS2 / NISQA a été retiré.

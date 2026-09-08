@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Génère le site de résultats statique (`site/resultats/`).
 
-- `index.html`    : page projet — classement triable + verdict + méthode.
-- `objectif.html` : table complète des métriques auto, par voix, triable,
-  détail par modèle (WER par longueur / registre / piège).
+- `index.html`    : page projet — classement (auto + écoute) + méthode.
+- `objectif.html` : table complète des métriques auto, **toutes voix
+  confondues** (moyenne pondérée par le nb de runs), triable, détail par
+  modèle (WER par longueur / registre / piège).
 - `ecoute.html`   : rendu de `resultats/ecoute.md` (test d'écoute humain).
 
 Pages autonomes (données injectées, Google Fonts) — ouvrables en `file://`.
-Aucune donnée vocale personnelle : que des métriques agrégées.
+**Aucun nom de voix de référence ni de participant** : que des agrégats.
 
     source env.sh
     python3 benchmark/build_pages.py
@@ -25,8 +26,19 @@ RESULTATS = RACINE / "resultats"
 LICENCES = RACINE / "benchmark" / "licences.yaml"
 MODELS_LOCK = RACINE / "models.lock"
 SORTIE = RACINE / "site" / "resultats"
-VOIX_DEFAUT = "papa_narration"
 REPO = "https://github.com/chvalois/benchmark-tts"
+
+# Noms d'affichage (les slugs `resultats/*.json` sont techniques).
+NOM_MODELE = {
+    "firered_tts3": "FireRed TTS3", "voxcpm2": "VoxCPM2",
+    "chatterbox_v3": "Chatterbox v3", "cosyvoice3_05b": "CosyVoice3-0.5B",
+    "xtts_v2": "XTTS-v2", "moss_tts_local_v15": "MOSS-1.5",
+    "kokoro_82m": "Kokoro-82M", "f5_tts": "F5-TTS",
+}
+
+
+def _nm(slug: str) -> str:
+    return NOM_MODELE.get(slug, slug)
 
 # --------------------------------------------------------------------------
 # Spéc. des métriques — sens (↓ = plus bas meilleur, ↑ = plus haut meilleur,
@@ -289,6 +301,10 @@ td.m-bad{background:color-mix(in oklab,var(--crit) 13%,transparent);
 .md td{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
 .md blockquote{margin:1em 0;padding:.4em 1em;border-left:3px solid var(--trace);
   background:var(--panel);border-radius:0 8px 8px 0;color:var(--ink)}
+.md table.rank td:nth-child(2){text-align:left}
+.md table.rank td:first-child{color:var(--faint)}
+.md .ic{color:var(--faint);font-size:.85em;font-weight:400}
+#ecoute .md .tablewrap{margin:.4em 0 1.1em}
 
 footer{border-top:1px solid var(--line);margin-top:56px}
 footer .wrap{padding:24px 22px 44px;color:var(--faint);
@@ -488,6 +504,7 @@ def _collecter() -> dict:
             voix_vues.add(voix)
             s, g, st = r["synthese"], r["vitesse"]["global"], r["stabilite"]
             par_voix[voix] = {
+                "n": s.get("n_verifiees") or s.get("n_runs") or 0,
                 "clonage": r["meta"].get("params", {}).get("clonage", True),
                 "wer": s["wer_moyen"], "wer_sigma": s["wer_ecart_type"],
                 "wer_net": s.get("wer_net_plancher"),
@@ -512,21 +529,72 @@ def _collecter() -> dict:
             "revision": (lk.get("revision") or "")[:10],
             "role": lk.get("role", ""),
             "par_voix": par_voix,
+            "global": _agrege(par_voix),
         }
-    ordre = [VOIX_DEFAUT, "johnny"] + sorted(v for v in voix_vues if v not in (VOIX_DEFAUT, "johnny"))
-    return {"modeles": modeles, "exclus": exclus, "voix_defaut": VOIX_DEFAUT,
-            "voix": [v for v in ordre if v in voix_vues]}
+    # « voix de référence » = les voix de narration (hors registres émotionnels
+    # d'un même locuteur et hors voix interne de modèle).
+    narration = {v for v in voix_vues
+                 if not re.fullmatch(r"papa_(joie|colere|peur|tristesse)", v)
+                 and v != "ff_siwis"}
+    return {"modeles": modeles, "exclus": exclus,
+            "n_voix": len(narration) or len(voix_vues)}
+
+
+SEUIL_WER_COMBO = 0.30   # au-delà, la (modèle, voix) est écartée de la moyenne :
+#                          clips inexploitables (échec de clonage sur cette voix)
+
+
+def _agrege(par_voix: dict) -> dict | None:
+    """Combine les stats d'un modèle sur **toutes ses voix** — moyenne
+    pondérée par le nb de runs vérifiés. Les (modèle, voix) au WER moyen
+    > `SEUIL_WER_COMBO` sont écartées (clips inexploitables). Les buckets
+    WER (longueur / registre / piège) sont recombinés clé à clé."""
+    toutes = [r for r in par_voix.values() if r.get("n")]
+    if not toutes:
+        return None
+    rows = [r for r in toutes if (r.get("wer") or 0) < SEUIL_WER_COMBO] or toutes
+    n_ecartees = len(toutes) - len(rows)
+    ntot = sum(r["n"] for r in rows)
+
+    def wmean(k: str):
+        pts = [(r["n"], r[k]) for r in rows if r.get(k) is not None]
+        return sum(n * v for n, v in pts) / sum(n for n, _ in pts) if pts else None
+
+    def merge(key: str) -> dict:
+        acc: dict[str, dict] = {}
+        for r in rows:
+            for b, x in (r.get(key) or {}).items():
+                a = acc.setdefault(b, {"n": 0, "s": 0.0})
+                a["n"] += x["n"]
+                a["s"] += x["n"] * x["wer_moyen"]
+        return {b: {"n": a["n"], "wer_moyen": a["s"] / a["n"]}
+                for b, a in acc.items() if a["n"]}
+
+    return {
+        "n": ntot, "n_voix": len(rows), "n_voix_ecartees": n_ecartees,
+        "clonage": any(r.get("clonage") for r in rows),
+        "wer": wmean("wer"), "wer_sigma": wmean("wer_sigma"),
+        "wer_net": wmean("wer_net"), "sim": wmean("sim"),
+        "hallu": wmean("hallu"), "rep": wmean("rep"), "tronc": wmean("tronc"),
+        "rtf": wmean("rtf"), "ttfa": wmean("ttfa"), "cv": wmean("cv"),
+        "n_suspects": sum(r.get("n_suspects", 0) for r in rows),
+        "wer_longueur": merge("wer_longueur"),
+        "wer_registre": merge("wer_registre"),
+        "wer_piege": merge("wer_piege"),
+        "flags": {kind: sorted({p for r in rows
+                                for p in (r.get("flags") or {}).get(kind, [])})
+                  for kind in ("hallucination", "repetition", "troncature")},
+    }
 
 
 # --------------------------------------------------------------------------
 # Page projet
 # --------------------------------------------------------------------------
 def _scope_svg(d: dict) -> str:
-    v = d["voix_defaut"]
     items = sorted(
-        ((m["par_voix"][v]["wer"], n) for n, m in d["modeles"].items()
-         if (m.get("par_voix", {}).get(v) or {}).get("wer") is not None
-         and m["par_voix"][v]["wer"] < 0.5),
+        ((m["global"]["wer"], _nm(n)) for n, m in d["modeles"].items()
+         if (m.get("global") or {}).get("wer") is not None
+         and m["global"]["wer"] < 0.5),
         key=lambda x: x[0],
     )
     if not items:
@@ -559,20 +627,94 @@ def _scope_svg(d: dict) -> str:
     return "".join(out)
 
 
-def _ecoute_resume() -> str | None:
+_AXES_MOS = ("Naturel", "Intelligibilite", "Similarite", "Expressivite")
+
+
+def _ecoute_donnees() -> dict | None:
+    """Parse `resultats/ecoute.md` → {panel, mos{modele:{axe:(moy,ic)}}, ab{modele:winrate}}."""
     f = RESULTATS / "ecoute.md"
     if not f.is_file():
         return None
     txt = f.read_text(encoding="utf-8")
-    m = re.search(r"(\d+) auditeur\(s\)[^\n]*?(\d+) votes A/B, (\d+) notes MOS, (\d+) votes émotion", txt)
-    top = re.search(r"## A/B — win-rate par modèle.*?\n\| *([\w_]+) *\| *(\d+%)", txt, re.S)
+    panel = re.search(r"(\d+) auditeur\(s\)[^\n]*?(\d+) votes A/B, (\d+) notes MOS, "
+                      r"(\d+) votes émotion", txt)
+
+    def _bloc(titre: str) -> list[list[str]]:
+        m = re.search(rf"## {re.escape(titre)}[^\n]*\n\n(.*?)(?:\n\n|\Z)", txt, re.S)
+        if not m:
+            return []
+        out = []
+        for ln in m.group(1).splitlines():
+            if not ln.strip().startswith("|") or re.match(r"\s*\|[\s:\-|]+\|\s*$", ln):
+                continue
+            out.append([c.strip() for c in ln.strip().strip("|").split("|")])
+        return out
+
+    mos: dict[str, dict] = {}
+    rows = _bloc("MOS — moyenne ± IC 95 % par axe")
+    entete = rows[0] if rows else []
+    for c in rows[1:]:
+        if len(c) < 2:
+            continue
+        d: dict[str, tuple] = {}
+        for j, axe in enumerate(entete[1:], 1):
+            mm = re.match(r"([\d.]+)\s*±\s*([\d.]+)", c[j]) if j < len(c) else None
+            if mm:
+                d[axe] = (float(mm.group(1)), float(mm.group(2)))
+        if d:
+            mos[c[0]] = d
+
+    ab: dict[str, str] = {}
+    for c in _bloc("A/B — win-rate par modèle")[1:]:
+        if len(c) >= 2 and c[1].endswith("%"):
+            ab[c[0]] = c[1]
+
+    return {"panel": panel.groups() if panel else None, "mos": mos, "ab": ab}
+
+
+def _ecoute_resume(dc: dict | None = None) -> str | None:
+    dc = dc if dc is not None else _ecoute_donnees()
+    if not dc:
+        return None
     parts = []
-    if m:
-        parts.append(f"{m.group(1)} auditeur·rice·s · {m.group(2)} A/B · "
-                     f"{m.group(3)} MOS · {m.group(4)} émotion")
-    if top:
-        parts.append(f"en tête A/B : <b>{top.group(1)}</b> ({top.group(2)})")
+    if dc["panel"]:
+        n, a, m, e = dc["panel"]
+        parts.append(f"{n} auditeur·rice·s · {a} votes A/B · {m} notes MOS · {e} émotion")
+    if dc["mos"]:
+        top = max(dc["mos"].items(), key=lambda kv: kv[1].get("Naturel", (0,))[0])
+        parts.append(f"plus naturel à l'oreille : <b>{_nm(top[0])}</b> "
+                     f"(MOS {top[1]['Naturel'][0]:.2f}/5)")
     return " — ".join(parts) if parts else "résultats disponibles"
+
+
+def _ecoute_classement_html(dc: dict) -> str:
+    """Tableau : classement des modèles par MOS « Naturel » + win-rate A/B."""
+    if not dc or not dc["mos"]:
+        return ""
+    lignes = sorted(dc["mos"].items(),
+                    key=lambda kv: -kv[1].get("Naturel", (0,))[0])
+
+    def cell(v):
+        return f'<td class="num">{v[0]:.2f}</td>' if v else "<td>—</td>"
+
+    tr = []
+    for i, (mod, ax) in enumerate(lignes, 1):
+        nat = ax.get("Naturel")
+        natc = (f'<td class="num"><b>{nat[0]:.2f}</b> '
+                f'<span class="ic">±{nat[1]:.2f}</span></td>') if nat else "<td>—</td>"
+        tr.append(
+            f"<tr><td>{i}</td><td><b>{_nm(mod)}</b></td>{natc}"
+            f"{cell(ax.get('Intelligibilite'))}{cell(ax.get('Similarite'))}"
+            f"{cell(ax.get('Expressivite'))}"
+            f"<td class=\"num\">{dc['ab'].get(mod, '—')}</td></tr>"
+        )
+    return (
+        "<div class='tablewrap'><table class='rank'>"
+        "<thead><tr><th>#</th><th>modèle</th>"
+        "<th>MOS «&nbsp;Naturel&nbsp;»</th><th>Intel.</th><th>Simil.</th>"
+        "<th>Express.</th><th>Win-rate A/B</th></tr></thead>"
+        f"<tbody>{''.join(tr)}</tbody></table></div>"
+    )
 
 
 def _detail_html(r: dict) -> str:
@@ -600,17 +742,16 @@ def _detail_html(r: dict) -> str:
 
 def page_index(standalone: bool = False) -> str:
     d = _collecter()
-    v = d["voix_defaut"]
     h_obj = REPO if standalone else "objectif.html"
     h_ec = "#ecoute" if standalone else "ecoute.html"
     lb = sorted(
-        ((n, m, m["par_voix"][v]) for n, m in d["modeles"].items()
-         if (m.get("par_voix", {}).get(v) or {}).get("wer") is not None
-         and m["par_voix"][v]["wer"] < 0.5),
+        ((n, m, m["global"]) for n, m in d["modeles"].items()
+         if (m.get("global") or {}).get("wer") is not None
+         and m["global"]["wer"] < 0.5),
         key=lambda x: x[2]["wer"],
     )
-    n_mod, n_voix = len(lb), len(d["voix"])
-    wmax = max((r["wer"] for _, _, r in lb), default=.1) * 1.12
+    n_mod, n_voix = len(lb), d["n_voix"]
+    dc = _ecoute_donnees()
 
     rows = []
     cartes = []
@@ -620,10 +761,7 @@ def page_index(standalone: bool = False) -> str:
         lic = (f'<span class="chip ok">{m["licence"]}</span>' if comm == "oui"
                else f'<span class="chip crit">{m["licence"]} · non&nbsp;comm.</span>' if comm == "non"
                else f'<span class="chip warn">{m["licence"]}</span>')
-        rows.append({
-            "_nom": nom, "_rank": i + 1,
-            "wer": r["wer"], "sim": r["sim"],
-        })
+        rows.append({"_nom": _nm(nom), "_rank": i + 1, "wer": r["wer"], "sim": r["sim"]})
         vram = f'{m["vram_go"]} Go' if m["vram_go"] else "—"
         st = (
             f'<b class="{_cls("rtf", r["rtf"])}">{r["rtf"]:.2f}×</b>&nbsp;RTF'
@@ -634,7 +772,7 @@ def page_index(standalone: bool = False) -> str:
         cartes.append(
             f'<div class="mcard"><div class="mhead">'
             f'<span class="mrk">{i+1}</span>'
-            f'<a href="{h_obj}"><b>{nom}</b></a>{lic}</div>'
+            f'<a href="{h_obj}"><b>{_nm(nom)}</b></a>{lic}</div>'
             f'<div class="msub mono">{m["revision"] or "—"} · {html.escape(m["role"][:70])}</div>'
             f'<div class="mstat mono">{st}</div></div>'
         )
@@ -648,10 +786,11 @@ def page_index(standalone: bool = False) -> str:
 
     hero = f"""<div class="hero" id="top"><div class="wrap">
   <div class="eyebrow">Benchmark · TTS open-source · Français</div>
-  <h1>Quel modèle pour quelle voix, en français.</h1>
-  <p class="thesis">Neuf modèles de synthèse vocale open-source, mis à l'épreuve sur un
-    corpus français annoté — liaison, nombres, noms propres, homographes, dialogue
-    émotionnel. Mesures reproductibles ; <em>l'écoute humaine tranche</em>.</p>
+  <h1>Quel modèle de synthèse vocale pour le français ?</h1>
+  <p class="thesis">Huit modèles open-source clonent {n_voix} voix de référence sur un
+    corpus français annoté (liaison, nombres, noms propres, homographes, dialogue
+    émotionnel). Métriques auto reproductibles pour l'intelligibilité et l'identité —
+    <em>la naturalité, elle, se juge à l'écoute humaine en aveugle</em>.</p>
   <div class="facts">
     <span class="fact"><b>{n_mod}</b> modèles classés</span>
     <span class="fact"><b>34</b> phrases annotées</span>
@@ -661,7 +800,7 @@ def page_index(standalone: bool = False) -> str:
     <span class="fact">révisions HF <b>épinglées</b></span>
   </div>
   <div class="scope">
-    <div class="cap">WER — voix « {v} », barre courte = meilleur</div>
+    <div class="cap">WER moyen (toutes voix confondues) — barre courte = meilleur</div>
     {_scope_svg(d)}
   </div>
 </div></div>"""
@@ -669,34 +808,47 @@ def page_index(standalone: bool = False) -> str:
     excl = ""
     if d["exclus"]:
         excl = ('<div class="board-foot">hors classement — '
-                + " · ".join(f'{e["nom"]} ({e["motif"]})' for e in d["exclus"]) + "</div>")
+                + " · ".join(f'{_nm(e["nom"])} ({e["motif"]})' for e in d["exclus"]) + "</div>")
 
-    ec_md = RESULTATS / "ecoute.md"
-    if standalone and ec_md.is_file():
-        ecoute_bloc = (
-            '<section id="ecoute">'
-            '<div class="sec-h"><h2>À l\'écoute — agrégation</h2>'
-            '<span class="n">MOS · A/B · émotion, en aveugle</span></div>'
-            f'<div class="md">{md_vers_html(ec_md.read_text(encoding="utf-8"))}</div>'
-            '</section>')
-    else:
-        lien = ("" if standalone else
-                ' &nbsp;<a class="link" href="ecoute.html">Agrégation complète →</a>')
-        ecoute_bloc = (
-            '<section id="ecoute">'
-            '<div class="sec-h"><h2>À l\'écoute</h2>'
-            '<span class="n">MOS · A/B · émotion, en aveugle</span></div>'
-            f'<p class="lead">{_ecoute_resume() or "Test d’écoute prêt — aucun retour agrégé."}'
-            f'{lien}</p></section>')
+    # --- section « À l'écoute » : classement par MOS + win-rate ---
+    ec_panel = ""
+    if dc and dc["panel"]:
+        n, a, m, e = dc["panel"]
+        ec_panel = (f'<p class="lead"><b>Panel</b> : {n} auditeur·rice·s, en aveugle — '
+                    f'{a} comparaisons A/B, {m} notes MOS (1–5), {e} votes émotion. '
+                    f'Aucun nom de voix ni de participant n\'est publié.</p>')
+    ec_rang = (f'<div class="md">{_ecoute_classement_html(dc)}</div>'
+               if dc and dc["mos"] else "")
+    ec_note = ('<p class="lead">MOS « Naturel » = moyenne des notes 1–5 sur l\'axe naturel '
+               '(± IC 95 %). Win-rate A/B = part de préférences « globalement meilleur » '
+               'sur l\'ensemble des duels. Le classement de naturalité du benchmark, '
+               'c\'est cette colonne — pas le WER.</p>') if ec_rang else ""
+    lien_ec = ("" if standalone else
+               '<p class="lead" style="margin-top:14px">'
+               '<a class="link" href="ecoute.html">'
+               'Détail : matrice des duels, MOS par axe, émotion &rarr;</a></p>')
+    ecoute_bloc = (
+        '<section id="ecoute">'
+        '<div class="sec-h"><h2>À l\'écoute — le classement qui compte</h2>'
+        '<span class="n">MOS · A/B · émotion, en aveugle</span></div>'
+        f'{ec_panel}{ec_rang}{ec_note}{lien_ec}'
+        '</section>') if (dc and dc["mos"]) else (
+        '<section id="ecoute">'
+        '<div class="sec-h"><h2>À l\'écoute</h2><span class="n">en aveugle</span></div>'
+        '<p class="lead">Test d\'écoute prêt — aucun retour agrégé pour l\'instant.</p>'
+        '</section>')
 
     corps = f"""<section id="classement">
-  <div class="sec-h"><h2>Recap des scores</h2><span class="n">voix « {v} » · passe-1</span></div>
-  <p class="lead">Les métriques auto qui tiennent — WER (intelligibilité, transcription
-    <span class="mono">whisper-large-v3-french</span> + <span class="mono">jiwer</span>)
-    et SIM (similarité au locuteur, ECAPA). <b>La naturalité ne se mesure pas
-    ici</b> : UTMOS, TTSDS2 et NISQA ont tous été écartés (non pertinents en
-    français) — elle vient du <a class="link" href="{h_ec}">test d'écoute</a>.
-    Clic sur un en-tête, ou&nbsp;:</p>
+  <div class="sec-h"><h2>Métriques auto — intelligibilité &amp; identité</h2>
+    <span class="n">toutes voix confondues · passe-1</span></div>
+  <p class="lead">Moyenne pondérée (par nb de runs) sur les {n_voix} voix de référence.
+    <b>WER</b> = taux d'erreur de transcription
+    (<span class="mono">whisper-large-v3-french</span> + <span class="mono">jiwer</span>),
+    ↓ meilleur — c'est l'<b>intelligibilité</b>. <b>SIM</b> = similarité au locuteur
+    de référence (embeddings ECAPA), ↑ meilleur — c'est l'<b>identité de timbre</b>.
+    <b>La naturalité n'est pas mesurée ici</b> (UTMOS, TTSDS2, NISQA tous écartés en
+    français) : voir <a class="link" href="{h_ec}">le classement à l'écoute</a>.
+    Clic sur un en-tête pour trier, ou&nbsp;:</p>
   {LEGENDE}
   <div class="tools"><label>Trier&nbsp;:
     <select id="msort">
@@ -708,35 +860,43 @@ def page_index(standalone: bool = False) -> str:
   <div class="board"><div id="lb"></div>{excl}</div>
 </section>
 
+{ecoute_bloc}
+
 <section id="modeles">
   <div class="sec-h"><h2>Les modèles</h2><span class="n">contexte · vitesse · stabilité</span></div>
   <div class="mgrid">{"".join(cartes)}</div>
   <p class="lead" style="margin-top:16px"><a class="link" href="{h_obj}">Table
-    complète (toutes voix, toutes métriques, détail par phrase) →</a></p>
+    complète (toutes métriques, toutes voix confondues, détail par phrase) &rarr;</a></p>
 </section>
 
 <section id="lecture"><div class="callout">
   <p><span class="k">Les métriques auto ne tranchent pas — l'écoute, oui.</span>
-  <span class="d">Le WER est brut (une vraie voix dans le même Whisper fait déjà 2–4 %).
-  La naturalité n'a aucune métrique auto fiable en français (UTMOS, TTSDS2, NISQA
-  tous écartés) : le classement de naturalité vient du test d'écoute en aveugle.</span></p>
+  <span class="d">Le WER est brut (une vraie voix humaine dans le même Whisper fait
+  déjà 2–4 %). La naturalité n'a aucune métrique auto fiable en français : UTMOS,
+  TTSDS2 et NISQA ont été essayés puis écartés (corrélation nulle voire négative
+  avec la note humaine). Le classement de naturalité vient du test d'écoute en
+  aveugle ci-dessus.</span></p>
 </div></section>
 
-{ecoute_bloc}
-
 <section id="methode">
-  <div class="sec-h"><h2>Méthode</h2><span class="n">docs/METHODOLOGIE.md</span></div>
+  <div class="sec-h"><h2>Méthode</h2><span class="n">détail : docs/METHODOLOGIE.md</span></div>
   <div class="cards">
     <div class="card"><span class="tag">Corpus</span><h3>34 phrases annotées</h3>
-      <p>Longueur × registre × piège : liaison, nombre, nom propre, silence/rythme,
-      homographe hétérophone, emprunt anglais, ponctuation répétée, onomatopée.
-      Plus un volet long-form (podcast, journalisme).</p></div>
+      <p>Croisement longueur × registre × piège : liaison, nombre, nom propre,
+      silence/rythme, homographe hétérophone, emprunt anglais, ponctuation répétée,
+      onomatopée. Plus un volet long-form (podcast, journalisme).</p></div>
     <div class="card"><span class="tag">Pré-traitement</span><h3>Identique pour tous</h3>
-      <p>Les 6 étapes du pipeline avisol appliquées à l'identique. Les nombres ne sont
-      pas développés à l'entrée : on teste le TN de chaque modèle.</p></div>
-    <div class="card"><span class="tag">Voix de référence</span><h3>Clonage zero-shot</h3>
-      <p>Une propre, une « difficile », féminine, âgée, accent régional. Piège avéré :
-      un texte de référence trop célèbre casse le clonage audio+transcript.</p></div>
+      <p>Même pipeline de normalisation appliqué à l'entrée de chaque modèle. Les
+      nombres ne sont pas développés en amont : on teste la normalisation de texte
+      propre à chaque modèle.</p></div>
+    <div class="card"><span class="tag">Voix de référence</span><h3>Clonage zero-shot, {n_voix} voix</h3>
+      <p>Une voix propre, une « difficile » (source brute), une féminine, deux âgées,
+      un accent régional, plus les registres émotionnels. Aucun nom n'est publié ;
+      les voix restent identiques d'une passe à l'autre.</p></div>
+    <div class="card"><span class="tag">Écoute</span><h3>Test MOS + A/B en aveugle</h3>
+      <p>Panel humain, clips anonymisés, plusieurs voix et phrases tirées au hasard
+      par session. C'est ce test qui produit le <b>classement de naturalité</b> ;
+      WER et SIM ne font que le préparer.</p></div>
     <div class="card"><span class="tag">Reproductibilité</span><h3>models.lock</h3>
       <p>repo_id + révision SHA Hugging&nbsp;Face épinglée + commit GitHub pour le code.
       Re-téléchargement bit-à-bit ; une révision non épinglée est refusée.</p></div>
@@ -746,7 +906,7 @@ def page_index(standalone: bool = False) -> str:
 <section id="repro">
   <div class="sec-h"><h2>Révisions épinglées</h2><span class="n">Hugging Face</span></div>
   <div class="card repro">{"".join(
-      f'<div><span>{n}</span><span>{m["revision"] or "—"}</span></div>'
+      f'<div><span>{_nm(n)}</span><span>{m["revision"] or "—"}</span></div>'
       for n, m in sorted(d["modeles"].items()))}</div>
 </section>"""
 
@@ -758,7 +918,7 @@ def page_index(standalone: bool = False) -> str:
 
 
 # --------------------------------------------------------------------------
-# Page métriques (complète, par voix)
+# Page métriques — toutes voix confondues
 # --------------------------------------------------------------------------
 def page_objectif() -> str:
     d = _collecter()
@@ -779,40 +939,50 @@ def page_objectif() -> str:
         {"k": "vram_go", "label": "VRAM~", "dir": 0, "fmt": "int", "p": 3},
         {"k": "_lic", "label": "licence", "kind": "lic", "p": 3},
     ]
-    par_voix = {}
-    for voix in d["voix"]:
-        rr = []
-        for n, m in sorted(d["modeles"].items()):
-            r = m["par_voix"].get(voix)
-            if not r:
-                continue
-            comm = m["usage_commercial"]
-            lic = (f'<span class="chip ok">{m["licence"]}</span>' if comm == "oui"
-                   else f'<span class="chip crit">{m["licence"]}</span>' if comm == "non"
-                   else f'<span class="chip">{m["licence"]}</span>')
-            rr.append({
-                "_nom": n, "_lic": lic, "_detail": _detail_html(r),
-                "clonage": r["clonage"], "wer": r["wer"], "wer_sigma": r["wer_sigma"],
-                "wer_net": r["wer_net"], "sim": r["sim"],
-                "hallu": r["hallu"], "rep": r["rep"], "tronc": r["tronc"],
-                "rtf": r["rtf"], "ttfa": r["ttfa"], "cv": r["cv"], "vram_go": m["vram_go"],
-            })
-        par_voix[voix] = rr
+    rows = []
+    for n, m in sorted(d["modeles"].items()):
+        r = m.get("global")
+        if not r:
+            continue
+        comm = m["usage_commercial"]
+        lic = (f'<span class="chip ok">{m["licence"]}</span>' if comm == "oui"
+               else f'<span class="chip crit">{m["licence"]}</span>' if comm == "non"
+               else f'<span class="chip">{m["licence"]}</span>')
+        rows.append({
+            "_nom": _nm(n), "_lic": lic, "_detail": _detail_html(r),
+            "clonage": r["clonage"], "wer": r["wer"], "wer_sigma": r["wer_sigma"],
+            "wer_net": r["wer_net"], "sim": r["sim"],
+            "hallu": r["hallu"], "rep": r["rep"], "tronc": r["tronc"],
+            "rtf": r["rtf"], "ttfa": r["ttfa"], "cv": r["cv"], "vram_go": m["vram_go"],
+        })
 
-    excl = ("hors classement : "
-            + " · ".join(f'{e["nom"]} ({e["motif"]})' for e in d["exclus"])) if d["exclus"] else ""
+    n_ecart = sum((m.get("global") or {}).get("n_voix_ecartees", 0)
+                  for m in d["modeles"].values())
+    foot = []
+    if d["exclus"]:
+        foot.append("hors classement : "
+                    + " · ".join(f'{_nm(e["nom"])} ({e["motif"]})' for e in d["exclus"]))
+    if n_ecart:
+        foot.append(f"{n_ecart} combinaison(s) (modèle, voix) au WER&nbsp;>&nbsp;30&nbsp;% "
+                    "écartées de la moyenne — clips inexploitables")
+    excl = " — ".join(foot)
 
     corps = f"""<section>
-  <div class="sec-h"><h2>Métriques par modèle</h2><span class="n">toutes voix · triable</span></div>
-  <p class="lead">WER brut (pas de plancher humain) — <i>WER net</i> = estimation après retrait
-    d'un plancher ASR. <b>Aucune métrique de naturalité</b> : UTMOS, TTSDS2, NISQA
-    tous écartés (non pertinents en français) → la naturalité se juge à l'écoute.
-    Kokoro : voix interne fixe, non comparable voix-à-voix. Clic sur un en-tête pour trier ;
-    clic sur une ligne pour le détail par phrase. Sur petit écran, seules WER / SIM
-    restent affichées.</p>
+  <div class="sec-h"><h2>Métriques par modèle</h2>
+    <span class="n">toutes voix confondues · triable</span></div>
+  <p class="lead">Chaque ligne agrège <b>toutes les voix de référence et registres
+    émotionnels</b> — moyenne <b>pondérée par le nombre de runs</b> (une voix de
+    narration à 99 runs pèse plus qu'un registre émotionnel à 6), <b>hors
+    combinaisons au WER&nbsp;>&nbsp;30&nbsp;%</b> (échec de clonage sur cette voix).
+    <i>WER net</i> = WER après retrait d'un plancher ASR estimé.
+    <b>Aucune métrique de naturalité</b> : UTMOS, TTSDS2 et NISQA écartés (non
+    pertinents en français) → naturalité = <a class="link" href="ecoute.html">test
+    d'écoute</a>. Kokoro n'a qu'une voix interne fixe : ses chiffres ne portent
+    que sur elle. Clic sur un en-tête pour trier ; clic sur une ligne pour le
+    détail par phrase (longueur / registre / piège). Sur petit écran, seules
+    WER / SIM restent affichées.</p>
   {LEGENDE}
   <div class="tools">
-    <label>Voix&nbsp;: <select id="voix"></select></label>
     <label>Trier&nbsp;:
       <select id="msort">
         <option value="wer|a">WER — meilleur d'abord</option>
@@ -827,18 +997,12 @@ def page_objectif() -> str:
     {f'<div class="board-foot">{excl}</div>' if excl else ''}</div>
 </section>"""
 
-    js = (f"var PV={json.dumps(par_voix, ensure_ascii=False)};"
-          f"var COLS={json.dumps(cols, ensure_ascii=False)};"
-          f"var SEL=document.getElementById('voix'),CNT=document.getElementById('compte');"
-          f"{json.dumps(d['voix'])}.forEach(function(v){{var o=document.createElement('option');"
-          f"o.value=o.textContent=v;SEL.appendChild(o);}});"
-          f"SEL.value={json.dumps(d['voix_defaut'])} in PV?{json.dumps(d['voix_defaut'])}:SEL.options[0].value;"
-          "var CFG={cols:COLS,rows:[],sort:{k:'wer',asc:true},"
-          "msort:document.getElementById('msort')};"
-          "function load(){CFG.rows=PV[SEL.value]||[];"
-          "CNT.textContent=CFG.rows.length+' modèles · voix « '+SEL.value+' »';"
-          "if(CFG.rerender)CFG.rerender();else ttsTable('#tbl',CFG);}"
-          "SEL.onchange=load;load();")
+    js = (f"var CFG={{cols:{json.dumps(cols, ensure_ascii=False)},"
+          f"rows:{json.dumps(rows, ensure_ascii=False)},"
+          "sort:{k:'wer',asc:true},msort:document.getElementById('msort')};"
+          "document.getElementById('compte').textContent="
+          "CFG.rows.length+' modèles · toutes voix confondues';"
+          "ttsTable('#tbl',CFG);")
     return _shell("Métriques par modèle — Benchmark TTS FR", "objectif", corps, js=js)
 
 

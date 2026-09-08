@@ -108,21 +108,17 @@ def agreger(exports: list[Path]) -> str:
         stats = defaultdict(lambda: {"v": 0, "n": 0, "d": 0})
         duel = defaultdict(lambda: [0, 0])          # (m1,m2) trié -> [gagne m1, gagne m2]
         defauts = defaultdict(lambda: defaultdict(int))
-        par_voix = defaultdict(lambda: defaultdict(lambda: [0.0, 0]))   # voix -> modele -> [v, n]
         for v in ab_votes:
             s = sol["ab"].get(v["id"])
             if not s or not v.get("choix"):
                 continue
             ma, mb = s["A_modele"], s["B_modele"]
-            voix = s.get("voix", "?")
             for m in (ma, mb):
                 stats[m]["n"] += 1
-                par_voix[voix][m][1] += 1
             gain = {"A": (ma,), "B": (mb,)}.get(v["choix"], (ma, mb))
             pts = 1.0 if v["choix"] in ("A", "B") else 0.5
             for m in gain:
                 stats[m]["v"] += pts
-                par_voix[voix][m][0] += pts
             k = tuple(sorted((ma, mb)))
             if v["choix"] in ("A", "B"):
                 gagnant = ma if v["choix"] == "A" else mb
@@ -157,20 +153,6 @@ def agreger(exports: list[Path]) -> str:
                 cells.append(f"{wins}/{tot}" if tot else "—")
             L.append(f"| **{a}** | " + " | ".join(cells) + " |")
         L.append("")
-
-        if len(par_voix) > 1:
-            voix_l = sorted(par_voix)
-            modeles_l = sorted({m for vv in par_voix.values() for m in vv})
-            L.append("## A/B — win-rate par voix de référence (victoires / duels)\n")
-            L.append("| modèle | " + " | ".join(voix_l) + " |")
-            L.append("|" + "---|" * (len(voix_l) + 1))
-            for m in modeles_l:
-                cells = []
-                for vx in voix_l:
-                    vv, nn = par_voix[vx].get(m, [0.0, 0])
-                    cells.append(f"{vv / nn:.0%} ({vv:.1f}/{nn})" if nn else "—")
-                L.append(f"| {m} | " + " | ".join(cells) + " |")
-            L.append("")
 
     # ---------- MOS ----------
     if mos_votes:
