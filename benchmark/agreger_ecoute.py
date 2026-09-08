@@ -8,9 +8,8 @@ Dé-anonymise via `_solution.json` puis produit :
 - **corrélations** MOS ↔ métriques auto (par clip) : intelligibilité↔(1−WER),
   similarité↔SIM (le **naturel** n'a pas de contrepartie auto : UTMOS/TTSDS2/
   NISQA écartés, cf. `docs/METHODOLOGIE.md` §10) ;
-- **ÉMOTION** : taux de transfert (l'auditeur juge le clip cloné depuis la
-  voix de réf émotionnelle plus expressif que celui cloné depuis la voix
-  neutre), par (modèle, émotion) et global par modèle.
+- **ÉMOTION** : win-rate modèle-vs-modèle « lequel rend le mieux l'émotion
+  <X> ? », global et par (modèle, émotion).
 
     source env.sh
     python3 benchmark/agreger_ecoute.py exports/*.json --out resultats/ecoute.md
@@ -176,19 +175,15 @@ def agreger(exports: list[Path]) -> str:
     # ---------- MOS ----------
     if mos_votes:
         par = defaultdict(lambda: defaultdict(list))    # modele -> axe -> [notes]
-        par_vx = defaultdict(lambda: defaultdict(list)) # voix -> modele -> [moyenne des 4 axes]
         corr_pts = defaultdict(lambda: ([], []))        # (axe_h, metrique) -> (xs, ys)
         for v in mos_votes:
             s = sol["mos"].get(v["id"])
             if not s:
                 continue
-            m, phrase, voix = s["modele"], s["phrase"], s.get("voix", "?")
-            notes = [float(v[a]) for a in AXES if v.get(a) is not None]
+            m, phrase = s["modele"], s["phrase"]
             for a in AXES:
                 if v.get(a) is not None:
                     par[m][a].append(float(v[a]))
-            if notes:
-                par_vx[voix][m].append(sum(notes) / len(notes))
             o = obj.get((m, phrase, sol["build"]["rep"]))
             if o:
                 if v.get("intelligibilite") is not None:
@@ -208,19 +203,6 @@ def agreger(exports: list[Path]) -> str:
                 cells.append(f"{mo:.2f} ±{ic:.2f}" if n else "—")
             L.append(f"| {m} | " + " | ".join(cells) + " |")
         L.append("")
-        if len(par_vx) > 1:
-            voix_l = sorted(par_vx)
-            modeles_l = sorted({m for vv in par_vx.values() for m in vv})
-            L.append("## MOS — note globale moyenne (4 axes) par voix de référence\n")
-            L.append("| modèle | " + " | ".join(voix_l) + " |")
-            L.append("|" + "---|" * (len(voix_l) + 1))
-            for m in modeles_l:
-                cells = []
-                for vx in voix_l:
-                    xs = par_vx[vx].get(m, [])
-                    cells.append(f"{sum(xs) / len(xs):.2f} (n={len(xs)})" if xs else "—")
-                L.append(f"| {m} | " + " | ".join(cells) + " |")
-            L.append("")
         L.append("## Corrélation MOS (humain) ↔ métrique automatique (par clip)\n")
         L.append("| axe humain | métrique auto | Pearson r | n |")
         L.append("|---|---|---|---|")
@@ -234,28 +216,19 @@ def agreger(exports: list[Path]) -> str:
     if emo_votes:
         mv = defaultdict(lambda: [0.0, 0])          # modèle -> [victoires, n]  (global)
         mv_e = defaultdict(lambda: [0.0, 0])        # (modèle, émotion) -> [victoires, n]
-        old = defaultdict(lambda: [0, 0, 0, 0])     # protocole archivé : (modèle, émotion) -> [n, émo, égal, neutre]
-        old_t = defaultdict(lambda: [0, 0, 0, 0])
         for v in emo_votes:
             s = sol.get("emo", {}).get(v["id"])
-            if not s or not v.get("choix"):
+            if not s or not v.get("choix") or not s.get("A_modele"):
                 continue
-            if s.get("A_modele"):                   # nouveau protocole : modèle vs modèle
-                ma, mb, emo = s["A_modele"], s["B_modele"], s["emotion"]
-                for m in (ma, mb):
-                    mv[m][1] += 1
-                    mv_e[(m, emo)][1] += 1
-                gg = {"A": (ma,), "B": (mb,)}.get(v["choix"], (ma, mb))
-                pts = 1.0 if v["choix"] in ("A", "B") else 0.5
-                for m in gg:
-                    mv[m][0] += pts
-                    mv_e[(m, emo)][0] += pts
-            elif s.get("A_ref"):                     # ancien protocole (émo vs neutre) — data archivée
-                m, emo = s["modele"], s["emotion"]
-                idx = 2 if v["choix"] == "=" else (1 if s[f"{v['choix']}_ref"] == "emo" else 3)
-                for cible in (old[(m, emo)], old_t[m]):
-                    cible[0] += 1
-                    cible[idx] += 1
+            ma, mb, emo = s["A_modele"], s["B_modele"], s["emotion"]
+            for m in (ma, mb):
+                mv[m][1] += 1
+                mv_e[(m, emo)][1] += 1
+            gg = {"A": (ma,), "B": (mb,)}.get(v["choix"], (ma, mb))
+            pts = 1.0 if v["choix"] in ("A", "B") else 0.5
+            for m in gg:
+                mv[m][0] += pts
+                mv_e[(m, emo)][0] += pts
 
         if mv:
             L.append("## Émotion — quel modèle rend le mieux l'émotion ?\n")
@@ -279,16 +252,6 @@ def agreger(exports: list[Path]) -> str:
                         cells.append(f"{vv / nn:.0%} ({vv:.1f}/{nn})" if nn else "—")
                     L.append(f"| {m} | " + " | ".join(cells) + " |")
                 L.append("")
-
-        if old_t:
-            L.append("## Émotion — protocole archivé (réf. émotionnelle vs neutre)\n")
-            L.append("*Sessions antérieures : « lequel sonne le plus <émotion> », clip "
-                     "cloné depuis la réf émotionnelle vs depuis la réf neutre.*\n")
-            L.append("| modèle | n | choix réf. émo. | égalité | choix réf. neutre | taux de transfert |")
-            L.append("|---|---|---|---|---|---|")
-            for m, (n, ce, eg, cn) in sorted(old_t.items(), key=lambda kv: -(kv[1][1] / max(1, kv[1][0]))):
-                L.append(f"| {m} | {n} | {ce} | {eg} | {cn} | {ce / n:.0%} |" if n else f"| {m} | 0 | | | | — |")
-            L.append("")
 
     return "\n".join(L)
 

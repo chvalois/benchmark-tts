@@ -46,17 +46,6 @@
 | voxcpm2 | 3.20 ±0.44 | 3.40 ±0.42 | 3.47 ±0.50 | 2.87 ±0.57 |
 | xtts_v2 | 2.88 ±0.56 | 3.32 ±0.54 | 1.88 ±0.40 | 2.60 ±0.36 |
 
-## MOS — note globale moyenne (4 axes) par voix de référence
-
-| modèle | ? | aurore2_narration | johnny | manou_narration | papa_colere | papa_joie | papa_narration | papa_peur | papy_narration | tonton_marc_narration |
-|---|---|---|---|---|---|---|---|---|---|---|
-| chatterbox_v3 | 2.83 (n=3) | 3.06 (n=4) | 2.38 (n=2) | — | — | — | 3.06 (n=4) | 3.00 (n=1) | 2.69 (n=4) | 3.38 (n=2) |
-| cosyvoice3_05b | 2.42 (n=3) | 2.83 (n=3) | 2.50 (n=2) | 3.06 (n=4) | 3.75 (n=1) | — | 2.58 (n=3) | — | 1.50 (n=2) | 2.38 (n=2) |
-| firered_tts3 | 4.42 (n=3) | 4.25 (n=7) | 3.50 (n=1) | — | — | — | 4.06 (n=4) | — | — | 3.12 (n=2) |
-| moss_tts_local_v15 | 3.70 (n=5) | 2.85 (n=5) | 3.25 (n=3) | — | — | 3.50 (n=1) | 4.75 (n=1) | — | 2.67 (n=3) | 3.40 (n=5) |
-| voxcpm2 | 3.69 (n=4) | 2.50 (n=2) | 2.67 (n=3) | — | — | — | 3.83 (n=3) | — | — | 3.08 (n=3) |
-| xtts_v2 | 2.75 (n=2) | 3.25 (n=4) | 1.00 (n=1) | 3.00 (n=3) | — | — | 2.34 (n=8) | — | 3.17 (n=3) | 2.50 (n=4) |
-
 ## Corrélation MOS (humain) ↔ métrique automatique (par clip)
 
 | axe humain | métrique auto | Pearson r | n |
@@ -87,16 +76,3 @@ A/B en aveugle : deux modèles disent la même phrase, tous deux clonés depuis 
 | moss_tts_local_v15 | 0% (0.0/4) | 100% (1.0/1) | — | 0% (0.0/2) |
 | voxcpm2 | 50% (2.0/4) | 100% (1.0/1) | 50% (1.0/2) | 0% (0.0/2) |
 | xtts_v2 | 75% (1.5/2) | — | 100% (1.0/1) | 0% (0.0/1) |
-
-## Émotion — protocole archivé (réf. émotionnelle vs neutre)
-
-*Sessions antérieures : « lequel sonne le plus <émotion> », clip cloné depuis la réf émotionnelle vs depuis la réf neutre.*
-
-| modèle | n | choix réf. émo. | égalité | choix réf. neutre | taux de transfert |
-|---|---|---|---|---|---|
-| moss_tts_local_v15 | 4 | 4 | 0 | 0 | 100% |
-| firered_tts3 | 2 | 2 | 0 | 0 | 100% |
-| voxcpm2 | 4 | 4 | 0 | 0 | 100% |
-| cosyvoice3_05b | 1 | 1 | 0 | 0 | 100% |
-| xtts_v2 | 4 | 4 | 0 | 0 | 100% |
-| chatterbox_v3 | 5 | 4 | 1 | 0 | 80% |
