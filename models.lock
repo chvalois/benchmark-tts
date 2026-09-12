@@ -45,8 +45,8 @@
       "vram_go_estimee": 2,
       "disque_go_estimee": 3,
       "venv": "kokoro_82m",
-      "statut": "verifie",
-      "notes": "pas de clonage ; build ONNX possible pour alléger le venv"
+      "statut": "retire_benchmark",
+      "notes": "pas de clonage ; build ONNX possible pour alléger le venv. Retiré du benchmark : locuteur interne fixe (pas de SIM comparable, absent du test d'écoute)."
     },
     "firered_tts3": {
       "phase": 1,

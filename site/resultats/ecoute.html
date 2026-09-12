@@ -288,7 +288,7 @@ footer a:hover{color:var(--trace)}
 </tbody></table></div></section>
 </div></main>
 <footer><div class="wrap">
-  <span>Généré 2026-09-08 18:15 UTC · <span style="color:var(--muted)">benchmark/build_pages.py</span></span>
+  <span>Généré 2026-09-12 08:00 UTC · <span style="color:var(--muted)">benchmark/build_pages.py</span></span>
   <span>Métriques automatiques — <span style="color:var(--muted)">l'écoute humaine tranche</span></span>
   <span><a href="https://github.com/chvalois/benchmark-tts">github.com/chvalois/benchmark-tts</a></span>
 </div></footer>
@@ -307,6 +307,7 @@ function ttsTable(mountSel, cfg){
   var open={};
   function fmt(c,x){ if(x===null||x===undefined) return '\u2014';
     if(c.fmt==='pct') return (x*100).toFixed(1)+'%';
+    if(c.fmt==='num1') return (+x).toFixed(1);
     if(c.fmt==='num2') return (+x).toFixed(2);
     if(c.fmt==='num3') return (+x).toFixed(3);
     if(c.fmt==='x') return (+x).toFixed(2)+'\u00d7';

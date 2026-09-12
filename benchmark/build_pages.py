@@ -40,6 +40,15 @@ NOM_MODELE = {
 def _nm(slug: str) -> str:
     return NOM_MODELE.get(slug, slug)
 
+
+# Modèles présents dans resultats/*.json mais retirés de l'agrégation —
+# le motif affiché vient du `statut` posé dans models.lock (source de
+# vérité unique : pas de liste d'exclusion dupliquée ici).
+STATUT_MOTIF = {
+    "fr_non_supporte": "FR non supporté",
+    "retire_benchmark": "retiré du benchmark",
+}
+
 # --------------------------------------------------------------------------
 # Spéc. des métriques — sens (↓ = plus bas meilleur, ↑ = plus haut meilleur,
 # 0 = neutre), format, et seuils bon / à-surveiller pour le code couleur.
@@ -343,6 +352,7 @@ function ttsTable(mountSel, cfg){
   var open={};
   function fmt(c,x){ if(x===null||x===undefined) return '\u2014';
     if(c.fmt==='pct') return (x*100).toFixed(1)+'%';
+    if(c.fmt==='num1') return (+x).toFixed(1);
     if(c.fmt==='num2') return (+x).toFixed(2);
     if(c.fmt==='num3') return (+x).toFixed(3);
     if(c.fmt==='x') return (+x).toFixed(2)+'\u00d7';
@@ -494,8 +504,9 @@ def _collecter() -> dict:
         if f.stem == "ecoute":
             continue
         lk = lock.get(f.stem, {})
-        if lk.get("statut") == "fr_non_supporte":
-            exclus.append({"nom": f.stem, "motif": "FR non supporté"})
+        statut = lk.get("statut", "verifie")
+        if statut != "verifie":
+            exclus.append({"nom": f.stem, "motif": STATUT_MOTIF.get(statut, statut)})
             continue
         data = json.loads(f.read_text(encoding="utf-8"))
         li = lic.get(f.stem, {})
@@ -590,39 +601,84 @@ def _agrege(par_voix: dict) -> dict | None:
 # --------------------------------------------------------------------------
 # Page projet
 # --------------------------------------------------------------------------
-def _scope_svg(d: dict) -> str:
+# --------------------------------------------------------------------------
+# Score global — bornes **fixes**, choisies une fois pour toutes (pas
+# dérivées des modèles présents dans le run). Le score d'un modèle ne
+# dépend donc que de ses 3 métriques : ajouter ou retirer un concurrent ne
+# fait jamais bouger le score des autres — seul leur rang peut changer.
+# C'est la convention des benchmarks IA établis (SWE-bench/MMLU publient
+# un taux brut déjà absolu ; les index composites comme l'Artificial
+# Analysis Intelligence Index normalisent chaque sous-score par des bornes
+# gelées, ex. clamp((Elo-500)/2000), jamais par le min/max du comparatif
+# du jour). Revoir ces bornes = décision méthodologique explicite, à
+# documenter ici et dans docs/METHODOLOGIE.md — jamais un recalcul auto.
+WER_PLANCHER, WER_PLAFOND = 0.0, 0.15   # 0 % = parfait ; 15 % = déjà jugé
+#   peu fiable pour un usage narratif (à mi-chemin du seuil d'exclusion
+#   de combo (modèle, voix) à 30 %, cf. SEUIL_WER_COMBO)
+SIM_PLANCHER, SIM_PLAFOND = 0.60, 0.90  # cosinus ECAPA : 0.60 = timbre
+#   nettement différent ; 0.90 = quasi la meilleure similarité observée
+#   en clonage zero-shot dans ce benchmark
+MOS_PLANCHER, MOS_PLAFOND = 1.0, 5.0    # échelle MOS native, aucune borne
+#   à choisir : 1-5 est déjà un barème absolu
+
+
+def _normalise(x: float | None, plancher: float, plafond: float,
+               inverse: bool = False) -> float | None:
+    """Ramène `x` sur [0,1] via des bornes fixes, clampé aux extrémités.
+    `inverse=True` pour une métrique où plus bas = meilleur (WER)."""
+    if x is None:
+        return None
+    v = (plafond - x) if inverse else (x - plancher)
+    return max(0.0, min(1.0, v / (plafond - plancher)))
+
+
+def _calc_score(rows: list[dict]) -> None:
+    """Ajoute `score` (0-100) à chaque ligne : moyenne de 3 métriques
+    normalisées sur des **bornes fixes** (voir plus haut) — WER inversé
+    (auto, intelligibilité), SIM (auto, identité de timbre), Naturalité =
+    MOS « Naturel » du test d'écoute humain (seul juge de la naturalité,
+    cf. [[remplacer-utmos-naturalite]]). Un modèle sans les 3 valeurs n'a
+    pas de score (classé après ceux qui en ont un)."""
+    for r in rows:
+        if r["wer"] is None or r["sim"] is None or r["naturel"] is None:
+            r["score"] = None
+            continue
+        nw = _normalise(r["wer"], WER_PLANCHER, WER_PLAFOND, inverse=True)
+        ns = _normalise(r["sim"], SIM_PLANCHER, SIM_PLAFOND)
+        nn = _normalise(r["naturel"], MOS_PLANCHER, MOS_PLAFOND)
+        r["score"] = round(100 * (nw + ns + nn) / 3, 1)
+
+
+def _scope_svg(rows: list[dict]) -> str:
     items = sorted(
-        ((m["global"]["wer"], _nm(n)) for n, m in d["modeles"].items()
-         if (m.get("global") or {}).get("wer") is not None
-         and m["global"]["wer"] < 0.5),
-        key=lambda x: x[0],
+        ((r["score"], r["_nom"]) for r in rows if r.get("score") is not None),
+        key=lambda x: -x[0],
     )
     if not items:
         return ""
     W, rowh, padL, padR = 560, 28, 140, 46
-    ech = max(0.08, max(w for w, _ in items) * 1.12)
     span = W - padL - padR
     H = 28 + rowh * len(items)
     out = [f'<svg viewBox="0 0 {W} {H}" width="100%" role="img" '
-           f'aria-label="WER par modèle" '
+           f'aria-label="Score global par modèle" '
            f'style="min-width:460px;font-family:\'IBM Plex Mono\',monospace">']
-    for gx in [g / 100 for g in range(0, int(ech * 100) + 1, 2)]:
-        x = padL + gx / ech * span
+    for gx in range(0, 101, 20):
+        x = padL + gx / 100 * span
         out.append(f'<line x1="{x:.0f}" y1="12" x2="{x:.0f}" y2="{H-16}" '
                    f'stroke="var(--line)" stroke-width="1"/>')
         out.append(f'<text x="{x:.0f}" y="{H-3}" text-anchor="middle" font-size="9" '
-                   f'fill="var(--faint)">{gx*100:.0f}%</text>')
-    for i, (wer, nom) in enumerate(items):
+                   f'fill="var(--faint)">{gx}</text>')
+    for i, (score, nom) in enumerate(items):
         y = 22 + i * rowh
-        x2 = padL + wer / ech * span
+        x2 = padL + score / 100 * span
         out.append(f'<text x="{padL-10:.0f}" y="{y+4:.0f}" text-anchor="end" '
                    f'font-size="10.5" fill="var(--muted)">{html.escape(nom)}</text>')
         out.append(f'<line x1="{padL}" y1="{y:.0f}" x2="{x2:.0f}" y2="{y:.0f}" '
                    f'stroke="var(--trace)" stroke-width="6" stroke-linecap="round" '
-                   f'opacity="{0.9 - 0.45*(wer/ech):.2f}"/>')
+                   f'opacity="{0.5 + 0.45*(score/100):.2f}"/>')
         out.append(f'<circle cx="{x2:.0f}" cy="{y:.0f}" r="3.4" fill="var(--trace)"/>')
         out.append(f'<text x="{x2+8:.0f}" y="{y+4:.0f}" font-size="10.5" '
-                   f'fill="var(--ink)">{wer*100:.1f}%</text>')
+                   f'fill="var(--ink)">{score:.1f}</text>')
     out.append('</svg>')
     return "".join(out)
 
@@ -672,51 +728,6 @@ def _ecoute_donnees() -> dict | None:
     return {"panel": panel.groups() if panel else None, "mos": mos, "ab": ab}
 
 
-def _ecoute_resume(dc: dict | None = None) -> str | None:
-    dc = dc if dc is not None else _ecoute_donnees()
-    if not dc:
-        return None
-    parts = []
-    if dc["panel"]:
-        n, a, m, e = dc["panel"]
-        parts.append(f"{n} auditeur·rice·s · {a} votes A/B · {m} notes MOS · {e} émotion")
-    if dc["mos"]:
-        top = max(dc["mos"].items(), key=lambda kv: kv[1].get("Naturel", (0,))[0])
-        parts.append(f"plus naturel à l'oreille : <b>{_nm(top[0])}</b> "
-                     f"(MOS {top[1]['Naturel'][0]:.2f}/5)")
-    return " — ".join(parts) if parts else "résultats disponibles"
-
-
-def _ecoute_classement_html(dc: dict) -> str:
-    """Tableau : classement des modèles par MOS « Naturel » + win-rate A/B."""
-    if not dc or not dc["mos"]:
-        return ""
-    lignes = sorted(dc["mos"].items(),
-                    key=lambda kv: -kv[1].get("Naturel", (0,))[0])
-
-    def cell(v):
-        return f'<td class="num">{v[0]:.2f}</td>' if v else "<td>—</td>"
-
-    tr = []
-    for i, (mod, ax) in enumerate(lignes, 1):
-        nat = ax.get("Naturel")
-        natc = (f'<td class="num"><b>{nat[0]:.2f}</b> '
-                f'<span class="ic">±{nat[1]:.2f}</span></td>') if nat else "<td>—</td>"
-        tr.append(
-            f"<tr><td>{i}</td><td><b>{_nm(mod)}</b></td>{natc}"
-            f"{cell(ax.get('Intelligibilite'))}{cell(ax.get('Similarite'))}"
-            f"{cell(ax.get('Expressivite'))}"
-            f"<td class=\"num\">{dc['ab'].get(mod, '—')}</td></tr>"
-        )
-    return (
-        "<div class='tablewrap'><table class='rank'>"
-        "<thead><tr><th>#</th><th>modèle</th>"
-        "<th>MOS «&nbsp;Naturel&nbsp;»</th><th>Intel.</th><th>Simil.</th>"
-        "<th>Express.</th><th>Win-rate A/B</th></tr></thead>"
-        f"<tbody>{''.join(tr)}</tbody></table></div>"
-    )
-
-
 def _detail_html(r: dict) -> str:
     def sub(t, obj):
         ks = sorted(obj or {}, key=lambda k: -obj[k]["wer_moyen"])
@@ -743,7 +754,7 @@ def _detail_html(r: dict) -> str:
 def page_index(standalone: bool = False) -> str:
     d = _collecter()
     h_obj = REPO if standalone else "objectif.html"
-    h_ec = "#ecoute" if standalone else "ecoute.html"
+    h_ec = "#classement" if standalone else "ecoute.html"
     lb = sorted(
         ((n, m, m["global"]) for n, m in d["modeles"].items()
          if (m.get("global") or {}).get("wer") is not None
@@ -752,16 +763,26 @@ def page_index(standalone: bool = False) -> str:
     )
     n_mod, n_voix = len(lb), d["n_voix"]
     dc = _ecoute_donnees()
+    naturel = {slug: ax["Naturel"][0] for slug, ax in (dc["mos"] if dc else {}).items()}
 
-    rows = []
+    rows = [{"_nom": _nm(nom), "_slug": nom, "wer": r["wer"], "sim": r["sim"],
+             "naturel": naturel.get(nom)} for nom, m, r in lb]
+    _calc_score(rows)
+    rows.sort(key=lambda r: (r["score"] is None, -(r["score"] if r["score"] is not None else 0)))
+    a_score = [r for r in rows if r["score"] is not None]
+    n_score = len(a_score)
+
+    # cartes « Les modèles » dans le même ordre que le classement (score,
+    # puis WER pour les modèles sans score d'écoute).
+    par_slug = {nom: (m, r) for nom, m, r in lb}
     cartes = []
-    for i, (nom, m, r) in enumerate(lb):
+    for i, row in enumerate(rows):
+        m, r = par_slug[row["_slug"]]
         anom = r["hallu"] + r["rep"] + r["tronc"]
         comm = m["usage_commercial"]
         lic = (f'<span class="chip ok">{m["licence"]}</span>' if comm == "oui"
                else f'<span class="chip crit">{m["licence"]} · non&nbsp;comm.</span>' if comm == "non"
                else f'<span class="chip warn">{m["licence"]}</span>')
-        rows.append({"_nom": _nm(nom), "_rank": i + 1, "wer": r["wer"], "sim": r["sim"]})
         vram = f'{m["vram_go"]} Go' if m["vram_go"] else "—"
         st = (
             f'<b class="{_cls("rtf", r["rtf"])}">{r["rtf"]:.2f}×</b>&nbsp;RTF'
@@ -772,7 +793,7 @@ def page_index(standalone: bool = False) -> str:
         cartes.append(
             f'<div class="mcard"><div class="mhead">'
             f'<span class="mrk">{i+1}</span>'
-            f'<a href="{h_obj}"><b>{_nm(nom)}</b></a>{lic}</div>'
+            f'<a href="{h_obj}"><b>{row["_nom"]}</b></a>{lic}</div>'
             f'<div class="msub mono">{m["revision"] or "—"} · {html.escape(m["role"][:70])}</div>'
             f'<div class="mstat mono">{st}</div></div>'
         )
@@ -781,16 +802,19 @@ def page_index(standalone: bool = False) -> str:
         {"k": "_nom", "label": "modèle"},
         {"k": "wer", "label": "WER", "dir": -1, "fmt": "pct", "g": .05, "b": .10},
         {"k": "sim", "label": "SIM", "dir": 1, "fmt": "num3", "g": .80, "b": .72},
+        {"k": "naturel", "label": "Naturalité", "dir": 1, "fmt": "num2", "g": 3.5, "b": 3.0},
+        {"k": "score", "label": "Score global", "dir": 1, "fmt": "num1", "g": 66, "b": 33},
     ]
-    cfg = {"cols": cols, "rows": rows, "sort": {"k": "wer", "asc": True}, "rankcol": True}
+    tri_defaut = {"k": "score", "asc": False} if n_score else {"k": "wer", "asc": True}
+    cfg = {"cols": cols, "rows": rows, "sort": tri_defaut, "rankcol": True}
 
     hero = f"""<div class="hero" id="top"><div class="wrap">
   <div class="eyebrow">Benchmark · TTS open-source · Français</div>
   <h1>Quel modèle de synthèse vocale pour le français ?</h1>
-  <p class="thesis">Huit modèles open-source clonent {n_voix} voix de référence sur un
+  <p class="thesis">{n_mod} modèles open-source clonent {n_voix} voix de référence sur un
     corpus français annoté (liaison, nombres, noms propres, homographes, dialogue
-    émotionnel). Métriques auto reproductibles pour l'intelligibilité et l'identité —
-    <em>la naturalité, elle, se juge à l'écoute humaine en aveugle</em>.</p>
+    émotionnel). <b>Score global</b> = WER, SIM et Naturalité (écoute humaine),
+    <em>normalisés puis moyennés</em> — voir méthode ci-dessous.</p>
   <div class="facts">
     <span class="fact"><b>{n_mod}</b> modèles classés</span>
     <span class="fact"><b>34</b> phrases annotées</span>
@@ -800,8 +824,8 @@ def page_index(standalone: bool = False) -> str:
     <span class="fact">révisions HF <b>épinglées</b></span>
   </div>
   <div class="scope">
-    <div class="cap">WER moyen (toutes voix confondues) — barre courte = meilleur</div>
-    {_scope_svg(d)}
+    <div class="cap">Score global (0–100) — barre longue = meilleur</div>
+    {_scope_svg(rows)}
   </div>
 </div></div>"""
 
@@ -810,57 +834,38 @@ def page_index(standalone: bool = False) -> str:
         excl = ('<div class="board-foot">hors classement — '
                 + " · ".join(f'{_nm(e["nom"])} ({e["motif"]})' for e in d["exclus"]) + "</div>")
 
-    # --- section « À l'écoute » : classement par MOS + win-rate ---
     ec_panel = ""
     if dc and dc["panel"]:
         n, a, m, e = dc["panel"]
-        ec_panel = (f'<p class="lead"><b>Panel</b> : {n} auditeur·rice·s, en aveugle — '
+        ec_panel = (f'<p class="lead"><b>Panel écoute</b> : {n} auditeur·rice·s, en aveugle — '
                     f'{a} comparaisons A/B, {m} notes MOS (1–5), {e} votes émotion. '
-                    f'Aucun nom de voix ni de participant n\'est publié.</p>')
-    ec_rang = (f'<div class="md">{_ecoute_classement_html(dc)}</div>'
-               if dc and dc["mos"] else "")
-    ec_note = ('<p class="lead">MOS « Naturel » = moyenne des notes 1–5 sur l\'axe naturel '
-               '(± IC 95 %). Win-rate A/B = part de préférences « globalement meilleur » '
-               'sur l\'ensemble des duels. Le classement de naturalité du benchmark, '
-               'c\'est cette colonne — pas le WER.</p>') if ec_rang else ""
-    lien_ec = ("" if standalone else
-               '<p class="lead" style="margin-top:14px">'
-               '<a class="link" href="ecoute.html">'
-               'Détail : matrice des duels, MOS par axe, émotion &rarr;</a></p>')
-    ecoute_bloc = (
-        '<section id="ecoute">'
-        '<div class="sec-h"><h2>À l\'écoute — le classement qui compte</h2>'
-        '<span class="n">MOS · A/B · émotion, en aveugle</span></div>'
-        f'{ec_panel}{ec_rang}{ec_note}{lien_ec}'
-        '</section>') if (dc and dc["mos"]) else (
-        '<section id="ecoute">'
-        '<div class="sec-h"><h2>À l\'écoute</h2><span class="n">en aveugle</span></div>'
-        '<p class="lead">Test d\'écoute prêt — aucun retour agrégé pour l\'instant.</p>'
-        '</section>')
+                    f'Aucun nom de voix ni de participant n\'est publié. '
+                    f'<a class="link" href="{h_ec}">Détail : matrice des duels, '
+                    f'MOS par axe, émotion &rarr;</a></p>')
 
     corps = f"""<section id="classement">
-  <div class="sec-h"><h2>Métriques auto — intelligibilité &amp; identité</h2>
-    <span class="n">toutes voix confondues · passe-1</span></div>
-  <p class="lead">Moyenne pondérée (par nb de runs) sur les {n_voix} voix de référence.
-    <b>WER</b> = taux d'erreur de transcription
+  <div class="sec-h"><h2>Classement — score global</h2>
+    <span class="n">WER + SIM + Naturalité · toutes voix confondues</span></div>
+  <p class="lead"><b>WER</b> = taux d'erreur de transcription
     (<span class="mono">whisper-large-v3-french</span> + <span class="mono">jiwer</span>),
-    ↓ meilleur — c'est l'<b>intelligibilité</b>. <b>SIM</b> = similarité au locuteur
-    de référence (embeddings ECAPA), ↑ meilleur — c'est l'<b>identité de timbre</b>.
-    <b>La naturalité n'est pas mesurée ici</b> (UTMOS, TTSDS2, NISQA tous écartés en
-    français) : voir <a class="link" href="{h_ec}">le classement à l'écoute</a>.
-    Clic sur un en-tête pour trier, ou&nbsp;:</p>
+    ↓ meilleur — l'<b>intelligibilité</b>, en auto. <b>SIM</b> = similarité au
+    locuteur de référence (embeddings ECAPA), ↑ meilleur — l'<b>identité de
+    timbre</b>, en auto. <i>Limite connue : SIM sous-pondère une dérive
+    d'accent que l'oreille sanctionne fort (corrélation avec la similarité
+    perçue à l'écoute : r≈0,16 sur les clips notés) — en cas de désaccord net,
+    fie-toi à l'écoute.</i> <b>Naturalité</b> = MOS « Naturel » (1–5) du test
+    d'écoute humain en aveugle — aucune métrique auto (UTMOS, TTSDS2, NISQA)
+    n'est fiable en français, voir <a class="link" href="{h_ec}">pourquoi</a>.
+    <b>Score global</b> = ces 3 valeurs ramenées sur des <b>bornes fixes</b>
+    (WER 0–15&nbsp;%, SIM 0,60–0,90, MOS 1–5 — jamais le min/max du run en
+    cours) puis moyennées, ×100 : le score d'un modèle ne bouge pas quand un
+    concurrent rejoint ou quitte le comparatif, seul son rang peut changer.
+    Un modèle sans note d'écoute n'a pas de score. Clic sur un en-tête pour
+    trier.</p>
   {LEGENDE}
-  <div class="tools"><label>Trier&nbsp;:
-    <select id="msort">
-      <option value="wer|a">WER — meilleur d'abord</option>
-      <option value="wer|d">WER — pire d'abord</option>
-      <option value="sim|d">SIM — meilleur d'abord</option>
-      <option value="sim|a">SIM — pire d'abord</option>
-    </select></label></div>
   <div class="board"><div id="lb"></div>{excl}</div>
+  {ec_panel}
 </section>
-
-{ecoute_bloc}
 
 <section id="modeles">
   <div class="sec-h"><h2>Les modèles</h2><span class="n">contexte · vitesse · stabilité</span></div>
@@ -870,12 +875,12 @@ def page_index(standalone: bool = False) -> str:
 </section>
 
 <section id="lecture"><div class="callout">
-  <p><span class="k">Les métriques auto ne tranchent pas — l'écoute, oui.</span>
-  <span class="d">Le WER est brut (une vraie voix humaine dans le même Whisper fait
-  déjà 2–4 %). La naturalité n'a aucune métrique auto fiable en français : UTMOS,
-  TTSDS2 et NISQA ont été essayés puis écartés (corrélation nulle voire négative
-  avec la note humaine). Le classement de naturalité vient du test d'écoute en
-  aveugle ci-dessus.</span></p>
+  <p><span class="k">Le score global mélange auto et humain — à dessein.</span>
+  <span class="d">WER et SIM sont reproductibles mais ne mesurent pas la
+  naturalité perçue : UTMOS, TTSDS2 et NISQA ont été essayés puis écartés en
+  français (corrélation nulle voire négative avec la note humaine). Le tiers
+  « Naturalité » du score vient donc du test d'écoute en aveugle, pas d'une
+  métrique auto.</span></p>
 </div></section>
 
 <section id="methode">
@@ -895,8 +900,8 @@ def page_index(standalone: bool = False) -> str:
       les voix restent identiques d'une passe à l'autre.</p></div>
     <div class="card"><span class="tag">Écoute</span><h3>Test MOS + A/B en aveugle</h3>
       <p>Panel humain, clips anonymisés, plusieurs voix et phrases tirées au hasard
-      par session. C'est ce test qui produit le <b>classement de naturalité</b> ;
-      WER et SIM ne font que le préparer.</p></div>
+      par session. C'est ce test qui fournit la <b>Naturalité</b> du score
+      global — WER et SIM ne mesurent pas ça.</p></div>
     <div class="card"><span class="tag">Reproductibilité</span><h3>models.lock</h3>
       <p>repo_id + révision SHA Hugging&nbsp;Face épinglée + commit GitHub pour le code.
       Re-téléchargement bit-à-bit ; une révision non épinglée est refusée.</p></div>
@@ -910,9 +915,7 @@ def page_index(standalone: bool = False) -> str:
       for n, m in sorted(d["modeles"].items()))}</div>
 </section>"""
 
-    js = (f"var CFG={json.dumps(cfg, ensure_ascii=False)};"
-          "CFG.msort=document.getElementById('msort');"
-          "ttsTable('#lb',CFG);")
+    js = f"var CFG={json.dumps(cfg, ensure_ascii=False)};ttsTable('#lb',CFG);"
     return _shell("Benchmark TTS français", "index", corps, hero=hero, js=js,
                   standalone=standalone)
 
