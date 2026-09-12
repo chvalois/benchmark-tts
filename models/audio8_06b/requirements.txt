@@ -1,0 +1,13 @@
+# venv dédié Audio8-TTS-Preview-0.6b (Edge0). Code custom EMBARQUÉ dans le
+# snapshot HF (trust_remote_code) -> pas de clonage GitHub séparé.
+#
+#   source env.sh
+#   uv venv "$TTSB_VENVS/audio8_06b" --python 3.11
+#   uv pip install --python "$TTSB_VENVS/audio8_06b/bin/python" \
+#     --index-url https://download.pytorch.org/whl/cu128 torch==2.8.0 torchaudio==2.8.0
+#   uv pip install --python "$TTSB_VENVS/audio8_06b/bin/python" \
+#     "transformers>=4.57.0,<5" soundfile librosa "numpy<2" nvidia-ml-py pyyaml accelerate
+#   python3 benchmark/fetch_models.py --model audio8_06b
+#
+# IMPORTANT : lancer avec `uv run --no-project` (voir models/omnivoice/requirements.txt
+# pour le détail du piège pyproject.toml racine).

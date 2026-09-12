@@ -238,6 +238,130 @@ def agreger(exports: list[Path]) -> str:
     return "\n".join(L)
 
 
+def calculer(exports: list[Path]) -> dict:
+    """Version STRUCTURÉE (dict JSON-sérialisable) de `agreger()` — mêmes
+    calculs, consommée par `build_pages.py` pour construire la page écoute
+    (tableaux triables, matrices colorées, graphique des défauts) sans avoir
+    à re-parser le rendu markdown. Dupliquée volontairement plutôt que
+    partagée avec `agreger()` : deux fonctions PURES et simples, plus sûres
+    à faire évoluer séparément (rendu texte vs page interactive) qu'une
+    factorisation prématurée."""
+    sol = _charger_solution()
+    obj = _lignes_objectives()
+
+    bacs = {"ab": [], "mos": [], "emo": []}
+    auditeurs = set()
+    for f in exports:
+        d = json.loads(f.read_text(encoding="utf-8"))
+        auditeurs.add(d.get("pseudo", f.stem))
+        bac = bacs.get(d.get("mode"), bacs["mos"])
+        bac.extend({**v, "_pseudo": d.get("pseudo")}
+                   for v in d.get("votes", []) if v.get("id"))
+    ab_votes, mos_votes, emo_votes = bacs["ab"], bacs["mos"], bacs["emo"]
+
+    donnees: dict = {
+        "panel": {"auditeurs": len(auditeurs), "ab": len(ab_votes),
+                  "mos": len(mos_votes), "emo": len(emo_votes)},
+        "ab": None, "mos": None, "emo": None,
+    }
+
+    if ab_votes:
+        stats = defaultdict(lambda: {"v": 0.0, "n": 0})
+        duel = defaultdict(lambda: [0, 0])
+        defauts = defaultdict(lambda: defaultdict(int))
+        for v in ab_votes:
+            s = sol["ab"].get(v["id"])
+            if not s or not v.get("choix"):
+                continue
+            ma, mb = s["A_modele"], s["B_modele"]
+            for m in (ma, mb):
+                stats[m]["n"] += 1
+            gain = {"A": (ma,), "B": (mb,)}.get(v["choix"], (ma, mb))
+            pts = 1.0 if v["choix"] in ("A", "B") else 0.5
+            for m in gain:
+                stats[m]["v"] += pts
+            k = tuple(sorted((ma, mb)))
+            if v["choix"] in ("A", "B"):
+                gagnant = ma if v["choix"] == "A" else mb
+                duel[k][0 if gagnant == k[0] else 1] += 1
+            for side, m in (("A", ma), ("B", mb)):
+                for dk in v.get(f"def_{side}", []):
+                    defauts[m][dk] += 1
+        donnees["ab"] = {
+            "stats": {m: {"winrate": (s["v"] / s["n"]) if s["n"] else 0.0,
+                         "victoires": s["v"], "n": s["n"]} for m, s in stats.items()},
+            "duel": {f"{a}|{b}": v for (a, b), v in duel.items()},
+            "defauts": {m: dict(dk) for m, dk in defauts.items()},
+        }
+
+    if mos_votes:
+        par = defaultdict(lambda: defaultdict(list))
+        corr_pts = defaultdict(lambda: ([], []))
+        for v in mos_votes:
+            s = sol["mos"].get(v["id"])
+            if not s:
+                continue
+            m, phrase = s["modele"], s["phrase"]
+            for a in AXES:
+                if v.get(a) is not None:
+                    par[m][a].append(float(v[a]))
+            o = obj.get((m, phrase, sol["build"]["rep"]))
+            if o:
+                if v.get("intelligibilite") is not None:
+                    xs, ys = corr_pts[("intelligibilite", "1-WER")]
+                    xs.append(float(v["intelligibilite"])); ys.append(1 - o["wer"])
+                if v.get("similarite") is not None and o["sim"] is not None:
+                    xs, ys = corr_pts[("similarite", "SIM")]
+                    xs.append(float(v["similarite"])); ys.append(o["sim"])
+        donnees["mos"] = {
+            "par_modele": {
+                m: {a: {"moyenne": mo, "ic": ic, "n": n}
+                    for a in AXES for (mo, ic, n) in [_moy_ic(par[m][a])] if n}
+                for m in par
+            },
+            "correlations": [
+                {"axe_humain": ah, "metrique": met, "pearson": _pearson(xs, ys), "n": len(xs)}
+                for (ah, met), (xs, ys) in corr_pts.items()
+            ],
+        }
+
+    if emo_votes:
+        mv = defaultdict(lambda: [0.0, 0])
+        mv_e = defaultdict(lambda: [0.0, 0])
+        duel_e = defaultdict(lambda: [0, 0])
+        for v in emo_votes:
+            s = sol.get("emo", {}).get(v["id"])
+            if not s or not v.get("choix") or not s.get("A_modele"):
+                continue
+            ma, mb, emo = s["A_modele"], s["B_modele"], s["emotion"]
+            for m in (ma, mb):
+                mv[m][1] += 1
+                mv_e[(m, emo)][1] += 1
+            gg = {"A": (ma,), "B": (mb,)}.get(v["choix"], (ma, mb))
+            pts = 1.0 if v["choix"] in ("A", "B") else 0.5
+            for m in gg:
+                mv[m][0] += pts
+                mv_e[(m, emo)][0] += pts
+            k = tuple(sorted((ma, mb)))
+            if v["choix"] in ("A", "B"):
+                gagnant = ma if v["choix"] == "A" else mb
+                duel_e[k][0 if gagnant == k[0] else 1] += 1
+        emotions = sorted({e for _, e in mv_e})
+        donnees["emo"] = {
+            "global": {m: {"winrate": (vv / nn) if nn else 0.0, "victoires": vv, "n": nn}
+                      for m, (vv, nn) in mv.items()},
+            "par_emotion": {
+                m: {e: {"victoires": mv_e[(m, e)][0], "n": mv_e[(m, e)][1]}
+                    for e in emotions if mv_e.get((m, e), [0, 0])[1]}
+                for m in mv
+            },
+            "emotions": emotions,
+            "duel": {f"{a}|{b}": v for (a, b), v in duel_e.items()},
+        }
+
+    return donnees
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("exports", nargs="*",
@@ -252,9 +376,14 @@ def main() -> int:
                          "ou passe-les en argument")
     print(f"[agreger] {len(fichiers)} export(s) : {', '.join(f.name for f in fichiers)}")
     md = agreger(fichiers)
-    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
-    Path(args.out).write_text(md, encoding="utf-8")
+    out = Path(args.out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(md, encoding="utf-8")
+    donnees = calculer(fichiers)
+    out_json = out.with_suffix(".json")
+    out_json.write_text(json.dumps(donnees, ensure_ascii=False, indent=2), encoding="utf-8")
     print(md)
+    print(f"\n-> {out_json} (données structurées pour build_pages.py)")
     print(f"\n-> {args.out}")
     return 0
 

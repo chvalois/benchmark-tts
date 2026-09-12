@@ -52,12 +52,38 @@ header.bar .wrap{display:flex;align-items:center;gap:14px;height:56px}
   color:var(--trace);border:1px solid color-mix(in oklab,var(--trace) 40%,var(--line));
   border-radius:4px;padding:3px 5px 2px;text-transform:uppercase}
 header.bar nav{margin-left:auto;display:flex;align-items:center;gap:2px}
+header.bar nav .navliens{display:flex;align-items:center;gap:2px}
 header.bar nav a{font-size:.84rem;color:var(--muted);padding:7px 9px;border-radius:7px}
 header.bar nav a:hover{color:var(--ink)}
 header.bar nav a.on{color:var(--ink);background:var(--panel2)}
-.tgl{margin-left:4px;width:32px;height:32px;display:grid;place-items:center;border-radius:7px;
-  border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer}
-.tgl:hover{color:var(--ink)}
+.tgl,.burger{width:32px;height:32px;display:grid;place-items:center;border-radius:7px;
+  border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;
+  font:inherit;line-height:1;padding:0}
+.tgl{margin-left:4px}
+.tgl:hover,.burger:hover{color:var(--ink)}
+.burger{display:none;margin-left:6px}
+.burger .bg{display:block;width:15px;height:1.5px;background:currentColor;border-radius:2px;
+  position:relative;transition:transform .18s ease,opacity .18s ease}
+.burger .bg::before,.burger .bg::after{content:"";position:absolute;left:0;width:15px;
+  height:1.5px;background:currentColor;border-radius:2px;
+  transition:transform .18s ease,top .18s ease}
+.burger .bg::before{top:-5px} .burger .bg::after{top:5px}
+.burger[aria-expanded="true"] .bg{background:transparent}
+.burger[aria-expanded="true"] .bg::before{top:0;transform:rotate(45deg)}
+.burger[aria-expanded="true"] .bg::after{top:0;transform:rotate(-45deg)}
+
+/* --- mobile : les liens passent dans un menu déroulant (hamburger) --- */
+@media (max-width:620px){
+  .burger{display:grid}
+  header.bar nav .navliens{position:absolute;top:100%;left:0;right:0;
+    flex-direction:column;align-items:stretch;gap:0;
+    background:var(--bg);border-bottom:1px solid var(--line);
+    box-shadow:var(--shadow);padding:6px 16px 12px;display:none}
+  header.bar nav .navliens.ouvert{display:flex}
+  header.bar nav .navliens a{font-size:.98rem;padding:13px 10px;border-radius:8px}
+  header.bar nav .navliens a+a{border-top:1px solid var(--line)}
+  header.bar nav .navliens a.on{background:var(--panel2)}
+}
 
 /* hero */
 .hero{padding:48px 0 36px;border-bottom:1px solid var(--line)}
@@ -66,12 +92,8 @@ header.bar nav a.on{color:var(--ink);background:var(--panel2)}
 .hero h1{font-family:"Newsreader",Georgia,serif;font-weight:400;
   font-size:clamp(1.9rem,6vw,3.1rem);line-height:1.08;letter-spacing:-.012em;
   text-wrap:balance;margin:0 0 14px;max-width:16ch}
-.hero .thesis{font-size:1.02rem;color:var(--muted);max-width:56ch;margin:0 0 24px}
+.hero .thesis{font-size:1.02rem;color:var(--muted);margin:0 0 24px}
 .hero .thesis em{font-family:"Newsreader",serif;font-style:italic;color:var(--ink)}
-.facts{display:flex;flex-wrap:wrap;gap:8px}
-.fact{font:.76rem/1 "IBM Plex Mono",monospace;color:var(--muted);
-  border:1px solid var(--line);border-radius:6px;padding:7px 9px;background:var(--panel)}
-.fact b{color:var(--ink);font-weight:500}
 .scope{margin-top:30px;border:1px solid var(--line);border-radius:12px;
   background:var(--panel);padding:16px 16px 8px;box-shadow:var(--shadow);overflow-x:auto}
 .scope .cap{font:.7rem/1 "IBM Plex Mono",monospace;letter-spacing:.1em;
@@ -84,7 +106,9 @@ section[id],[id="top"]{scroll-margin-top:72px}
 .sec-h h2{font-family:"Newsreader",serif;font-weight:500;font-size:1.45rem;
   letter-spacing:-.01em;margin:0}
 .sec-h .n{font:.7rem/1 "IBM Plex Mono",monospace;color:var(--faint);letter-spacing:.08em}
-.lead{color:var(--muted);max-width:66ch;margin:-4px 0 18px;font-size:.95rem}
+.lead{color:var(--muted);margin:-4px 0 18px;font-size:.95rem}
+.lead p{margin:0 0 .7em}
+.lead p:last-child{margin-bottom:0}
 
 /* --- table --- */
 .tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
@@ -110,6 +134,7 @@ table.rt{border-collapse:collapse;width:100%}
 .rt thead th:first-child,.rt thead th.name{text-align:left}
 .rt thead th.rk{text-align:center;width:40px;cursor:default}
 .rt thead th:hover:not(.rk){color:var(--ink)}
+.rt thead th .hlabel{border-bottom:1px dotted var(--faint);cursor:help}
 .rt thead th .ar{color:var(--faint);font-weight:400;margin-left:3px}
 .rt thead th[data-active] .ar{color:var(--trace)}
 .rt tbody td{padding:12px;border-bottom:1px solid var(--line);text-align:right;
@@ -148,6 +173,41 @@ td.m-bad{background:color-mix(in oklab,var(--crit) 13%,transparent);
 .board-foot{padding:11px 15px;border-top:1px solid var(--line);
   font:.76rem/1.5 "IBM Plex Mono",monospace;color:var(--faint)}
 
+/* matrice des duels — 2 axes, donc non empilable : on la fait défiler
+   horizontalement AVEC la colonne des noms figée à gauche, pour ne jamais
+   perdre de vue à quelle ligne correspond une cellule. */
+table.matrice{table-layout:auto;border-collapse:separate;border-spacing:0}
+table.matrice th,table.matrice td{text-align:center;font-size:.78rem;
+  padding:9px 10px;white-space:nowrap}
+table.matrice thead th{font-size:.62rem;cursor:default;vertical-align:bottom;
+  min-width:74px;background:var(--panel);border-bottom:1px solid var(--line)}
+table.matrice thead th:first-child{position:sticky;left:0;z-index:3;min-width:118px}
+table.matrice td.name{font-family:"IBM Plex Sans",sans-serif;font-weight:500;
+  text-align:left;font-size:.82rem;position:sticky;left:0;z-index:2;
+  background:var(--panel);border-right:1px solid var(--line);
+  box-shadow:6px 0 8px -8px rgba(0,0,0,.35)}
+table.matrice tbody td{border-bottom:1px solid var(--line)}
+table.matrice tbody tr:last-child td{border-bottom:0}
+table.matrice td.diag,table.matrice td.nodata{color:var(--faint)}
+@media (max-width:620px){
+  table.matrice th,table.matrice td{font-size:.72rem;padding:8px 7px}
+  table.matrice thead th{min-width:62px}
+  table.matrice thead th:first-child,table.matrice td.name{min-width:96px;
+    max-width:96px;white-space:normal;line-height:1.25}
+}
+
+/* tests d'écoute : gros titres numérotés par test */
+.testblock{padding-top:8px}
+.testblock+.testblock{margin-top:56px;border-top:1px solid var(--line);padding-top:40px}
+.testhead .eyebrow{margin-bottom:10px}
+.testhead h1{font-family:"Newsreader",Georgia,serif;font-weight:400;
+  font-size:clamp(1.5rem,4vw,2.15rem);line-height:1.15;letter-spacing:-.01em;margin:0 0 12px}
+.subhead{font-family:"Newsreader",serif;font-weight:500;font-size:1.1rem;
+  margin:28px 0 10px;color:var(--ink)}
+.subhead:first-of-type{margin-top:20px}
+.subhead .n{font:.68rem/1 "IBM Plex Mono",monospace;color:var(--faint);
+  letter-spacing:.06em;margin-left:8px;font-weight:400}
+
 /* --- responsif : on masque les colonnes secondaires, la table reste
    une table et tient sans scroll horizontal --- */
 @media (max-width:900px){ .rt .p3{display:none} }
@@ -160,6 +220,50 @@ td.m-bad{background:color-mix(in oklab,var(--crit) 13%,transparent);
   .legend{gap:10px;font-size:.7rem}
   .md table{font-size:.72rem}
   .md th,.md td{padding:6px 7px}
+}
+
+/* --- mobile : les tableaux « une ligne = un modèle » s'empilent en fiches.
+   Plus aucun défilement horizontal, et TOUTES les colonnes redeviennent
+   visibles (y compris celles masquées en p2/p3 sur écran moyen), chacune
+   précédée de son intitulé. Les matrices (2 axes) sont exclues : elles ne
+   s'empilent pas — elles gardent leur colonne de gauche figée. --- */
+/* NB : sélecteurs en enfant direct (`>`) — sinon les règles descendent aussi
+   dans les petites tables imbriquées du détail dépliable et leur suppriment
+   leurs en-têtes. */
+@media (max-width:620px){
+  table.rt.empile{display:block}
+  table.rt.empile > thead{display:none}
+  table.rt.empile > tbody{display:block}
+  table.rt.empile > tbody > tr{display:block;padding:12px 14px 14px;
+    border-bottom:1px solid var(--line);position:relative}
+  table.rt.empile > tbody > tr:last-child{border-bottom:0}
+  table.rt.empile > tbody > tr > td{display:flex;align-items:baseline;gap:12px;
+    justify-content:space-between;width:auto;border:0;padding:5px 0;
+    text-align:right;white-space:normal}
+  table.rt.empile > tbody > tr > td.p2,
+  table.rt.empile > tbody > tr > td.p3{display:flex}
+  table.rt.empile > tbody > tr > td::before{content:attr(data-label);text-align:left;
+    color:var(--muted);font:500 .66rem/1.5 "IBM Plex Mono",monospace;
+    letter-spacing:.04em;text-transform:uppercase;flex:0 0 auto}
+  table.rt.empile > tbody > tr > td.name{padding:0 58px 8px 0;font-size:1.02rem;
+    justify-content:flex-start}
+  table.rt.empile > tbody > tr > td.name::before{content:none}
+  table.rt.empile > tbody > tr > td.rk{position:absolute;top:12px;right:14px;padding:0;
+    font:500 .72rem/1 "IBM Plex Mono",monospace;color:var(--faint)}
+  table.rt.empile > tbody > tr > td.rk::before{content:"#";margin-right:1px}
+  /* cellules colorées : le fond pleine largeur devient illisible empilé,
+     on ne garde la couleur que sur la valeur */
+  table.rt.empile > tbody > tr > td.m-good,
+  table.rt.empile > tbody > tr > td.m-mid,
+  table.rt.empile > tbody > tr > td.m-bad{background:none}
+  table.rt.empile > tbody > tr > td.m-good{color:var(--ok)}
+  table.rt.empile > tbody > tr > td.m-mid{color:var(--warn)}
+  table.rt.empile > tbody > tr > td.m-bad{color:var(--crit)}
+  /* ligne de détail dépliée : on rend la main aux tables imbriquées */
+  table.rt.empile > tbody > tr.detail{padding:0}
+  table.rt.empile > tbody > tr.detail > td{display:block;text-align:left;
+    padding:14px 14px 16px}
+  table.rt.empile > tbody > tr.detail > td::before{content:none}
 }
 
 /* callout / cards */
@@ -185,12 +289,45 @@ td.m-bad{background:color-mix(in oklab,var(--crit) 13%,transparent);
 .mstat b{color:var(--ink);font-weight:500}
 .mstat b.m-bad{color:var(--crit)} .mstat b.m-mid{color:var(--warn)} .mstat b.m-good{color:var(--ok)}
 .mstat .sep{color:var(--faint);margin:0 4px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
-.card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:16px 18px}
-.card h3{margin:0 0 6px;font-size:.94rem;font-weight:600}
-.card p{margin:0;color:var(--muted);font-size:.88rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:16px;align-items:start}
+.card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:18px 20px}
+.card h3{margin:0 0 8px;font-size:.98rem;font-weight:600}
+.card p{margin:0 0 .6em;color:var(--muted);font-size:.88rem;line-height:1.55}
+.card p:last-child{margin-bottom:0}
+.card ul{margin:.4em 0 .8em;padding-left:1.1em;color:var(--muted);font-size:.86rem;line-height:1.6}
+.card ul:last-child{margin-bottom:0}
+.card li{margin-bottom:.35em}
+.card li:last-child{margin-bottom:0}
+.card li b{color:var(--ink);font-weight:600}
 .card .tag{font:.66rem/1 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;
   color:var(--trace);display:block;margin-bottom:9px}
+/* fiche modèle : table des paramètres réglables */
+table.params tbody td{white-space:normal;vertical-align:top;text-align:left}
+table.params td.name{font-size:.82rem;white-space:nowrap}
+table.params td.defaut{text-align:center}
+table.params td.role{font-family:"IBM Plex Sans",sans-serif;font-size:.86rem;
+  line-height:1.55;color:var(--muted);min-width:280px}
+@media (max-width:620px){
+  table.params td.name{white-space:normal}
+  /* empilé : le rôle passe sous son intitulé, pleine largeur, aligné à gauche */
+  table.rt.params.empile > tbody > tr > td.role{display:block;text-align:left;
+    min-width:0;padding-top:6px}
+  table.rt.params.empile > tbody > tr > td.role::before{display:block;margin-bottom:3px}
+  table.rt.params.empile > tbody > tr > td.name{font-family:"IBM Plex Mono",monospace;
+    font-size:.88rem;padding-right:0}
+}
+
+/* fiche modèle : paires clé/valeur + avertissements */
+.kvgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:0 22px}
+.kv{display:flex;gap:14px;justify-content:space-between;align-items:baseline;
+  padding:9px 0;border-bottom:1px dashed var(--line)}
+.kv .k{color:var(--muted);font-size:.88rem}
+.kv .v{color:var(--ink);font-weight:500;font-size:.9rem;text-align:right;
+  overflow-wrap:anywhere}
+ul.avert{margin:0;padding-left:0;list-style:none;display:grid;gap:10px}
+ul.avert li{border:1px solid var(--line);border-left:3px solid var(--warn);
+  border-radius:0 10px 10px 0;background:var(--panel);padding:12px 16px;
+  color:var(--muted);font-size:.92rem;line-height:1.6}
 .repro{font-family:"IBM Plex Mono",monospace;font-size:.8rem;line-height:1.8}
 .repro div{display:flex;gap:12px;justify-content:space-between;
   border-bottom:1px dashed var(--line);padding:4px 0}
@@ -200,7 +337,7 @@ td.m-bad{background:color-mix(in oklab,var(--crit) 13%,transparent);
 .md h1{font-family:"Newsreader",serif;font-weight:400;font-size:1.9rem;margin:0 0 8px}
 .md h2{font-family:"Newsreader",serif;font-weight:500;font-size:1.35rem;margin:1.8em 0 .5em}
 .md h3{font-size:.98rem;margin:1.5em 0 .4em;color:var(--muted)}
-.md p,.md ul{color:var(--muted);max-width:70ch}
+.md p,.md ul{color:var(--muted)}
 .md code{font-family:"IBM Plex Mono",monospace;font-size:.85em;background:var(--panel2);
   padding:2px 5px;border-radius:4px}
 .md .tablewrap{border:1px solid var(--line);border-radius:10px;margin:1em 0;
@@ -215,7 +352,7 @@ td.m-bad{background:color-mix(in oklab,var(--crit) 13%,transparent);
   background:var(--panel);border-radius:0 8px 8px 0;color:var(--ink)}
 .md table.rank td:nth-child(2){text-align:left}
 .md table.rank td:first-child{color:var(--faint)}
-.md .ic{color:var(--faint);font-size:.85em;font-weight:400}
+.ic{color:var(--faint);font-size:.85em;font-weight:400}
 #ecoute .md .tablewrap{margin:.4em 0 1.1em}
 
 footer{border-top:1px solid var(--line);margin-top:56px}
@@ -229,66 +366,36 @@ footer a:hover{color:var(--trace)}
 <body>
 <header class="bar"><div class="wrap">
   <span class="brand">Benchmark&nbsp;TTS<span class="fr">FR</span></span>
-  <nav><a href="index.html">Aperçu</a><a href="objectif.html">Recap</a><a href="ecoute.html" class="on">Écoute</a><a href="https://github.com/chvalois/benchmark-tts" class="link" style="text-decoration:none">Dépôt&nbsp;↗</a><button class="tgl" id="tgl" title="Thème" aria-label="Changer de thème">◑</button></nav>
+  <nav>
+    <div class="navliens" id="navliens"><a href="index.html">Aperçu</a><a href="objectif.html">Recap</a><a href="ecoute.html" class="on">Écoute</a><a href="https://github.com/chvalois/benchmark-tts" class="link" style="text-decoration:none">Dépôt&nbsp;↗</a></div>
+    <button class="tgl" id="tgl" title="Thème" aria-label="Changer de thème">◑</button>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false"
+      aria-controls="navliens"><span class="bg"></span></button>
+  </nav>
 </div></header>
 
 <main><div class="wrap">
-<section class='md'><h1>Test d'écoute — agrégation</h1>
-<p>7 auditeur(s) — 60 votes A/B, 120 notes MOS, 60 votes émotion.</p>
-<h2>A/B — win-rate par modèle</h2>
-<div class='tablewrap'><table><thead><tr><th>modèle</th><th>win-rate</th><th>(victoires / duels)</th><th>défauts entendus</th></tr></thead><tbody>
-<tr><td>firered_tts3</td><td>78%</td><td>19.5 / 25</td><td>accent:2</td></tr>
-<tr><td>voxcpm2</td><td>64%</td><td>14.0 / 22</td><td>tronque:1</td></tr>
-<tr><td>cosyvoice3_05b</td><td>44%</td><td>7.5 / 17</td><td>voix_diff:7 accent:4 tronque:2 repetition:1 artefact:1</td></tr>
-<tr><td>xtts_v2</td><td>38%</td><td>7.5 / 20</td><td>voix_diff:11 artefact:5 accent:2 tronque:1</td></tr>
-<tr><td>chatterbox_v3</td><td>36%</td><td>7.5 / 21</td><td>voix_diff:7 accent:4 artefact:2 tronque:1 repetition:1</td></tr>
-<tr><td>moss_tts_local_v15</td><td>27%</td><td>4.0 / 15</td><td>voix_diff:2 artefact:1</td></tr>
-</tbody></table></div>
-<h2>A/B — matrice des duels (gauche bat haut)</h2>
-<div class='tablewrap'><table><thead><tr><th></th><th>chatterbox_v3</th><th>cosyvoice3_05b</th><th>firered_tts3</th><th>moss_tts_local_v15</th><th>voxcpm2</th><th>xtts_v2</th></tr></thead><tbody>
-<tr><td><strong>chatterbox_v3</strong></td><td>·</td><td>0/1</td><td>0/5</td><td>2/3</td><td>0/2</td><td>2/3</td></tr>
-<tr><td><strong>cosyvoice3_05b</strong></td><td>1/1</td><td>·</td><td>1/4</td><td>1/1</td><td>1/4</td><td>1/2</td></tr>
-<tr><td><strong>firered_tts3</strong></td><td>5/5</td><td>3/4</td><td>·</td><td>3/3</td><td>3/5</td><td>4/5</td></tr>
-<tr><td><strong>moss_tts_local_v15</strong></td><td>1/3</td><td>0/1</td><td>0/3</td><td>·</td><td>2/4</td><td>0/2</td></tr>
-<tr><td><strong>voxcpm2</strong></td><td>2/2</td><td>3/4</td><td>2/5</td><td>2/4</td><td>·</td><td>3/3</td></tr>
-<tr><td><strong>xtts_v2</strong></td><td>1/3</td><td>1/2</td><td>1/5</td><td>2/2</td><td>0/3</td><td>·</td></tr>
-</tbody></table></div>
-<h2>MOS — moyenne ± IC 95 % par axe</h2>
-<div class='tablewrap'><table><thead><tr><th>modèle</th><th>Naturel</th><th>Intelligibilite</th><th>Similarite</th><th>Expressivite</th></tr></thead><tbody>
-<tr><td>chatterbox_v3</td><td>3.05 ±0.39</td><td>3.45 ±0.33</td><td>2.20 ±0.50</td><td>2.95 ±0.30</td></tr>
-<tr><td>cosyvoice3_05b</td><td>2.50 ±0.50</td><td>2.75 ±0.47</td><td>2.80 ±0.46</td><td>2.40 ±0.41</td></tr>
-<tr><td>firered_tts3</td><td>4.06 ±0.36</td><td>4.53 ±0.30</td><td>4.41 ±0.29</td><td>3.24 ±0.36</td></tr>
-<tr><td>moss_tts_local_v15</td><td>2.91 ±0.56</td><td>3.70 ±0.40</td><td>3.87 ±0.36</td><td>2.70 ±0.36</td></tr>
-<tr><td>voxcpm2</td><td>3.20 ±0.44</td><td>3.40 ±0.42</td><td>3.47 ±0.50</td><td>2.87 ±0.57</td></tr>
-<tr><td>xtts_v2</td><td>2.88 ±0.56</td><td>3.32 ±0.54</td><td>1.88 ±0.40</td><td>2.60 ±0.36</td></tr>
-</tbody></table></div>
-<h2>Corrélation MOS (humain) ↔ métrique automatique (par clip)</h2>
-<div class='tablewrap'><table><thead><tr><th>axe humain</th><th>métrique auto</th><th>Pearson r</th><th>n</th></tr></thead><tbody>
-<tr><td>intelligibilite</td><td>1-WER</td><td>0.17</td><td>120</td></tr>
-<tr><td>similarite</td><td>SIM</td><td>0.16</td><td>120</td></tr>
-</tbody></table></div>
-<h2>Émotion — quel modèle rend le mieux l'émotion ?</h2>
-<p>A/B en aveugle : deux modèles disent la même phrase, tous deux clonés depuis la <strong>même</strong> voix de réf émotionnelle. Win-rate = victoires + ½ nuls.</p>
-<div class='tablewrap'><table><thead><tr><th>modèle</th><th>win-rate</th><th>(victoires / duels)</th></tr></thead><tbody>
-<tr><td>firered_tts3</td><td>78%</td><td>12.5 / 16</td></tr>
-<tr><td>chatterbox_v3</td><td>54%</td><td>6.5 / 12</td></tr>
-<tr><td>voxcpm2</td><td>53%</td><td>9.0 / 17</td></tr>
-<tr><td>xtts_v2</td><td>50%</td><td>4.0 / 8</td></tr>
-<tr><td>cosyvoice3_05b</td><td>42%</td><td>5.0 / 12</td></tr>
-<tr><td>moss_tts_local_v15</td><td>20%</td><td>3.0 / 15</td></tr>
-</tbody></table></div>
-<h3>Émotion — win-rate par (modèle, émotion)</h3>
-<div class='tablewrap'><table><thead><tr><th>modèle</th><th>colere</th><th>joie</th><th>peur</th><th>tristesse</th></tr></thead><tbody>
-<tr><td>chatterbox_v3</td><td>67% (4.0/6)</td><td>0% (0.0/2)</td><td>25% (0.5/2)</td><td>100% (2.0/2)</td></tr>
-<tr><td>cosyvoice3_05b</td><td>33% (1.0/3)</td><td>50% (1.0/2)</td><td>0% (0.0/4)</td><td>100% (3.0/3)</td></tr>
-<tr><td>firered_tts3</td><td>81% (6.5/8)</td><td>0% (0.0/1)</td><td>100% (3.0/3)</td><td>75% (3.0/4)</td></tr>
-<tr><td>moss_tts_local_v15</td><td>11% (1.0/9)</td><td>100% (2.0/2)</td><td>0% (0.0/1)</td><td>0% (0.0/3)</td></tr>
-<tr><td>voxcpm2</td><td>50% (3.0/6)</td><td>100% (2.0/2)</td><td>60% (3.0/5)</td><td>25% (1.0/4)</td></tr>
-<tr><td>xtts_v2</td><td>75% (1.5/2)</td><td>0% (0.0/1)</td><td>83% (2.5/3)</td><td>0% (0.0/2)</td></tr>
-</tbody></table></div></section>
+<section id="intro">
+  <div class="sec-h"><h2>Test d'écoute — méthode</h2>
+    <span class="n">8 auditeur·rice·s, en aveugle</span></div>
+  <p class="lead">Le classement automatique (WER, SIM) ne dit rien de ce qu'une
+    oreille humaine perçoit. Ce test le complète avec <b>3 protocoles
+    distincts</b>, tous en aveugle — aucun nom de modèle n'est jamais affiché,
+    aucun nom de voix ni de participant n'est publié : une comparaison directe
+    entre deux modèles (<b>Test&nbsp;1</b>), une notation isolée de chaque clip
+    (<b>Test&nbsp;2</b>), et une comparaison ciblée sur le rendu de l'émotion
+    (<b>Test&nbsp;3</b>). Panel : 80 comparaisons A/B, 140 notes
+    MOS, 80 votes émotion.</p>
+</section>
+
+<section id="test1" class="testblock"><div class="testhead"><span class="eyebrow">Test 1</span><h1>Comparaison A/B</h1><p class="lead">Ce test met en comparaison la <b>même phrase</b>, dite par la <b>même voix de référence</b> clonée, générée par <b>2 modèles différents</b>. L'auditeur·rice écoute les deux clips à l'aveugle (sans savoir quels modèles sont comparés) et choisit celui qu'il ou elle préfère globalement ; il/elle peut aussi signaler des défauts précis entendus sur chaque clip (voix qui ne ressemble pas à la référence, coupure/troncature, répétition, accent, artefact).</p></div><h3 class="subhead">Win-rate par modèle<span class="n">victoire = 1 point, égalité = ½ point</span></h3><div class="board"><div id="tbl-ab"></div></div><h3 class="subhead">Matrice des duels<span class="n">ligne vs colonne — vert = la ligne gagne, rouge = elle perd</span></h3><div class="tablewrap"><table class="rt matrice"><thead><tr><th></th><th>OmniVoice</th><th>FireRed TTS3</th><th>VoxCPM2</th><th>CosyVoice3-0.5B</th><th>Chatterbox v3</th><th>XTTS-v2</th><th>MOSS-1.5</th><th>Audio8-TTS-0.6B</th></tr></thead><tbody><tr><td class="name">OmniVoice</td><td class="diag">·</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 50%,var(--crit)) 42%,transparent)">1/2</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">3/3</td><td class="nodata">—</td><td class="nodata">—</td><td class="nodata">—</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">5/5</td></tr><tr><td class="name">FireRed TTS3</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 50%,var(--crit)) 42%,transparent)">1/2</td><td class="diag">·</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 75%,var(--crit)) 42%,transparent)">6/8</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 75%,var(--crit)) 42%,transparent)">3/4</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">5/5</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 80%,var(--crit)) 42%,transparent)">4/5</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">4/4</td><td class="nodata">—</td></tr><tr><td class="name">VoxCPM2</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/3</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 25%,var(--crit)) 42%,transparent)">2/8</td><td class="diag">·</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 75%,var(--crit)) 42%,transparent)">3/4</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">2/2</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">3/3</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 60%,var(--crit)) 42%,transparent)">3/5</td><td class="nodata">—</td></tr><tr><td class="name">CosyVoice3-0.5B</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 25%,var(--crit)) 42%,transparent)">1/4</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 25%,var(--crit)) 42%,transparent)">1/4</td><td class="diag">·</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">1/1</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 50%,var(--crit)) 42%,transparent)">1/2</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">1/1</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">1/1</td></tr><tr><td class="name">Chatterbox v3</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/5</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/2</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/1</td><td class="diag">·</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 67%,var(--crit)) 42%,transparent)">2/3</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 67%,var(--crit)) 42%,transparent)">2/3</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">1/1</td></tr><tr><td class="name">XTTS-v2</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 20%,var(--crit)) 42%,transparent)">1/5</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/3</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 50%,var(--crit)) 42%,transparent)">1/2</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 33%,var(--crit)) 42%,transparent)">1/3</td><td class="diag">·</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">2/2</td><td class="nodata">—</td></tr><tr><td class="name">MOSS-1.5</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/4</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 40%,var(--crit)) 42%,transparent)">2/5</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/1</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 33%,var(--crit)) 42%,transparent)">1/3</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/2</td><td class="diag">·</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/1</td></tr><tr><td class="name">Audio8-TTS-0.6B</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/5</td><td class="nodata">—</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/1</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/1</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">1/1</td><td class="diag">·</td></tr></tbody></table></div><h3 class="subhead">Défauts entendus par modèle<span class="n">taux par duel (comparable malgré des expositions inégales)</span></h3><div class="scope" style="margin-top:0"><svg viewBox="0 0 620 272" width="100%" role="img" aria-label="Défauts entendus par modèle, taux par duel" style="min-width:460px;font-family:'IBM Plex Mono',monospace"><text x="140" y="18" text-anchor="end" font-size="10.5" fill="var(--muted)">XTTS-v2</text><rect x="150.0" y="7" width="23.2" height="14" rx="2" fill="#c0533f"><title>XTTS-v2 — coupé / tronqué : 5% des duels</title></rect><rect x="173.2" y="7" width="254.7" height="14" rx="2" fill="#6f7fd1"><title>XTTS-v2 — voix ne ressemble pas à la référence : 55% des duels</title></rect><rect x="427.9" y="7" width="46.3" height="14" rx="2" fill="#3f8fc4"><title>XTTS-v2 — accent / prononciation non française : 10% des duels</title></rect><rect x="474.2" y="7" width="115.8" height="14" rx="2" fill="#9a63b0"><title>XTTS-v2 — artefact / bruit / robotique : 25% des duels</title></rect><text x="140" y="46" text-anchor="end" font-size="10.5" fill="var(--muted)">CosyVoice3-0.5B</text><rect x="150.0" y="35" width="51.5" height="14" rx="2" fill="#c0533f"><title>CosyVoice3-0.5B — coupé / tronqué : 11% des duels</title></rect><rect x="201.5" y="35" width="25.7" height="14" rx="2" fill="#c98a3c"><title>CosyVoice3-0.5B — répétition / bégaiement : 6% des duels</title></rect><rect x="227.2" y="35" width="205.8" height="14" rx="2" fill="#6f7fd1"><title>CosyVoice3-0.5B — voix ne ressemble pas à la référence : 44% des duels</title></rect><rect x="433.0" y="35" width="102.9" height="14" rx="2" fill="#3f8fc4"><title>CosyVoice3-0.5B — accent / prononciation non française : 22% des duels</title></rect><rect x="536.0" y="35" width="25.7" height="14" rx="2" fill="#9a63b0"><title>CosyVoice3-0.5B — artefact / bruit / robotique : 6% des duels</title></rect><text x="140" y="74" text-anchor="end" font-size="10.5" fill="var(--muted)">Chatterbox v3</text><rect x="150.0" y="63" width="20.1" height="14" rx="2" fill="#c0533f"><title>Chatterbox v3 — coupé / tronqué : 4% des duels</title></rect><rect x="170.1" y="63" width="20.1" height="14" rx="2" fill="#c98a3c"><title>Chatterbox v3 — répétition / bégaiement : 4% des duels</title></rect><rect x="190.3" y="63" width="141.0" height="14" rx="2" fill="#6f7fd1"><title>Chatterbox v3 — voix ne ressemble pas à la référence : 30% des duels</title></rect><rect x="331.2" y="63" width="80.5" height="14" rx="2" fill="#3f8fc4"><title>Chatterbox v3 — accent / prononciation non française : 17% des duels</title></rect><rect x="411.8" y="63" width="40.3" height="14" rx="2" fill="#9a63b0"><title>Chatterbox v3 — artefact / bruit / robotique : 9% des duels</title></rect><text x="140" y="102" text-anchor="end" font-size="10.5" fill="var(--muted)">Audio8-TTS-0.6B</text><rect x="150.0" y="91" width="57.9" height="14" rx="2" fill="#6f7fd1"><title>Audio8-TTS-0.6B — voix ne ressemble pas à la référence : 12% des duels</title></rect><rect x="207.9" y="91" width="57.9" height="14" rx="2" fill="#9a63b0"><title>Audio8-TTS-0.6B — artefact / bruit / robotique : 12% des duels</title></rect><text x="140" y="130" text-anchor="end" font-size="10.5" fill="var(--muted)">MOSS-1.5</text><rect x="150.0" y="119" width="51.5" height="14" rx="2" fill="#6f7fd1"><title>MOSS-1.5 — voix ne ressemble pas à la référence : 11% des duels</title></rect><rect x="201.5" y="119" width="25.7" height="14" rx="2" fill="#9a63b0"><title>MOSS-1.5 — artefact / bruit / robotique : 6% des duels</title></rect><text x="140" y="158" text-anchor="end" font-size="10.5" fill="var(--muted)">FireRed TTS3</text><rect x="150.0" y="147" width="14.5" height="14" rx="2" fill="#c98a3c"><title>FireRed TTS3 — répétition / bégaiement : 3% des duels</title></rect><rect x="164.5" y="147" width="28.9" height="14" rx="2" fill="#3f8fc4"><title>FireRed TTS3 — accent / prononciation non française : 6% des duels</title></rect><text x="140" y="186" text-anchor="end" font-size="10.5" fill="var(--muted)">OmniVoice</text><rect x="150.0" y="175" width="42.1" height="14" rx="2" fill="#c0533f"><title>OmniVoice — coupé / tronqué : 9% des duels</title></rect><text x="140" y="214" text-anchor="end" font-size="10.5" fill="var(--muted)">VoxCPM2</text><rect x="150.0" y="203" width="15.4" height="14" rx="2" fill="#c0533f"><title>VoxCPM2 — coupé / tronqué : 3% des duels</title></rect><rect x="150" y="254" width="9" height="9" rx="2" fill="#c0533f"/><text x="163" y="262" font-size="9.5" fill="var(--muted)">tronqué</text><rect x="208" y="254" width="9" height="9" rx="2" fill="#c98a3c"/><text x="221" y="262" font-size="9.5" fill="var(--muted)">répétition</text><rect x="285" y="254" width="9" height="9" rx="2" fill="#6f7fd1"/><text x="298" y="262" font-size="9.5" fill="var(--muted)">voix≠réf</text><rect x="350" y="254" width="9" height="9" rx="2" fill="#3f8fc4"/><text x="363" y="262" font-size="9.5" fill="var(--muted)">accent</text><rect x="402" y="254" width="9" height="9" rx="2" fill="#9a63b0"/><text x="415" y="262" font-size="9.5" fill="var(--muted)">artefact</text></svg></div><p class="lead" style="margin-top:10px;font-size:.82rem"><b>tronqué</b> = coupé / tronqué · <b>répétition</b> = répétition / bégaiement · <b>voix≠réf</b> = voix ne ressemble pas à la référence · <b>accent</b> = accent / prononciation non française · <b>artefact</b> = artefact / bruit / robotique</p></section>
+
+<section id="test2" class="testblock"><div class="testhead"><span class="eyebrow">Test 2</span><h1>Notes MOS</h1><p class="lead">Contrairement au test 1, il n'y a pas de comparaison directe : chaque clip est écouté <b>isolément</b> et anonymisé, puis noté de 1 (mauvais) à 5 (excellent) sur 4 axes — <b>Naturel</b> (sonne-t-il comme une vraie voix humaine ?), <b>Intelligibilité</b> (comprend-on tout ?), <b>Similarité</b> (ressemble-t-il à la voix de référence ?), <b>Expressivité</b> (le ton correspond-il à la phrase ?).</p></div><h3 class="subhead">Moyenne ± IC 95&nbsp;% par axe<span class="n">clic sur un en-tête pour trier</span></h3><div class="board"><div id="tbl-mos"></div></div><h3 class="subhead">Corrélation avec les métriques automatiques<span class="n">à titre d'info</span></h3><p class="lead">Le coefficient de Pearson (<span class="mono">r</span>, de −1 à 1) mesure si la note humaine et la métrique automatique équivalente varient ensemble, clip par clip : proche de 1 = la métrique automatique est un bon indicateur du jugement humain sur cet axe ; proche de 0 = aucun lien. Sert à vérifier si WER/SIM peuvent remplacer l'oreille humaine — ici, non : voir <a class="link" href="index.html#lecture">pourquoi la naturalité reste jugée à l'écoute</a>.</p><div class="board"><div id="tbl-corr"></div></div></section>
+
+<section id="test3" class="testblock"><div class="testhead"><span class="eyebrow">Test 3</span><h1>Émotion A/B</h1><p class="lead">Comme le test 1 (comparaison à l'aveugle de 2 modèles sur la même phrase), mais les deux clips clonent ici la <b>même voix de référence émotionnelle</b> (ex. la voix « en colère » du même intervenant) sur une phrase du registre correspondant. La question n'est plus « quel modèle est le meilleur en général ? » mais « lequel des deux rend le mieux <i>cette émotion précise</i> ? ».</p></div><h3 class="subhead">Win-rate global par modèle</h3><div class="board"><div id="tbl-emo"></div></div><h3 class="subhead">Win-rate par modèle × émotion</h3><div class="board"><div id="tbl-emo-pe"></div></div><h3 class="subhead">Matrice des duels<span class="n">ligne vs colonne — vert = la ligne gagne, rouge = elle perd</span></h3><div class="tablewrap"><table class="rt matrice"><thead><tr><th></th><th>OmniVoice</th><th>FireRed TTS3</th><th>VoxCPM2</th><th>XTTS-v2</th><th>Chatterbox v3</th><th>CosyVoice3-0.5B</th><th>MOSS-1.5</th><th>Audio8-TTS-0.6B</th></tr></thead><tbody><tr><td class="name">OmniVoice</td><td class="diag">·</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">1/1</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">1/1</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">1/1</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">2/2</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">3/3</td></tr><tr><td class="name">FireRed TTS3</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/1</td><td class="diag">·</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 62%,var(--crit)) 42%,transparent)">5/8</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">1/1</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">7/7</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">3/3</td></tr><tr><td class="name">VoxCPM2</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 38%,var(--crit)) 42%,transparent)">3/8</td><td class="diag">·</td><td class="nodata">—</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 71%,var(--crit)) 42%,transparent)">5/7</td><td class="nodata">—</td><td class="nodata">—</td></tr><tr><td class="name">XTTS-v2</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/1</td><td class="nodata">—</td><td class="nodata">—</td><td class="diag">·</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 67%,var(--crit)) 42%,transparent)">2/3</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 33%,var(--crit)) 42%,transparent)">1/3</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 100%,var(--crit)) 42%,transparent)">1/1</td></tr><tr><td class="name">Chatterbox v3</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/1</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/1</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 33%,var(--crit)) 42%,transparent)">1/3</td><td class="diag">·</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 62%,var(--crit)) 42%,transparent)">5/8</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 50%,var(--crit)) 42%,transparent)">1/2</td></tr><tr><td class="name">CosyVoice3-0.5B</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/2</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 29%,var(--crit)) 42%,transparent)">2/7</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 67%,var(--crit)) 42%,transparent)">2/3</td><td class="nodata">—</td><td class="diag">·</td><td class="nodata">—</td><td class="nodata">—</td></tr><tr><td class="name">MOSS-1.5</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/7</td><td class="nodata">—</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 38%,var(--crit)) 42%,transparent)">3/8</td><td class="nodata">—</td><td class="diag">·</td><td class="nodata">—</td></tr><tr><td class="name">Audio8-TTS-0.6B</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/3</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/3</td><td class="nodata">—</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 0%,var(--crit)) 42%,transparent)">0/1</td><td style="background:color-mix(in oklab,color-mix(in oklab,var(--ok) 50%,var(--crit)) 42%,transparent)">1/2</td><td class="nodata">—</td><td class="nodata">—</td><td class="diag">·</td></tr></tbody></table></div></section>
 </div></main>
 <footer><div class="wrap">
-  <span>Généré 2026-09-12 08:00 UTC · <span style="color:var(--muted)">benchmark/build_pages.py</span></span>
+  <span>Généré 2026-09-12 17:47 UTC · <span style="color:var(--muted)">benchmark/build_pages.py</span></span>
   <span>Métriques automatiques — <span style="color:var(--muted)">l'écoute humaine tranche</span></span>
   <span><a href="https://github.com/chvalois/benchmark-tts">github.com/chvalois/benchmark-tts</a></span>
 </div></footer>
@@ -299,6 +406,21 @@ var b=document.getElementById('tgl');if(!b)return;
 function cur(){return r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');}
 b.onclick=function(){var n=cur()==='dark'?'light':'dark';r.setAttribute('data-theme',n);
 try{localStorage.setItem(K,n);}catch(e){}};})();
+
+
+(function(){var b=document.getElementById('burger'),p=document.getElementById('navliens');
+if(!b||!p)return;
+function etat(ouvert){p.classList.toggle('ouvert',ouvert);
+  b.setAttribute('aria-expanded',ouvert?'true':'false');
+  b.setAttribute('aria-label',ouvert?'Fermer le menu':'Ouvrir le menu');}
+b.addEventListener('click',function(e){e.stopPropagation();
+  etat(b.getAttribute('aria-expanded')!=='true');});
+p.addEventListener('click',function(e){if(e.target.tagName==='A')etat(false);});
+document.addEventListener('click',function(e){
+  if(p.classList.contains('ouvert')&&!p.contains(e.target)&&e.target!==b)etat(false);});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&p.classList.contains('ouvert')){etat(false);b.focus();}});
+addEventListener('resize',function(){if(innerWidth>620)etat(false);});})();
 
 
 function ttsTable(mountSel, cfg){
@@ -334,7 +456,9 @@ function ttsTable(mountSel, cfg){
     cfg.cols.forEach(function(c){
       var pc=c.p?' p'+c.p:'';
       th+='<th class="'+(c.k==='_nom'?'name':'')+pc.trim()+'" data-k="'+c.k+'"'
-        +(sort.k===c.k?' data-active':'')+'>'+c.label
+        +(sort.k===c.k?' data-active':'')
+        +(c.desc?' title="'+c.desc.replace(/"/g,'&quot;')+'"':'')+'>'
+        +(c.desc?'<span class="hlabel">'+c.label+'</span>':c.label)
         +'<span style="color:var(--faint)">'+dirGlyph(c)+'</span>'+arrow(c.k)+'</th>'; });
     th+='</tr>';
     var body='';
@@ -354,8 +478,10 @@ function ttsTable(mountSel, cfg){
           inner='<span class="chip '+(k==='m-bad'?'crit':k==='m-good'?'ok':k==='m-mid'?'warn':'')+'">'+inner+'</span>'; k='';
         } else if(c.kind==='lic'){
           inner=row._lic; k='';
+        } else if(c.kind==='mos'){
+          inner=(v==null)?'—':(v.toFixed(2)+' <span class="ic">±'+(row[c.k+'_ic']||0).toFixed(2)+'</span>');
         }
-        tr+='<td class="'+(k+pc).trim()+'">'+inner+'</td>';
+        tr+='<td class="'+(k+pc).trim()+'" data-label="'+c.label+'">'+inner+'</td>';
       });
       tr+='</tr>';
       if(row._detail){
@@ -364,7 +490,7 @@ function ttsTable(mountSel, cfg){
       }
       body+=tr;
     });
-    mount.innerHTML='<div class="tablewrap"><table class="rt"><thead>'+th
+    mount.innerHTML='<div class="tablewrap"><table class="rt empile"><thead>'+th
       +'</thead><tbody>'+body+'</tbody></table></div>';
     mount.querySelectorAll('thead th[data-k]').forEach(function(h){
       h.onclick=function(){ var k=h.dataset.k;
@@ -385,5 +511,9 @@ function ttsTable(mountSel, cfg){
   render();
 }
 
-</script>
+var CFG_AB={cols:[{"k": "_nom", "label": "modèle"}, {"k": "winrate", "label": "win-rate", "dir": 1, "fmt": "pct", "g": 0.55, "b": 0.45}, {"k": "victoires", "label": "victoires", "fmt": "num1"}, {"k": "n", "label": "duels"}],rows:[{"_nom": "FireRed TTS3", "_slug": "firered_tts3", "winrate": 0.78125, "victoires": 25.0, "n": 32}, {"_nom": "VoxCPM2", "_slug": "voxcpm2", "winrate": 0.5166666666666667, "victoires": 15.5, "n": 30}, {"_nom": "MOSS-1.5", "_slug": "moss_tts_local_v15", "winrate": 0.2222222222222222, "victoires": 4.0, "n": 18}, {"_nom": "Chatterbox v3", "_slug": "chatterbox_v3", "winrate": 0.391304347826087, "victoires": 9.0, "n": 23}, {"_nom": "XTTS-v2", "_slug": "xtts_v2", "winrate": 0.375, "victoires": 7.5, "n": 20}, {"_nom": "CosyVoice3-0.5B", "_slug": "cosyvoice3_05b", "winrate": 0.4722222222222222, "victoires": 8.5, "n": 18}, {"_nom": "Audio8-TTS-0.6B", "_slug": "audio8_06b", "winrate": 0.125, "victoires": 1.0, "n": 8}, {"_nom": "OmniVoice", "_slug": "omnivoice", "winrate": 0.8636363636363636, "victoires": 9.5, "n": 11}],sort:{k:'winrate',asc:false},rankcol:true};ttsTable('#tbl-ab',CFG_AB);
+var CFG_MOS={cols:[{"k": "_nom", "label": "modèle"}, {"k": "naturel", "label": "Naturel", "dir": 1, "kind": "mos", "g": 3.5, "b": 2.5}, {"k": "intelligibilite", "label": "Intelligibilité", "dir": 1, "kind": "mos", "g": 3.5, "b": 2.5}, {"k": "similarite", "label": "Similarité", "dir": 1, "kind": "mos", "g": 3.5, "b": 2.5}, {"k": "expressivite", "label": "Expressivité", "dir": 1, "kind": "mos", "g": 3.5, "b": 2.5}],rows:[{"_nom": "MOSS-1.5", "_slug": "moss_tts_local_v15", "naturel": 2.92, "naturel_ic": 0.5175785673048424, "intelligibilite": 3.76, "intelligibilite_ic": 0.38005810082144026, "similarite": 3.84, "similarite_ic": 0.3698120603766189, "expressivite": 2.76, "expressivite_ic": 0.344722342376199}, {"_nom": "XTTS-v2", "_slug": "xtts_v2", "naturel": 2.888888888888889, "naturel_ic": 0.5160637047772436, "intelligibilite": 3.3703703703703702, "intelligibilite_ic": 0.5033390669451153, "similarite": 1.9259259259259258, "similarite_ic": 0.40417845004247577, "expressivite": 2.6296296296296298, "expressivite_ic": 0.3332697628524042}, {"_nom": "CosyVoice3-0.5B", "_slug": "cosyvoice3_05b", "naturel": 2.5, "naturel_ic": 0.5027293925217254, "intelligibilite": 2.75, "intelligibilite_ic": 0.46891476051792064, "similarite": 2.8, "similarite_ic": 0.4629479907130641, "expressivite": 2.4, "expressivite_ic": 0.4121154667016719}, {"_nom": "VoxCPM2", "_slug": "voxcpm2", "naturel": 3.2, "naturel_ic": 0.4361773339671225, "intelligibilite": 3.4, "intelligibilite_ic": 0.4190656273186814, "similarite": 3.466666666666667, "similarite_ic": 0.5012269390649753, "expressivite": 2.8666666666666667, "expressivite_ic": 0.5695627952893146}, {"_nom": "Chatterbox v3", "_slug": "chatterbox_v3", "naturel": 3.0952380952380953, "naturel_ic": 0.3802689106993161, "intelligibilite": 3.4761904761904763, "intelligibilite_ic": 0.32061052869659645, "similarite": 2.2857142857142856, "similarite_ic": 0.5086452594883786, "expressivite": 3.0, "expressivite_ic": 0.30243456592570017}, {"_nom": "FireRed TTS3", "_slug": "firered_tts3", "naturel": 4.0588235294117645, "naturel_ic": 0.355360336641741, "intelligibilite": 4.529411764705882, "intelligibilite_ic": 0.29675639818138994, "similarite": 4.411764705882353, "similarite_ic": 0.29394347784240765, "expressivite": 3.235294117647059, "expressivite_ic": 0.3576905933256188}, {"_nom": "OmniVoice", "_slug": "omnivoice", "naturel": 2.5, "naturel_ic": 0.7304488726499313, "intelligibilite": 3.8, "intelligibilite_ic": 0.4889098985384617, "similarite": 3.8, "similarite_ic": 0.39199999999999996, "expressivite": 3.2, "expressivite_ic": 0.39199999999999996}, {"_nom": "Audio8-TTS-0.6B", "_slug": "audio8_06b", "naturel": 2.6, "naturel_ic": 1.176, "intelligibilite": 4.2, "intelligibilite_ic": 0.39199999999999996, "similarite": 3.4, "similarite_ic": 1.176, "expressivite": 2.6, "expressivite_ic": 0.4800999895855029}],sort:{k:'naturel',asc:false},rankcol:true};ttsTable('#tbl-mos',CFG_MOS);
+var CFG_CORR={cols:[{"k": "_nom", "label": "axe humain ↔ métrique auto"}, {"k": "pearson", "label": "pearson r", "dir": 1, "fmt": "num2", "g": 0.5, "b": 0.2}, {"k": "n", "label": "n"}],rows:[{"_nom": "Intelligibilité ↔ 1-WER", "pearson": 0.19169475195835545, "n": 140}, {"_nom": "Similarité ↔ SIM", "pearson": 0.19506320100266425, "n": 140}],sort:{k:'pearson',asc:false}};ttsTable('#tbl-corr',CFG_CORR);
+var CFG_EMO={cols:[{"k": "_nom", "label": "modèle"}, {"k": "winrate", "label": "win-rate", "dir": 1, "fmt": "pct", "g": 0.55, "b": 0.45}, {"k": "victoires", "label": "victoires", "fmt": "num1"}, {"k": "n", "label": "duels"}],rows:[{"_nom": "MOSS-1.5", "_slug": "moss_tts_local_v15", "winrate": 0.21875, "victoires": 3.5, "n": 16}, {"_nom": "Chatterbox v3", "_slug": "chatterbox_v3", "winrate": 0.46875, "victoires": 7.5, "n": 16}, {"_nom": "VoxCPM2", "_slug": "voxcpm2", "winrate": 0.5277777777777778, "victoires": 9.5, "n": 18}, {"_nom": "CosyVoice3-0.5B", "_slug": "cosyvoice3_05b", "winrate": 0.35714285714285715, "victoires": 5.0, "n": 14}, {"_nom": "XTTS-v2", "_slug": "xtts_v2", "winrate": 0.5, "victoires": 6.0, "n": 12}, {"_nom": "FireRed TTS3", "_slug": "firered_tts3", "winrate": 0.7727272727272727, "victoires": 17.0, "n": 22}, {"_nom": "Audio8-TTS-0.6B", "_slug": "audio8_06b", "winrate": 0.18181818181818182, "victoires": 2.0, "n": 11}, {"_nom": "OmniVoice", "_slug": "omnivoice", "winrate": 0.8636363636363636, "victoires": 9.5, "n": 11}],sort:{k:'winrate',asc:false},rankcol:true};ttsTable('#tbl-emo',CFG_EMO);
+var CFG_EMOPE={cols:[{"k": "_nom", "label": "modèle"}, {"k": "colere", "label": "Colère", "dir": 1, "fmt": "pct", "g": 0.55, "b": 0.45}, {"k": "joie", "label": "Joie", "dir": 1, "fmt": "pct", "g": 0.55, "b": 0.45}, {"k": "peur", "label": "Peur", "dir": 1, "fmt": "pct", "g": 0.55, "b": 0.45}, {"k": "tristesse", "label": "Tristesse", "dir": 1, "fmt": "pct", "g": 0.55, "b": 0.45}],rows:[{"_nom": "MOSS-1.5", "_slug": "moss_tts_local_v15", "colere": 0.15, "joie": 1.0, "peur": 0.0, "tristesse": 0.0}, {"_nom": "Chatterbox v3", "_slug": "chatterbox_v3", "colere": 0.5714285714285714, "joie": 0.25, "peur": 0.16666666666666666, "tristesse": 1.0}, {"_nom": "VoxCPM2", "_slug": "voxcpm2", "colere": 0.5, "joie": 1.0, "peur": 0.6, "tristesse": 0.25}, {"_nom": "CosyVoice3-0.5B", "_slug": "cosyvoice3_05b", "colere": 0.3333333333333333, "joie": 0.5, "peur": 0.0, "tristesse": 0.75}, {"_nom": "XTTS-v2", "_slug": "xtts_v2", "colere": 0.5, "joie": 0.0, "peur": 0.8333333333333334, "tristesse": 0.375}, {"_nom": "FireRed TTS3", "_slug": "firered_tts3", "colere": 0.85, "joie": 0.3333333333333333, "peur": 1.0, "tristesse": 0.7}, {"_nom": "Audio8-TTS-0.6B", "_slug": "audio8_06b", "colere": 0.2, "joie": 0.0, "peur": 0.3333333333333333, "tristesse": 0.0}, {"_nom": "OmniVoice", "_slug": "omnivoice", "colere": 0.875, "joie": 1.0, "peur": 1.0, "tristesse": 0.6666666666666666}],sort:{k:'colere',asc:false},rankcol:true};ttsTable('#tbl-emo-pe',CFG_EMOPE);</script>
 </body></html>

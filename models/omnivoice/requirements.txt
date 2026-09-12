@@ -1,0 +1,15 @@
+# venv dédié OmniVoice (k2-fsa). Paquet PyPI, pas de code_ref GitHub.
+#
+#   source env.sh
+#   uv venv "$TTSB_VENVS/omnivoice" --python 3.11
+#   uv pip install --python "$TTSB_VENVS/omnivoice/bin/python" \
+#     --index-url https://download.pytorch.org/whl/cu128 torch==2.8.0 torchaudio==2.8.0
+#   uv pip install --python "$TTSB_VENVS/omnivoice/bin/python" \
+#     "omnivoice==0.2.1" soundfile librosa "numpy<2" nvidia-ml-py pyyaml
+#   # poids (bundle audio_tokenizer HiggsAudioV2 inclus dans le snapshot) :
+#   python3 benchmark/fetch_models.py --model omnivoice
+#
+# IMPORTANT : lancer avec `uv run --no-project` (pas juste `uv run`) — le
+# pyproject.toml racine du repo ne déclare aucune dépendance, donc `uv run`
+# sans --no-project resynchronise le venv dessus et désinstalle tout ce qui
+# vient d'être pip-installé manuellement (ModuleNotFoundError: numpy).

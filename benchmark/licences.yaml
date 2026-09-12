@@ -29,8 +29,8 @@ firered_tts3:
   licence: Apache-2.0
   usage_commercial: oui
   source_url: "https://huggingface.co/FireRedTeam/FireRedTTS3"
-  verifie_le: "2026-09-05"
-  note: "repo HF ouvert, apache-2.0 confirmé (métadonnée HF)"
+  verifie_le: "2026-09-12"
+  note: "apache-2.0 confirmé (métadonnée HF + LICENSE du dépôt). ATTENTION : la même model card ajoute un « Usage Disclaimer » affirmant que la fonction de clonage de voix est « intended solely for academic research purposes » — non repris dans le texte de licence Apache-2.0 lui-même, mais à arbitrer avant tout usage produit du clonage (relevé le 2026-09-12)."
 
 voxcpm2:
   licence: Apache-2.0
@@ -97,11 +97,11 @@ fish_speech:
   note: "Research License, inchangée depuis mars 2026 ; commercial interdit sans accord écrit séparé (classé Apache par erreur dans une veille antérieure)"
 
 omnivoice:
-  licence: "code Apache-2.0 / poids CC-BY-NC"
-  usage_commercial: conditionnel
-  source_url: "https://github.com/k2-fsa/omnivoice"
-  verifie_le: null
-  note: "le finetune émotion (ModelsLab/omnivoice-singing) reste non commercial malgré le code libre — même situation que XTTS-v2 / F5-TTS"
+  licence: Apache-2.0
+  usage_commercial: oui
+  source_url: "https://huggingface.co/k2-fsa/OmniVoice"
+  verifie_le: "2026-09-12"
+  note: "corrigé le 2026-09-12 : le poids k2-fsa/OmniVoice (celui utilisé par ce benchmark) n'affiche pas de tag `license` dans sa carte HF, mais le dépôt GitHub k2-fsa/OmniVoice (code + poids, même release) a un LICENSE Apache-2.0 à la racine, et le finetune émotion cité par une note antérieure (ModelsLab/omnivoice-singing) est LUI-MÊME apache-2.0 sur HF — l'ancienne note 'poids CC-BY-NC / conditionnel' était erronée."
 
 higgs_audio_v3:
   licence: "Research & Non-Commercial + Creator Use Grant"

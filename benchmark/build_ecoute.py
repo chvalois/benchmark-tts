@@ -35,6 +35,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import random
 import shutil
 from pathlib import Path
@@ -52,7 +53,7 @@ AUDIO_SRC = Path("/mnt/d/tts-benchmark-data/audio_genere")  # $TTSB_AUDIO_OUT
 # voix-à-voix — sa qualité reste couverte par les métriques auto
 # (UTMOS + comparatif). Cf. docs/METHODOLOGIE.md §10.6.
 MODELES = ["firered_tts3", "voxcpm2", "chatterbox_v3", "cosyvoice3_05b",
-           "xtts_v2", "moss_tts_local_v15"]
+           "xtts_v2", "moss_tts_local_v15", "omnivoice", "audio8_06b"]
 # Les deux "têtes" : plus exposées (vs chaque challenger + l'une à l'autre).
 # VoxCPM2 en tête aussi (moins lourd que FireRed, intérêt fort).
 TETES = ["voxcpm2", "firered_tts3"]
@@ -88,8 +89,7 @@ LIMITE_SESSION = 20     # items max tirés par session (cf. index.html)
 # rendu de l'émotion (pas émotion vs neutre : le résultat serait joué
 # d'avance). Un modèle sans clip pour ce (phrase, voix) est sauté.
 EMO_MODELES = ["firered_tts3", "voxcpm2", "chatterbox_v3", "moss_tts_local_v15",
-               "cosyvoice3_05b", "xtts_v2"]
-EMO_COMBOS = [(0, 1), (2, 3), (4, 5), (1, 4), (0, 3), (2, 5)]  # couvre les 6, paires variées
+               "cosyvoice3_05b", "xtts_v2", "omnivoice", "audio8_06b"]
 EMOTIONS = {                       # émotion -> (voix de réf, phrases, mot pour la question)
     "joie":      ("papa_joie",      ["p01", "p06"],                      "JOYEUX / ENTHOUSIASTE"),
     "colere":    ("papa_colere",    ["p02", "p07", "p19", "p22", "p33"], "EN COLÈRE"),
@@ -131,6 +131,87 @@ def _hid(prefixe: str, *parts) -> str:
 
 def _flip(hid: str) -> bool:
     return int(hid[-2:], 16) % 2 == 1
+
+
+# --- équité d'exposition : sur-représente dans le NOUVEAU pool les modèles
+# les moins ENTENDUS jusqu'ici (votes réels déjà collectés dans exports/,
+# dé-anonymisés via les solutions archivées) — un modèle tout juste ajouté
+# (compte=0) démarre avec le poids maximal. -------------------------------
+def _charger_solution_archivee() -> dict:
+    """Fusion de `_solution.json` (build courant, avant écrasement) + de
+    l'archive `_solutions/` — mapping id -> modèle(s) des builds précédents,
+    seul moyen de décoder les votes réels déjà exportés."""
+    sol: dict[str, dict] = {"ab": {}, "mos": {}, "emo": {}}
+    dossier = SORTIE / "_solutions"
+    fichiers = sorted(dossier.glob("*.json")) if dossier.is_dir() else []
+    courante = SORTIE / "_solution.json"
+    if courante.is_file():
+        fichiers = fichiers + [courante]
+    for f in fichiers:
+        d = json.loads(f.read_text(encoding="utf-8"))
+        for k in ("ab", "mos", "emo"):
+            sol[k].update(d.get(k, {}))
+    return sol
+
+
+def _comptes_ecoute(modeles: list[str]) -> dict[str, int]:
+    """Nb de fois que chaque modèle a été réellement ENTENDU (voté) dans
+    `exports/*.json` — pas juste « proposé » dans un pool. Un modèle absent
+    des exports (jamais écouté, ex. tout juste ajouté) reste à 0."""
+    comptes = {m: 0 for m in modeles}
+    dossier_exports = RACINE / "exports"
+    if not dossier_exports.is_dir():
+        return comptes
+    sol = _charger_solution_archivee()
+    axes_mos = [a["k"] for a in AXES_MOS]
+    for f in sorted(dossier_exports.glob("*.json")):
+        d = json.loads(f.read_text(encoding="utf-8"))
+        for v in d.get("votes", []):
+            vid = v.get("id")
+            if not vid:
+                continue
+            if vid in sol["ab"] and v.get("choix"):
+                s = sol["ab"][vid]
+                for m in (s.get("A_modele"), s.get("B_modele")):
+                    if m in comptes:
+                        comptes[m] += 1
+            elif vid in sol["emo"] and v.get("choix"):
+                s = sol["emo"][vid]
+                for m in (s.get("A_modele"), s.get("B_modele")):
+                    if m in comptes:
+                        comptes[m] += 1
+            elif vid in sol["mos"] and any(v.get(a) is not None for a in axes_mos):
+                m = sol["mos"][vid].get("modele")
+                if m in comptes:
+                    comptes[m] += 1
+    return comptes
+
+
+def _poids_equite(comptes: dict[str, int]) -> dict[str, float]:
+    """Poids décroissant avec le nb d'écoutes déjà collectées (racine plutôt
+    qu'inverse linéaire : sur-représente sans pour autant écraser les
+    modèles déjà bien couverts à quasi rien). Un modèle à 0 écoute a le
+    poids maximal (1.0) ; à 58 écoutes déjà, ~0,13 (~7-8x moins de chances
+    d'être tiré à chaque tour) -> rattrapage rapide sans exclusion de fait."""
+    return {m: 1.0 / math.sqrt(1 + n) for m, n in comptes.items()}
+
+
+def _tirage_pondere(rnd: random.Random, pool: list[str], poids: dict[str, float]) -> str:
+    return rnd.choices(pool, weights=[poids.get(m, 1.0) for m in pool], k=1)[0]
+
+
+def _tirage_pondere_sans_remise(
+    rnd: random.Random, pool: list[str], poids: dict[str, float], k: int
+) -> list[str]:
+    """`k` modèles DISTINCTS de `pool`, tirés sans remise mais pondérés
+    (poids fort = plus de chances d'être tiré tôt)."""
+    restant = list(pool)
+    out: list[str] = []
+    for _ in range(min(k, len(restant))):
+        m = _tirage_pondere(rnd, restant, poids)
+        out.append(m)
+        restant.remove(m)
+    return out
 
 
 def _wav(modele: str, phrase: str, voix: str | None = None) -> Path:
@@ -204,6 +285,11 @@ def build() -> None:
     rnd = random.Random(SEED)
     phrases_ab, phrases_mos = _charger_selection()
 
+    comptes_ecoute = _comptes_ecoute(sorted(set(MODELES) | set(EMO_MODELES)))
+    poids = _poids_equite(comptes_ecoute)
+    print("[build_ecoute] écoutes réelles déjà collectées (équité, poids appliqué) : "
+          + ", ".join(f"{m}={comptes_ecoute[m]}" for m in sorted(comptes_ecoute, key=lambda m: comptes_ecoute[m])))
+
     clips: dict[tuple[str, str], str] = {}
     solution_clips: dict[str, dict] = {}
 
@@ -228,12 +314,15 @@ def build() -> None:
         return (m, voix) not in exclus and _wav(m, phrase, voix).is_file()
 
     # --- paires A/B, PAR VOIX : pas de champion unique -------------------
-    #   1) une tête (alternée) vs un challenger (tournant) ;
-    #   2) 1 phrase / 2 : duel des têtes ; l'autre : challenger vs challenger ;
-    #   + N_PAIRES_ALEA paires aléatoires / voix.
+    #   1) une tête (alternée) vs un challenger (tiré au sort, PONDÉRÉ équité) ;
+    #   2) 1 phrase / 2 : duel des têtes ; l'autre : challenger vs challenger
+    #      (les deux tirés pondérés équité) ;
+    #   + N_PAIRES_ALEA paires aléatoires / voix (pondérées équité aussi).
     # Un combo (modèle, voix) au WER > seuil (clip cassé) est sauté.
+    # Pondération équité (`poids`) : un modèle moins écouté jusqu'ici a plus
+    # de chances d'être tiré -> sur-représenté dans CE pool pour rattraper
+    # les modèles déjà beaucoup entendus (cf. `_comptes_ecoute` plus haut).
     challengers = [m for m in MODELES if m not in TETES]
-    nc = len(challengers)
     paires: list[dict] = []
     vus: set[tuple] = set()
 
@@ -247,17 +336,21 @@ def build() -> None:
         paires.append({"voix": voix, "phrase": phrase, "m1": a, "m2": b})
 
     for voix in VOIX_ECOUTE:
-        k2 = 0
         for i, phrase in enumerate(phrases_ab):
-            _ajouter(voix, phrase, TETES[(i + i // nc) % 2], challengers[i % nc])
+            chall = _tirage_pondere(rnd, challengers, poids)
+            _ajouter(voix, phrase, TETES[(i + i // len(challengers)) % 2], chall)
             if i % 2 == 0:
                 _ajouter(voix, phrase, TETES[0], TETES[1])
             else:
-                _ajouter(voix, phrase, challengers[k2 % nc], challengers[(k2 + 1) % nc])
-                k2 += 1
+                a = _tirage_pondere(rnd, challengers, poids)
+                reste = [m for m in challengers if m != a] or [a]
+                b = _tirage_pondere(rnd, reste, poids)
+                _ajouter(voix, phrase, a, b)
         for _ in range(N_PAIRES_ALEA * 6):
             phrase = rnd.choice(phrases_ab)
-            a, b = rnd.sample(MODELES, 2)
+            a = _tirage_pondere(rnd, MODELES, poids)
+            reste = [m for m in MODELES if m != a]
+            b = _tirage_pondere(rnd, reste, poids)
             _ajouter(voix, phrase, a, b)
 
     rnd.shuffle(paires)
@@ -284,16 +377,18 @@ def build() -> None:
     # Phrase de registre émotionnel  -> UNIQUEMENT la voix `papa_<émotion>`
     # correspondante (pas de rendu neutre d'une réplique en colère, etc.).
     # Phrase neutre                  -> les voix de `VOIX_ECOUTE`.
+    # Rotation PONDÉRÉE équité (sans remise) plutôt qu'un simple modulo :
+    # un modèle moins écouté jusqu'ici a plus de chances d'entrer dans les
+    # `N_MODELES_MOS` tirés pour chaque (phrase, voix).
     mos: list[dict] = []
     solution_mos: dict[str, dict] = {}
-    for i, phrase in enumerate(phrases_mos):
+    for phrase in phrases_mos:
         voix_list = [MOS_VOIX_EMO[phrase]] if phrase in MOS_VOIX_EMO else VOIX_ECOUTE
         for voix in voix_list:
             dispo = [m for m in MODELES if _ok(m, voix, phrase)]
             if not dispo:
                 continue
-            for j in range(N_MODELES_MOS):
-                m = dispo[(N_MODELES_MOS * i + j) % len(dispo)]
+            for m in _tirage_pondere_sans_remise(rnd, dispo, poids, N_MODELES_MOS):
                 mid = _hid("mos", voix, phrase, m)
                 if mid in solution_mos:
                     continue
@@ -308,21 +403,23 @@ def build() -> None:
     rnd.shuffle(mos)
 
     # --- mode ÉMOTION : modèle A vs modèle B, même voix `papa_<émotion>` ----
+    # Paires tirées PONDÉRÉES équité (plus de chances pour un modèle moins
+    # écouté jusqu'ici), avec re-tirage tant qu'on n'a pas `N_PAIRES_EMO`
+    # paires distinctes pour cette phrase (ou jusqu'à épuiser les essais).
     emo: list[dict] = []
     solution_emo: dict[str, dict] = {}
     emo_sautes: list[str] = []
-    rot = 0
     for nom_emo, (voix_emo, phrases_emo, mot) in EMOTIONS.items():
         for phrase in phrases_emo:
-            for j in range(N_PAIRES_EMO):
-                ia, ib = EMO_COMBOS[(rot + j) % len(EMO_COMBOS)]
-                a, b = EMO_MODELES[ia], EMO_MODELES[ib]
-                if a == b:
-                    continue
-                if not (_wav(a, phrase, voix_emo).is_file()
-                        and _wav(b, phrase, voix_emo).is_file()):
-                    emo_sautes.append(f"{a}|{b}/{nom_emo}/{phrase}")
-                    continue
+            dispo_emo = [m for m in EMO_MODELES if _wav(m, phrase, voix_emo).is_file()]
+            obtenues = 0
+            essais = 0
+            max_essais = N_PAIRES_EMO * 8
+            while obtenues < N_PAIRES_EMO and essais < max_essais and len(dispo_emo) >= 2:
+                essais += 1
+                a = _tirage_pondere(rnd, dispo_emo, poids)
+                reste = [m for m in dispo_emo if m != a]
+                b = _tirage_pondere(rnd, reste, poids)
                 mlo, mhi = sorted((a, b))
                 eid = _hid("emo", nom_emo, phrase, mlo, mhi)
                 if eid in solution_emo:
@@ -338,7 +435,10 @@ def build() -> None:
                 })
                 solution_emo[eid] = {"phrase": phrase, "emotion": nom_emo,
                                      "voix": voix_emo, "A_modele": m_a, "B_modele": m_b}
-            rot += N_PAIRES_EMO
+                obtenues += 1
+            for m in EMO_MODELES:
+                if m not in dispo_emo:
+                    emo_sautes.append(f"{m}/{nom_emo}/{phrase}")
     rnd.shuffle(emo)
     if emo_sautes:
         print(f"[build_ecoute] {len(emo_sautes)} paires émotion sautées "
@@ -359,7 +459,8 @@ def build() -> None:
                   "wer_max_ecoute": WER_MAX_ECOUTE,
                   "combos_exclus": sorted(f"{m}/{v}" for m, v in exclus),
                   "phrases_ab": phrases_ab, "phrases_mos": phrases_mos,
-                  "emo_sautes": emo_sautes}
+                  "emo_sautes": emo_sautes,
+                  "equite_comptes_ecoute": comptes_ecoute, "equite_poids": poids}
 
     manifest = {
         # côté page : PAS de nom de modèle (test aveugle) — seulement une

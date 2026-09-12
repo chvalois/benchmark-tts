@@ -17,10 +17,10 @@ Mesuré sur matériel réel (**RTX 4090**, 24 Go), un modèle à la fois.
 | 0 | Socle infra (env, `doctor.py`, stockage D:) | ✅ |
 | 1 | Contrats partagés (corpus, voix, pré-traitement, `models.lock`, contrat modèle) | ✅ |
 | 2 | Module commun de scoring (WER FR, fidélité, vitesse, licence, stabilité) | ✅ pur & testé (97 % cov.) |
-| 3 | Adaptateurs modèles (venv-par-modèle) | ✅ 8 : chatterbox_v3, kokoro_82m, firered_tts3, voxcpm2, moss_tts_local_v15, cosyvoice3_05b, xtts_v2 (+ f5_tts = FR non supporté) |
+| 3 | Adaptateurs modèles (venv-par-modèle) | ✅ 8 : chatterbox_v3, kokoro_82m, firered_tts3, voxcpm2, moss_tts_local_v15, cosyvoice3_05b, xtts_v2 (+ f5_tts = FR non supporté) · 🚧 +2 en intégration (smoke-testés, pas encore scorés corpus complet) : omnivoice, audio8_06b |
 | 4 | Protocole subjectif (MOS, A/B aveugle) | ✅ `build_ecoute.py` → `site/ecoute/` ; agrégation `agreger_ecoute.py` → `resultats/ecoute.md` |
 | 5 | Agrégation & rapport | ✅ `rapport.py` + `comparatif.py` → `resultats/` (par modèle + `comparatif.md` + `RESUME.md` + `EMOTIONS.md`) |
-| 6 | Présence publique (site de résultats) | 🚧 `build_pages.py` → `site/resultats/` (3 pages autonomes) ; déploiement Coolify |
+| 6 | Présence publique (site de résultats) | 🚧 `build_pages.py` → `site/resultats/` (classement, métriques, écoute + 1 fiche par modèle) ; déploiement Coolify |
 | 7 | Cadence & contenu (re-run par sortie de modèle, outil de conseil) | à venir |
 
 **Périmètre v1** : corpus de phrases annotées + WER FR + licence + vitesse + écoute humaine.
@@ -51,7 +51,9 @@ python3 benchmark/fetch_models.py --check --set lean
 
 - `index.html` — classement triable + verdict + méthode
 - `objectif.html` — table complète des métriques auto, par voix
-- `ecoute.html` — rendu du test d'écoute humain (`resultats/ecoute.md`)
+- `ecoute.html` — les 3 protocoles du test d'écoute humain (`resultats/ecoute.json`)
+- `modele-<nom>.html` — une fiche par modèle : particularité, choix techniques
+  vulgarisés, mesures et **sources vérifiées** (registre `benchmark/fiches_modeles.yaml`)
 
 ```bash
 source env.sh

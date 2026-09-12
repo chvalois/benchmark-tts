@@ -1,0 +1,630 @@
+{
+  "panel": {
+    "auditeurs": 8,
+    "ab": 80,
+    "mos": 140,
+    "emo": 80
+  },
+  "ab": {
+    "stats": {
+      "firered_tts3": {
+        "winrate": 0.78125,
+        "victoires": 25.0,
+        "n": 32
+      },
+      "voxcpm2": {
+        "winrate": 0.5166666666666667,
+        "victoires": 15.5,
+        "n": 30
+      },
+      "moss_tts_local_v15": {
+        "winrate": 0.2222222222222222,
+        "victoires": 4.0,
+        "n": 18
+      },
+      "chatterbox_v3": {
+        "winrate": 0.391304347826087,
+        "victoires": 9.0,
+        "n": 23
+      },
+      "xtts_v2": {
+        "winrate": 0.375,
+        "victoires": 7.5,
+        "n": 20
+      },
+      "cosyvoice3_05b": {
+        "winrate": 0.4722222222222222,
+        "victoires": 8.5,
+        "n": 18
+      },
+      "audio8_06b": {
+        "winrate": 0.125,
+        "victoires": 1.0,
+        "n": 8
+      },
+      "omnivoice": {
+        "winrate": 0.8636363636363636,
+        "victoires": 9.5,
+        "n": 11
+      }
+    },
+    "duel": {
+      "firered_tts3|voxcpm2": [
+        6,
+        2
+      ],
+      "firered_tts3|moss_tts_local_v15": [
+        4,
+        0
+      ],
+      "moss_tts_local_v15|voxcpm2": [
+        2,
+        3
+      ],
+      "chatterbox_v3|cosyvoice3_05b": [
+        0,
+        1
+      ],
+      "cosyvoice3_05b|firered_tts3": [
+        1,
+        3
+      ],
+      "chatterbox_v3|firered_tts3": [
+        0,
+        5
+      ],
+      "cosyvoice3_05b|moss_tts_local_v15": [
+        1,
+        0
+      ],
+      "chatterbox_v3|moss_tts_local_v15": [
+        2,
+        1
+      ],
+      "cosyvoice3_05b|xtts_v2": [
+        1,
+        1
+      ],
+      "firered_tts3|xtts_v2": [
+        4,
+        1
+      ],
+      "chatterbox_v3|xtts_v2": [
+        2,
+        1
+      ],
+      "voxcpm2|xtts_v2": [
+        3,
+        0
+      ],
+      "cosyvoice3_05b|voxcpm2": [
+        1,
+        3
+      ],
+      "moss_tts_local_v15|xtts_v2": [
+        0,
+        2
+      ],
+      "chatterbox_v3|voxcpm2": [
+        0,
+        2
+      ],
+      "audio8_06b|omnivoice": [
+        0,
+        5
+      ],
+      "omnivoice|voxcpm2": [
+        3,
+        0
+      ],
+      "audio8_06b|chatterbox_v3": [
+        0,
+        1
+      ],
+      "audio8_06b|moss_tts_local_v15": [
+        1,
+        0
+      ],
+      "audio8_06b|cosyvoice3_05b": [
+        0,
+        1
+      ],
+      "firered_tts3|omnivoice": [
+        1,
+        1
+      ]
+    },
+    "defauts": {
+      "chatterbox_v3": {
+        "accent": 4,
+        "voix_diff": 7,
+        "artefact": 2,
+        "tronque": 1,
+        "repetition": 1
+      },
+      "xtts_v2": {
+        "artefact": 5,
+        "voix_diff": 11,
+        "accent": 2,
+        "tronque": 1
+      },
+      "cosyvoice3_05b": {
+        "voix_diff": 8,
+        "accent": 4,
+        "tronque": 2,
+        "repetition": 1,
+        "artefact": 1
+      },
+      "moss_tts_local_v15": {
+        "voix_diff": 2,
+        "artefact": 1
+      },
+      "voxcpm2": {
+        "tronque": 1
+      },
+      "omnivoice": {
+        "tronque": 1
+      },
+      "firered_tts3": {
+        "repetition": 1,
+        "accent": 2
+      },
+      "audio8_06b": {
+        "voix_diff": 1,
+        "artefact": 1
+      }
+    }
+  },
+  "mos": {
+    "par_modele": {
+      "moss_tts_local_v15": {
+        "naturel": {
+          "moyenne": 2.92,
+          "ic": 0.5175785673048424,
+          "n": 25
+        },
+        "intelligibilite": {
+          "moyenne": 3.76,
+          "ic": 0.38005810082144026,
+          "n": 25
+        },
+        "similarite": {
+          "moyenne": 3.84,
+          "ic": 0.3698120603766189,
+          "n": 25
+        },
+        "expressivite": {
+          "moyenne": 2.76,
+          "ic": 0.344722342376199,
+          "n": 25
+        }
+      },
+      "xtts_v2": {
+        "naturel": {
+          "moyenne": 2.888888888888889,
+          "ic": 0.5160637047772436,
+          "n": 27
+        },
+        "intelligibilite": {
+          "moyenne": 3.3703703703703702,
+          "ic": 0.5033390669451153,
+          "n": 27
+        },
+        "similarite": {
+          "moyenne": 1.9259259259259258,
+          "ic": 0.40417845004247577,
+          "n": 27
+        },
+        "expressivite": {
+          "moyenne": 2.6296296296296298,
+          "ic": 0.3332697628524042,
+          "n": 27
+        }
+      },
+      "cosyvoice3_05b": {
+        "naturel": {
+          "moyenne": 2.5,
+          "ic": 0.5027293925217254,
+          "n": 20
+        },
+        "intelligibilite": {
+          "moyenne": 2.75,
+          "ic": 0.46891476051792064,
+          "n": 20
+        },
+        "similarite": {
+          "moyenne": 2.8,
+          "ic": 0.4629479907130641,
+          "n": 20
+        },
+        "expressivite": {
+          "moyenne": 2.4,
+          "ic": 0.4121154667016719,
+          "n": 20
+        }
+      },
+      "voxcpm2": {
+        "naturel": {
+          "moyenne": 3.2,
+          "ic": 0.4361773339671225,
+          "n": 15
+        },
+        "intelligibilite": {
+          "moyenne": 3.4,
+          "ic": 0.4190656273186814,
+          "n": 15
+        },
+        "similarite": {
+          "moyenne": 3.466666666666667,
+          "ic": 0.5012269390649753,
+          "n": 15
+        },
+        "expressivite": {
+          "moyenne": 2.8666666666666667,
+          "ic": 0.5695627952893146,
+          "n": 15
+        }
+      },
+      "chatterbox_v3": {
+        "naturel": {
+          "moyenne": 3.0952380952380953,
+          "ic": 0.3802689106993161,
+          "n": 21
+        },
+        "intelligibilite": {
+          "moyenne": 3.4761904761904763,
+          "ic": 0.32061052869659645,
+          "n": 21
+        },
+        "similarite": {
+          "moyenne": 2.2857142857142856,
+          "ic": 0.5086452594883786,
+          "n": 21
+        },
+        "expressivite": {
+          "moyenne": 3.0,
+          "ic": 0.30243456592570017,
+          "n": 21
+        }
+      },
+      "firered_tts3": {
+        "naturel": {
+          "moyenne": 4.0588235294117645,
+          "ic": 0.355360336641741,
+          "n": 17
+        },
+        "intelligibilite": {
+          "moyenne": 4.529411764705882,
+          "ic": 0.29675639818138994,
+          "n": 17
+        },
+        "similarite": {
+          "moyenne": 4.411764705882353,
+          "ic": 0.29394347784240765,
+          "n": 17
+        },
+        "expressivite": {
+          "moyenne": 3.235294117647059,
+          "ic": 0.3576905933256188,
+          "n": 17
+        }
+      },
+      "omnivoice": {
+        "naturel": {
+          "moyenne": 2.5,
+          "ic": 0.7304488726499313,
+          "n": 10
+        },
+        "intelligibilite": {
+          "moyenne": 3.8,
+          "ic": 0.4889098985384617,
+          "n": 10
+        },
+        "similarite": {
+          "moyenne": 3.8,
+          "ic": 0.39199999999999996,
+          "n": 10
+        },
+        "expressivite": {
+          "moyenne": 3.2,
+          "ic": 0.39199999999999996,
+          "n": 10
+        }
+      },
+      "audio8_06b": {
+        "naturel": {
+          "moyenne": 2.6,
+          "ic": 1.176,
+          "n": 5
+        },
+        "intelligibilite": {
+          "moyenne": 4.2,
+          "ic": 0.39199999999999996,
+          "n": 5
+        },
+        "similarite": {
+          "moyenne": 3.4,
+          "ic": 1.176,
+          "n": 5
+        },
+        "expressivite": {
+          "moyenne": 2.6,
+          "ic": 0.4800999895855029,
+          "n": 5
+        }
+      }
+    },
+    "correlations": [
+      {
+        "axe_humain": "intelligibilite",
+        "metrique": "1-WER",
+        "pearson": 0.19169475195835545,
+        "n": 140
+      },
+      {
+        "axe_humain": "similarite",
+        "metrique": "SIM",
+        "pearson": 0.19506320100266425,
+        "n": 140
+      }
+    ]
+  },
+  "emo": {
+    "global": {
+      "moss_tts_local_v15": {
+        "winrate": 0.21875,
+        "victoires": 3.5,
+        "n": 16
+      },
+      "chatterbox_v3": {
+        "winrate": 0.46875,
+        "victoires": 7.5,
+        "n": 16
+      },
+      "voxcpm2": {
+        "winrate": 0.5277777777777778,
+        "victoires": 9.5,
+        "n": 18
+      },
+      "cosyvoice3_05b": {
+        "winrate": 0.35714285714285715,
+        "victoires": 5.0,
+        "n": 14
+      },
+      "xtts_v2": {
+        "winrate": 0.5,
+        "victoires": 6.0,
+        "n": 12
+      },
+      "firered_tts3": {
+        "winrate": 0.7727272727272727,
+        "victoires": 17.0,
+        "n": 22
+      },
+      "audio8_06b": {
+        "winrate": 0.18181818181818182,
+        "victoires": 2.0,
+        "n": 11
+      },
+      "omnivoice": {
+        "winrate": 0.8636363636363636,
+        "victoires": 9.5,
+        "n": 11
+      }
+    },
+    "par_emotion": {
+      "moss_tts_local_v15": {
+        "colere": {
+          "victoires": 1.5,
+          "n": 10
+        },
+        "joie": {
+          "victoires": 2.0,
+          "n": 2
+        },
+        "peur": {
+          "victoires": 0.0,
+          "n": 1
+        },
+        "tristesse": {
+          "victoires": 0.0,
+          "n": 3
+        }
+      },
+      "chatterbox_v3": {
+        "colere": {
+          "victoires": 4.0,
+          "n": 7
+        },
+        "joie": {
+          "victoires": 1.0,
+          "n": 4
+        },
+        "peur": {
+          "victoires": 0.5,
+          "n": 3
+        },
+        "tristesse": {
+          "victoires": 2.0,
+          "n": 2
+        }
+      },
+      "voxcpm2": {
+        "colere": {
+          "victoires": 3.5,
+          "n": 7
+        },
+        "joie": {
+          "victoires": 2.0,
+          "n": 2
+        },
+        "peur": {
+          "victoires": 3.0,
+          "n": 5
+        },
+        "tristesse": {
+          "victoires": 1.0,
+          "n": 4
+        }
+      },
+      "cosyvoice3_05b": {
+        "colere": {
+          "victoires": 1.0,
+          "n": 3
+        },
+        "joie": {
+          "victoires": 1.0,
+          "n": 2
+        },
+        "peur": {
+          "victoires": 0.0,
+          "n": 5
+        },
+        "tristesse": {
+          "victoires": 3.0,
+          "n": 4
+        }
+      },
+      "xtts_v2": {
+        "colere": {
+          "victoires": 2.0,
+          "n": 4
+        },
+        "joie": {
+          "victoires": 0.0,
+          "n": 1
+        },
+        "peur": {
+          "victoires": 2.5,
+          "n": 3
+        },
+        "tristesse": {
+          "victoires": 1.5,
+          "n": 4
+        }
+      },
+      "firered_tts3": {
+        "colere": {
+          "victoires": 8.5,
+          "n": 10
+        },
+        "joie": {
+          "victoires": 1.0,
+          "n": 3
+        },
+        "peur": {
+          "victoires": 4.0,
+          "n": 4
+        },
+        "tristesse": {
+          "victoires": 3.5,
+          "n": 5
+        }
+      },
+      "audio8_06b": {
+        "colere": {
+          "victoires": 1.0,
+          "n": 5
+        },
+        "joie": {
+          "victoires": 0.0,
+          "n": 2
+        },
+        "peur": {
+          "victoires": 1.0,
+          "n": 3
+        },
+        "tristesse": {
+          "victoires": 0.0,
+          "n": 1
+        }
+      },
+      "omnivoice": {
+        "colere": {
+          "victoires": 3.5,
+          "n": 4
+        },
+        "joie": {
+          "victoires": 2.0,
+          "n": 2
+        },
+        "peur": {
+          "victoires": 2.0,
+          "n": 2
+        },
+        "tristesse": {
+          "victoires": 2.0,
+          "n": 3
+        }
+      }
+    },
+    "emotions": [
+      "colere",
+      "joie",
+      "peur",
+      "tristesse"
+    ],
+    "duel": {
+      "chatterbox_v3|moss_tts_local_v15": [
+        5,
+        3
+      ],
+      "cosyvoice3_05b|voxcpm2": [
+        2,
+        5
+      ],
+      "chatterbox_v3|xtts_v2": [
+        1,
+        2
+      ],
+      "firered_tts3|voxcpm2": [
+        5,
+        3
+      ],
+      "cosyvoice3_05b|xtts_v2": [
+        2,
+        1
+      ],
+      "firered_tts3|moss_tts_local_v15": [
+        7,
+        0
+      ],
+      "audio8_06b|firered_tts3": [
+        0,
+        3
+      ],
+      "chatterbox_v3|firered_tts3": [
+        0,
+        1
+      ],
+      "audio8_06b|omnivoice": [
+        0,
+        3
+      ],
+      "audio8_06b|chatterbox_v3": [
+        1,
+        1
+      ],
+      "chatterbox_v3|omnivoice": [
+        0,
+        1
+      ],
+      "cosyvoice3_05b|omnivoice": [
+        0,
+        2
+      ],
+      "audio8_06b|xtts_v2": [
+        0,
+        1
+      ],
+      "omnivoice|xtts_v2": [
+        1,
+        0
+      ],
+      "firered_tts3|omnivoice": [
+        0,
+        1
+      ]
+    }
+  }
+}

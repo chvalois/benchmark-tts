@@ -128,12 +128,29 @@
       "licence": "Apache-2.0",
       "usage_commercial": true,
       "clonage_zero_shot": true,
-      "langue_fr": "correct",
-      "vram_go_estimee": 4,
+      "langue_fr": "confirmé (11 langues recommandées, dont French — card HF)",
+      "vram_go_estimee": 6,
       "disque_go_estimee": 6,
       "venv": "audio8_06b",
       "statut": "verifie",
-      "notes": "id en 'b' minuscule ; single model.safetensors ; variantes ONNX-INT4 dispo"
+      "notes": "id en 'b' minuscule ; single model.safetensors ; variantes ONNX-INT4 dispo. Code GitHub (Edge0-AI/Audio8_TTS, ex-Audio8-AI) = démo/training seulement ; l'inférence charge le code custom EMBARQUÉ dans le snapshot HF via AutoModel/AutoProcessor trust_remote_code=True (pas de code_ref séparé). Codec natif 44,1 kHz -> resample commun vers 24 kHz. Smoke-test réel OK le 2026-09-12 (cold start ~72 s, VRAM pic mesurée ~5,9 Go -> estimation relevée de 4 à 6 Go). `uv run` EXIGE `--no-project` (voir NOTES.md)."
+    },
+    "omnivoice": {
+      "phase": 2,
+      "role": "candidat clonage massivement multilingue (k2-fsa, 600+ langues)",
+      "repo_id": "k2-fsa/OmniVoice",
+      "repo_id_verifie": true,
+      "revision": "c5fdb5ccb189668d56333f77ba2629f4cd7535f4",
+      "hf_allow_patterns": null,
+      "licence": "Apache-2.0",
+      "usage_commercial": true,
+      "clonage_zero_shot": true,
+      "langue_fr": "confirmé (docs/languages.md : code 'fra', 23675 h d'entraînement)",
+      "vram_go_estimee": 6,
+      "disque_go_estimee": 5,
+      "venv": "omnivoice",
+      "statut": "verifie",
+      "notes": "paquet PyPI `omnivoice==0.2.1` (pas de code_ref GitHub : OmniVoice.from_pretrained() accepte directement un chemin local, pas besoin de repo_id distant). audio_tokenizer (HiggsAudioV2, ~0,8 Go) déjà bundlé dans le snapshot HF -> pas de download implicite séparé (contrairement à MOSS). Langue pilotée par paramètre explicite `language=\"French\"` passé à generate(). Pas de seed natif exposé par le modèle -> variance des reps portée par la graine globale torch (fixer_seed, déjà posée par executer_corpus). Smoke-test réel OK le 2026-09-12 (cold start ~77 s, VRAM pic mesurée ~5,5 Go -> estimation relevée de 4 à 6 Go). `uv run` EXIGE `--no-project` (voir NOTES.md)."
     },
     "pocket_tts": {
       "phase": 2,

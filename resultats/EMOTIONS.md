@@ -20,11 +20,17 @@ plancher humain soustrait).
 
 | modèle | voix | clon. | WER | ±σ | SIM | hallu. | rép. | tronc. | RTF | CV dur. |
 |---|---|---|---|---|---|---|---|---|---|---|
+| audio8_06b | papa_joie | oui | 0.0% | 0.0% | 0.727 | 0.0% | 0.0% | 0.0% | 1.52 | 3.7% |
+| audio8_06b | papa_peur | oui | 0.0% | 0.0% | 0.759 | 0.0% | 0.0% | 0.0% | 1.12 | 5.2% |
+| audio8_06b | papa_tristesse | oui | 0.0% | 0.0% | 0.641 | 0.0% | 0.0% | 0.0% | 1.14 | 4.7% |
 | chatterbox_v3 | papa_joie | oui | 0.0% | 0.0% | 0.760 | 0.0% | 0.0% | 0.0% | 0.54 | 8.2% |
 | firered_tts3 | papa_joie | oui | 0.0% | 0.0% | 0.828 | 0.0% | 0.0% | 0.0% | 1.00 | 3.2% |
 | firered_tts3 | papa_peur | oui | 0.0% | 0.0% | 0.797 | 0.0% | 0.0% | 0.0% | 0.94 | 4.1% |
 | firered_tts3 | papa_tristesse | oui | 0.0% | 0.0% | 0.757 | 0.0% | 0.0% | 0.0% | 0.95 | 4.1% |
 | moss_tts_local_v15 | papa_tristesse | oui | 0.0% | 0.0% | 0.616 | 0.0% | 0.0% | 0.0% | 0.66 | 15.6% |
+| omnivoice | papa_joie | oui | 0.0% | 0.0% | 0.792 | 0.0% | 0.0% | 0.0% | 0.31 | 0.0% |
+| omnivoice | papa_peur | oui | 0.0% | 0.0% | 0.776 | 0.0% | 0.0% | 0.0% | 0.29 | 0.0% |
+| omnivoice | papa_tristesse | oui | 0.0% | 0.0% | 0.775 | 0.0% | 0.0% | 0.0% | 0.27 | 0.0% |
 | voxcpm2 | papa_joie | oui | 0.0% | 0.0% | 0.779 | 0.0% | 0.0% | 0.0% | 0.40 | 5.5% |
 | voxcpm2 | papa_tristesse | oui | 0.0% | 0.0% | 0.764 | 0.0% | 0.0% | 0.0% | 0.41 | 4.8% |
 | xtts_v2 | papa_tristesse | oui | 0.0% | 0.0% | 0.665 | 0.0% | 0.0% | 0.0% | 0.28 | 5.2% |
@@ -32,7 +38,9 @@ plancher humain soustrait).
 | moss_tts_local_v15 | papa_joie | oui | 1.1% | 2.5% | 0.764 | 0.0% | 0.0% | 0.0% | 1.09 | 15.1% |
 | xtts_v2 | papa_peur | oui | 1.1% | 3.1% | 0.659 | 0.0% | 0.0% | 0.0% | 0.25 | 5.4% |
 | voxcpm2 | papa_peur | oui | 1.2% | 3.5% | 0.779 | 0.0% | 0.0% | 0.0% | 0.40 | 9.4% |
+| omnivoice | papa_colere | oui | 1.5% | 3.1% | 0.788 | 0.0% | 0.0% | 0.0% | 0.36 | 4.8% |
 | voxcpm2 | papa_colere | oui | 1.5% | 3.1% | 0.739 | 0.0% | 0.0% | 0.0% | 0.41 | 6.3% |
+| audio8_06b | papa_colere | oui | 2.0% | 3.3% | 0.748 | 0.0% | 0.0% | 0.0% | 1.11 | 3.8% |
 | chatterbox_v3 | papa_colere | oui | 2.0% | 3.3% | 0.778 | 0.0% | 0.0% | 0.0% | 0.58 | 4.1% |
 | xtts_v2 | papa_joie | oui | 2.2% | 3.1% | 0.692 | 0.0% | 0.0% | 0.0% | 0.24 | 10.0% |
 | moss_tts_local_v15 | papa_colere | oui | 2.8% | 5.2% | 0.708 | 0.0% | 0.0% | 0.0% | 0.70 | 10.2% |
@@ -45,7 +53,7 @@ plancher humain soustrait).
 | cosyvoice3_05b | papa_joie | oui | 19.4% | 6.5% | 0.734 | 0.0% | 0.0% | 0.0% | 0.77 | 7.6% |
 | cosyvoice3_05b | papa_colere | oui | 29.1% | 30.4% | 0.786 | 13.3% | 0.0% | 13.3% | 1.87 | 5.8% |
 
-*24 lignes — 6 modèles × 4 registres émotionnels.*
+*32 lignes — 8 modèles × 4 registres émotionnels.*
 
 - **RTF** = temps de génération / durée audio (< 1 = plus rapide que le temps réel).
 - **SIM** = cosinus embeddings **ECAPA-TDNN** gén. vs voix de réf émotionnelle (0–1).

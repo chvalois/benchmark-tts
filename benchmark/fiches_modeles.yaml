@@ -1,0 +1,868 @@
+# =====================================================================
+# Fiches de vulgarisation — une par modèle du benchmark.
+#
+# Donnée DÉCLARÉE et vérifiée À LA MAIN, comme `licences.yaml`. RIEN ici
+# ne doit être écrit « de mémoire » : chaque affirmation technique vient
+#   (a) des POIDS ÉPINGLÉS eux-mêmes (compte de paramètres lu dans les
+#       en-têtes safetensors / torch du snapshot de `models.lock`),
+#   (b) de la model card officielle (voir `sources`),
+#   (c) ou de NOS mesures (resultats/*.json, models/<nom>/NOTES.md).
+# Quand un chiffre n'a pas pu être vérifié, on ne l'écrit pas.
+#
+# Champs (tous obligatoires) :
+#   une_phrase        : ce que c'est, en une phrase, sans jargon
+#   particularite     : ce qui le distingue vraiment des autres
+#   choix_techniques  : liste de {titre, texte} — les partis pris d'ingénierie
+#   a_savoir          : liste de mises en garde / pièges (peut être vide)
+#   sources           : liste de {label, url} — au moins une
+#   verifie_le        : date ISO de la dernière vérification à la source
+# =====================================================================
+
+firered_tts3:
+  une_phrase: >-
+    Le mieux classé de notre benchmark : un système qui génère ET édite de la
+    parole, construit sur des représentations audio « continues » plutôt que
+    sur des jetons discrets comme la majorité de ses concurrents.
+  particularite: >-
+    Là où presque tous les TTS modernes découpent l'audio en petits jetons
+    discrets (comme des lettres d'un alphabet sonore), FireRed travaille sur des
+    représentations continues « enrichies sémantiquement ». Concrètement, chez
+    nous : meilleur score global du classement, et aucune anomalie détectée
+    (ni hallucination, ni répétition, ni troncature) sur la voix de référence
+    principale.
+  choix_techniques:
+    - titre: Deux gros modèles chargés en même temps
+      texte: >-
+        Le dossier de poids contient un cœur de génération de 2,12 milliards de
+        paramètres et un auto-encodeur audio « RedAE » de 0,94 milliard
+        (comptés directement dans les fichiers safetensors de la révision que
+        nous faisons tourner). C'est ce cumul, pas un seul gros modèle, qui
+        explique les ~8 Go de VRAM nécessaires.
+    - titre: La langue se déclare, elle ne se devine pas
+      texte: >-
+        La model card précise que la variante Base « s'appuie sur des balises de
+        langue explicites pour de meilleures performances ». Notre adaptateur
+        passe donc explicitement `language="French"` à chaque appel. Une
+        détection automatique (fastText) existe en option, nous ne l'utilisons
+        pas : on préfère dire la langue plutôt que la laisser deviner.
+    - titre: Une normalisation du texte qui ne couvre pas le français
+      texte: >-
+        L'outil de normalisation par défaut (`wetext`) ne gère que le chinois et
+        l'anglais ; les autres langues ne reçoivent qu'un nettoyage basique. Les
+        nombres, dates et heures français ne sont donc pas verbalisés par le
+        modèle, sauf à activer une normalisation par LLM (qui exige des
+        identifiants d'API externes — écarté ici pour rester reproductible).
+    - titre: Clonage avec transcription fournie
+      texte: >-
+        Le clonage ne prend pas seulement l'extrait audio de référence : il
+        prend aussi sa transcription écrite. Nous stockons donc, à côté de
+        chaque voix, le texte exact de l'extrait.
+    - titre: Fondations empruntées
+      texte: >-
+        Les remerciements de la model card citent Qwen3 et Qwen2-Audio pour la
+        partie modèle de langue, et X-Codec pour le discriminateur utilisé à
+        l'entraînement de RedAE.
+  a_savoir:
+    - >-
+      La licence affichée est Apache-2.0, mais la model card ajoute un
+      avertissement d'usage : la fonction de clonage de voix y est décrite comme
+      « destinée uniquement à des fins de recherche académique ». Les deux
+      informations viennent de la même page officielle — à arbitrer avant tout
+      usage produit.
+    - >-
+      `flash-attn` est obligatoire : le code de RedAE impose en dur
+      `attn_implementation="flash_attention_2"`, il n'y a pas de repli possible
+      (constaté à l'installation, cf. `models/firered_tts3/requirements.txt`).
+    - >-
+      Pas de paquet PyPI : le code vient du dépôt GitHub, épinglé sur un commit
+      précis dans `models.lock`.
+  langues:
+    resume: 24 langues, dont le français — plus 21 dialectes chinois
+    detail: >-
+      arabe, cantonais, chinois, tchèque, néerlandais, anglais, finnois,
+      FRANÇAIS, allemand, grec, hindi, indonésien, italien, japonais, coréen,
+      polonais, portugais, roumain, russe, espagnol, thaï, turc, ukrainien,
+      vietnamien
+    source: liste explicite de la model card officielle
+  parametres:
+    - nom: language
+      defaut: "None (détection auto)"
+      role: >-
+        Langue cible, déclarée explicitement (`"French"` chez nous). La model
+        card précise que la variante Base fonctionne mieux avec une balise
+        explicite qu'en détection automatique.
+    - nom: n_timesteps
+      defaut: "10"
+      role: >-
+        Nombre d'étapes de raffinement du signal. Plus haut = plus propre mais
+        plus lent : c'est le curseur qualité/vitesse principal.
+    - nom: inference_cfg
+      defaut: "2.0"
+      role: >-
+        Force du guidage : à quel point le modèle colle au texte et à la voix
+        de référence plutôt que de « partir en improvisation ».
+    - nom: seed
+      defaut: "1234"
+      role: >-
+        Graine aléatoire propre au modèle — l'un des rares du benchmark à en
+        exposer une, ce qui rend nos répétitions vraiment différentes.
+    - nom: do_tn / do_clean / do_split
+      defaut: "True"
+      role: >-
+        Normalisation du texte, nettoyage et découpage automatique en segments
+        (bornés par `token_min_n` / `token_max_n`).
+    - nom: prompt_text + prompt_audio
+      defaut: "—"
+      role: >-
+        Le couple extrait de référence + sa transcription : c'est ce qui définit
+        la voix clonée.
+  sources:
+    - label: Model card Hugging Face (FireRedTeam/FireRedTTS3)
+      url: https://huggingface.co/FireRedTeam/FireRedTTS3
+    - label: Code source GitHub
+      url: https://github.com/FireRedTeam/FireRedTTS3
+  verifie_le: "2026-09-12"
+
+voxcpm2:
+  une_phrase: >-
+    Un modèle « sans tokenizer » : au lieu de prédire des jetons audio, il
+    fabrique directement le son par diffusion, et sort du 48 kHz studio.
+  particularite: >-
+    C'est le seul du benchmark à revendiquer une architecture « tokenizer-free,
+    diffusion autoregressive ». Il accepte une référence en 16 kHz et produit
+    quand même du 48 kHz, grâce à une super-résolution intégrée à son
+    auto-encodeur audio — pas besoin d'un ré-échantillonneur externe.
+  choix_techniques:
+    - titre: 2 milliards de paramètres, plus un auto-encodeur audio
+      texte: >-
+        Comptés dans les poids épinglés : 2,29 milliards de paramètres pour le
+        modèle principal, plus 94 millions pour l'AudioVAE qui reconstruit le
+        son. La model card annonce « 2B » et 30 langues, entraîné sur plus de
+        2 millions d'heures de parole.
+    - titre: Un curseur qualité / vitesse explicite
+      texte: >-
+        La génération par diffusion se fait en un nombre d'étapes réglable.
+        Nous fixons `inference_timesteps=10` et `cfg_value=2.0` : c'est ce
+        compromis-là qui est mesuré dans nos chiffres, pas le maximum de qualité
+        atteignable.
+    - titre: Deux modes de création de voix
+      texte: >-
+        « Voice Design » invente une voix à partir d'une description écrite
+        (genre, âge, ton, émotion…), sans aucun extrait audio ; « Controllable
+        Cloning » clone une voix existante tout en permettant d'orienter
+        l'émotion et le débit. Notre benchmark n'utilise que le clonage, pour
+        rester comparable aux autres modèles.
+  a_savoir:
+    - >-
+      La version PyPI utilisée (`voxcpm 2.0.3`) n'expose pas de graine
+      aléatoire : la variation entre nos 3 répétitions vient uniquement de la
+      graine globale de PyTorch, posée par le socle commun du benchmark.
+    - >-
+      Piège d'installation rencontré ici : le chargement dépasse les 8 Go de RAM
+      alloués par défaut à une VM WSL2 et se fait tuer par l'OOM-killer avant
+      même la première génération (correctif documenté dans
+      `models/voxcpm2/NOTES.md`).
+    - >-
+      La model card annonce un facteur temps réel d'environ 0,3 sur RTX 4090 ;
+      nous mesurons 0,41–0,42 sur la même génération de carte, avec notre
+      découpage et nos réglages.
+  langues:
+    resume: 30 langues, dont le français — plus 9 dialectes chinois
+    detail: >-
+      arabe, birman, chinois, danois, néerlandais, anglais, finnois, FRANÇAIS,
+      allemand, grec, hébreu, hindi, indonésien, italien, japonais, khmer,
+      coréen, lao, malais, norvégien, polonais, portugais, russe, espagnol,
+      swahili, suédois, tagalog, thaï, turc, vietnamien
+    source: liste explicite de la model card officielle
+  parametres:
+    - nom: inference_timesteps
+      defaut: "10"
+      role: >-
+        Nombre d'étapes de diffusion. C'est LE curseur qualité/vitesse : monter
+        cette valeur affine le rendu et ralentit la génération d'autant.
+    - nom: cfg_value
+      defaut: "2.0"
+      role: >-
+        Force du guidage — à quel point le modèle suit le texte et la voix de
+        référence plutôt que de dériver.
+    - nom: normalize
+      defaut: "False"
+      role: >-
+        Normalisation du texte en amont (nombres, dates…). Laissée désactivée
+        chez nous : le pré-traitement commun du benchmark s'en charge.
+    - nom: denoise
+      defaut: "False"
+      role: >-
+        Débruitage de l'extrait de référence, utile quand la prise de son
+        d'origine est mauvaise (nécessite de charger le débruiteur).
+    - nom: retry_badcase
+      defaut: "True"
+      role: >-
+        Ré-essaie automatiquement une génération jugée ratée (jusqu'à 3 fois par
+        défaut, sur un critère de ratio de durée). Un garde-fou intégré que peu
+        de modèles proposent.
+    - nom: prompt_wav_path + prompt_text
+      defaut: "—"
+      role: >-
+        Extrait de référence et sa transcription pour le clonage. En mode
+        « Voice Design », on les remplace par une description écrite de la voix.
+  sources:
+    - label: Model card Hugging Face (openbmb/VoxCPM2)
+      url: https://huggingface.co/openbmb/VoxCPM2
+    - label: Code source GitHub
+      url: https://github.com/OpenBMB/VoxCPM
+  verifie_le: "2026-09-12"
+
+chatterbox_v3:
+  une_phrase: >-
+    Le modèle de Resemble AI : licence MIT (la plus permissive du benchmark),
+    et un curseur d'« exagération » émotionnelle qu'aucun autre n'expose.
+  particularite: >-
+    Deux choses le distinguent. D'abord un réglage d'intensité expressive
+    (`exaggeration`) que l'on pousse ou réduit phrase par phrase. Ensuite un
+    tatouage numérique (« watermark ») inaudible ajouté à CHAQUE audio produit,
+    conçu pour survivre à une compression MP3 ou à un montage : c'est un parti
+    pris de traçabilité assumé par l'éditeur, pas une option à activer.
+  choix_techniques:
+    - titre: Un transformeur de 0,5 B, mais un pipeline de 0,8 B
+      texte: >-
+        La communication annonce « 0,5 B ». Dans les poids épinglés, le
+        transformeur texte→jetons que nous chargeons (`t3_mtl23ls_v3`) pèse
+        effectivement 536 millions de paramètres — mais il faut y ajouter le
+        générateur audio S3Gen (264 millions) et l'encodeur de voix
+        (1,4 million) pour produire du son. Le dépôt embarque d'ailleurs
+        plusieurs générations de checkpoints côte à côte.
+    - titre: Une base empruntée aux modèles de texte
+      texte: >-
+        La model card décrit un « backbone Llama » de 0,5 B et une couverture de
+        23 langues, dont le français.
+    - titre: La langue est un paramètre global
+      texte: >-
+        Pas de balise à insérer dans le texte : on passe `language_id="fr"` à
+        l'appel. Sortie en 24 kHz.
+    - titre: Expressivité pilotée par type de passage
+      texte: >-
+        Notre adaptateur module l'exagération selon la nature du segment —
+        0,3 en narration, 0,9 en dialogue, 0,5 pour une réplique courte — la
+        détection de dialogue se faisant sur la ponctuation (tirets cadratins,
+        guillemets).
+  a_savoir:
+    - >-
+      Le paquet PyPI officiel ne sait charger que le checkpoint de génération
+      précédente (v2). Pour faire tourner le v3, on installe le code GitHub
+      épinglé par-dessus les dépendances PyPI.
+    - >-
+      Dépendance piège : le composant de watermarking importe `pkg_resources`,
+      retiré de `setuptools` ≥ 81 — d'où un `setuptools<80` épinglé, sans quoi
+      le chargement échoue.
+    - >-
+      Observé lors de nos premiers essais : le détecteur d'alignement interne a
+      forcé la fin de génération sur 5 essais sur 6 (« répétition de jeton
+      détectée »). C'est exactement le type d'arrêt prématuré que notre scoring
+      de fidélité est là pour objectiver.
+  langues:
+    resume: 23 langues, dont le français
+    detail: >-
+      arabe, danois, allemand, grec, anglais, espagnol, finnois, FRANÇAIS,
+      hébreu, hindi, italien, japonais, coréen, malais, néerlandais, norvégien,
+      polonais, portugais, russe, suédois, swahili, turc, chinois
+    source: métadonnées `language:` de la model card
+  parametres:
+    - nom: exaggeration
+      defaut: "0.5"
+      role: >-
+        Intensité expressive — le paramètre signature de Chatterbox, unique dans
+        ce benchmark. La model card note qu'au-delà de 0,7 le débit s'accélère
+        aussi. Nous le modulons par type de passage (0,3 narration /
+        0,9 dialogue / 0,5 réplique courte).
+    - nom: cfg_weight
+      defaut: "0.5"
+      role: >-
+        Force du guidage. La model card conseille de le baisser vers 0,3 quand
+        la voix de référence parle vite, ou pour compenser une exagération
+        élevée. À 0, il neutralise le transfert d'accent depuis la référence.
+    - nom: language_id
+      defaut: "—"
+      role: >-
+        Langue cible, en paramètre global (pas de balise dans le texte). Le code
+        refuse une langue hors de la liste des 23 supportées.
+    - nom: temperature
+      defaut: "0.8"
+      role: Aléa du décodage — plus haut = plus varié, mais plus risqué.
+    - nom: repetition_penalty
+      defaut: "1.2"
+      role: >-
+        Pénalise les motifs répétés (bégaiement, boucle). Une valeur inférieure
+        à 1 inverserait l'effet : à ne jamais faire.
+    - nom: min_p / top_p
+      defaut: "0.05 / 1.0"
+      role: >-
+        Filtrage des jetons candidats au moment du tirage (les deux stratégies
+        cohabitent dans l'API).
+  sources:
+    - label: Model card Hugging Face (ResembleAI/chatterbox)
+      url: https://huggingface.co/ResembleAI/chatterbox
+    - label: Code source GitHub
+      url: https://github.com/resemble-ai/chatterbox
+  verifie_le: "2026-09-12"
+
+moss_tts_local_v15:
+  une_phrase: >-
+    Le poids lourd du benchmark — 4,55 milliards de paramètres mesurés — et le
+    seul à produire nativement du 48 kHz en stéréo.
+  particularite: >-
+    Tous les autres modèles sortent du mono. Celui-ci génère deux canaux, à
+    48 kHz, parce que son codec audio a été conçu pour ça. Il expose aussi un
+    contrôle de durée au niveau du jeton : on peut lui demander une durée cible
+    plutôt que de subir celle qu'il choisit.
+  choix_techniques:
+    - titre: 4,55 milliards de paramètres
+      texte: >-
+        Comptés dans le fichier de poids de la révision épinglée. La
+        configuration déclare un taux d'échantillonnage de 48 000 Hz et un
+        vocabulaire audio de 1 024 entrées.
+    - titre: Un second modèle téléchargé sans le dire
+      texte: >-
+        Le chargement tire aussi, implicitement, le tokenizer audio
+        `MOSS-Audio-Tokenizer-v2` (environ 8 Go supplémentaires). Un piège pour
+        le budget disque si on ne compte que la taille affichée du dépôt
+        principal.
+    - titre: Un codec lent en images par seconde
+      texte: >-
+        Le codec fonctionne à 12,5 images par seconde (125 images ≈ 10 secondes
+        d'audio, d'après la model card) : c'est ce qui rend le contrôle de durée
+        possible « au jeton près ».
+    - titre: Sortie stéréo à convertir
+      texte: >-
+        Le décodage renvoie un tenseur `[canaux, échantillons]`. Notre socle
+        commun ne garde que le canal 0 pour rester comparable aux autres
+        modèles — et surtout pour éviter le bug classique qui concaténerait les
+        deux canaux bout à bout.
+    - titre: Balisage riche dans le texte
+      texte: >-
+        Pauses explicites (`[pause 0.5s]`), prononciation en Pinyin ou en API
+        phonétique, alternance de langues dans une même phrase : tout cela passe
+        directement dans le texte d'entrée.
+  a_savoir:
+    - >-
+      Démarrage à froid mesuré chez nous à environ 600 secondes au tout premier
+      lancement — téléchargement du tokenizer audio inclus.
+    - >-
+      Nous faisons tourner les réglages par défaut de la model card
+      (température audio 1,7), pas un réglage calibré par voix : les chiffres
+      mesurés ici sont donc ceux d'une intégration « sortie de boîte ».
+  langues:
+    resume: 31 langues, dont le français
+    detail: >-
+      chinois, cantonais, anglais, arabe, tchèque, danois, allemand,
+      néerlandais, espagnol, FRANÇAIS, finnois, grec, hébreu, hindi, hongrois,
+      japonais, italien, coréen, macédonien, malais, russe, persan, polonais,
+      portugais, suédois, roumain, swahili, tagalog, thaï, turc, vietnamien
+    source: métadonnées `language:` de la model card
+  parametres:
+    - nom: "contrôle de durée (`${token:N}`, `token_count`)"
+      defaut: "—"
+      role: >-
+        Le paramètre le plus distinctif du modèle : on lui impose une durée
+        cible en nombre de jetons (12,5 jetons = 1 seconde). Précieux pour
+        caler une voix sur une vidéo ou un temps de parole imposé.
+    - nom: audio_temperature
+      defaut: "1.7"
+      role: >-
+        Aléa de l'échantillonnage audio. Valeur recommandée élevée par rapport
+        aux autres modèles du benchmark — c'est un choix de l'éditeur.
+    - nom: audio_top_p / audio_top_k
+      defaut: "0.8 / 25"
+      role: Filtrage des jetons acoustiques candidats au moment du tirage.
+    - nom: audio_repetition_penalty
+      defaut: "1.0"
+      role: >-
+        Pénalise les motifs acoustiques répétés. Descendre sous 1,0 est un
+        piège connu : cela encourage la répétition au lieu de la punir.
+    - nom: "balises dans le texte (`[pause 0.5s]`, Pinyin, API phonétique)"
+      defaut: "—"
+      role: >-
+        Pauses explicites et prononciation forcée s'écrivent directement dans le
+        texte d'entrée, sans passer par un paramètre.
+    - nom: language / instructions
+      defaut: "—"
+      role: >-
+        Indication de langue et consigne de style en langage libre (via l'API
+        compatible OpenAI exposée par le projet).
+  sources:
+    - label: Model card Hugging Face (MOSS-TTS-Local-Transformer-v1.5)
+      url: https://huggingface.co/OpenMOSS-Team/MOSS-TTS-Local-Transformer-v1.5
+    - label: Code source GitHub
+      url: https://github.com/OpenMOSS/MOSS-TTS
+  verifie_le: "2026-09-12"
+
+cosyvoice3_05b:
+  une_phrase: >-
+    Un TTS piloté par un petit modèle de langue Qwen2-0,5B, assemblé en quatre
+    étages séparés plutôt qu'en un seul bloc.
+  particularite: >-
+    C'est l'architecture la plus « démontable » du benchmark : un modèle de
+    langue produit des jetons de parole, un module de flow matching les
+    transforme en spectrogramme, un vocodeur en fait du son, et deux modèles
+    ONNX annexes s'occupent de découper l'audio de référence et d'en extraire
+    l'empreinte du locuteur. Chaque étage est un fichier distinct.
+  choix_techniques:
+    - titre: Quatre fichiers, quatre rôles
+      texte: >-
+        Mesuré dans les poids épinglés : le modèle de langue pèse 642 millions
+        de paramètres (architecture Qwen2, 24 couches, dimension 896), le module
+        de flow matching 332 millions, le vocodeur 21 millions. S'y ajoutent un
+        tokenizer de parole au format ONNX (environ 970 Mo) et un extracteur
+        d'empreinte vocale.
+    - titre: Piloté par instructions en langage naturel
+      texte: >-
+        La model card annonce le contrôle par instruction (langue, dialecte,
+        émotion, vitesse, volume) et 9 langues dont le français, plus 18
+        dialectes chinois. Notre benchmark n'utilise que le mode de clonage
+        « zero-shot » pour rester comparable.
+  a_savoir:
+    - >-
+      Le checkpoint n'est pas un fichier unique : c'est un assemblage
+      multi-fichiers (`llm.pt`, `flow.pt`, `hift.pt` + ONNX). La variante
+      « -0.5B » nue est soumise à autorisation sur Hugging Face, d'où l'usage
+      de la version `Fun-CosyVoice3-0.5B-2512`.
+  langues:
+    resume: 9 langues, dont le français — plus 18 dialectes/accents chinois
+    detail: >-
+      chinois, anglais, japonais, coréen, allemand, espagnol, FRANÇAIS,
+      italien, russe
+    source: métadonnées `language:` + liste explicite de la model card
+  parametres:
+    - nom: "mode d'inférence (`inference_zero_shot`, `inference_instruct2`, `inference_cross_lingual`, `inference_vc`…)"
+      defaut: zero_shot
+      role: >-
+        Ici le « paramètre » principal est le choix du mode d'appel : clonage
+        classique, clonage piloté par instruction, clonage d'une langue vers
+        une autre, ou conversion de voix. Notre benchmark n'utilise que le
+        clonage zero-shot, pour rester comparable aux autres modèles.
+    - nom: instruct_text
+      defaut: "—"
+      role: >-
+        Consigne en langage naturel (dialecte, émotion, vitesse, volume) passée
+        avec le texte dans les modes « instruct ».
+    - nom: speed
+      defaut: "1.0"
+      role: >-
+        Facteur de vitesse d'élocution, disponible sur tous les modes
+        d'inférence.
+    - nom: text_frontend
+      defaut: "True"
+      role: >-
+        Active la normalisation de texte maison du projet avant synthèse.
+    - nom: stream
+      defaut: "False"
+      role: Génération en flux, pour commencer à jouer l'audio avant la fin.
+  sources:
+    - label: Model card Hugging Face (FunAudioLLM/Fun-CosyVoice3-0.5B-2512)
+      url: https://huggingface.co/FunAudioLLM/Fun-CosyVoice3-0.5B-2512
+    - label: Code source GitHub (CosyVoice)
+      url: https://github.com/FunAudioLLM/CosyVoice
+  verifie_le: "2026-09-12"
+
+omnivoice:
+  une_phrase: >-
+    Le pari inverse de tous les autres : plus de 600 langues couvertes avec le
+    plus petit modèle de langue du benchmark (0,6 milliard de paramètres).
+  particularite: >-
+    Il vient de l'équipe k2-fsa (l'écosystème Kaldi / icefall, historiquement
+    côté reconnaissance vocale). Sa promesse n'est pas la performance sur une
+    langue mais la couverture : 646 langues annoncées. Le français n'y est pas
+    un ajout symbolique — la table officielle des langues lui attribue 23 675
+    heures d'entraînement.
+  choix_techniques:
+    - titre: Un petit modèle de langue, un gros tokenizer audio
+      texte: >-
+        Mesuré dans les poids épinglés : 612,6 millions de paramètres pour le
+        modèle principal (bâti sur Qwen3-0.6B d'après la carte), plus 201,4
+        millions pour le tokenizer audio (HiggsAudio v2, 24 kHz, 1 024 entrées
+        de codebook) livré dans le même dépôt — donc pas de téléchargement
+        implicite surprise, contrairement à d'autres.
+    - titre: Architecture « modèle de diffusion textuelle »
+      texte: >-
+        La documentation revendique une architecture de type « diffusion
+        language model », choisie pour la vitesse autant que pour la qualité.
+        C'est cohérent avec ce qu'on mesure : facteur temps réel de 0,26,
+        soit le modèle clonant le plus rapide du benchmark encore utilisable
+        en production (seul XTTS-v2 fait marginalement mieux à 0,24, mais sa
+        licence l'exclut d'un usage commercial).
+    - titre: La langue se passe en paramètre
+      texte: >-
+        `language="French"` est transmis explicitement à chaque génération. La
+        documentation note que préciser la langue améliore légèrement le
+        résultat par rapport au mode « agnostique ».
+    - titre: Pas de graine propre
+      texte: >-
+        La fonction de génération n'expose pas de graine aléatoire : la
+        variation entre nos répétitions provient de la graine globale PyTorch
+        posée par le socle commun.
+  a_savoir:
+    - >-
+      La model card Hugging Face n'affiche AUCUNE balise de licence ; la licence
+      Apache-2.0 vient du fichier LICENSE du dépôt GitHub officiel (code et
+      poids publiés ensemble). Une note antérieure de notre registre affirmait
+      des « poids CC-BY-NC » en confondant avec un finetune tiers : erreur
+      corrigée le 2026-09-12, ledit finetune étant lui-même en Apache-2.0.
+    - >-
+      Nos extraits de référence durent environ 24 secondes ; le modèle émet un
+      avertissement au-delà de 20 secondes et recommande 3 à 10 secondes. Un
+      raccourcissement des références pourrait donc encore améliorer ses
+      résultats de clonage.
+    - >-
+      La normalisation de texte est laissée désactivée (valeur par défaut du
+      modèle) : les nombres écrits en chiffres ne sont pas verbalisés en amont.
+  langues:
+    resume: 646 langues — le français est la 5ᵉ mieux dotée
+    detail: >-
+      Trop nombreuses pour être listées. Classement par volume d'entraînement :
+      anglais (206 061 h), chinois (111 343 h), japonais (36 914 h), espagnol
+      (27 560 h), FRANÇAIS (23 675 h), allemand (21 927 h), russe (20 338 h),
+      portugais (16 855 h), cantonais (13 302 h), thaï (10 500 h)… La liste
+      complète des 646 langues, avec le volume de chacune, est publiée par le
+      projet (lien ci-dessous).
+    source: "table `docs/languages.md` du dépôt officiel (646 lignes)"
+  parametres:
+    - nom: language
+      defaut: "None"
+      role: >-
+        Langue cible (`"French"` chez nous). Facultatif — le modèle sait
+        fonctionner en mode agnostique — mais la documentation indique que
+        préciser la langue donne un résultat légèrement meilleur.
+    - nom: num_step
+      defaut: "32"
+      role: >-
+        Nombre d'étapes de « démasquage » successives. La documentation
+        suggère 16 pour aller deux fois plus vite au prix de la qualité.
+    - nom: guidance_scale
+      defaut: "2.0"
+      role: Force du guidage (classifier-free guidance).
+    - nom: duration / speed
+      defaut: "None / 1.0"
+      role: >-
+        Durée cible imposée en secondes, ou simple facteur de vitesse. `duration`
+        prend le pas sur `speed` quand les deux sont donnés.
+    - nom: instruct
+      defaut: "—"
+      role: >-
+        Mode « Voice Design » : décrire la voix en mots (genre, âge, hauteur,
+        accent, chuchotement) au lieu de fournir un extrait à cloner.
+    - nom: normalize_text
+      defaut: "False"
+      role: >-
+        Verbalisation des nombres avant synthèse. En français elle passerait par
+        `num2words` (WeTextProcessing ne couvrant que le chinois et l'anglais) ;
+        laissée désactivée dans nos runs.
+    - nom: denoise / preprocess_prompt / postprocess_output
+      defaut: "True"
+      role: >-
+        Chaîne de nettoyage : signal plus propre, silences retirés de l'extrait
+        de référence, silences retirés de l'audio produit.
+    - nom: "symboles inline (`[laughter]`, `[sigh]`…)"
+      defaut: "—"
+      role: >-
+        Sons non verbaux et corrections de prononciation s'écrivent directement
+        dans le texte.
+  sources:
+    - label: Model card Hugging Face (k2-fsa/OmniVoice)
+      url: https://huggingface.co/k2-fsa/OmniVoice
+    - label: Code source GitHub + table des langues
+      url: https://github.com/k2-fsa/OmniVoice/blob/master/docs/languages.md
+  verifie_le: "2026-09-12"
+
+audio8_06b:
+  une_phrase: >-
+    Un « petit » modèle de 0,6 milliard de paramètres qui vise le haut du panier
+    en intelligibilité — et chez nous c'est vérifié : meilleur WER du benchmark.
+  particularite: >-
+    Son architecture « DualAR » travaille à deux vitesses : un transformeur
+    « lent » prédit un jeton de sens par image audio, un transformeur « rapide »
+    remplit ensuite les couches de codec de cette image. L'éditeur revendique
+    s'être inspiré de Fish Audio S2 Pro. Résultat : la qualité d'un gros modèle
+    avec une empreinte mémoire de petit modèle.
+  choix_techniques:
+    - titre: 601 millions de paramètres — annonce et mesure concordent
+      texte: >-
+        La model card annonce 601 159 424 paramètres hors codec ; nous comptons
+        601,2 millions dans les poids épinglés. Le codec audio livré à côté pèse
+        337,4 millions de plus.
+    - titre: Un codec en 44,1 kHz, 10 couches
+      texte: >-
+        La configuration déclare 10 codebooks de 4 096 entrées et un codec à
+        44 100 Hz (environ 21,5 images par seconde). Notre socle ré-échantillonne
+        vers 24 kHz pour que tous les modèles soient comparés sur le même format.
+    - titre: Le code d'inférence est DANS le dépôt de poids
+      texte: >-
+        Le modèle se charge via `trust_remote_code` : les fichiers Python
+        d'inférence sont livrés avec les poids. Conséquence appréciable pour la
+        reproductibilité : épingler la révision fige aussi le code, sans dépôt
+        de code séparé à synchroniser.
+    - titre: Clonage avec transcription
+      texte: >-
+        Comme FireRed, il attend l'extrait de référence ET sa transcription
+        exacte.
+  a_savoir:
+    - >-
+      Statut « preview » assumé par l'éditeur : la couverture linguistique est
+      volontairement limitée à 11 langues recommandées (dont le français) et la
+      stabilité du clonage dépend beaucoup de la qualité de la référence.
+    - >-
+      Nous avons relevé `max_new_tokens` de 1 024 (valeur de l'exemple de la
+      model card, calibrée pour une phrase courte) à 4 096, pour éviter de
+      tronquer nos segments les plus longs.
+    - >-
+      Attention à la lecture du classement à l'écoute : il y arrive en dernier
+      pour l'instant, mais sur très peu de duels — c'est un modèle ajouté
+      récemment, ses intervalles de confiance sont encore larges.
+  langues:
+    resume: 11 langues recommandées, dont le français
+    detail: >-
+      cantonais, chinois, néerlandais, anglais, FRANÇAIS, allemand, italien,
+      japonais, coréen, polonais, espagnol
+    source: métadonnées `language:` + section « Supported Languages » de la model card
+  parametres:
+    - nom: max_new_tokens
+      defaut: "1024 (exemple de la card)"
+      role: >-
+        Longueur maximale générée. C'est un garde-fou anti-emballement, mais
+        aussi un risque de troncature s'il est trop bas : nous l'avons monté à
+        4 096 pour nos segments les plus longs.
+    - nom: temperature
+      defaut: "0.8"
+      role: Aléa du décodage — plus haut = plus varié, plus risqué.
+    - nom: top_p / top_k
+      defaut: "0.95 / 50"
+      role: Filtrage des jetons candidats au moment du tirage.
+    - nom: do_sample
+      defaut: "True"
+      role: >-
+        Bascule entre tirage aléatoire et décodage déterministe (le mode
+        déterministe rend les répétitions identiques entre elles).
+    - nom: reference_audio + reference_text
+      defaut: "—"
+      role: >-
+        Extrait de référence et sa transcription. Les omettre bascule le modèle
+        en génération sans voix de référence.
+  sources:
+    - label: Model card Hugging Face (Audio8-TTS-Preview-0.6b)
+      url: https://huggingface.co/Audio8/Audio8-TTS-Preview-0.6b
+    - label: Code source GitHub (Edge0-AI/Audio8_TTS)
+      url: https://github.com/Edge0-AI/Audio8_TTS
+  verifie_le: "2026-09-12"
+
+kokoro_82m:
+  une_phrase: >-
+    Le poids plume : 82 millions de paramètres, aucune capacité de clonage, une
+    voix française figée — retiré du classement pour cette raison.
+  particularite: >-
+    Il ne joue pas dans la même catégorie que les autres : il ne clone pas de
+    voix, il choisit dans une banque de voix pré-entraînées. C'est un choix
+    d'ingénierie radicalement différent, qui lui donne une vitesse sans
+    équivalent ici (facteur temps réel mesuré à 0,02) mais le rend incomparable
+    aux modèles de clonage sur la similarité de timbre.
+  choix_techniques:
+    - titre: Une architecture d'avant l'ère des gros modèles
+      texte: >-
+        La model card décrit une architecture StyleTTS 2 + ISTFTNet, « decoder
+        only : pas de diffusion ». On est loin des modèles de langue géants du
+        reste du benchmark — et ça se voit sur la consommation mémoire.
+    - titre: 82 millions de paramètres, plus une voix = un petit fichier
+      texte: >-
+        Mesuré dans les poids épinglés : 81,8 millions de paramètres pour le
+        modèle, et environ 0,1 million par voix (54 voix livrées, dont la voix
+        française `ff_siwis` utilisée dans nos runs). Changer de voix, c'est
+        changer un vecteur, pas un modèle.
+    - titre: Phonétisation externe
+      texte: >-
+        Le texte passe par un convertisseur graphème→phonème séparé (misaki /
+        espeak-ng) avant d'atteindre le modèle : la prononciation dépend donc
+        autant de cet outil que du modèle lui-même.
+  a_savoir:
+    - >-
+      Pas de clonage ⇒ pas de score de similarité comparable aux autres, et
+      exclusion du test d'écoute (qui compare toujours deux modèles clonant la
+      même voix). Son statut dans `models.lock` est `retire_benchmark`.
+    - >-
+      La model card revendique un entraînement exclusivement sur des données
+      audio libres de droits, ce qui est rare et vaut d'être signalé.
+  langues:
+    resume: 8 langues — mais une seule voix française livrée
+    detail: >-
+      Comptées dans le paquet de voix de la révision épinglée : anglais
+      américain (20 voix), anglais britannique (8), chinois (8), japonais (5),
+      hindi (4), portugais (3), espagnol (3), italien (2) et FRANÇAIS — avec
+      exactement une voix, `ff_siwis`, celle utilisée dans nos runs. Le choix
+      est donc très contraint en français.
+    source: fichiers `voices/*.pt` du snapshot épinglé
+  parametres:
+    - nom: voice
+      defaut: "—"
+      role: >-
+        LE paramètre central : on choisit une voix dans la banque livrée au lieu
+        d'en cloner une. C'est un vecteur de style chargé depuis un petit
+        fichier, pas un modèle différent.
+    - nom: lang_code
+      defaut: "—"
+      role: >-
+        Code de langue (première lettre du nom de voix : `f` = français) — il
+        détermine surtout le convertisseur graphème→phonème utilisé en amont.
+    - nom: speed
+      defaut: "1"
+      role: >-
+        Facteur de vitesse d'élocution ; accepte aussi une fonction pour varier
+        la vitesse segment par segment.
+    - nom: split_pattern
+      defaut: '"\\n+"'
+      role: >-
+        Expression régulière de découpage du texte en segments avant synthèse.
+  sources:
+    - label: Model card Hugging Face (hexgrad/Kokoro-82M)
+      url: https://huggingface.co/hexgrad/Kokoro-82M
+    - label: Code source GitHub
+      url: https://github.com/hexgrad/kokoro
+  verifie_le: "2026-09-12"
+
+xtts_v2:
+  une_phrase: >-
+    La référence historique du clonage open source — conservée comme plafond de
+    comparaison, mais hors service pour un usage produit.
+  particularite: >-
+    Pendant longtemps, c'était LE modèle de clonage multilingue accessible :
+    six secondes de référence suffisaient, avec transfert d'émotion et clonage
+    d'une langue à l'autre. Deux choses l'écartent aujourd'hui : sa licence
+    (Coqui Public Model License, non commerciale) et la fermeture de Coqui, qui
+    laisse le modèle sans maintenance amont.
+  choix_techniques:
+    - titre: Clonage à partir d'un extrait très court
+      texte: >-
+        La model card annonce un clonage à partir de 6 secondes d'audio, 17
+        langues dont le français, le transfert d'émotion et de style par
+        clonage, et une sortie en 24 kHz.
+    - titre: Un checkpoint monolithique
+      texte: >-
+        Le dépôt livre un checkpoint principal d'environ 1,87 Go, un DVAE de
+        52,6 millions de paramètres et une banque de locuteurs pré-calculés.
+        Le checkpoint principal n'est pas un fichier safetensors : nous n'en
+        donnons donc pas de compte de paramètres, faute d'avoir pu le vérifier
+        proprement.
+  a_savoir:
+    - >-
+      Licence CPML : usage commercial exclu. Dans ce benchmark il sert de
+      plafond de qualité pour comparaison, jamais de candidat produit.
+    - >-
+      Coqui a fermé : aucune correction ni mise à jour à attendre en amont.
+  langues:
+    resume: 17 langues, dont le français
+    detail: >-
+      anglais, espagnol, FRANÇAIS, allemand, italien, portugais, polonais,
+      turc, russe, néerlandais, tchèque, arabe, chinois, japonais, hongrois,
+      coréen, hindi
+    source: liste explicite de la model card officielle
+  parametres:
+    - nom: speaker_wav
+      defaut: "—"
+      role: >-
+        Extrait de référence à cloner (6 secondes suffisent d'après la card).
+        L'API accepte plusieurs extraits pour une même voix, et sait interpoler
+        entre locuteurs.
+    - nom: language
+      defaut: "—"
+      role: >-
+        Langue cible. Le clonage étant cross-lingue, on peut faire parler une
+        voix française en anglais, et réciproquement.
+    - nom: speaker
+      defaut: "—"
+      role: >-
+        Alternative au clonage : choisir une voix dans la banque de locuteurs
+        pré-calculés livrée avec le modèle.
+    - nom: split_sentences
+      defaut: "True"
+      role: Découpage automatique du texte en phrases avant synthèse.
+    - nom: emotion
+      defaut: "—"
+      role: >-
+        Exposé par l'API Coqui, mais sans effet documenté sur XTTS-v2 : le
+        transfert d'émotion s'y fait par le choix de l'extrait de référence.
+  sources:
+    - label: Model card Hugging Face (coqui/XTTS-v2)
+      url: https://huggingface.co/coqui/XTTS-v2
+    - label: Texte de la licence CPML
+      url: https://coqui.ai/cpml
+  verifie_le: "2026-09-12"
+
+f5_tts:
+  une_phrase: >-
+    Un modèle réputé pour sa prosodie, dont le checkpoint officiel ne parle tout
+    simplement pas français — et notre mesure le confirme sans appel.
+  particularite: >-
+    Son approche (flow matching, non autorégressive) a bonne presse sur la
+    fluidité. Mais le checkpoint de référence publié ne couvre que l'anglais et
+    le chinois : sur notre corpus français, la sortie est inintelligible, avec
+    un taux d'erreur de mot supérieur à 100 %. C'est le seul modèle du
+    benchmark classé « FR non supporté » sur la base d'une mesure, pas d'une
+    lecture de documentation.
+  choix_techniques:
+    - titre: 337 millions de paramètres par checkpoint
+      texte: >-
+        Comptés dans les poids épinglés — le dépôt en livre plusieurs
+        générations côte à côte ; nos runs utilisent `F5TTS_v1_Base`.
+    - titre: Réglages de génération utilisés
+      texte: >-
+        32 étapes de résolution (`nfe_step`) et un guidage `cfg_strength=2.0`,
+        valeurs usuelles pour ce modèle.
+  a_savoir:
+    - >-
+      Mesuré ici : 104,6 % et 123,6 % de taux d'erreur de mot selon la voix,
+      avec hallucination détectée sur la quasi-totalité des phrases. Un WER
+      au-dessus de 100 % signifie que la transcription contient plus d'erreurs
+      que de mots attendus — autrement dit, le modèle dit autre chose.
+    - >-
+      La licence CC-BY-NC-4.0 exclut de toute façon l'usage commercial.
+    - >-
+      Des finetunes français communautaires existent mais ne sont pas
+      maintenus ; nous n'en avons retenu aucun, faute de pouvoir garantir leur
+      reproductibilité.
+  langues:
+    resume: 2 langues — anglais et chinois. Pas de français.
+    detail: >-
+      Le checkpoint de référence publié (`F5TTS_v1_Base`) est entraîné sur le
+      corpus Emilia, en anglais et en chinois. Aucune balise de langue n'est
+      exposée : le modèle applique son vocabulaire phonétique à tout texte
+      qu'on lui donne — d'où une sortie inintelligible sur du français.
+    source: >-
+      métadonnées et jeu de données de la model card, confirmés par notre mesure
+      (WER > 100 % sur le corpus FR)
+  parametres:
+    - nom: nfe_step
+      defaut: "32"
+      role: >-
+        Nombre d'évaluations du champ de flux — le curseur qualité/vitesse de
+        cette famille de modèles.
+    - nom: cfg_strength
+      defaut: "2"
+      role: Force du guidage vers le texte et la voix de référence.
+    - nom: sway_sampling_coef
+      defaut: "-1"
+      role: >-
+        Réglage propre à F5-TTS de la trajectoire d'échantillonnage, présenté
+        dans l'article comme un gain de qualité à faible nombre d'étapes.
+    - nom: speed / fix_duration
+      defaut: "1.0 / None"
+      role: Facteur de vitesse, ou durée imposée en secondes.
+    - nom: cross_fade_duration
+      defaut: "0.15"
+      role: >-
+        Fondu enchaîné entre segments lors de la génération d'un texte long
+        découpé.
+    - nom: seed
+      defaut: "aléatoire"
+      role: Graine — exposée, contrairement à plusieurs concurrents.
+  sources:
+    - label: Model card Hugging Face (SWivid/F5-TTS)
+      url: https://huggingface.co/SWivid/F5-TTS
+    - label: Code source GitHub
+      url: https://github.com/SWivid/F5-TTS
+  verifie_le: "2026-09-12"

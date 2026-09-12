@@ -11,11 +11,15 @@ naturalité vient du **test d'écoute** (`resultats/ecoute.md`).
 
 | modèle | voix | clon. | WER | ±σ | SIM | hallu. | rép. | tronc. | RTF | CV dur. |
 |---|---|---|---|---|---|---|---|---|---|---|
+| omnivoice | papa_narration | oui | 2.3% | 4.8% | 0.823 | 0.0% | 0.0% | 0.0% | 0.29 | 0.5% |
 | firered_tts3 | papa_narration | oui | 3.6% | 6.5% | 0.844 | 0.0% | 0.0% | 0.0% | 1.00 | 3.5% |
+| audio8_06b | papa_narration | oui | 3.7% | 6.2% | 0.765 | 0.0% | 0.0% | 0.0% | 1.13 | 2.9% |
 | voxcpm2 | papa_narration | oui | 4.2% | 8.0% | 0.822 | 0.0% | 0.0% | 6.1% | 0.42 | 3.3% |
 | firered_tts3 | johnny | oui | 4.3% | 6.9% | 0.779 | 0.0% | 0.0% | 0.0% | 0.94 | 5.3% |
+| omnivoice | johnny | oui | 4.3% | 8.2% | 0.797 | 0.0% | 0.0% | 1.0% | 0.23 | 0.0% |
 | chatterbox_v3 | papa_narration | oui | 4.8% | 7.6% | 0.800 | 0.0% | 0.0% | 2.0% | 0.59 | 3.4% |
 | cosyvoice3_05b | papa_narration | oui | 4.9% | 8.9% | 0.823 | 0.0% | 0.0% | 0.0% | 0.82 | 6.6% |
+| audio8_06b | johnny | oui | 5.0% | 7.9% | 0.675 | 0.0% | 0.0% | 2.0% | 1.11 | 9.4% |
 | voxcpm2 | johnny | oui | 7.3% | 10.1% | 0.784 | 0.0% | 0.0% | 0.0% | 0.41 | 10.9% |
 | xtts_v2 | johnny | oui | 7.3% | 11.0% | 0.697 | 1.0% | 2.0% | 7.1% | 0.24 | 14.4% |
 | xtts_v2 | papa_narration | oui | 7.4% | 19.6% | 0.745 | 1.0% | 0.0% | 0.0% | 0.24 | 10.1% |
