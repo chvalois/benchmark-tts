@@ -1,0 +1,238 @@
+# =====================================================================
+# Corpus LONG-FORM (v2) — FIXE et PARTAGÉ par tous les modèles.
+# Volet « narration longue + podcast + journalisme » : tenue du timbre
+# sur plusieurs minutes, respiration inter-paragraphes, prosodie de
+# registre (lecture littéraire vs animateur radio vs desk info).
+#
+# ⚠️ Distinct de `corpus/phrases.yaml` (v1). Même règle : ne jamais
+# modifier une entrée en cours de release — rejouer tout le volet sinon.
+#
+# ⚠️ Tous les textes sont ORIGINAUX et FICTIFS (`fictif: true`). Les
+# extraits qui imitent une dépêche ou une brève emploient des organismes,
+# lieux et personnes INVENTÉS (univers Grismouton / Kernide / Vallée de
+# Mérindol) : ce sont des stimuli de test, jamais du journalisme réel.
+# Les sigles réels (INSEE, BCE, CAC 40…) servent uniquement de test de
+# normalisation ; les faits chiffrés associés sont inventés.
+#
+# Schéma d'une entrée :
+#   <id>:
+#     titre:          str   — titre de travail (non lu ; repère humain)
+#     genre:          narration_livre | podcast_solo | podcast_dialogue
+#                     | interview_reponse | journalisme_flash
+#                     | journalisme_reportage | edito | documentaire
+#                     | vulgarisation
+#     duree_cible_s:  int   — durée approximative attendue (repère de dérive)
+#     fictif:         bool  — true = contenu inventé (toujours true ici)
+#     traits:         liste parmi :
+#                     tenue_timbre | respiration_paragraphe | sigle
+#                     | date_heure | nombre_complexe | nom_propre_dense
+#                     | discours_rapporte | enumeration | question_rhetorique
+#                     | incise | anglicisme | disfluence
+#                     | ponctuation_dialogue | ironie | terminologie
+#                     | bascule_registre
+#     texte:          str (bloc `|`) — texte source AVANT pré-traitement §3.9
+#
+# lf01–lf04 : narration livre audio (littéraire)
+# lf05–lf08 : podcast (solo, dialogue, interview, vulgarisation)
+# lf09–lf12 : journalisme (flash, reportage, édito, TN hostile)
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# NARRATION — LIVRE AUDIO
+# ---------------------------------------------------------------------
+lf01:
+  titre: "Le moulin de Grismouton — ouverture de chapitre"
+  genre: narration_livre
+  duree_cible_s: 115
+  fictif: true
+  traits: [tenue_timbre, respiration_paragraphe, discours_rapporte, incise, homographe_heterophone]
+  texte: |
+    La route qui descend vers Grismouton n'a jamais figuré sur aucune carte sérieuse. Elle s'enfonce entre deux haies d'aubépine, tourne trois fois sur elle-même sans raison apparente, puis débouche, presque à regret, sur une vallée que les nuages semblent avoir choisie pour y dormir. C'est là, tout au fond, près d'un ruisseau qui ne gèle jamais tout à fait, que se dresse le vieux moulin.
+
+    Personne, dans le village, ne l'appelait autrement que « le moulin ». Il n'avait pas besoin d'un autre nom. Les anciens racontaient qu'un hiver, il y a de cela quatre-vingt-onze ans, le meunier y avait enfermé le vent lui-même, un soir de tempête, pour l'empêcher d'emporter la toiture. Depuis, disaient-ils en baissant la voix, le vent dormait dans la grande roue de bois, et il ne fallait surtout pas le réveiller.
+
+    Camille, elle, n'avait jamais cru à ces histoires. Elle avait douze ans, un cartable trop lourd, et une manière bien à elle de hausser les épaules quand on lui parlait de fantômes. « Ce sont des contes pour faire tenir les enfants tranquilles », répétait-elle, ce qui était exactement le genre de phrase qu'un adulte aurait pu dire à sa place.
+
+    Ce matin-là, pourtant, elle descendit le sentier gelé bien avant le jour, une lanterne à la main, sans très bien savoir ce qu'elle espérait trouver. La porte du moulin n'était pas fermée à clé. À l'intérieur, l'air sentait la farine froide et le bois humide. La grande roue attendait, immobile ; et lorsque la fillette y posa la paume, le bois, sous ses doigts, était tiède.
+
+# ---------------------------------------------------------------------
+lf02:
+  titre: "La bibliothèque de nuit — passage descriptif et dialogue"
+  genre: narration_livre
+  duree_cible_s: 85
+  fictif: true
+  traits: [tenue_timbre, ponctuation_dialogue, discours_rapporte, enumeration, incise]
+  texte: |
+    À minuit passé, la bibliothèque municipale de Kernide changeait de nature. Les lampes de lecture s'éteignaient une à une, les radiateurs se taisaient, et il ne restait bientôt qu'une seule fenêtre allumée, tout en haut, sous les combles : celle du bureau de monsieur Aldwin, le bibliothécaire de nuit.
+
+    Il occupait ce poste depuis dix-neuf ans. Sa tâche officielle tenait en trois lignes : vérifier les serrures, relever la température des réserves, et consigner dans un cahier chaque livre rendu après la fermeture. Sa tâche réelle, celle dont il ne parlait à personne, consistait à écouter.
+
+    — Vous entendez ça ? me demanda-t-il, le soir où il accepta enfin de me laisser monter.
+
+    Je tendis l'oreille. Le bâtiment craquait, comme tous les vieux bâtiments. Une gouttière, quelque part, comptait les secondes.
+
+    — C'est le papier, dit-il, sans se retourner. Des kilomètres de papier qui respirent. Le jour, on ne l'entend pas, il y a trop de bruit. Mais la nuit, si vous restez tranquille, vous finissez par distinguer chaque rayon, chaque étagère, chaque reliure. Et il y en a une, au fond de la salle des archives, qui ne respire pas du tout.
+
+# ---------------------------------------------------------------------
+lf03:
+  titre: "Traversée en mer — récit à la première personne, tension"
+  genre: narration_livre
+  duree_cible_s: 70
+  fictif: true
+  traits: [tenue_timbre, respiration_paragraphe, nombre_complexe, question_rhetorique]
+  texte: |
+    Nous avions quitté le port de Sainte-Ambroise à cinq heures du matin, avec vingt litres d'eau douce, trois jours de vivres et une confiance que je jugerais aujourd'hui déraisonnable. Le baromètre était stable. La météo annonçait un vent de force quatre, virant nord-ouest dans l'après-midi. Rien, absolument rien, ne laissait présager ce qui allait suivre.
+
+    Vers treize heures, la mer a changé de couleur. Ce n'est pas une image : elle est passée d'un gris-vert ordinaire à quelque chose de plus sombre, de plus lourd, comme si l'eau elle-même s'était épaissie. Mon frère, à la barre, n'a rien dit. Il a seulement resserré la sangle de son gilet, et j'ai compris que nous pensions la même chose.
+
+    Combien de temps peut tenir un bateau de neuf mètres dans une houle de six ? Je l'ignorais alors. Je sais seulement que, la première vague nous ayant couché sur le flanc, j'ai cessé de compter les suivantes.
+
+# ---------------------------------------------------------------------
+lf04:
+  titre: "Le dernier train — nouvelle, chute"
+  genre: narration_livre
+  duree_cible_s: 63
+  fictif: true
+  traits: [tenue_timbre, incise, discours_rapporte, date_heure]
+  texte: |
+    Le dernier train pour Mérindol partait à vingt-trois heures douze, quai numéro quatre, et Hélène le prenait chaque vendredi depuis onze ans. Elle connaissait par cœur la voix du haut-parleur, le grincement du troisième wagon, l'odeur de café refroidi qui stagnait près des portes.
+
+    Ce vendredi-là, le train était vide. Non pas peu rempli : vide. Elle parcourut les six voitures, une à une, sans croiser un seul voyageur, pas même un contrôleur. Les banquettes étaient tièdes, comme si les gens venaient tout juste de se lever.
+
+    À l'approche de Mérindol, le haut-parleur grésilla, puis une voix qu'elle ne reconnut pas annonça, très calmement : « Nous vous rappelons que ce train ne dessert plus aucune gare. Merci de votre fidélité. » Hélène regarda par la vitre. Dehors, il n'y avait plus de quai. Il n'y avait plus rien du tout.
+
+# ---------------------------------------------------------------------
+# PODCAST
+# ---------------------------------------------------------------------
+lf05:
+  titre: "Podcast solo — ouverture d'épisode, adresse directe"
+  genre: podcast_solo
+  duree_cible_s: 82
+  fictif: true
+  traits: [anglicisme, question_rhetorique, disfluence, incise, bascule_registre, enumeration]
+  texte: |
+    Salut à toutes et à tous, et bienvenue dans le quarante-deuxième épisode de « Signal faible », le podcast qui prend le temps de regarder ce que tout le monde regarde trop vite. Je suis ravi de vous retrouver.
+
+    Avant de commencer, deux choses rapides. La première : merci, vraiment, pour tous vos retours sur l'épisode précédent. On a reçu, euh, je crois, plus de trois cents messages, et j'en ai lu chacun. La seconde : si l'émission vous plaît, le meilleur moyen de nous aider, c'est encore d'en parler autour de vous, à une personne, une seule, qui pourrait avoir envie de l'écouter.
+
+    Bon. Le sujet du jour, c'est l'attention. Pas la vôtre, rassurez-vous, la mienne. Parce que je me suis rendu compte, il y a quelques semaines, que j'étais devenu incapable de lire un article en entier sans consulter mon téléphone. Et la vraie question, celle qui m'a tenu éveillé, ce n'est pas « comment font les autres », c'est : à quel moment, exactement, est-ce que j'ai arrêté d'être capable de m'ennuyer ?
+
+    Alors on va essayer d'y répondre ensemble, tranquillement, en trois parties. C'est parti.
+
+# ---------------------------------------------------------------------
+lf06:
+  titre: "Podcast dialogue — transcription deux intervenants"
+  genre: podcast_dialogue
+  duree_cible_s: 62
+  fictif: true
+  traits: [ponctuation_dialogue, disfluence, anglicisme, discours_rapporte, question_rhetorique]
+  texte: |
+    — Donc, si je résume, tu as tout arrêté du jour au lendemain.
+
+    — Pas exactement du jour au lendemain. Disons que ça faisait deux ans que j'y pensais, et qu'un matin, j'ai juste... arrêté d'y penser et commencé à le faire.
+
+    — Et la réaction de ton entourage ?
+
+    — Alors ça, c'est intéressant. Mes proches, en fait, ont été beaucoup plus inquiets que moi. Ma mère m'a appelé pour me demander si tout allait bien. Un ami m'a dit, mot pour mot : « Tu es sûr que ce n'est pas une fuite ? »
+
+    — Et c'en était une ?
+
+    — Peut-être. Mais je crois qu'à un moment, il faut accepter que fuir quelque chose et courir vers autre chose, ça peut être exactement le même geste.
+
+    — Exactement le même geste. On garde ça pour le titre de l'épisode.
+
+# ---------------------------------------------------------------------
+lf07:
+  titre: "Interview — réponse longue d'un invité, registre spontané"
+  genre: interview_reponse
+  duree_cible_s: 68
+  fictif: true
+  traits: [disfluence, incise, discours_rapporte, nombre_complexe, bascule_registre]
+  texte: |
+    Alors, comment est-ce que c'est né... En fait, au départ, il n'y avait pas de projet, hein. Il faut être honnête. On était trois, dans un garage prêté par le père de Samuel, à Mérindol, et on bricolait des trucs le week-end sans se poser de questions.
+
+    Ce qui a tout changé, c'est une commande. Enfin, je dis « commande », c'était une dame du village qui nous a demandé si on pouvait lui réparer une horloge. Une horloge comtoise, très ancienne, qui appartenait à sa grand-mère. Et là, du coup, on a passé, je crois, six week-ends dessus. Six. Pour une seule horloge.
+
+    Et à la fin, quand on la lui a rapportée et qu'elle s'est mise à pleurer en entendant le carillon, on s'est regardés tous les trois et on a compris, en même temps, qu'on ne réparait pas des objets. On réparait, comment dire... du temps. Du temps que les gens croyaient avoir perdu.
+
+# ---------------------------------------------------------------------
+lf08:
+  titre: "Vulgarisation — épisode de science, analogie et chiffres"
+  genre: vulgarisation
+  duree_cible_s: 78
+  fictif: true
+  traits: [terminologie, sigle, nombre_complexe, question_rhetorique, enumeration, anglicisme]
+  texte: |
+    Imaginez que vous vouliez recopier, à la main, un livre de trois milliards de lettres, sans faire plus d'une faute toutes les dix mille pages. Impossible ? C'est pourtant, à peu près, ce que fait chacune de vos cellules chaque fois qu'elle se divise. Ce livre, c'est votre ADN, et la machinerie qui le recopie est d'une précision qui dépasse tout ce que nous savons fabriquer.
+
+    Comment ça marche ? En très simplifié, trois étapes. D'abord, la double hélice s'ouvre, comme une fermeture éclair. Ensuite, une enzyme, l'ADN polymérase, avance le long de chaque brin et place, en face de chaque lettre, sa lettre complémentaire. Enfin, un système de relecture repasse derrière et corrige les erreurs, une par une.
+
+    Le taux d'erreur final est de l'ordre d'une lettre fausse sur un milliard. À titre de comparaison, un modèle d'IA entraîné pour la même tâche ferait, aujourd'hui, nettement moins bien. La nature, sur ce coup-là, garde une confortable avance.
+
+# ---------------------------------------------------------------------
+# JOURNALISME
+# ---------------------------------------------------------------------
+lf09:
+  titre: "Flash info — brèves, desk, registre soutenu"
+  genre: journalisme_flash
+  duree_cible_s: 78
+  fictif: true
+  traits: [sigle, date_heure, nombre_complexe, nom_propre_dense, discours_rapporte, enumeration]
+  texte: |
+    Il est dix-huit heures, voici les titres de ce mardi 3 juin.
+
+    Climat. L'Institut Mérindol de climatologie publie ce matin son rapport annuel : la vallée a connu, l'an dernier, quarante-trois jours de fortes chaleurs, contre vingt-huit en moyenne sur la décennie précédente. Selon sa directrice, Aline Vaugirard, « le seuil d'alerte, fixé à trente jours, est désormais dépassé une année sur deux ».
+
+    Transports. La liaison ferroviaire entre Kernide et Sainte-Ambroise sera interrompue du 12 au 26 juillet, pour des travaux de modernisation évalués à quatre-vingt-douze millions d'euros. Un service de bus de remplacement est prévu.
+
+    Économie. Le taux de chômage dans le département recule de zéro virgule quatre point au deuxième trimestre, pour s'établir à six virgule un pour cent, son plus bas niveau depuis deux mille huit.
+
+    Sport, culture et météo dans un instant, restez avec nous.
+
+# ---------------------------------------------------------------------
+lf10:
+  titre: "Reportage — feature, planté de décor, citation, analyse"
+  genre: journalisme_reportage
+  duree_cible_s: 108
+  fictif: true
+  traits: [tenue_timbre, discours_rapporte, incise, nombre_complexe, nom_propre_dense, bascule_registre]
+  texte: |
+    Il est sept heures du matin, et sur la place de Grismouton, la buée sort des bouches autant que des tasses. Ils sont une trentaine, ce samedi-là, à s'être levés avant le jour pour une raison qui, vue de l'extérieur, peut sembler dérisoire : sauver une ligne de bus.
+
+    La ligne 7 relie le village au chef-lieu, vingt-deux kilomètres plus au sud. Quatre allers-retours par jour, une quarantaine d'usagers réguliers, en majorité des lycéens et des personnes âgées. Le conseil régional envisage de la supprimer à la rentrée, jugeant son coût, un peu plus de deux cent mille euros par an, disproportionné.
+
+    « Ce n'est pas une ligne de bus qu'ils veulent fermer, c'est une porte », résume Mathis Renard, dix-sept ans, qui met aujourd'hui une heure quarante pour rejoindre son lycée, contre trente-cinq minutes avec le bus. À côté de lui, madame Ferrand, quatre-vingt-un ans, n'a pas d'autre moyen d'aller chez le médecin.
+
+    Le débat dépasse largement Grismouton. Dans la région, cent quatre-vingts lignes de ce type sont aujourd'hui « à l'étude », un euphémisme administratif que tout le monde, ici, a appris à traduire. Derrière les chiffres, une question politique simple : jusqu'où finance-t-on un service public qui ne sera jamais rentable ?
+
+    À neuf heures, la pétition avait recueilli six cent quarante signatures. Le car de neuf heures dix, lui, est parti à l'heure, avec trois passagers à bord.
+
+# ---------------------------------------------------------------------
+lf11:
+  titre: "Édito — chronique d'opinion, première personne, ironie"
+  genre: edito
+  duree_cible_s: 72
+  fictif: true
+  traits: [ironie, question_rhetorique, incise, bascule_registre, anglicisme]
+  texte: |
+    On nous avait promis que tout irait plus vite. C'était même l'argument principal. Grâce aux nouveaux outils, disait la brochure, nous allions « gagner un temps considérable ». Six mois plus tard, je passe mes journées à relire ce que des machines ont écrit à ma place, et mes soirées à réécrire ce que j'avais relu trop vite. Le progrès a ceci de merveilleux qu'il trouve toujours le moyen de vous rendre indispensable à la correction de ses propres erreurs.
+
+    Comprenons-nous bien : je ne suis pas nostalgique. Je n'ai aucune envie de revenir au fax, ni au carbone, ni aux réunions de trois heures pour décider de la date de la prochaine réunion. La question n'est pas de savoir si ces outils sont utiles. Ils le sont. La question, la seule, c'est : utiles à qui, et pour faire quoi ?
+
+    Parce qu'un gain de temps qui ne profite qu'à celui qui vous facture ce temps, dans mon dictionnaire, ça porte un autre nom.
+
+# ---------------------------------------------------------------------
+lf12:
+  titre: "Desk éco — normalisation hostile : sigles, taux, indices, dates"
+  genre: journalisme_flash
+  duree_cible_s: 92
+  fictif: true
+  traits: [sigle, nombre_complexe, date_heure, nom_propre_dense, terminologie, enumeration]
+  texte: |
+    Les marchés d'abord. À la clôture, ce jeudi, le CAC 40 a cédé un virgule sept pour cent, à sept mille huit cent quarante-deux points, plombé par le secteur du luxe. À Francfort, le DAX perd zéro virgule neuf pour cent ; à New York, le Dow Jones était quasiment stable à l'ouverture, vers quinze heures trente, heure de Paris.
+
+    Sur le front des taux, la BCE a maintenu son taux de dépôt à trois virgule vingt-cinq pour cent, une décision attendue par la quasi-totalité des analystes. La prochaine réunion est fixée au 7 septembre.
+
+    Côté conjoncture, l'INSEE a révisé sa prévision de croissance pour deux mille vingt-cinq, de plus zéro virgule huit à plus un virgule un pour cent, et anticipe une inflation entre un virgule six et un virgule neuf pour cent sur l'ensemble de l'année.
+
+    Enfin, le groupe agroalimentaire Vaugirand, numéro quatre mondial du secteur, annonce la suppression de trois cents à quatre cent cinquante postes, soit près de douze pour cent de ses effectifs européens.

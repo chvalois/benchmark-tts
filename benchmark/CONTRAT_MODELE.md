@@ -19,7 +19,8 @@ le respecter à la lettre.
 
 | Ressource | Emplacement | Règle |
 |---|---|---|
-| Textes | `corpus/phrases.yaml` | jamais de texte en dur dans le script du modèle |
+| Textes v1 | `corpus/phrases.yaml` (`charger_corpus`) | jamais de texte en dur dans le script du modèle |
+| Textes v2 long-form | `corpus/longform.yaml` (`charger_longform`) via `--corpus longform` | sortie isolée dans `<modèle>/longform/<voix>/` |
 | Voix de référence | `corpus/voix_reference/<id>.wav` | même échantillon pour tous les modèles clonants |
 | Pré-traitement | `benchmark.pretraitement.pretraiter(texte, est_titre=<type == "titre">)` | appliqué **identiquement** par tous |
 

@@ -43,6 +43,10 @@
   .choices{display:flex;gap:10px;margin-top:14px}
   .choices button{flex:1}
   .choices button.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .emoq{font-size:1.1rem;font-weight:600;margin:2px 0 6px;color:var(--warn)}
+  .reveal{font-size:.85rem;color:var(--warn);margin-top:12px;
+    padding:6px 10px;border:1px dashed var(--warn);border-radius:8px}
+  #btn-reveal.on{background:var(--warn);color:#fff;border-color:var(--warn)}
   .sliders{display:grid;gap:14px;margin-top:8px}
   .sliders .row{display:grid;grid-template-columns:190px 1fr 28px;gap:10px;align-items:center}
   .sliders .row .lbl{font-size:.95rem}
@@ -66,15 +70,18 @@
   <section id="s-home">
     <h1>Écoute — benchmark TTS français</h1>
     <p class="muted">Test en aveugle. Casque recommandé, environnement calme,
-      oreille francophone native. ~20–25 min. Rien n'est envoyé : à la fin tu
-      exportes un fichier que tu renvoies.</p>
+      oreille francophone native. Une série = <b>20 items neufs</b> (~8 min) —
+      <b>jamais de répétition</b> d'une série à l'autre : tu peux en enchaîner
+      autant que tu veux, ta couverture monte. Rien n'est envoyé : tu exportes
+      un fichier (tout ton historique) que tu renvoies.</p>
     <div class="card">
       <p><label>Ton prénom / identifiant<br>
         <input type="text" id="pseudo" placeholder="ex. charles" autocomplete="off"></label></p>
       <p class="muted" id="resume-line"></p>
       <p>
-        <button class="primary big" id="go-ab">Commencer — A/B préférence</button>
+        <button class="primary big" id="go-ab">A/B préférence</button>
         <button class="big" id="go-mos">Notation MOS 1–5</button>
+        <button class="big" id="go-emo">A/B émotion</button>
       </p>
     </div>
     <details class="card"><summary>Consignes détaillées</summary>
@@ -85,15 +92,23 @@
       <p><b>MOS</b> — Un extrait à la fois, note de 1 (mauvais) à 5 (excellent)
       sur 4 axes. Le bouton « voix de référence » te fait entendre la vraie
       voix, pour l'axe <i>similarité</i>.</p>
+      <p><b>A/B émotion</b> — Deux modèles disent la même phrase, tous deux
+      clonés depuis la <i>même</i> voix de référence émotionnelle (joie,
+      colère, peur, tristesse). Question : « lequel rend le mieux l'émotion
+      <i>[affichée]</i> ? » — on compare les modèles sur leur rendu
+      émotionnel.</p>
       <p>Aucun retour en arrière une fois validé. Tu peux fermer l'onglet et
-      reprendre plus tard (progression sauvée dans le navigateur).</p>
+      reprendre : chaque série reprend sur des items pas encore notés
+      (historique sauvé dans le navigateur, par identifiant).</p>
+      <p><button id="reset-hist">Effacer mon historique (tous modes)</button></p>
     </details>
   </section>
 
-  <!-- ÉCRAN A/B -->
+  <!-- ÉCRAN A/B (sert aussi au mode ÉMOTION) -->
   <section id="s-ab" class="hidden">
     <div class="bar"><i id="ab-bar"></i></div>
     <p class="meta"><span id="ab-count"></span> — phrase <span id="ab-pid"></span></p>
+    <p class="emoq hidden" id="ab-emoq"></p>
     <div class="txt" id="ab-txt"></div>
     <p class="meta" id="ab-reg"></p>
     <div class="ab">
@@ -119,6 +134,7 @@
       <button data-v="=">équivalent</button>
       <button data-v="B">B meilleur</button>
     </div>
+    <p class="reveal" id="ab-reveal" hidden></p>
   </section>
 
   <!-- ÉCRAN MOS -->
@@ -135,6 +151,7 @@
       </div>
       <div class="sliders" id="mos-sliders"></div>
     </div>
+    <p class="reveal" id="mos-reveal" hidden></p>
   </section>
 
   <!-- ÉCRAN FIN -->
@@ -156,6 +173,7 @@
   <div class="wrap2">
     <span class="muted" id="foot-info"></span>
     <span>
+      <button id="btn-reveal" title="déblinde le test — pour vérification">👁 modèles</button>
       <button id="btn-quit">Quitter</button>
       <button class="primary" id="btn-next" disabled>Suivant →</button>
     </span>
@@ -163,9 +181,43 @@
 </div>
 
 <script src="manifest.js"></script>
+<script src="solution.js" onerror="window.__SOL_MISSING=1"></script>
 <script>
 "use strict";
-const M = window.MANIFEST || {ab:[],mos:[],defauts:[],axes_mos:[]};
+const M = window.MANIFEST || {ab:[],mos:[],emo:[],defauts:[],axes_mos:[]};
+if(!M.emo) M.emo = [];
+const LIST = m => m==="ab" ? M.ab : m==="emo" ? M.emo : M.mos;
+const SOL = window.SOLUTION || null;   // présent seulement si solution.js chargé
+let revealOn = false;
+try{ revealOn = localStorage.getItem("ecoute_reveal")==="1"; }catch(e){}
+
+const VOIX_LABEL = {
+  papa_narration:"homme, narration", johnny:"homme, réf brute (44 kHz converti)",
+  aurore2_narration:"femme", tonton_marc_narration:"homme, accent du Sud-Ouest",
+  papy_narration:"homme âgé",
+  papa_joie:"réf. émotion JOIE", papa_colere:"réf. émotion COLÈRE",
+  papa_peur:"réf. émotion PEUR", papa_tristesse:"réf. émotion TRISTESSE"
+};
+const voixTxt = v => v ? "  ·  voix de réf : " + (VOIX_LABEL[v] || v) : "";
+
+function revealText(mode, it){
+  if(!SOL) return "";
+  if(mode==="mos"){ const s=SOL.mos[it.id];
+    return s ? "modèle : "+s.modele+(s.voix?"  ·  "+s.voix:"") : ""; }
+  const s = (mode==="emo"?SOL.emo:SOL.ab)[it.id];
+  if(!s) return "";
+  if(mode==="emo" && s.A_ref){   // ancien protocole archivé (émo vs neutre)
+    const lab = r => r==="emo" ? "réf émotionnelle" : "réf neutre";
+    return "modèle "+s.modele+"  ·  A = "+lab(s.A_ref)+"  ·  B = "+lab(s.B_ref);
+  }
+  return "A = "+s.A_modele+"  ·  B = "+s.B_modele
+    + (s.voix?"  ·  voix "+s.voix:"") + (s.emotion?"  ·  "+s.emotion:"");
+}
+function showReveal(elId, mode, it){
+  const e = $(elId); if(!e) return;
+  const t = (revealOn && SOL) ? revealText(mode, it) : "";
+  e.textContent = t; e.hidden = !t;
+}
 const $ = s => document.querySelector(s);
 const el = (t,c) => { const e=document.createElement(t); if(c) e.className=c; return e; };
 
@@ -174,30 +226,54 @@ function hash32(s){let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCod
 function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
 function shuffled(arr, rnd){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-// ---- État --------------------------------------------------------------
-let S = null; // {pseudo, mode, order:[idx], pos, votes:{}}
-const KEY = p => "ecoute_" + p;
+// ---- État ------------------------------------------------------------
+// Historique CUMULATIF par (pseudo, mode) : {itemId: vote}. Jamais effacé
+// sauf reset explicite. Une "session" = pointeur volatil (order/pos) sur
+// ≤ LIMITE items NON encore notés → on ne repasse jamais deux fois.
+let S = null;
+const HKEY = (p,m) => "ecoute_h_"+p+"_"+m;
+const SKEY = (p,m) => "ecoute_s_"+p+"_"+m;
+const LIMITE = (M.build && M.build.limite_session) || 20;
 
-function load(pseudo){
-  try{ const raw = localStorage.getItem(KEY(pseudo)); if(raw) return JSON.parse(raw); }catch(e){}
-  return null;
+function loadH(p,m){ try{ return JSON.parse(localStorage.getItem(HKEY(p,m)) || "{}") || {}; }catch(e){ return {}; } }
+function loadSess(p,m){ try{ return JSON.parse(localStorage.getItem(SKEY(p,m)) || "null"); }catch(e){ return null; } }
+function save(){
+  try{
+    localStorage.setItem(HKEY(S.pseudo,S.mode), JSON.stringify(S.votes));
+    localStorage.setItem(SKEY(S.pseudo,S.mode),
+      JSON.stringify({order:S.order, pos:S.pos, nonce:S.nonce, started:S.started}));
+  }catch(e){}
 }
-function save(){ try{ localStorage.setItem(KEY(S.pseudo), JSON.stringify(S)); }catch(e){} }
+function progres(pseudo){
+  return ["ab","mos","emo"].map(m=>{
+    const n = Object.keys(loadH(pseudo,m)).length, tot = LIST(m).length;
+    return m.toUpperCase()+" "+n+"/"+tot;
+  }).join("  ·  ");
+}
 
 function start(mode){
   const pseudo = $("#pseudo").value.trim().toLowerCase();
   if(!pseudo){ $("#pseudo").focus(); return; }
-  const prev = load(pseudo);
-  if(prev && prev.mode===mode && prev.pos < prev.order.length &&
-     !confirm("Reprendre la session en cours ("+prev.pos+"/"+prev.order.length+") ?\nOK = reprendre, Annuler = repartir de zéro.")){
-    localStorage.removeItem(KEY(pseudo));
+  const H = loadH(pseudo, mode);
+  const sess = loadSess(pseudo, mode);
+  const enCours = !!(sess && sess.order && sess.pos < sess.order.length);
+  let order, nonce, started, pos;
+  if(enCours && confirm("Série en cours ("+sess.pos+"/"+sess.order.length+"). "
+      +"OK = reprendre  ·  Annuler = nouvelle série de 20 (items pas encore notés).")){
+    order = sess.order; nonce = sess.nonce; started = sess.started; pos = sess.pos;
+  }else{
+    nonce = Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+    const rnd = mulberry32(hash32(pseudo+"|"+mode+"|"+nonce));
+    const lst = LIST(mode);
+    const tous = [...Array(lst.length).keys()];
+    const frais = tous.filter(i => !(lst[i].id in H));
+    // en priorité les items PAS encore notés ; complète avec des déjà-vus
+    // seulement si le pool est épuisé
+    const base = frais.length >= LIMITE ? frais : frais.concat(tous.filter(i => lst[i].id in H));
+    order = shuffled(base, rnd).slice(0, Math.min(LIMITE, base.length));
+    pos = 0; started = new Date().toISOString();
   }
-  S = (prev && prev.mode===mode) ? prev : null;
-  if(!S){
-    const rnd = mulberry32(hash32(pseudo+"|"+mode));
-    const n = (mode==="ab" ? M.ab.length : M.mos.length);
-    S = {pseudo, mode, order: shuffled([...Array(n).keys()], rnd), pos:0, votes:{}, started:new Date().toISOString()};
-  }
+  S = {pseudo, mode, order, nonce, started, pos, votes: H};
   save();
   render();
 }
@@ -220,16 +296,27 @@ function defBox(side){
     box.appendChild(l);
   });
 }
-function renderAB(){
+const AB_LABELS = {"A":"A meilleur", "=":"équivalent", "B":"B meilleur"};
+const EMO_LABELS = {"A":"A rend mieux", "=":"équivalent", "B":"B rend mieux"};
+
+function renderAB(){ renderPair(false); }
+function renderEMO(){ renderPair(true); }
+
+function renderPair(isEmo){
   $("#s-ab").classList.remove("hidden");
   const idx = S.order[S.pos];
-  const it = M.ab[idx];
+  const it = (isEmo ? M.emo : M.ab)[idx];
   const vote = S.votes[it.id] || {};
-  $("#ab-count").textContent = "A/B "+(S.pos+1)+" / "+S.order.length;
-  $("#ab-pid").textContent = it.phrase;
+  $("#ab-count").textContent = (isEmo ? "Émotion " : "A/B ")+(S.pos+1)+" / "+S.order.length;
+  $("#ab-pid").textContent = it.phrase + (isEmo ? " ("+it.emotion+")" : "");
+  const q = $("#ab-emoq");
+  q.classList.toggle("hidden", !isEmo);
+  if(isEmo) q.textContent = it.question;
   $("#ab-txt").textContent = "« "+it.texte+" »";
-  $("#ab-reg").textContent = "registre : "+it.registre;
+  $("#ab-reg").textContent = "registre : "+it.registre + voixTxt(it.voix);
   $("#ab-bar").style.width = (100*S.pos/S.order.length)+"%";
+  const labels = isEmo ? EMO_LABELS : AB_LABELS;
+  document.querySelectorAll("#ab-choices button").forEach(b=>{ b.textContent = labels[b.dataset.v]; });
   defBox("A"); defBox("B");
   // restaurer
   ["A","B"].forEach(s=>(vote["def_"+s]||[]).forEach(k=>{
@@ -237,7 +324,10 @@ function renderAB(){
   }));
   document.querySelectorAll("#ab-choices button").forEach(b=>b.classList.toggle("sel", b.dataset.v===vote.choix));
   $("#btn-next").disabled = !vote.choix;
-  $("#foot-info").textContent = "A/B — clique A puis B, écoute, choisis.";
+  $("#foot-info").textContent = isEmo
+    ? "Émotion — écoute A puis B, dis lequel porte le plus l'émotion."
+    : "A/B — clique A puis B, écoute, choisis.";
+  showReveal("#ab-reveal", isEmo ? "emo" : "ab", it);
   // handlers audio
   document.querySelectorAll("#s-ab .play-btn,#s-ab .replay-btn").forEach(b=>{
     b.onclick = ()=> play(b.dataset.side==="A" ? it.A : it.B);
@@ -269,14 +359,16 @@ function renderMOS(){
   $("#mos-count").textContent = "MOS "+(S.pos+1)+" / "+S.order.length;
   $("#mos-pid").textContent = it.phrase;
   $("#mos-txt").textContent = "« "+it.texte+" »";
-  $("#mos-reg").textContent = "registre : "+it.registre;
+  $("#mos-reg").textContent = "registre : "+it.registre + voixTxt(it.voix);
   $("#mos-bar").style.width = (100*S.pos/S.order.length)+"%";
   const box = $("#mos-sliders"); box.innerHTML="";
+  const v0 = S.votes[it.id] || (S.votes[it.id]={});
   M.axes_mos.forEach(a=>{
     const row = el("div","row");
     const lbl = el("div","lbl"); lbl.textContent = a.label;
     const r = el("input"); r.type="range"; r.min=1; r.max=5; r.step=1;
-    r.value = (vote[a.k]!=null ? vote[a.k] : 3); r.dataset.axe=a.k;
+    if(v0[a.k]==null) v0[a.k] = 3;          // curseur à 3 = note « moyen » retenue par défaut
+    r.value = v0[a.k]; r.dataset.axe=a.k;
     const out = el("div"); out.textContent = r.value;
     r.oninput = ()=>{ out.textContent=r.value; };
     r.onchange = ()=>{
@@ -285,10 +377,12 @@ function renderMOS(){
     };
     row.append(lbl,r,out); box.appendChild(row);
   });
+  save();
   $("#mos-play").onclick = ()=> play(it.clip);
   $("#mos-replay").onclick = ()=> play(it.clip);
-  $("#mos-ref").onclick = ()=> play(M.ref);
-  $("#foot-info").textContent = "MOS — écoute, place les 4 curseurs.";
+  $("#mos-ref").onclick = ()=> play(it.ref || M.ref);
+  $("#foot-info").textContent = "MOS — écoute, ajuste les curseurs (3 = moyen par défaut).";
+  showReveal("#mos-reveal", "mos", it);
   checkMosDone(it.id);
 }
 function checkMosDone(id){
@@ -303,7 +397,7 @@ function render(){
   $("#foot").style.display = "block";
   if(!S){ $("#s-home").classList.remove("hidden"); $("#foot").style.display="none"; return; }
   if(S.pos >= S.order.length){ renderDone(); return; }
-  (S.mode==="ab" ? renderAB : renderMOS)();
+  (S.mode==="ab" ? renderAB : S.mode==="emo" ? renderEMO : renderMOS)();
 }
 function next(){
   if(S.pos < S.order.length){ S.pos++; save(); }
@@ -313,12 +407,15 @@ function next(){
 
 // ---- Fin + export -------------------------------------------------
 function payload(){
+  const byId = {}; LIST(S.mode).forEach(it=>byId[it.id]=it);
+  const ids = Object.keys(S.votes);
   return {
     pseudo:S.pseudo, mode:S.mode, started:S.started,
     finished:new Date().toISOString(),
-    n_items:S.order.length, n_repondus:Object.keys(S.votes).length,
+    n_session:S.order.length, n_total:ids.length, pool:LIST(S.mode).length,
     manifest:(M.build||null),
-    votes: (S.mode==="ab" ? M.ab : M.mos).map(it=>({id:it.id, phrase:it.phrase, ...(S.votes[it.id]||{})}))
+    // TOUT l'historique du mode (cumulé sur toutes les sessions)
+    votes: ids.map(id=>({id, phrase:(byId[id]||{}).phrase, ...S.votes[id]}))
   };
 }
 function download(name, text, type){
@@ -329,7 +426,10 @@ function download(name, text, type){
 function renderDone(){
   $("#s-done").classList.remove("hidden"); $("#foot").style.display="none";
   const p = payload();
-  $("#done-line").textContent = p.n_repondus+" / "+p.n_items+" items notés ("+p.mode.toUpperCase()+").";
+  $("#done-line").textContent =
+    "Série finie : "+p.n_session+" items. Total "+p.mode.toUpperCase()+" : "
+    +p.n_total+" / "+p.pool+" du pool. Tu peux refaire une série (20 items neufs) "
+    +"ou exporter maintenant — l'export contient TOUT ton historique.";
   $("#export-txt").value = JSON.stringify(p,null,1);
   $("#export").onclick = ()=> download("ecoute_"+S.pseudo+"_"+S.mode+".json", JSON.stringify(p,null,1), "application/json");
   $("#export-csv").onclick = ()=>{
@@ -342,17 +442,38 @@ function renderDone(){
 // ---- Wiring -----------------------------------------------------
 $("#go-ab").onclick = ()=> start("ab");
 $("#go-mos").onclick = ()=> start("mos");
+$("#go-emo").onclick = ()=> start("emo");
 $("#btn-next").onclick = next;
-$("#btn-quit").onclick = ()=>{ if(confirm("Quitter ? La progression est sauvée.")){ S=null; render(); } };
+$("#btn-quit").onclick = ()=>{ if(confirm("Quitter ? Tes réponses sont gardées — tu reprendras là où tu en es.")){ S=null; render(); } };
 $("#restart").onclick = ()=>{ S=null; render(); };
+$("#reset-hist").onclick = ()=>{
+  const p = ($("#pseudo").value.trim().toLowerCase());
+  if(!p) return;
+  if(!confirm("Effacer TOUT l'historique de « "+p+" » (A/B + MOS + émotion) ? Irréversible.")) return;
+  ["ab","mos","emo"].forEach(m=>{ localStorage.removeItem(HKEY(p,m)); localStorage.removeItem(SKEY(p,m)); });
+  S=null; render(); $("#pseudo").dispatchEvent(new Event("input"));
+};
+(function(){
+  const b = $("#btn-reveal");
+  if(!SOL){ b.disabled = true; b.title = "solution.js absent (build local requis)"; return; }
+  const sync = ()=> b.classList.toggle("on", revealOn);
+  sync();
+  b.onclick = ()=>{
+    revealOn = !revealOn;
+    try{ localStorage.setItem("ecoute_reveal", revealOn?"1":"0"); }catch(e){}
+    sync();
+    if(S && S.pos < S.order.length) render();   // ré-affiche l'item courant
+  };
+})();
 $("#pseudo").addEventListener("input", e=>{
-  const pv = load(e.target.value.trim().toLowerCase());
-  $("#resume-line").textContent = pv ? ("Session trouvée : "+pv.mode.toUpperCase()+" "+pv.pos+"/"+pv.order.length+" — clique le même mode pour reprendre.") : "";
+  const p = e.target.value.trim().toLowerCase();
+  $("#resume-line").textContent = p ? ("Ta progression — " + progres(p)) : "";
 });
 $("#foot-info").textContent = "";
-if(!M.ab.length && !M.mos.length){
+if(!M.ab.length && !M.mos.length && !M.emo.length){
   $("#s-home").innerHTML = "<h1>manifest.js absent</h1><p>Lance <code>benchmark/build_ecoute.py</code> pour générer les données.</p>";
 }
+if(!M.emo.length){ const b=$("#go-emo"); if(b) b.disabled=true; }
 render();
 </script>
 </body>

@@ -25,7 +25,7 @@ RACINE = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RACINE))
 
 from benchmark.chunking import FAMILLE_DEFAUT  # noqa: E402
-from benchmark.corpus import charger_corpus  # noqa: E402
+from benchmark.corpus import charger_corpus, charger_longform  # noqa: E402
 from benchmark.generation import executer_corpus, parser_voix_phrases  # noqa: E402
 
 NOM_MODELE = "f5_tts"
@@ -79,6 +79,8 @@ def main() -> int:
     p.add_argument("--voix-phrases", default="")
     p.add_argument("--base-seed", type=int, default=1000)
     p.add_argument("--phrases", default="")
+    p.add_argument("--corpus", choices=("v1", "longform"), default="v1",
+                   help="v1 = corpus/phrases.yaml (défaut) ; longform = corpus/longform.yaml (v2)")
     p.add_argument("--limite", type=int, default=0)
     p.add_argument("--device", default="cuda")
     args = p.parse_args()
@@ -87,7 +89,7 @@ def main() -> int:
     voix_list = list(pxv) if pxv else [v.strip() for v in args.voix.split(",") if v.strip()]
     refs = {v: _charger_ref(v) for v in voix_list}
 
-    phrases = charger_corpus()
+    phrases = charger_longform() if args.corpus == "longform" else charger_corpus()
     if args.phrases:
         garde = set(args.phrases.split(","))
         phrases = [ph for ph in phrases if ph.id in garde]
@@ -95,6 +97,8 @@ def main() -> int:
         phrases = phrases[: args.limite]
 
     racine_sortie = Path(os.environ.get("TTSB_AUDIO_OUT", RACINE / "audio_genere")) / NOM_MODELE
+    if args.corpus == "longform":
+        racine_sortie = racine_sortie / "longform"
 
     print(f"[{NOM_MODELE}] chargement ({REPO_ID} @ {REVISION[:8]}, {F5_MODEL})…", flush=True)
     t0 = time.perf_counter()

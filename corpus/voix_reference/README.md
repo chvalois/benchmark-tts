@@ -31,6 +31,28 @@ benchmark sinon (protocole §4.5). Référence : APIAVISOL §3.4 et §4.2.
 > `vf_multi` = 4 fichiers `vf_multi_normal.wav`, `vf_multi_joie.wav`, etc.,
 > **même locutrice**, enregistrés dans la foulée.
 
+## Voix réellement en banque (v1)
+
+Fichiers `<id>.wav` (24 kHz mono, crête ~-0.3 dB, ≤ 30 s), non poussés
+(`.gitignore`). `<id>.prompt.txt` = transcription du `.wav` complet
+(`whisper-large-v3-french`), requise par FireRed / VoxCPM / MOSS. CosyVoice
+utilise en plus `<id>.16k.wav` + `<id>.f5.prompt.txt` (clip 12 s).
+
+| id | genre | ~durée | ce que ça teste |
+|---|---|---|---|
+| `papa_narration` | H | 27 s | référence principale, voix propre |
+| `johnny` | H | 21 s | référence « difficile » (44 kHz stéréo converti, brute) |
+| `papa_{joie,colere,peur,tristesse}` | H | ~19–22 s | run émotions (voix de réf émotionnelle → phrases du registre) |
+| `aurore2_narration` | F | 24 s | **voix féminine** |
+| `manou_narration` | F | 30 s | **femme âgée** (conte original — texte sans prior fort) |
+| `papy_narration` | H | 30 s | **homme âgé + poème très connu** (« Demain, dès l'aube… ») — piège : casse le clonage audio+transcript |
+| `tonton_marc_narration` | H | 30 s | **accent du Sud-Ouest** (risque d'accent parasite au clonage) |
+
+`aurore2` / `manou` / `papy` / `tonton_marc` : narration uniquement, **pas
+de variation émotionnelle**. Intégrées au test d'écoute A/B + MOS
+(`VOIX_ECOUTE` dans `build_ecoute.py`, hors `manou` ajoutée après) et
+visibles dans `site/resultats/objectif.html` + `comparatif.md`.
+
 ## Sidecar par voix (`<id>.json`)
 
 ```json

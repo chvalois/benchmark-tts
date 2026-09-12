@@ -16,6 +16,7 @@ venv/
 !/audio_genere/.gitkeep
 /resultats/*.csv
 !/resultats/.gitkeep
+# NB : resultats/*.json est versionné (jeu de données publié, source du site)
 
 # Retours d'auditeurs bruts (pseudos) — jamais publiés
 exports/*.json
@@ -35,4 +36,9 @@ corpus/voix_reference/*.json
 # Test d'écoute : artefacts régénérables + audio (voix perso)
 site/ecoute/audio/
 site/ecoute/manifest.js
+site/ecoute/solution.js
 site/ecoute/_solution.json
+site/ecoute/_solutions/
+
+# Retours d'auditeurs (données personnelles) — le README reste versionné
+exports/*.json
