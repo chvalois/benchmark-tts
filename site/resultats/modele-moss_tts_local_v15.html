@@ -245,6 +245,12 @@ table.matrice td.diag,table.matrice td.nodata{color:var(--faint)}
   table.rt.empile > tbody{display:block}
   table.rt.empile > tbody > tr{display:block;padding:12px 14px 14px;
     border-bottom:1px solid var(--line);position:relative}
+  /* l'attribut `hidden` (posé par ttsTable tant qu'une ligne n'est pas
+     dépliée) doit continuer à masquer la ligne : sans ce sélecteur plus
+     spécifique, la règle `tr{display:block}` ci-dessus (origine "auteur")
+     l'emportait sur le `[hidden]{display:none}` du navigateur (origine
+     "user-agent") et affichait TOUS les détails en permanence. */
+  table.rt.empile > tbody > tr[hidden]{display:none}
   table.rt.empile > tbody > tr:last-child{border-bottom:0}
   table.rt.empile > tbody > tr > td{display:flex;align-items:baseline;gap:12px;
     justify-content:space-between;width:auto;border:0;padding:5px 0;

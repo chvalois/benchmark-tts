@@ -366,6 +366,12 @@ table.matrice td.diag,table.matrice td.nodata{color:var(--faint)}
   table.rt.empile > tbody{display:block}
   table.rt.empile > tbody > tr{display:block;padding:12px 14px 14px;
     border-bottom:1px solid var(--line);position:relative}
+  /* l'attribut `hidden` (posé par ttsTable tant qu'une ligne n'est pas
+     dépliée) doit continuer à masquer la ligne : sans ce sélecteur plus
+     spécifique, la règle `tr{display:block}` ci-dessus (origine "auteur")
+     l'emportait sur le `[hidden]{display:none}` du navigateur (origine
+     "user-agent") et affichait TOUS les détails en permanence. */
+  table.rt.empile > tbody > tr[hidden]{display:none}
   table.rt.empile > tbody > tr:last-child{border-bottom:0}
   table.rt.empile > tbody > tr > td{display:flex;align-items:baseline;gap:12px;
     justify-content:space-between;width:auto;border:0;padding:5px 0;
@@ -1368,16 +1374,35 @@ def page_objectif() -> str:
     corps = f"""<section>
   <div class="sec-h"><h2>Métriques par modèle</h2>
     <span class="n">toutes voix confondues · triable</span></div>
-  <p class="lead">Chaque ligne agrège <b>toutes les voix de référence et registres
-    émotionnels</b> — moyenne <b>pondérée par le nombre de runs</b> (une voix de
-    narration à 99 runs pèse plus qu'un registre émotionnel à 6), <b>hors
-    combinaisons au WER&nbsp;>&nbsp;30&nbsp;%</b> (échec de clonage sur cette voix).
-    <b>Aucune métrique de naturalité</b> : UTMOS, TTSDS2 et NISQA écartés (non
-    pertinents en français) → naturalité = <a class="link" href="ecoute.html">test
-    d'écoute</a>. Kokoro n'a qu'une voix interne fixe : ses chiffres ne portent
-    que sur elle. Survole un en-tête de colonne pour son explication, clique pour
-    trier ; clic sur une ligne pour le détail par phrase (longueur / registre /
-    piège). Sur petit écran, seules WER / SIM restent affichées.</p>
+  <div class="lead">
+    <p>Cette table réunit <b>toutes les métriques automatiques</b> mesurées pour
+    chaque modèle — aucune écoute humaine ici, c'est la vue « instruments » du
+    benchmark. Elle sert à comparer les modèles sur un axe précis plutôt que sur
+    un seul score : lequel se trompe le moins de mots (WER) ? lequel garde le
+    mieux le timbre de la voix clonée (SIM) ? lequel est le plus rapide (RTF) ?
+    le plus stable d'une répétition à l'autre (CV durée) ?</p>
+    <p><b>Comment l'utiliser</b> — survole l'intitulé d'une colonne pour lire ce
+    qu'elle mesure exactement ; clique dessus pour trier la table selon cette
+    colonne (reclique pour inverser l'ordre), ou passe par le menu déroulant
+    « Trier » ci-dessous pour les tris les plus courants. Clique n'importe où
+    sur une ligne de modèle pour déplier son détail : le WER se recalcule alors
+    par longueur de phrase, par registre (narration, dialogue…) et par piège
+    testé (liaison, nombre, homographe…) — utile pour voir SUR QUOI un modèle
+    trébuche, pas seulement s'il trébuche.</p>
+    <p><b>Comment chaque ligne est construite</b> — elle agrège <b>toutes les
+    voix de référence et registres émotionnels</b> du modèle en une seule
+    moyenne, <b>pondérée par le nombre de runs</b> (une voix de narration à 99
+    runs pèse donc plus qu'un registre émotionnel à 6 runs). Les combinaisons
+    (modèle, voix) au WER&nbsp;>&nbsp;30&nbsp;% sont écartées de cette moyenne :
+    un échec de clonage sur une seule voix ne doit pas noyer le reste des
+    résultats du modèle.</p>
+    <p><b>Deux limites à garder en tête</b> — aucune métrique de naturalité
+    automatique n'est incluse (UTMOS, TTSDS2 et NISQA se sont révélés peu
+    fiables en français) : la naturalité perçue se lit sur le
+    <a class="link" href="ecoute.html">test d'écoute</a>, pas ici. Et Kokoro n'a
+    qu'une voix interne fixe (pas de clonage) : ses chiffres ne portent que sur
+    cette voix précise, à ne pas comparer directement à ceux des autres modèles.</p>
+  </div>
   {LEGENDE}
   <div class="tools">
     <label>Trier&nbsp;:
