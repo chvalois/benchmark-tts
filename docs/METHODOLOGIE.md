@@ -154,7 +154,7 @@ température MOSS abaissée…) **non faite**.
 
 | Axe | Comment | Fichier |
 |---|---|---|
-| **WER FR** | transcription `bofenghuang/whisper-large-v3-french` (révision épinglée), `jiwer`, **normalisation identique ref/hyp** (retrait balises, `num2words`) | `transcrire.py` + `mesurer_wer.py` |
+| **WER FR** | transcription `bofenghuang/whisper-large-v3-french` (révision épinglée), `jiwer`, **normalisation identique ref/hyp** (retrait balises, `num2words`, heures « 10 h 45 »/« 10h45 »/« 10 heures 45 » canonisées avant comparaison) ; **tolérance phonétique des noms propres** (`noms_propres` annoté par phrase dans `corpus/phrases.yaml`, sauvetage espeak-ng si substitution ≥ 0,75 de similarité — `wer_brut` conserve la valeur sans tolérance) | `transcrire.py` + `normalisation.py` + `mesurer_wer.py` |
 | **Fidélité** *language-agnostic* | portage de `avisol/transcription_check.py` : recall/precision mot-à-mot, hallucination (recall < 0,6 ou digression), répétition (run / n-gramme / ratio trigrammes), **troncature de fin** (`trailing_missing_words`) ; sauvetages anti-faux-positifs **orthographique** (Levenshtein suffixe) puis **phonétique** (espeak-ng) | `fidelite.py` + `evaluer.py` |
 | **Vitesse** | RTF = `gen_s / audio_s` (à chaud), TTFA, cold start séparé | `mesurer_vitesse.py` |
 | **SIM** | similarité locuteur — cosinus embeddings **ECAPA-TDNN** (`speechbrain/spkrec-ecapa-voxceleb`), **silences rognés** (30 dB) des deux côtés. `wavlm-base-plus-sv` abandonné : cosinus tous ~0,96, aucune discrimination, corrélation nulle avec la note humaine. ECAPA : même-locuteur ~0,75–0,9, écart net entre modèles. Clip < 0,4 s → **pas de score** | `mesurer_perceptuel.py` |
