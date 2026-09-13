@@ -499,7 +499,7 @@ function ttsTable(mountSel, cfg){
         } else if(c.kind==='mos'){
           inner=(v==null)?'—':(v.toFixed(2)+' <span class="ic">±'+(row[c.k+'_ic']||0).toFixed(2)+'</span>');
         }
-        tr+='<td class="'+(k+pc).trim()+'" data-label="'+c.label+'">'+inner+'</td>';
+        tr+='<td class="'+(k+pc).trim()+'" data-label="'+c.label+'"><span class="cv">'+inner+'</span></td>';
       });
       tr+='</tr>';
       if(row._detail){
