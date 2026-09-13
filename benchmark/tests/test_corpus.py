@@ -87,6 +87,59 @@ def test_phrase_est_immuable():
         p.texte = "autre"  # type: ignore[misc]
 
 
+# --- noms_propres (tolérance phonétique WER, §3.9bis) --------------------
+
+def test_noms_propres_charge_et_expose(tmp_path):
+    f = _ecrire(tmp_path, """
+        x01:
+          texte: "Le sorcier Franfrelou vivait au hameau."
+          longueur: court
+          registre: narration
+          pieges: [nom_propre]
+          noms_propres: ["Franfrelou"]
+    """)
+    (p,) = charger_corpus(f)
+    assert p.noms_propres == ("Franfrelou",)
+
+
+def test_piege_nom_propre_sans_noms_propres_leve(tmp_path):
+    f = _ecrire(tmp_path, """
+        x01:
+          texte: "Le sorcier Franfrelou vivait au hameau."
+          longueur: court
+          registre: narration
+          pieges: [nom_propre]
+    """)
+    with pytest.raises(ErreurCorpus, match="nom_propre"):
+        charger_corpus(f)
+
+
+def test_noms_propres_sans_piege_nom_propre_leve(tmp_path):
+    f = _ecrire(tmp_path, """
+        x01:
+          texte: "Le sorcier Franfrelou vivait au hameau."
+          longueur: court
+          registre: narration
+          pieges: []
+          noms_propres: ["Franfrelou"]
+    """)
+    with pytest.raises(ErreurCorpus, match="noms_propres.*sans le piège"):
+        charger_corpus(f)
+
+
+def test_noms_propres_absent_du_texte_leve(tmp_path):
+    f = _ecrire(tmp_path, """
+        x01:
+          texte: "Le sorcier Franfrelou vivait au hameau."
+          longueur: court
+          registre: narration
+          pieges: [nom_propre]
+          noms_propres: ["Gandalf"]
+    """)
+    with pytest.raises(ErreurCorpus, match="absent du texte"):
+        charger_corpus(f)
+
+
 # --- volet long-form (v2) ---------------------------------------------
 def test_longform_reel_se_charge_et_est_valide():
     textes = charger_longform()

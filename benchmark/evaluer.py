@@ -38,7 +38,7 @@ def evaluer_runs(
             continue
         transcrit = (t.get("texte_transcrit") or "").strip()
         pp = perc.get((t.get("id_phrase"), t.get("repetition")), {})
-        w = wer(ph.texte, transcrit, langue)
+        w = wer(ph.texte, transcrit, langue, noms_propres=list(getattr(ph, "noms_propres", ())))
         f = evaluer_fidelite(
             ph.texte, transcrit, langue=langue, seg_logprobs=t.get("seg_logprobs")
         )
@@ -50,10 +50,12 @@ def evaluer_runs(
             "pieges": list(ph.pieges),
             "type": ph.type,
             "wer": w["wer"],
+            "wer_brut": w["wer_brut"],
             "wer_substitutions": w["substitutions"],
             "wer_deletions": w["deletions"],
             "wer_insertions": w["insertions"],
             "n_ref": w["n_ref"],
+            "noms_propres_rescapes": w["noms_propres_rescapes"],
             "fidelite_verifiee": f["verifie"],
             "hallucination": f["hallucination"],
             "repetition_audio": f["repetition"],

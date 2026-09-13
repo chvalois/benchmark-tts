@@ -13,6 +13,8 @@ from pathlib import Path
 
 import yaml
 
+from benchmark.normalisation import normaliser_mots
+
 RACINE = Path(__file__).resolve().parent.parent
 CHEMIN_CORPUS = RACINE / "corpus" / "phrases.yaml"
 CHEMIN_LONGFORM = RACINE / "corpus" / "longform.yaml"
@@ -58,6 +60,7 @@ class Phrase:
     registre: str
     pieges: tuple[str, ...]
     type: str = "phrase"
+    noms_propres: tuple[str, ...] = ()
 
     @property
     def est_titre(self) -> bool:
@@ -87,7 +90,23 @@ def _valider(entree_id: str, d: object) -> Phrase:
     type_ = d.get("type", "phrase")
     if type_ not in TYPES:
         raise ErreurCorpus(f"{entree_id} : type invalide {type_!r}")
-    return Phrase(entree_id, str(d["texte"]).strip(), d["longueur"], d["registre"], pieges, type_)
+    texte = str(d["texte"]).strip()
+    noms_propres = tuple(d.get("noms_propres") or ())
+    if "nom_propre" in pieges and not noms_propres:
+        raise ErreurCorpus(
+            f"{entree_id} : piège 'nom_propre' déclaré sans 'noms_propres' "
+            "(annoter les tokens à tolérance phonétique, cf. §3.9bis)"
+        )
+    if noms_propres and "nom_propre" not in pieges:
+        raise ErreurCorpus(f"{entree_id} : 'noms_propres' sans le piège 'nom_propre'")
+    mots_texte = set(normaliser_mots(texte))
+    for nom in noms_propres:
+        manquants = [m for m in normaliser_mots(nom) if m not in mots_texte]
+        if manquants:
+            raise ErreurCorpus(
+                f"{entree_id} : noms_propres {nom!r} absent du texte (mots {manquants} introuvables)"
+            )
+    return Phrase(entree_id, texte, d["longueur"], d["registre"], pieges, type_, noms_propres)
 
 
 def charger_corpus(chemin: Path | str = CHEMIN_CORPUS) -> list[Phrase]:

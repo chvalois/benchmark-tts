@@ -4,16 +4,16 @@
 
 | voix | runs ok | WER moyen | ±σ | SIM | hallu. | rép. | tronc. | RTF méd. | VRAM pic | CV durée |
 |---|---|---|---|---|---|---|---|---|---|---|
-| aurore2_narration | 99/99 | 4.0% | 5.9% | 0.708 | 0.0% | 0.0% | 0.0% | 1.12 | 5835 Mo | 2.5% |
-| johnny | 99/99 | 5.0% | 7.9% | 0.675 | 0.0% | 0.0% | 2.0% | 1.11 | 5833 Mo | 9.4% |
-| manou_narration | 99/99 | 3.7% | 6.1% | 0.749 | 0.0% | 0.0% | 0.0% | 1.13 | 8294 Mo | 2.7% |
+| aurore2_narration | 99/99 | 3.0% | 5.4% | 0.708 | 0.0% | 0.0% | 0.0% | 1.12 | 5835 Mo | 2.5% |
+| johnny | 99/99 | 3.8% | 6.6% | 0.675 | 0.0% | 0.0% | 2.0% | 1.11 | 5833 Mo | 9.4% |
+| manou_narration | 99/99 | 2.9% | 5.8% | 0.749 | 0.0% | 0.0% | 0.0% | 1.13 | 8294 Mo | 2.7% |
 | papa_colere | 15/15 | 2.0% | 3.3% | 0.748 | 0.0% | 0.0% | 0.0% | 1.11 | 5620 Mo | 3.8% |
 | papa_joie | 6/6 | 0.0% | 0.0% | 0.727 | 0.0% | 0.0% | 0.0% | 1.52 | 5621 Mo | 3.7% |
-| papa_narration | 99/99 | 3.7% | 6.2% | 0.765 | 0.0% | 0.0% | 0.0% | 1.13 | 5875 Mo | 2.9% |
+| papa_narration | 99/99 | 2.6% | 5.4% | 0.765 | 0.0% | 0.0% | 0.0% | 1.13 | 5875 Mo | 2.9% |
 | papa_peur | 9/9 | 0.0% | 0.0% | 0.759 | 0.0% | 0.0% | 0.0% | 1.12 | 6299 Mo | 5.2% |
 | papa_tristesse | 6/6 | 0.0% | 0.0% | 0.641 | 0.0% | 0.0% | 0.0% | 1.14 | 6330 Mo | 4.7% |
-| papy_narration | 99/99 | 3.6% | 6.1% | 0.770 | 0.0% | 0.0% | 1.0% | 1.13 | 8277 Mo | 2.3% |
-| tonton_marc_narration | 99/99 | 3.0% | 5.6% | 0.713 | 0.0% | 0.0% | 0.0% | 1.12 | 8016 Mo | 4.7% |
+| papy_narration | 99/99 | 2.7% | 5.2% | 0.770 | 0.0% | 0.0% | 1.0% | 1.13 | 8277 Mo | 2.3% |
+| tonton_marc_narration | 99/99 | 2.3% | 5.2% | 0.713 | 0.0% | 0.0% | 0.0% | 1.12 | 8016 Mo | 4.7% |
 
 ## aurore2_narration — WER par catégorie
 
@@ -22,8 +22,8 @@
 | longueur | n | WER moyen |
 |---|---|---|
 | court | 39 | 3.2% |
-| long | 12 | 4.3% |
-| moyen | 48 | 4.7% |
+| long | 12 | 3.9% |
+| moyen | 48 | 2.7% |
 
 **Par registre**
 
@@ -34,7 +34,7 @@
 | dialogue_joie | 6 | 0.0% |
 | dialogue_peur | 9 | 0.0% |
 | dialogue_tristesse | 6 | 0.0% |
-| narration | 48 | 5.9% |
+| narration | 48 | 3.9% |
 
 **Par piège**
 
@@ -42,12 +42,12 @@
 |---|---|---|
 | emprunt_en | 6 | 0.0% |
 | homographe_heterophone | 21 | 3.1% |
-| liaison | 24 | 1.8% |
-| nom_propre | 18 | 5.7% |
-| nombre | 18 | 6.5% |
+| liaison | 24 | 0.6% |
+| nom_propre | 18 | 1.2% |
+| nombre | 18 | 4.0% |
 | onomatopee | 6 | 9.0% |
 | ponctuation_repetee | 3 | 0.0% |
-| silence_rythme | 21 | 3.4% |
+| silence_rythme | 21 | 3.3% |
 
 ## johnny — WER par catégorie
 
@@ -56,8 +56,8 @@
 | longueur | n | WER moyen |
 |---|---|---|
 | court | 39 | 2.8% |
-| long | 12 | 3.6% |
-| moyen | 48 | 7.2% |
+| long | 12 | 3.1% |
+| moyen | 48 | 4.8% |
 
 **Par registre**
 
@@ -68,7 +68,7 @@
 | dialogue_joie | 6 | 5.0% |
 | dialogue_peur | 9 | 0.6% |
 | dialogue_tristesse | 6 | 1.2% |
-| narration | 48 | 7.9% |
+| narration | 48 | 5.3% |
 
 **Par piège**
 
@@ -76,12 +76,12 @@
 |---|---|---|
 | emprunt_en | 6 | 0.0% |
 | homographe_heterophone | 21 | 2.1% |
-| liaison | 24 | 2.7% |
-| nom_propre | 18 | 7.6% |
-| nombre | 18 | 4.9% |
+| liaison | 24 | 2.2% |
+| nom_propre | 18 | 1.5% |
+| nombre | 18 | 3.5% |
 | onomatopee | 6 | 11.5% |
 | ponctuation_repetee | 3 | 0.0% |
-| silence_rythme | 21 | 3.9% |
+| silence_rythme | 21 | 3.7% |
 
 **Troncature détectée sur** : p01, p33
 
@@ -94,8 +94,8 @@
 | longueur | n | WER moyen |
 |---|---|---|
 | court | 39 | 2.4% |
-| long | 12 | 3.9% |
-| moyen | 48 | 4.6% |
+| long | 12 | 3.5% |
+| moyen | 48 | 3.1% |
 
 **Par registre**
 
@@ -106,7 +106,7 @@
 | dialogue_joie | 6 | 0.0% |
 | dialogue_peur | 9 | 0.0% |
 | dialogue_tristesse | 6 | 0.0% |
-| narration | 48 | 6.3% |
+| narration | 48 | 4.6% |
 
 **Par piège**
 
@@ -114,12 +114,12 @@
 |---|---|---|
 | emprunt_en | 6 | 0.0% |
 | homographe_heterophone | 21 | 2.0% |
-| liaison | 24 | 3.8% |
-| nom_propre | 18 | 5.1% |
-| nombre | 18 | 6.7% |
+| liaison | 24 | 2.6% |
+| nom_propre | 18 | 1.0% |
+| nombre | 18 | 4.7% |
 | onomatopee | 6 | 5.1% |
 | ponctuation_repetee | 3 | 0.0% |
-| silence_rythme | 21 | 1.8% |
+| silence_rythme | 21 | 1.6% |
 
 ## papa_colere — WER par catégorie
 
@@ -172,8 +172,8 @@
 | longueur | n | WER moyen |
 |---|---|---|
 | court | 39 | 2.4% |
-| long | 12 | 0.7% |
-| moyen | 48 | 5.5% |
+| long | 12 | 0.3% |
+| moyen | 48 | 3.4% |
 
 **Par registre**
 
@@ -184,7 +184,7 @@
 | dialogue_joie | 6 | 0.0% |
 | dialogue_peur | 9 | 0.0% |
 | dialogue_tristesse | 6 | 0.0% |
-| narration | 48 | 6.7% |
+| narration | 48 | 4.6% |
 
 **Par piège**
 
@@ -192,12 +192,12 @@
 |---|---|---|
 | emprunt_en | 6 | 0.0% |
 | homographe_heterophone | 21 | 1.6% |
-| liaison | 24 | 3.3% |
-| nom_propre | 18 | 7.4% |
-| nombre | 18 | 5.4% |
+| liaison | 24 | 2.0% |
+| nom_propre | 18 | 2.0% |
+| nombre | 18 | 3.4% |
 | onomatopee | 6 | 6.4% |
 | ponctuation_repetee | 3 | 0.0% |
-| silence_rythme | 21 | 2.2% |
+| silence_rythme | 21 | 2.0% |
 
 **Durée instable (CV > seuil)** : p02
 
@@ -250,8 +250,8 @@
 | longueur | n | WER moyen |
 |---|---|---|
 | court | 39 | 2.4% |
-| long | 12 | 3.2% |
-| moyen | 48 | 4.7% |
+| long | 12 | 2.7% |
+| moyen | 48 | 2.9% |
 
 **Par registre**
 
@@ -262,7 +262,7 @@
 | dialogue_joie | 6 | 1.1% |
 | dialogue_peur | 9 | 0.0% |
 | dialogue_tristesse | 6 | 0.0% |
-| narration | 48 | 6.0% |
+| narration | 48 | 4.0% |
 
 **Par piège**
 
@@ -270,12 +270,12 @@
 |---|---|---|
 | emprunt_en | 6 | 0.0% |
 | homographe_heterophone | 21 | 2.0% |
-| liaison | 24 | 1.7% |
-| nom_propre | 18 | 6.0% |
-| nombre | 18 | 6.3% |
+| liaison | 24 | 0.4% |
+| nom_propre | 18 | 1.1% |
+| nombre | 18 | 4.3% |
 | onomatopee | 6 | 6.4% |
 | ponctuation_repetee | 3 | 0.0% |
-| silence_rythme | 21 | 2.2% |
+| silence_rythme | 21 | 2.0% |
 
 **Troncature détectée sur** : p26
 
@@ -286,8 +286,8 @@
 | longueur | n | WER moyen |
 |---|---|---|
 | court | 39 | 2.4% |
-| long | 12 | 1.3% |
-| moyen | 48 | 4.0% |
+| long | 12 | 1.1% |
+| moyen | 48 | 2.5% |
 
 **Par registre**
 
@@ -298,7 +298,7 @@
 | dialogue_joie | 6 | 0.0% |
 | dialogue_peur | 9 | 0.0% |
 | dialogue_tristesse | 6 | 0.0% |
-| narration | 48 | 5.6% |
+| narration | 48 | 4.0% |
 
 **Par piège**
 
@@ -306,11 +306,11 @@
 |---|---|---|
 | emprunt_en | 6 | 0.0% |
 | homographe_heterophone | 21 | 1.6% |
-| liaison | 24 | 1.3% |
-| nom_propre | 18 | 5.3% |
-| nombre | 18 | 4.1% |
+| liaison | 24 | 0.1% |
+| nom_propre | 18 | 1.5% |
+| nombre | 18 | 2.3% |
 | onomatopee | 6 | 7.7% |
 | ponctuation_repetee | 3 | 0.0% |
-| silence_rythme | 21 | 2.4% |
+| silence_rythme | 21 | 2.3% |
 
 **Durée instable (CV > seuil)** : p02, p24

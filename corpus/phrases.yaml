@@ -92,6 +92,11 @@ p12:
   longueur: moyen
   registre: narration
   pieges: [nom_propre]
+  # tolérance phonétique WER (cf. normalisation.py + mesurer_wer.py) : un nom
+  # propre RÉEL mal orthographié par l'ASR (ex. "Grzegorz" -> "Gregor") n'est
+  # pas un défaut du modèle TTS, mais une ambiguïté de graphie que même un
+  # humain ne peut lever à l'oreille seule.
+  noms_propres: ["Anne-Sophie", "Legrand-Dubois", "Grzegorz", "Wozniak", "Aix-en-Provence"]
 
 p13:
   texte: "Le fils du tisserand ramassa les fils de laine tombés sur le sol, les enroula avec soin, puis rentra chez lui sous une pluie fine qui n'en finissait pas de tomber sur les toits gris du village."
@@ -140,6 +145,7 @@ p20:
   longueur: moyen
   registre: narration
   pieges: [nombre, nom_propre, liaison]
+  noms_propres: ["Sacha", "Amélie", "Acacias", "Bordeaux"]
 
 # --- C4 : onomatopées & ponctuation répétée -------------------------------
 p21:
@@ -167,6 +173,7 @@ p24:
   registre: narration
   pieges: [nom_propre]
   type: titre
+  noms_propres: ["Kabuki"]
 
 p25:
   texte: "Chapitre premier : le moulin endormi"
@@ -189,6 +196,7 @@ p26:
   registre: narration
   pieges: [nombre, nom_propre, liaison, silence_rythme]
   type: long_form
+  noms_propres: ["Grismouton", "Aristide", "Vaillant-Coste", "Camille"]
 
 # --- C10 : multi-voix (balises <voice:>) --------------------------------
 p27:
@@ -210,6 +218,7 @@ p29:
   longueur: moyen
   registre: cours_magistral
   pieges: [emprunt_en, nom_propre]
+  noms_propres: ["Bradley"]
 
 # --- Cas limites du pré-traitement §3.9 --------------------------------
 p30:
@@ -217,12 +226,20 @@ p30:
   longueur: moyen
   registre: narration
   pieges: [nombre]   # verbalisation FR de chiffres écrits, "h" -> "heures"
+  # 2026-09-13 : tentative de correction "10h45" (sans espaces) REVERTÉE —
+  # les transcriptions réelles montrent que la majorité des modèles VERBALISENT
+  # correctement "h" -> "heures" ("10 heures 45"), et non "10h45" collé. Coller
+  # les caractères aurait empiré le WER pour ce comportement pourtant correct.
+  # Le vrai correctif est dans benchmark/normalisation.py (angle mort documenté
+  # en tête de fichier) : canoniser "10 h 45" / "10h45" / "10 heures 45" vers
+  # une même forme AVANT comparaison WER, des deux côtés (réf. ET transcrit).
 
 p31:
   texte: "Le sorcier Franfrelou vivait au hameau de Grismouton-le-Vieux, près du bois de Kernide."
   longueur: moyen
   registre: narration
   pieges: [nom_propre]
+  noms_propres: ["Franfrelou", "Grismouton-le-Vieux", "Kernide"]
 
 p32:
   texte: "Les enfants heureux ont ouvert, un à un, les anciens albums oubliés au grenier."

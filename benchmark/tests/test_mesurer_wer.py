@@ -45,3 +45,46 @@ def test_agreger_wer_global_et_categories():
 def test_plancher_wer_sans_donnee_est_zero():
     assert plancher_wer([]) == 0.0
     assert abs(plancher_wer([{"wer": 0.05}, {"wer": 0.07}]) - 0.06) < 1e-9
+
+
+# --- Tolérance phonétique des noms propres (§3.9bis) --------------------
+
+def test_wer_nom_propre_sauve_si_phonetiquement_proche():
+    # "Franfrelou" -> "Franc Frelou" : sur-découpage ASR, même son.
+    r = wer(
+        "le sorcier franfrelou vivait au hameau",
+        "le sorcier franc frelou vivait au hameau",
+        noms_propres=["franfrelou"],
+    )
+    assert r["wer"] == 0.0
+    assert r["noms_propres_rescapes"] == 1
+    assert r["wer_brut"] > 0.0  # le WER brut (sans tolérance) reste tracé
+
+
+def test_wer_sans_annotation_noms_propres_inchange():
+    # Même paire, sans passer `noms_propres` -> comportement d'avant (pas de sauvetage).
+    r = wer("le sorcier franfrelou vivait au hameau", "le sorcier franc frelou vivait au hameau")
+    assert r["wer"] == r["wer_brut"]
+    assert r["noms_propres_rescapes"] == 0
+
+
+def test_wer_nom_propre_non_sauve_si_pas_phonetiquement_proche():
+    # Remplacement par un mot sans rapport de son -> reste une vraie erreur.
+    r = wer(
+        "le sorcier franfrelou vivait au hameau",
+        "le sorcier gandalf vivait au hameau",
+        noms_propres=["franfrelou"],
+    )
+    assert r["noms_propres_rescapes"] == 0
+    assert r["wer"] == r["wer_brut"] > 0.0
+
+
+def test_wer_tolerance_ne_couvre_pas_les_mots_ordinaires():
+    # Même erreur, mais sur un mot NON annoté nom propre -> pas de sauvetage.
+    r = wer(
+        "le sorcier franfrelou vivait au hameau",
+        "le sorcier franfrelou habitait au hameau",
+        noms_propres=["franfrelou"],
+    )
+    assert r["noms_propres_rescapes"] == 0
+    assert r["wer"] == r["wer_brut"] > 0.0
