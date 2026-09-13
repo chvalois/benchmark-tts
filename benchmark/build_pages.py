@@ -643,8 +643,7 @@ def _shell(titre: str, actif: str, corps: str, hero: str = "", js: str = "",
     h_ec = "#ecoute" if standalone else "ecoute.html"
     nav = (f'<a href="{"#top" if standalone else "index.html"}"{cl("index")}>Aperçu</a>'
            f'<a href="{h_obj}"{cl("objectif")}>Recap</a>'
-           f'<a href="{h_ec}"{cl("ecoute")}>Écoute</a>'
-           f'<a href="{REPO}" class="link" style="text-decoration:none">Dépôt&nbsp;↗</a>')
+           f'<a href="{h_ec}"{cl("ecoute")}>Écoute</a>')
     gen = f"{datetime.now(timezone.utc):%Y-%m-%d %H:%M} UTC"
     return f"""<!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
@@ -670,7 +669,6 @@ def _shell(titre: str, actif: str, corps: str, hero: str = "", js: str = "",
 <footer><div class="wrap">
   <span>Généré {gen} · <span style="color:var(--muted)">benchmark/build_pages.py</span></span>
   <span>Métriques automatiques — <span style="color:var(--muted)">l'écoute humaine tranche</span></span>
-  <span><a href="{REPO}">github.com/chvalois/benchmark-tts</a></span>
 </div></footer>
 <script>{TOGGLE_JS}
 {MENU_JS}
@@ -870,7 +868,7 @@ def _scope_svg(rows: list[dict]) -> str:
     H = 28 + rowh * len(items)
     out = [f'<svg viewBox="0 0 {W} {H}" width="100%" role="img" '
            f'aria-label="Score global par modèle" '
-           f'style="min-width:460px;font-family:\'IBM Plex Mono\',monospace">']
+           f'style="font-family:\'IBM Plex Mono\',monospace;display:block">']
     for gx in range(0, 101, 20):
         x = padL + gx / 100 * span
         out.append(f'<line x1="{x:.0f}" y1="12" x2="{x:.0f}" y2="{H-16}" '
