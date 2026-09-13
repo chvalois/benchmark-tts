@@ -59,10 +59,6 @@ DEFAUT_LABELS = {
     "accent": "accent / prononciation non française",
     "artefact": "artefact / bruit / robotique",
 }
-DEFAUT_LABELS_COURT = {
-    "tronque": "tronqué", "repetition": "répétition", "voix_diff": "voix≠réf",
-    "accent": "accent", "artefact": "artefact",
-}
 DEFAUT_COULEURS = {
     "tronque": "#c0533f", "repetition": "#c98a3c", "voix_diff": "#6f7fd1",
     "accent": "#3f8fc4", "artefact": "#9a63b0",
@@ -217,7 +213,7 @@ header.bar nav a.on{color:var(--ink);background:var(--panel2)}
   text-transform:uppercase;color:var(--trace);margin-bottom:16px}
 .hero h1{font-family:"Newsreader",Georgia,serif;font-weight:400;
   font-size:clamp(1.9rem,6vw,3.1rem);line-height:1.08;letter-spacing:-.012em;
-  text-wrap:balance;margin:0 0 14px;max-width:16ch}
+  text-wrap:balance;margin:0 0 14px}
 .hero .thesis{font-size:1.02rem;color:var(--muted);margin:0 0 24px}
 .hero .thesis em{font-family:"Newsreader",serif;font-style:italic;color:var(--ink)}
 .scope{margin-top:30px;border:1px solid var(--line);border-radius:12px;
@@ -298,6 +294,15 @@ td.m-bad{background:color-mix(in oklab,var(--crit) 13%,transparent);
 .flags{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
 .board-foot{padding:11px 15px;border-top:1px solid var(--line);
   font:.76rem/1.5 "IBM Plex Mono",monospace;color:var(--faint)}
+
+/* colonnes de mesure toutes de même largeur (desktop) : le rang et le nom
+   prennent une largeur fixe, les colonnes restantes se partagent le reste à
+   parts égales grâce à `table-layout:fixed`. */
+@media (min-width:621px){
+  table.rt.cols-egales{table-layout:fixed}
+  table.rt.cols-egales th.rk{width:56px}
+  table.rt.cols-egales th.name{width:30%}
+}
 
 /* matrice des duels — 2 axes, donc non empilable : on la fait défiler
    horizontalement AVEC la colonne des noms figée à gauche, pour ne jamais
@@ -427,6 +432,15 @@ table.matrice td.diag,table.matrice td.nodata{color:var(--faint)}
 .card li b{color:var(--ink);font-weight:600}
 .card .tag{font:.66rem/1 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;
   color:var(--trace);display:block;margin-bottom:9px}
+/* défauts entendus : un petit graphique par type de défaut */
+.defauts-grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+  gap:14px}
+.panneau-defaut{border:1px solid var(--line);border-radius:12px;background:var(--panel);
+  padding:12px 14px 8px}
+.panneau-defaut .cap{display:flex;align-items:center;gap:7px;margin-bottom:6px;
+  font:.72rem/1.35 "IBM Plex Mono",monospace;color:var(--muted)}
+.panneau-defaut .cap i{width:9px;height:9px;border-radius:2px;flex:0 0 auto}
+
 /* fiche modèle : table des paramètres réglables */
 table.params tbody td{white-space:normal;vertical-align:top;text-align:left}
 table.params td.name{font-size:.82rem;white-space:nowrap}
@@ -597,7 +611,8 @@ function ttsTable(mountSel, cfg){
       }
       body+=tr;
     });
-    mount.innerHTML='<div class="tablewrap"><table class="rt empile"><thead>'+th
+    mount.innerHTML='<div class="tablewrap"><table class="rt empile'
+      +(cfg.colsEgales?' cols-egales':'')+'"><thead>'+th
       +'</thead><tbody>'+body+'</tbody></table></div>';
     mount.querySelectorAll('thead th[data-k]').forEach(function(h){
       h.onclick=function(){ var k=h.dataset.k;
@@ -926,49 +941,60 @@ def _matrice_html(duel: dict, ordre: list[str]) -> str:
 
 
 def _defauts_svg(ab: dict) -> str:
-    """Barres horizontales EMPILÉES : taux de chaque défaut signalé par
-    duel (défauts / nb de duels du modèle) — normalisé pour rester
-    comparable entre modèles inégalement exposés (pondération d'équité du
-    pool d'écoute, cf. `benchmark/build_ecoute.py`)."""
+    """UN graphique PAR TYPE de défaut. Chaque barre = part des duels d'un
+    modèle où ce défaut précis a été signalé. On ne cumule PAS les défauts sur
+    une même barre : deux défauts peuvent être cochés sur le même clip, la
+    somme n'aurait donc aucun sens. Échelle commune aux 5 graphiques, pour que
+    la fréquence des défauts reste comparable de l'un à l'autre."""
     stats, defauts = ab.get("stats", {}), ab.get("defauts", {})
     modeles = [m for m in stats if stats[m]["n"]]
     if not modeles:
         return ""
-    taux = {m: {dk: defauts.get(m, {}).get(dk, 0) / stats[m]["n"] for dk in DEFAUT_LABELS}
-            for m in modeles}
-    ordre = sorted(modeles, key=lambda m: -sum(taux[m].values()))
-    maxi = max((sum(taux[m].values()) for m in ordre), default=0)
+    taux = {dk: {m: defauts.get(m, {}).get(dk, 0) / stats[m]["n"] for m in modeles}
+            for dk in DEFAUT_LABELS}
+    maxi = max((v for par_m in taux.values() for v in par_m.values()), default=0)
     if maxi <= 0:
-        return ""
-    W, rowh, padL, padR = 620, 28, 150, 30
-    span = W - padL - padR
-    H = 18 + rowh * len(ordre) + 30
-    out = [f'<svg viewBox="0 0 {W} {H}" width="100%" role="img" '
-           f'aria-label="Défauts entendus par modèle, taux par duel" '
-           f'style="min-width:460px;font-family:\'IBM Plex Mono\',monospace">']
-    for i, m in enumerate(ordre):
-        y = 14 + i * rowh
-        out.append(f'<text x="{padL-10}" y="{y+4}" text-anchor="end" font-size="10.5" '
-                   f'fill="var(--muted)">{html.escape(_nm(m))}</text>')
-        x = padL
-        for dk in DEFAUT_LABELS:
-            w = taux[m].get(dk, 0) / maxi * span
-            if w <= 0.4:
-                continue
-            out.append(f'<rect x="{x:.1f}" y="{y-7}" width="{w:.1f}" height="14" rx="2" '
-                       f'fill="{DEFAUT_COULEURS[dk]}"><title>{html.escape(_nm(m))} — '
-                       f'{DEFAUT_LABELS[dk]} : {taux[m][dk]*100:.0f}% des duels</title></rect>')
-            x += w
-    y_leg = H - 10
-    lx = padL
-    for dk, lab in DEFAUT_LABELS_COURT.items():
-        out.append(f'<rect x="{lx:.0f}" y="{y_leg-8}" width="9" height="9" rx="2" '
-                   f'fill="{DEFAUT_COULEURS[dk]}"/>')
-        out.append(f'<text x="{lx+13:.0f}" y="{y_leg}" font-size="9.5" '
-                   f'fill="var(--muted)">{html.escape(lab)}</text>')
-        lx += 15 + len(lab) * 6.2
-    out.append('</svg>')
-    return "".join(out)
+        return '<p class="lead">Aucun défaut signalé pour l\'instant.</p>'
+    # arrondi au palier supérieur de 10 points, pour une échelle lisible
+    plafond = min(1.0, (int(maxi * 10) + 1) / 10)
+
+    panneaux = []
+    for dk, label in DEFAUT_LABELS.items():
+        ordre = sorted(modeles, key=lambda m: (-taux[dk][m], _nm(m)))
+        W, rowh, padL, padR = 330, 21, 118, 42
+        span = W - padL - padR
+        H = 12 + rowh * len(ordre) + 16
+        svg = [f'<svg viewBox="0 0 {W} {H}" width="100%" role="img" '
+               f'aria-label="{html.escape(label)} — part des duels concernés" '
+               f'style="font-family:\'IBM Plex Mono\',monospace">']
+        for gx in (0, 0.5, 1.0):
+            x = padL + gx * span
+            svg.append(f'<line x1="{x:.0f}" y1="6" x2="{x:.0f}" y2="{H-14:.0f}" '
+                       f'stroke="var(--line)" stroke-width="1"/>')
+            svg.append(f'<text x="{x:.0f}" y="{H-3}" text-anchor="middle" font-size="8" '
+                       f'fill="var(--faint)">{gx*plafond*100:.0f}%</text>')
+        for i, m in enumerate(ordre):
+            y = 14 + i * rowh
+            t = taux[dk][m]
+            svg.append(f'<text x="{padL-8}" y="{y+3.5:.0f}" text-anchor="end" font-size="9" '
+                       f'fill="var(--muted)">{html.escape(_nm(m))}</text>')
+            if t > 0:
+                w = max(2.0, t / plafond * span)
+                svg.append(f'<rect x="{padL}" y="{y-5:.0f}" width="{w:.1f}" height="10" rx="2" '
+                           f'fill="{DEFAUT_COULEURS[dk]}" opacity="0.85">'
+                           f'<title>{html.escape(_nm(m))} — {html.escape(label)} : '
+                           f'signalé sur {t*100:.0f}% de ses duels</title></rect>')
+                svg.append(f'<text x="{padL+w+5:.1f}" y="{y+3.5:.0f}" font-size="9" '
+                           f'fill="var(--ink)">{t*100:.0f}%</text>')
+            else:
+                svg.append(f'<text x="{padL+4}" y="{y+3.5:.0f}" font-size="9" '
+                           f'fill="var(--faint)">0</text>')
+        svg.append('</svg>')
+        panneaux.append(
+            f'<div class="panneau-defaut">'
+            f'<div class="cap"><i style="background:{DEFAUT_COULEURS[dk]}"></i>'
+            f'{html.escape(label)}</div>{"".join(svg)}</div>')
+    return f'<div class="defauts-grille">{"".join(panneaux)}</div>'
 
 
 def _ecoute_json() -> dict | None:
@@ -994,9 +1020,20 @@ def _ecoute_donnees() -> dict | None:
     return {"panel": (p["auditeurs"], p["ab"], p["mos"], p["emo"]), "mos": mos}
 
 
+# Ordre d'affichage des buckets dans le détail dépliable : toujours le même
+# d'un modèle à l'autre, pour qu'on puisse comparer deux lignes à l'œil sans
+# relire les intitulés (trier par WER remettrait les lignes dans un ordre
+# différent pour chaque modèle).
+ORDRE_LONGUEUR = ("court", "moyen", "long")
+
+
 def _detail_html(r: dict) -> str:
-    def sub(t, obj):
-        ks = sorted(obj or {}, key=lambda k: -obj[k]["wer_moyen"])
+    def sub(t, obj, ordre=None):
+        if ordre:
+            rang = {k: i for i, k in enumerate(ordre)}
+            ks = sorted(obj or {}, key=lambda k: (rang.get(k, len(rang)), k))
+        else:
+            ks = sorted(obj or {})
         if not ks:
             return ""
         rows = "".join(
@@ -1013,8 +1050,10 @@ def _detail_html(r: dict) -> str:
         ch.append(f'<span class="chip warn">durée instable : {r["n_suspects"]}</span>')
     flags = (f'<div class="flags">{"".join(ch)}</div>' if ch
              else '<p style="margin-top:12px;color:var(--faint)">Aucune phrase signalée.</p>')
-    return (f'<div class="grid">{sub("longueur", r.get("wer_longueur"))}'
-            f'{sub("registre", r.get("wer_registre"))}{sub("piège", r.get("wer_piege"))}</div>{flags}')
+    return (f'<div class="grid">'
+            f'{sub("longueur", r.get("wer_longueur"), ORDRE_LONGUEUR)}'
+            f'{sub("registre", r.get("wer_registre"))}'
+            f'{sub("piège", r.get("wer_piege"))}</div>{flags}')
 
 
 def page_index(standalone: bool = False) -> str:
@@ -1076,7 +1115,8 @@ def page_index(standalone: bool = False) -> str:
         {"k": "score", "label": "Score global", "dir": 1, "fmt": "num1", "g": 66, "b": 33},
     ]
     tri_defaut = {"k": "score", "asc": False} if n_score else {"k": "wer", "asc": True}
-    cfg = {"cols": cols, "rows": rows, "sort": tri_defaut, "rankcol": True}
+    cfg = {"cols": cols, "rows": rows, "sort": tri_defaut, "rankcol": True,
+           "colsEgales": True}
 
     hero = f"""<div class="hero" id="top"><div class="wrap">
   <div class="eyebrow">Benchmark · TTS open-source · Français</div>
@@ -1113,19 +1153,26 @@ def page_index(standalone: bool = False) -> str:
 
   <div class="lead" style="margin-top:20px">
     <p><b>WER</b> — taux d'erreur de transcription
-    (<span class="mono">whisper-large-v3-french</span> + <span class="mono">jiwer</span>),
-    ↓ meilleur. Mesure l'<b>intelligibilité</b> : est-ce que ce qui est dit
-    correspond au texte demandé ? Automatique.</p>
-    <p><b>SIM</b> — similarité au locuteur de référence (embeddings ECAPA),
-    ↑ meilleur. Mesure l'<b>identité de timbre</b> : la voix générée
-    ressemble-t-elle à la voix clonée ? Automatique. <i>Limite connue : SIM
-    sous-pondère une dérive d'accent que l'oreille sanctionne fort
-    (corrélation avec la similarité perçue à l'écoute : r≈0,16 sur les clips
-    notés) — en cas de désaccord net entre SIM et l'écoute, fie-toi à
-    l'écoute.</i></p>
-    <p><b>Naturalité</b> — MOS « Naturel » (1–5) du test d'écoute humain en
-    aveugle, ↑ meilleur. Aucune métrique automatique (UTMOS, TTSDS2, NISQA)
-    ne s'est révélée fiable en français, voir <a class="link" href="{h_ec}">pourquoi</a>.</p>
+    (<span class="mono">whisper-large-v3-french</span> + <span class="mono">jiwer</span>).
+    <b>Plus le pourcentage est bas, mieux c'est</b> : 0&nbsp;% voudrait dire que
+    la transcription retrouve exactement le texte demandé. Mesure
+    l'<b>intelligibilité</b> : est-ce que ce qui est dit correspond au texte
+    demandé ? Calculé <b>automatiquement par une machine</b>, sans écoute
+    humaine.</p>
+    <p><b>SIM</b> — similarité au locuteur de référence (embeddings ECAPA).
+    <b>Plus la valeur est haute, mieux c'est</b> : 1,00 signifierait un timbre
+    identique à la voix d'origine. Mesure l'<b>identité de timbre</b> : la voix
+    générée ressemble-t-elle à la voix clonée ? Calculé <b>automatiquement</b>,
+    sans écoute humaine. <i>Limite connue : SIM sous-pondère une dérive
+    d'accent que l'oreille sanctionne fort (corrélation avec la similarité
+    perçue à l'écoute : r≈0,16 sur les clips notés) — en cas de désaccord net
+    entre SIM et l'écoute, fie-toi à l'écoute.</i></p>
+    <p><b>Naturalité</b> — note MOS « Naturel » de 1 à 5 attribuée par des
+    auditeur·rice·s humain·e·s en aveugle. <b>Plus la note est haute, mieux
+    c'est</b> : 5 = « on dirait une vraie voix humaine ». C'est la seule des
+    trois à ne PAS être automatique — aucune métrique machine (UTMOS, TTSDS2,
+    NISQA) ne s'est révélée fiable en français, voir
+    <a class="link" href="{h_ec}">pourquoi</a>.</p>
     <p><b>Score global</b> — moyenne de ces 3 valeurs, chacune ramenée sur des
     <b>bornes fixes</b> (WER 0–15&nbsp;%, SIM 0,60–0,90, MOS 1–5 — jamais le
     min/max des modèles présents dans le run en cours), puis ×100 : le score
@@ -1193,12 +1240,13 @@ def page_index(standalone: bool = False) -> str:
       <p>Chaque modèle clone le même jeu de voix de référence, dans plusieurs
       registres :</p>
       <ul>
-        <li><b>voix « propre »</b> : enregistrement studio, sans bruit.</li>
-        <li><b>voix « difficile »</b> : source brute, prise de son bruitée —
-          teste la robustesse du clonage à une référence imparfaite.</li>
-        <li><b>voix féminine</b>.</li>
-        <li><b>2 voix âgées</b>.</li>
-        <li><b>1 accent régional</b>.</li>
+        <li><b>1 voix masculine « propre »</b> : enregistrement studio, sans bruit.</li>
+        <li><b>1 voix masculine « difficile »</b> : source brute, prise de son
+          bruitée — teste la robustesse du clonage à une référence imparfaite.</li>
+        <li><b>1 voix féminine « propre »</b>.</li>
+        <li><b>1 voix âgée masculine</b>.</li>
+        <li><b>1 voix âgée féminine</b>.</li>
+        <li><b>1 voix masculine avec un accent régional</b>.</li>
         <li><b>registres émotionnels</b> (joie, colère, peur, tristesse) d'une
           même voix — teste si le clonage transporte l'émotion, pas juste le
           timbre.</li>
@@ -1327,16 +1375,8 @@ def page_objectif() -> str:
             "rtf": r["rtf"], "ttfa": r["ttfa"], "cv": r["cv"], "vram_go": m["vram_go"],
         })
 
-    n_ecart = sum((m.get("global") or {}).get("n_voix_ecartees", 0)
-                  for m in d["modeles"].values())
-    foot = []
-    if d["exclus"]:
-        foot.append("hors classement : "
-                    + " · ".join(f'{_nm(e["nom"])} ({e["motif"]})' for e in d["exclus"]))
-    if n_ecart:
-        foot.append(f"{n_ecart} combinaison(s) (modèle, voix) au WER&nbsp;>&nbsp;30&nbsp;% "
-                    "écartées de la moyenne — clips inexploitables")
-    excl = " — ".join(foot)
+    excl = ""   # pied de tableau retiré : l'info figure déjà dans le texte
+    #             d'intro et sur les fiches modèle concernées.
 
     corps = f"""<section>
   <div class="sec-h"><h2>Métriques par modèle</h2>
@@ -1496,7 +1536,8 @@ def page_ecoute() -> str:
         js_parts.append(
             f"var CFG_AB={{cols:{json.dumps(cols_ab, ensure_ascii=False)},"
             f"rows:{json.dumps(rows_ab, ensure_ascii=False)},"
-            "sort:{k:'winrate',asc:false},rankcol:true};ttsTable('#tbl-ab',CFG_AB);")
+            "sort:{k:'winrate',asc:false},rankcol:true,colsEgales:true};"
+            "ttsTable('#tbl-ab',CFG_AB);")
 
         ordre_ab = sorted(ab["stats"], key=lambda m: -ab["stats"][m]["winrate"])
         t1.append('<h3 class="subhead">Matrice des duels'
@@ -1506,14 +1547,16 @@ def page_ecoute() -> str:
 
         svg_def = _defauts_svg(ab)
         if svg_def:
-            t1.append('<h3 class="subhead">Défauts entendus par modèle'
-                       '<span class="n">taux par duel (comparable malgré des '
-                       'expositions inégales)</span></h3>')
-            t1.append(f'<div class="scope" style="margin-top:0">{svg_def}</div>')
-            t1.append('<p class="lead" style="margin-top:10px;font-size:.82rem">'
-                       + " · ".join(f"<b>{lab}</b> = {DEFAUT_LABELS[k]}"
-                                     for k, lab in DEFAUT_LABELS_COURT.items())
-                       + "</p>")
+            t1.append('<h3 class="subhead">Défauts entendus, par type'
+                       '<span class="n">part des duels du modèle concernés</span></h3>')
+            t1.append('<p class="lead">Un graphique par défaut : chaque barre indique '
+                       'sur quelle part des duels de ce modèle les auditeur·rice·s ont '
+                       'coché ce défaut précis. Les défauts ne sont pas additionnés — '
+                       'un même clip peut en cumuler plusieurs, une somme n\'aurait pas '
+                       'de sens. Le rapport à un nombre de duels rend la comparaison '
+                       'valable malgré des expositions inégales ; l\'échelle est commune '
+                       'aux cinq graphiques.</p>')
+            t1.append(svg_def)
     else:
         t1.append('<p class="lead">Aucun vote A/B pour l\'instant.</p>')
     t1.append('</section>')
@@ -1550,7 +1593,8 @@ def page_ecoute() -> str:
         js_parts.append(
             f"var CFG_MOS={{cols:{json.dumps(cols_mos, ensure_ascii=False)},"
             f"rows:{json.dumps(rows_mos, ensure_ascii=False)},"
-            "sort:{k:'naturel',asc:false},rankcol:true};ttsTable('#tbl-mos',CFG_MOS);")
+            "sort:{k:'naturel',asc:false},rankcol:true,colsEgales:true};"
+            "ttsTable('#tbl-mos',CFG_MOS);")
 
         if mos.get("correlations"):
             t2.append('<h3 class="subhead">Corrélation avec les métriques automatiques'
@@ -1575,7 +1619,7 @@ def page_ecoute() -> str:
             js_parts.append(
                 f"var CFG_CORR={{cols:{json.dumps(cols_c, ensure_ascii=False)},"
                 f"rows:{json.dumps(rows_c, ensure_ascii=False)},"
-                "sort:{k:'pearson',asc:false}};ttsTable('#tbl-corr',CFG_CORR);")
+                "sort:{k:'pearson',asc:false},colsEgales:true};ttsTable('#tbl-corr',CFG_CORR);")
     else:
         t2.append('<p class="lead">Aucune note MOS pour l\'instant.</p>')
     t2.append('</section>')
@@ -1605,7 +1649,8 @@ def page_ecoute() -> str:
         js_parts.append(
             f"var CFG_EMO={{cols:{json.dumps(cols_g, ensure_ascii=False)},"
             f"rows:{json.dumps(rows_g, ensure_ascii=False)},"
-            "sort:{k:'winrate',asc:false},rankcol:true};ttsTable('#tbl-emo',CFG_EMO);")
+            "sort:{k:'winrate',asc:false},rankcol:true,colsEgales:true};"
+            "ttsTable('#tbl-emo',CFG_EMO);")
 
         emotions = emo.get("emotions", [])
         if emotions:
@@ -1625,7 +1670,7 @@ def page_ecoute() -> str:
             js_parts.append(
                 f"var CFG_EMOPE={{cols:{json.dumps(cols_pe, ensure_ascii=False)},"
                 f"rows:{json.dumps(rows_pe, ensure_ascii=False)},"
-                "sort:{k:'"+ (emotions[0]) +"',asc:false},rankcol:true};"
+                "sort:{k:'"+ (emotions[0]) +"',asc:false},rankcol:true,colsEgales:true};"
                 "ttsTable('#tbl-emo-pe',CFG_EMOPE);")
 
         ordre_emo = sorted(emo["global"], key=lambda m: -emo["global"][m]["winrate"])

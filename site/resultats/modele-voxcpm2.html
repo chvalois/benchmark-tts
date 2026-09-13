@@ -91,7 +91,7 @@ header.bar nav a.on{color:var(--ink);background:var(--panel2)}
   text-transform:uppercase;color:var(--trace);margin-bottom:16px}
 .hero h1{font-family:"Newsreader",Georgia,serif;font-weight:400;
   font-size:clamp(1.9rem,6vw,3.1rem);line-height:1.08;letter-spacing:-.012em;
-  text-wrap:balance;margin:0 0 14px;max-width:16ch}
+  text-wrap:balance;margin:0 0 14px}
 .hero .thesis{font-size:1.02rem;color:var(--muted);margin:0 0 24px}
 .hero .thesis em{font-family:"Newsreader",serif;font-style:italic;color:var(--ink)}
 .scope{margin-top:30px;border:1px solid var(--line);border-radius:12px;
@@ -172,6 +172,15 @@ td.m-bad{background:color-mix(in oklab,var(--crit) 13%,transparent);
 .flags{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
 .board-foot{padding:11px 15px;border-top:1px solid var(--line);
   font:.76rem/1.5 "IBM Plex Mono",monospace;color:var(--faint)}
+
+/* colonnes de mesure toutes de même largeur (desktop) : le rang et le nom
+   prennent une largeur fixe, les colonnes restantes se partagent le reste à
+   parts égales grâce à `table-layout:fixed`. */
+@media (min-width:621px){
+  table.rt.cols-egales{table-layout:fixed}
+  table.rt.cols-egales th.rk{width:56px}
+  table.rt.cols-egales th.name{width:30%}
+}
 
 /* matrice des duels — 2 axes, donc non empilable : on la fait défiler
    horizontalement AVEC la colonne des noms figée à gauche, pour ne jamais
@@ -301,6 +310,15 @@ table.matrice td.diag,table.matrice td.nodata{color:var(--faint)}
 .card li b{color:var(--ink);font-weight:600}
 .card .tag{font:.66rem/1 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;
   color:var(--trace);display:block;margin-bottom:9px}
+/* défauts entendus : un petit graphique par type de défaut */
+.defauts-grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+  gap:14px}
+.panneau-defaut{border:1px solid var(--line);border-radius:12px;background:var(--panel);
+  padding:12px 14px 8px}
+.panneau-defaut .cap{display:flex;align-items:center;gap:7px;margin-bottom:6px;
+  font:.72rem/1.35 "IBM Plex Mono",monospace;color:var(--muted)}
+.panneau-defaut .cap i{width:9px;height:9px;border-radius:2px;flex:0 0 auto}
+
 /* fiche modèle : table des paramètres réglables */
 table.params tbody td{white-space:normal;vertical-align:top;text-align:left}
 table.params td.name{font-size:.82rem;white-space:nowrap}
@@ -468,7 +486,7 @@ footer a:hover{color:var(--trace)}
 </section>
 </div></main>
 <footer><div class="wrap">
-  <span>Généré 2026-09-13 07:42 UTC · <span style="color:var(--muted)">benchmark/build_pages.py</span></span>
+  <span>Généré 2026-09-13 11:01 UTC · <span style="color:var(--muted)">benchmark/build_pages.py</span></span>
   <span>Métriques automatiques — <span style="color:var(--muted)">l'écoute humaine tranche</span></span>
   <span><a href="https://github.com/chvalois/benchmark-tts">github.com/chvalois/benchmark-tts</a></span>
 </div></footer>
@@ -563,7 +581,8 @@ function ttsTable(mountSel, cfg){
       }
       body+=tr;
     });
-    mount.innerHTML='<div class="tablewrap"><table class="rt empile"><thead>'+th
+    mount.innerHTML='<div class="tablewrap"><table class="rt empile'
+      +(cfg.colsEgales?' cols-egales':'')+'"><thead>'+th
       +'</thead><tbody>'+body+'</tbody></table></div>';
     mount.querySelectorAll('thead th[data-k]').forEach(function(h){
       h.onclick=function(){ var k=h.dataset.k;

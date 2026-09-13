@@ -91,7 +91,7 @@ header.bar nav a.on{color:var(--ink);background:var(--panel2)}
   text-transform:uppercase;color:var(--trace);margin-bottom:16px}
 .hero h1{font-family:"Newsreader",Georgia,serif;font-weight:400;
   font-size:clamp(1.9rem,6vw,3.1rem);line-height:1.08;letter-spacing:-.012em;
-  text-wrap:balance;margin:0 0 14px;max-width:16ch}
+  text-wrap:balance;margin:0 0 14px}
 .hero .thesis{font-size:1.02rem;color:var(--muted);margin:0 0 24px}
 .hero .thesis em{font-family:"Newsreader",serif;font-style:italic;color:var(--ink)}
 .scope{margin-top:30px;border:1px solid var(--line);border-radius:12px;
@@ -172,6 +172,15 @@ td.m-bad{background:color-mix(in oklab,var(--crit) 13%,transparent);
 .flags{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
 .board-foot{padding:11px 15px;border-top:1px solid var(--line);
   font:.76rem/1.5 "IBM Plex Mono",monospace;color:var(--faint)}
+
+/* colonnes de mesure toutes de même largeur (desktop) : le rang et le nom
+   prennent une largeur fixe, les colonnes restantes se partagent le reste à
+   parts égales grâce à `table-layout:fixed`. */
+@media (min-width:621px){
+  table.rt.cols-egales{table-layout:fixed}
+  table.rt.cols-egales th.rk{width:56px}
+  table.rt.cols-egales th.name{width:30%}
+}
 
 /* matrice des duels — 2 axes, donc non empilable : on la fait défiler
    horizontalement AVEC la colonne des noms figée à gauche, pour ne jamais
@@ -301,6 +310,15 @@ table.matrice td.diag,table.matrice td.nodata{color:var(--faint)}
 .card li b{color:var(--ink);font-weight:600}
 .card .tag{font:.66rem/1 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;
   color:var(--trace);display:block;margin-bottom:9px}
+/* défauts entendus : un petit graphique par type de défaut */
+.defauts-grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+  gap:14px}
+.panneau-defaut{border:1px solid var(--line);border-radius:12px;background:var(--panel);
+  padding:12px 14px 8px}
+.panneau-defaut .cap{display:flex;align-items:center;gap:7px;margin-bottom:6px;
+  font:.72rem/1.35 "IBM Plex Mono",monospace;color:var(--muted)}
+.panneau-defaut .cap i{width:9px;height:9px;border-radius:2px;flex:0 0 auto}
+
 /* fiche modèle : table des paramètres réglables */
 table.params tbody td{white-space:normal;vertical-align:top;text-align:left}
 table.params td.name{font-size:.82rem;white-space:nowrap}
@@ -394,19 +412,26 @@ footer a:hover{color:var(--trace)}
 
   <div class="lead" style="margin-top:20px">
     <p><b>WER</b> — taux d'erreur de transcription
-    (<span class="mono">whisper-large-v3-french</span> + <span class="mono">jiwer</span>),
-    ↓ meilleur. Mesure l'<b>intelligibilité</b> : est-ce que ce qui est dit
-    correspond au texte demandé ? Automatique.</p>
-    <p><b>SIM</b> — similarité au locuteur de référence (embeddings ECAPA),
-    ↑ meilleur. Mesure l'<b>identité de timbre</b> : la voix générée
-    ressemble-t-elle à la voix clonée ? Automatique. <i>Limite connue : SIM
-    sous-pondère une dérive d'accent que l'oreille sanctionne fort
-    (corrélation avec la similarité perçue à l'écoute : r≈0,16 sur les clips
-    notés) — en cas de désaccord net entre SIM et l'écoute, fie-toi à
-    l'écoute.</i></p>
-    <p><b>Naturalité</b> — MOS « Naturel » (1–5) du test d'écoute humain en
-    aveugle, ↑ meilleur. Aucune métrique automatique (UTMOS, TTSDS2, NISQA)
-    ne s'est révélée fiable en français, voir <a class="link" href="ecoute.html">pourquoi</a>.</p>
+    (<span class="mono">whisper-large-v3-french</span> + <span class="mono">jiwer</span>).
+    <b>Plus le pourcentage est bas, mieux c'est</b> : 0&nbsp;% voudrait dire que
+    la transcription retrouve exactement le texte demandé. Mesure
+    l'<b>intelligibilité</b> : est-ce que ce qui est dit correspond au texte
+    demandé ? Calculé <b>automatiquement par une machine</b>, sans écoute
+    humaine.</p>
+    <p><b>SIM</b> — similarité au locuteur de référence (embeddings ECAPA).
+    <b>Plus la valeur est haute, mieux c'est</b> : 1,00 signifierait un timbre
+    identique à la voix d'origine. Mesure l'<b>identité de timbre</b> : la voix
+    générée ressemble-t-elle à la voix clonée ? Calculé <b>automatiquement</b>,
+    sans écoute humaine. <i>Limite connue : SIM sous-pondère une dérive
+    d'accent que l'oreille sanctionne fort (corrélation avec la similarité
+    perçue à l'écoute : r≈0,16 sur les clips notés) — en cas de désaccord net
+    entre SIM et l'écoute, fie-toi à l'écoute.</i></p>
+    <p><b>Naturalité</b> — note MOS « Naturel » de 1 à 5 attribuée par des
+    auditeur·rice·s humain·e·s en aveugle. <b>Plus la note est haute, mieux
+    c'est</b> : 5 = « on dirait une vraie voix humaine ». C'est la seule des
+    trois à ne PAS être automatique — aucune métrique machine (UTMOS, TTSDS2,
+    NISQA) ne s'est révélée fiable en français, voir
+    <a class="link" href="ecoute.html">pourquoi</a>.</p>
     <p><b>Score global</b> — moyenne de ces 3 valeurs, chacune ramenée sur des
     <b>bornes fixes</b> (WER 0–15&nbsp;%, SIM 0,60–0,90, MOS 1–5 — jamais le
     min/max des modèles présents dans le run en cours), puis ×100 : le score
@@ -474,12 +499,13 @@ footer a:hover{color:var(--trace)}
       <p>Chaque modèle clone le même jeu de voix de référence, dans plusieurs
       registres :</p>
       <ul>
-        <li><b>voix « propre »</b> : enregistrement studio, sans bruit.</li>
-        <li><b>voix « difficile »</b> : source brute, prise de son bruitée —
-          teste la robustesse du clonage à une référence imparfaite.</li>
-        <li><b>voix féminine</b>.</li>
-        <li><b>2 voix âgées</b>.</li>
-        <li><b>1 accent régional</b>.</li>
+        <li><b>1 voix masculine « propre »</b> : enregistrement studio, sans bruit.</li>
+        <li><b>1 voix masculine « difficile »</b> : source brute, prise de son
+          bruitée — teste la robustesse du clonage à une référence imparfaite.</li>
+        <li><b>1 voix féminine « propre »</b>.</li>
+        <li><b>1 voix âgée masculine</b>.</li>
+        <li><b>1 voix âgée féminine</b>.</li>
+        <li><b>1 voix masculine avec un accent régional</b>.</li>
         <li><b>registres émotionnels</b> (joie, colère, peur, tristesse) d'une
           même voix — teste si le clonage transporte l'émotion, pas juste le
           timbre.</li>
@@ -532,7 +558,7 @@ footer a:hover{color:var(--trace)}
 </section>
 </div></main>
 <footer><div class="wrap">
-  <span>Généré 2026-09-13 07:42 UTC · <span style="color:var(--muted)">benchmark/build_pages.py</span></span>
+  <span>Généré 2026-09-13 11:01 UTC · <span style="color:var(--muted)">benchmark/build_pages.py</span></span>
   <span>Métriques automatiques — <span style="color:var(--muted)">l'écoute humaine tranche</span></span>
   <span><a href="https://github.com/chvalois/benchmark-tts">github.com/chvalois/benchmark-tts</a></span>
 </div></footer>
@@ -627,7 +653,8 @@ function ttsTable(mountSel, cfg){
       }
       body+=tr;
     });
-    mount.innerHTML='<div class="tablewrap"><table class="rt empile"><thead>'+th
+    mount.innerHTML='<div class="tablewrap"><table class="rt empile'
+      +(cfg.colsEgales?' cols-egales':'')+'"><thead>'+th
       +'</thead><tbody>'+body+'</tbody></table></div>';
     mount.querySelectorAll('thead th[data-k]').forEach(function(h){
       h.onclick=function(){ var k=h.dataset.k;
@@ -648,5 +675,5 @@ function ttsTable(mountSel, cfg){
   render();
 }
 
-var CFG={"cols": [{"k": "_nom", "label": "modèle"}, {"k": "wer", "label": "WER", "dir": -1, "fmt": "pct", "g": 0.05, "b": 0.1}, {"k": "sim", "label": "SIM", "dir": 1, "fmt": "num3", "g": 0.8, "b": 0.72}, {"k": "naturel", "label": "Naturalité", "dir": 1, "fmt": "num2", "g": 3.5, "b": 3.0}, {"k": "score", "label": "Score global", "dir": 1, "fmt": "num1", "g": 66, "b": 33}], "rows": [{"_nom": "FireRed TTS3", "_slug": "firered_tts3", "wer": 0.047657343635636826, "sim": 0.8100774011299434, "naturel": 4.111111111111111, "_href": "modele-firered_tts3.html", "score": 72.0}, {"_nom": "VoxCPM2", "_slug": "voxcpm2", "wer": 0.04625460484812254, "sim": 0.7890734463276835, "naturel": 3.2, "_href": "modele-voxcpm2.html", "score": 62.4}, {"_nom": "OmniVoice", "_slug": "omnivoice", "wer": 0.04536163983532404, "sim": 0.8091133333333335, "naturel": 2.8421052631578947, "_href": "modele-omnivoice.html", "score": 61.8}, {"_nom": "Chatterbox v3", "_slug": "chatterbox_v3", "wer": 0.05110852424762199, "sim": 0.7663455555555555, "naturel": 3.0454545454545454, "_href": "modele-chatterbox_v3.html", "score": 57.5}, {"_nom": "Audio8-TTS-0.6B", "_slug": "audio8_06b", "wer": 0.03668889161683648, "sim": 0.7298782539682541, "naturel": 2.5, "_href": "modele-audio8_06b.html", "score": 52.1}, {"_nom": "XTTS-v2", "_slug": "xtts_v2", "wer": 0.05935298245448622, "sim": 0.6856720634920637, "naturel": 2.857142857142857, "_href": "modele-xtts_v2.html", "score": 45.1}, {"_nom": "CosyVoice3-0.5B", "_slug": "cosyvoice3_05b", "wer": 0.10573798406208379, "sim": 0.7995958733050755, "naturel": 2.5, "_href": "modele-cosyvoice3_05b.html", "score": 44.5}, {"_nom": "MOSS-1.5", "_slug": "moss_tts_local_v15", "wer": 0.08988399278812814, "sim": 0.7264379365079365, "naturel": 2.8846153846153846, "_href": "modele-moss_tts_local_v15.html", "score": 43.1}], "sort": {"k": "score", "asc": false}, "rankcol": true};ttsTable('#lb',CFG);</script>
+var CFG={"cols": [{"k": "_nom", "label": "modèle"}, {"k": "wer", "label": "WER", "dir": -1, "fmt": "pct", "g": 0.05, "b": 0.1}, {"k": "sim", "label": "SIM", "dir": 1, "fmt": "num3", "g": 0.8, "b": 0.72}, {"k": "naturel", "label": "Naturalité", "dir": 1, "fmt": "num2", "g": 3.5, "b": 3.0}, {"k": "score", "label": "Score global", "dir": 1, "fmt": "num1", "g": 66, "b": 33}], "rows": [{"_nom": "FireRed TTS3", "_slug": "firered_tts3", "wer": 0.047657343635636826, "sim": 0.8100774011299434, "naturel": 4.111111111111111, "_href": "modele-firered_tts3.html", "score": 72.0}, {"_nom": "VoxCPM2", "_slug": "voxcpm2", "wer": 0.04625460484812254, "sim": 0.7890734463276835, "naturel": 3.2, "_href": "modele-voxcpm2.html", "score": 62.4}, {"_nom": "OmniVoice", "_slug": "omnivoice", "wer": 0.04536163983532404, "sim": 0.8091133333333335, "naturel": 2.8421052631578947, "_href": "modele-omnivoice.html", "score": 61.8}, {"_nom": "Chatterbox v3", "_slug": "chatterbox_v3", "wer": 0.05110852424762199, "sim": 0.7663455555555555, "naturel": 3.0454545454545454, "_href": "modele-chatterbox_v3.html", "score": 57.5}, {"_nom": "Audio8-TTS-0.6B", "_slug": "audio8_06b", "wer": 0.03668889161683648, "sim": 0.7298782539682541, "naturel": 2.5, "_href": "modele-audio8_06b.html", "score": 52.1}, {"_nom": "XTTS-v2", "_slug": "xtts_v2", "wer": 0.05935298245448622, "sim": 0.6856720634920637, "naturel": 2.857142857142857, "_href": "modele-xtts_v2.html", "score": 45.1}, {"_nom": "CosyVoice3-0.5B", "_slug": "cosyvoice3_05b", "wer": 0.10573798406208379, "sim": 0.7995958733050755, "naturel": 2.5, "_href": "modele-cosyvoice3_05b.html", "score": 44.5}, {"_nom": "MOSS-1.5", "_slug": "moss_tts_local_v15", "wer": 0.08988399278812814, "sim": 0.7264379365079365, "naturel": 2.8846153846153846, "_href": "modele-moss_tts_local_v15.html", "score": 43.1}], "sort": {"k": "score", "asc": false}, "rankcol": true, "colsEgales": true};ttsTable('#lb',CFG);</script>
 </body></html>
