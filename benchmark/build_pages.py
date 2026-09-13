@@ -23,7 +23,6 @@ import html
 import json
 import re
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # lancé en script
@@ -221,7 +220,7 @@ header.bar nav a.on{color:var(--ink);background:var(--panel2)}
 .scope .cap{font:.7rem/1 "IBM Plex Mono",monospace;letter-spacing:.1em;
   text-transform:uppercase;color:var(--faint);margin-bottom:10px}
 
-main .wrap{padding-top:44px;padding-bottom:20px}
+main .wrap{padding-top:44px;padding-bottom:48px}
 section+section{margin-top:48px}
 section[id],[id="top"]{scroll-margin-top:72px}
 .sec-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:16px}
@@ -495,11 +494,6 @@ ul.avert li{border:1px solid var(--line);border-left:3px solid var(--warn);
 .ic{color:var(--faint);font-size:.85em;font-weight:400}
 #ecoute .md .tablewrap{margin:.4em 0 1.1em}
 
-footer{border-top:1px solid var(--line);margin-top:56px}
-footer .wrap{padding:24px 22px 44px;color:var(--faint);
-  font:.78rem/1.7 "IBM Plex Mono",monospace;display:flex;flex-wrap:wrap;gap:6px 22px}
-footer a{color:var(--muted)}
-footer a:hover{color:var(--trace)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 """
 
@@ -644,7 +638,6 @@ def _shell(titre: str, actif: str, corps: str, hero: str = "", js: str = "",
     nav = (f'<a href="{"#top" if standalone else "index.html"}"{cl("index")}>Aperçu</a>'
            f'<a href="{h_obj}"{cl("objectif")}>Recap</a>'
            f'<a href="{h_ec}"{cl("ecoute")}>Écoute</a>')
-    gen = f"{datetime.now(timezone.utc):%Y-%m-%d %H:%M} UTC"
     return f"""<!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -666,10 +659,6 @@ def _shell(titre: str, actif: str, corps: str, hero: str = "", js: str = "",
 <main><div class="wrap">
 {corps}
 </div></main>
-<footer><div class="wrap">
-  <span>Généré {gen} · <span style="color:var(--muted)">benchmark/build_pages.py</span></span>
-  <span>Métriques automatiques — <span style="color:var(--muted)">l'écoute humaine tranche</span></span>
-</div></footer>
 <script>{TOGGLE_JS}
 {MENU_JS}
 {TABLE_JS}
